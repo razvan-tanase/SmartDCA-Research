@@ -1,7 +1,7 @@
 # Design a repository-root LLM-Wiki using OKF v0.2
 
 Type: grilling
-Status: claimed
+Status: resolved
 Blocked by: 10
 Parent: [Find the rigorous out quasi-Gini route to a complete SmartDCA paper](../map.md)
 
@@ -15,6 +15,8 @@ Design the repository itself as a human- and agent-navigable LLM-Wiki whose root
 - The user accepted the recommended choices across eleven design rounds covering scope, root-bundle topology, authority, trust, identity, schema, migration, ingestion, retrieval, maintenance, and delivery.
 - Independent OKF and SmartDCA workflow reviews found actor-syntax, log-format, raw-Markdown, re-verification, schema-completeness, glossary-purity, ADR, and ticket-sequencing issues. The answer below incorporates their actionable findings.
 - Implementation-ticket decomposition is specified below but later tickets are not created or modified while ticket 12 remains claimed.
+- Independent OKF and SmartDCA standards/specification reviews completed on 2026-08-15. All actionable findings were corrected, and both final re-reviews returned PASS with no remaining finding.
+- Tickets 13–17 are created only now, during resolution, and remain open with sequential blockers.
 
 ## Answer
 
