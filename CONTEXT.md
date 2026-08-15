@@ -149,3 +149,15 @@ _Avoid_: silently rewriting a source summary, unresolved conflict presented as s
 **Superseded concept**:
 A previously stable concept retained at its original Concept ID with deprecated status, a reason, and a `superseded_by` link to its successor.
 _Avoid_: deleting stable knowledge, overwriting history without a successor link
+
+**Structural freeze**:
+The checkpoint after metadata migration, green validation, complete role classification and indexing, and one successful ingest-query-lint cycle, after which redundancy cleanup may begin even though research content continues to evolve.
+_Avoid_: permanent content finality, cleanup during schema migration
+
+**Promoted query result**:
+A reusable query-derived comparison, derivation, synthesis, or resolved research question normalized into a concept with explicit type, role, provenance, index placement, and required validation.
+_Avoid_: saved chat transcript, automatic persistence of every answer
+
+**Knowledge index**:
+The root `index.md` inventory that routes agents first to stable canonical concepts while keeping drafts, deprecated concepts, evidence, and operational records separately discoverable.
+_Avoid_: research frontier, alphabetical file dump
