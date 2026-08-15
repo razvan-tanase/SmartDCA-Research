@@ -38,6 +38,10 @@ Design the repository itself as a human- and agent-navigable LLM-Wiki whose root
 - Lint is event-driven: every change gets structural/profile/link/index checks; every ingest or promoted query gets provenance, orphan, canonical-home, and contradiction checks; every ticket resolution and release gets a full semantic audit.
 - Stable actors are `human:github:razvan-tanase`, `agent:openai:codex`, and `process:github-actions:smartdca-wiki-ci`; execution details live in extensions or the log. Semantic verification must come from a reviewer distinct from the producing agent, and CI does not count as semantic review.
 - Retrieval starts with `index.md` and repository search. Hybrid search is a later recorded decision triggered by measured failures or scale near 100 sources or several hundred concepts.
+- `stale_after` is reserved for genuinely time-sensitive concepts. Timeless mathematics has no calendar expiry; dependency changes, deprecation, or supersession trigger freshness review.
+- Batch ingestion requires structural freeze plus three consecutive supervised ingests without schema changes, conformance failures, or high-severity semantic corrections; the first batch remains draft until batch-level review passes.
+- Full OKF Attested Computation is deferred until runtime packaging, inputs, receipts, verdicts, and an attester are defined. Current Python checks remain versioned evidence assets linked from knowledge concepts.
+- External sources are preserved locally when redistribution permits, with origin, retrieval date, upstream edition/version, and SHA-256. Otherwise the authoritative URL and provenance metadata are retained without an unauthorized local copy; a changed edition is a new artifact.
 
 ## Answer
 
