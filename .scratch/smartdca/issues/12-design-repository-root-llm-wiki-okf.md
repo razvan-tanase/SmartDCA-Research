@@ -27,6 +27,9 @@ Design the repository itself as a human- and agent-navigable LLM-Wiki whose root
 - Documents split only at semantic boundaries that warrant independent identity, reuse, provenance, verification, lifecycle, or cross-query retrieval; no word- or token-count threshold defines a concept.
 - Imported external source artifacts are immutable after ingestion; changed upstream editions become new versioned artifacts. Internal tickets, research notes, and canonical concepts remain editable through their governed workflows and Git history.
 - Canonical high-risk concepts use document-level OKF `sources` plus claim-level Markdown footnotes joined to source IDs; one-source summaries may use document-level attribution unless a claim needs separate qualification.
+- Each normalized claim has one canonical home. Evidence and operational records retain only the local context needed to remain understandable and link to the canonical concept.
+- Conflicting source claims remain preserved as evidence; a separately reviewed `synthesis` concept states the resolution, links both directions, and remains draft while the conflict is unresolved. `synthesis` is added to the registered type vocabulary.
+- A replaced stable concept is retained at its Concept ID with `status: deprecated`, a `superseded_by` extension, a brief reason, and a link to its successor; stable concepts are not deleted.
 
 ## Answer
 
