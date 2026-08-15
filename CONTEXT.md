@@ -169,3 +169,15 @@ _Avoid_: ordinary read-only query, substitute for Git history
 **Independent semantic review**:
 Verification by an agent distinct from the concept's producing agent, checking the claim against its sources, proof, computation, and declared scope rather than only its formatting.
 _Avoid_: producer self-review, CI schema validation, confidence score
+
+**Dependency freshness**:
+The review state triggered when a concept's cited dependency changes, is deprecated, or is superseded; timeless mathematical knowledge uses this signal instead of an arbitrary calendar expiry.
+_Avoid_: annual expiration for proofs, assuming an unchanged page has unchanged support
+
+**Batch-ingestion gate**:
+The structural freeze plus three consecutive supervised ingests without schema changes, conformance failures, or high-severity semantic corrections; the first resulting batch remains draft pending batch-level review.
+_Avoid_: calendar-based enablement, one successful ingest
+
+**Source fingerprint**:
+The SHA-256 and accompanying origin, retrieval date, and upstream edition or version metadata used to identify an immutable external source artifact when it may be preserved locally.
+_Avoid_: mutable filename as identity, unauthorized mirror
