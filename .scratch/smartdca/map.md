@@ -43,7 +43,8 @@ A journal-grade, self-contained scientific paper suitable for arXiv and peer rev
 - The favorable path class, stochastic estimand, or utility objective on which the guarded SmartDCA rule can strictly improve on DCA without weakening its universal safety floor.
 - The behavior of the corrected-mean reference under changes in lagged prices outside parameter/transform regions where coordinatewise monotonicity is known.
 - The first sharp strict-improvement test is the open two-purchase boundary ticket: [Characterize the two-purchase DCA win/loss boundary](issues/11-characterize-two-purchase-dca-win-loss-boundary.md).
-- The research frontier is temporarily paused while [Design a repository-root LLM-Wiki using OKF v0.2](issues/12-design-repository-root-llm-wiki-okf.md) is claimed and resolved; ticket 11 remains open and unmodified until this architecture reaches its significance gate.
+- The research frontier is paused for the repository-root LLM-Wiki sequence: [design the architecture](issues/12-design-repository-root-llm-wiki-okf.md), [implement the profile and validator](issues/13-implement-smartdca-okf-profile-validator.md), [migrate atomically](issues/14-atomically-migrate-repository-to-okf.md), [ingest the foundation sources](issues/15-ingest-llm-wiki-okf-foundation-sources.md), [extract semantic concepts and certify structural freeze](issues/16-extract-semantic-concepts-certify-freeze.md), and [clean redundancy](issues/17-clean-redundancy-after-structural-freeze.md).
+- The two-purchase strict-improvement frontier [resumes after the wiki cleanup checkpoint](issues/11-characterize-two-purchase-dca-win-loss-boundary.md).
 - The exact empirical estimands, datasets, transaction-cost assumptions, robustness grid, and statistical reporting protocol.
 - The manuscript outline, target venue, literature positioning, proof organization, reproducibility package, and final verification process.
 
