@@ -13,7 +13,7 @@ Add root `index.md` with only `okf_version: "0.2"` in frontmatter and `smartdca-
 
 ## Comments
 
-- Created during resolution of the independently reviewed ticket-12 architecture.
+- Created during resolution of [Design a repository-root LLM-Wiki using OKF v0.2](12-design-repository-root-llm-wiki-okf.md).
 - [Implement the SmartDCA OKF profile and report-only validator](13-implement-smartdca-okf-profile-validator.md) may expose the repository's existing nonconformance in report mode; this migration must combine complete metadata conversion with strict-CI activation atomically.
 
 ## Answer
