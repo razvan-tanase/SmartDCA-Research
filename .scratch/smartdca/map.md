@@ -43,6 +43,7 @@ A journal-grade, self-contained scientific paper suitable for arXiv and peer rev
 - The favorable path class, stochastic estimand, or utility objective on which the guarded SmartDCA rule can strictly improve on DCA without weakening its universal safety floor.
 - The behavior of the corrected-mean reference under changes in lagged prices outside parameter/transform regions where coordinatewise monotonicity is known.
 - The first sharp strict-improvement test is the open two-purchase boundary ticket: [Characterize the two-purchase DCA win/loss boundary](issues/11-characterize-two-purchase-dca-win-loss-boundary.md).
+- The research frontier is temporarily paused while [Design a repository-root LLM-Wiki using OKF v0.2](issues/12-design-repository-root-llm-wiki-okf.md) is claimed and resolved; ticket 11 remains open and unmodified until this architecture reaches its significance gate.
 - The exact empirical estimands, datasets, transaction-cost assumptions, robustness grid, and statistical reporting protocol.
 - The manuscript outline, target venue, literature positioning, proof organization, reproducibility package, and final verification process.
 
