@@ -13,7 +13,7 @@ Run a supervised ingest of the existing *SmartDCA superiority* source paper at `
 
 ## Comments
 
-- Created during resolution of the independently reviewed ticket-12 architecture.
+- Created during resolution of [Design a repository-root LLM-Wiki using OKF v0.2](12-design-repository-root-llm-wiki-okf.md).
 - Failure to meet the freeze criteria must identify the required schema change and keep [Clean redundancy after structural freeze](17-clean-redundancy-after-structural-freeze.md) blocked.
 
 ## Answer
