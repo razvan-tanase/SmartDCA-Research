@@ -2,7 +2,7 @@
 
 Type: task
 Status: open
-Blocked by: 10, 17
+Blocked by: 10
 Parent: [Find the rigorous out quasi-Gini route to a complete SmartDCA paper](../map.md)
 
 ## Question
@@ -28,7 +28,6 @@ generalize to arbitrary horizons or make a stochastic claim in this ticket.
 - Opened after ticket 10 supplied a fully specified causal rule with exact accounting.
 - This is the smallest decisive test of whether the corrected-mean discretion creates a mathematically informative strict-improvement region.
 - It remains unclaimed until the user passes ticket 10's significance gate.
-- On 2026-08-15 the user paused the research frontier for the repository-root LLM-Wiki sequence; this ticket resumes only after ticket 17 completes post-freeze cleanup.
 
 ## Answer
 
