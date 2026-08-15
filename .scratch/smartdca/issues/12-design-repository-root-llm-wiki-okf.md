@@ -42,6 +42,10 @@ Design the repository itself as a human- and agent-navigable LLM-Wiki whose root
 - Batch ingestion requires structural freeze plus three consecutive supervised ingests without schema changes, conformance failures, or high-severity semantic corrections; the first batch remains draft until batch-level review passes.
 - Full OKF Attested Computation is deferred until runtime packaging, inputs, receipts, verdicts, and an attester are defined. Current Python checks remain versioned evidence assets linked from knowledge concepts.
 - External sources are preserved locally when redistribution permits, with origin, retrieval date, upstream edition/version, and SHA-256. Otherwise the authoritative URL and provenance metadata are retained without an unauthorized local copy; a changed edition is a new artifact.
+- Ticket 12 ends with the reviewed architecture and significance gate. Sequential tracer tickets then implement: profile/validator; atomic metadata migration plus index/log; supervised foundation-source ingestion; semantic concept extraction and structural-freeze audit; and post-freeze redundancy cleanup.
+- Wiki tooling lives at `tools/okf/validate.py`; the normative local profile at `docs/knowledge/okf-profile.md`; and agent procedures at `docs/agents/llm-wiki-workflow.md`. A small pinned YAML dependency supports local and CI validation.
+- Initial roles are canonical for `README.md`, `CONTEXT.md`, and accepted ADRs; evidence for `research/notes/*.md`; operational for `AGENTS.md`, `docs/agents/*.md`, the Wayfinder map, and tickets. Future definitions, theorems, and reviewed syntheses are canonical.
+- Open or claimed tickets are OKF draft and resolved tickets stable; `ticket_status` remains separate. ADR acceptance uses `decision_status`, while OKF `status` remains `draft|stable|deprecated`.
 
 ## Answer
 
