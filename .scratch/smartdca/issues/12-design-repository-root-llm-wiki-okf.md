@@ -7,16 +7,16 @@ Parent: [Find the rigorous out quasi-Gini route to a complete SmartDCA paper](..
 
 ## Question
 
-Design the repository itself as a human- and agent-navigable LLM-Wiki whose root is a conformant Open Knowledge Format v0.2 Knowledge Bundle. Specify the document authority model, concept taxonomy, metadata profile, stable-identity policy, navigation and agent contracts, semantic splitting and redundancy rules, provenance and trust workflow, validation gates, ingest/query/lint lifecycle, and staged migration of the existing corpus. Preserve the established separation between research state, detailed reasoning, and executable evidence, and do not resume ticket 11 until this architecture reaches its significance gate.
+Design the repository itself as a human- and agent-navigable LLM-Wiki whose root is a conformant Open Knowledge Format v0.2 Knowledge Bundle. Specify the document authority model, concept taxonomy, metadata profile, stable-identity policy, navigation and agent contracts, semantic splitting and redundancy rules, provenance and trust workflow, validation gates, ingest/query/lint lifecycle, and staged migration of the existing corpus. Preserve the established separation between research state, detailed reasoning, and executable evidence, and do not resume [Characterize the two-purchase DCA win/loss boundary](11-characterize-two-purchase-dca-win-loss-boundary.md) until this architecture reaches its significance gate.
 
 ## Comments
 
 - Claimed on 2026-08-15 after the user explicitly paused the research frontier for this architecture work.
 - The user accepted the recommended choices across eleven design rounds covering scope, root-bundle topology, authority, trust, identity, schema, migration, ingestion, retrieval, maintenance, and delivery.
 - Independent OKF and SmartDCA workflow reviews found actor-syntax, log-format, raw-Markdown, re-verification, schema-completeness, glossary-purity, ADR, and ticket-sequencing issues. The answer below incorporates their actionable findings.
-- Implementation-ticket decomposition is specified below but later tickets are not created or modified while ticket 12 remains claimed.
+- Implementation-ticket decomposition is specified below, but later work is not created or modified while this architecture ticket remains claimed.
 - Independent OKF and SmartDCA standards/specification reviews completed on 2026-08-15. All actionable findings were corrected, and both final re-reviews returned PASS with no remaining finding.
-- Tickets 13–17 are created only now, during resolution, and remain open with sequential blockers.
+- The five implementation tickets are created only now, during resolution, and remain open with sequential blockers.
 
 ## Answer
 
@@ -101,7 +101,7 @@ Batch ingestion is enabled only after structural freeze and three consecutive su
 
 ### Migration and sequential implementation
 
-Ticket 12 ends with this reviewed architecture and its significance gate. Only during resolution are the following open tickets created and wired sequentially:
+This architecture ticket ends with the reviewed design and its significance gate. Only during resolution are the following open tickets created and wired sequentially:
 
 1. Implement the normative profile, agent workflow, and report-only validator with all base/profile fixtures and a complete violation inventory.
 2. In one merge transaction, preserve existing Markdown bodies while adding metadata, populate the complete index, add conformant event history, perform any required bootstrap semantic reviews, and switch CI to strict enforcement.
@@ -109,7 +109,7 @@ Ticket 12 ends with this reviewed architecture and its significance gate. Only d
 4. Extract initial semantic concepts and certify structural freeze after a named supervised ingest plus query and lint cycle. Promote a query result only if reusable uncaptured knowledge is actually found; otherwise record that promotion was correctly skipped. Then evaluate the complete batch gate.
 5. After structural freeze, clean redundancy and apply deprecation or supersession without altering mathematical conclusions merely to shorten text.
 
-Ticket 11 remains open and is blocked by the fifth implementation ticket once those tickets are created.
+[Characterize the two-purchase DCA win/loss boundary](11-characterize-two-purchase-dca-win-loss-boundary.md) remains open and is blocked by [Clean redundancy after structural freeze](17-clean-redundancy-after-structural-freeze.md).
 
 ### Required edge-case behavior
 
