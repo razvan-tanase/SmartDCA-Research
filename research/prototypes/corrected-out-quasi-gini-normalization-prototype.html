@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prototype - corrected out quasi-Gini normalization</title>
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #5c6670;
+      --paper: #f7f5ef;
+      --card: #ffffff;
+      --line: #d8d4c9;
+      --accent: #0f766e;
+      --accent-soft: #dff4f0;
+      --warn: #9a3412;
+      --warn-soft: #ffedd5;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font: 16px/1.55 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main { max-width: 1100px; margin: 0 auto; padding: 42px 22px 64px; }
+    h1, h2, h3 { line-height: 1.16; margin: 0; }
+    h1 { font-size: clamp(2rem, 4vw, 3.25rem); letter-spacing: -0.04em; }
+    h2 { font-size: 1.35rem; margin-bottom: 16px; }
+    h3 { font-size: 1rem; }
+    p { margin: 10px 0 0; }
+    .eyebrow { color: var(--accent); font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+    .lede { max-width: 830px; color: var(--muted); font-size: 1.1rem; }
+    .notice {
+      margin-top: 24px;
+      padding: 14px 16px;
+      border-left: 4px solid var(--warn);
+      background: var(--warn-soft);
+    }
+    .section { margin-top: 34px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .card {
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--card);
+      box-shadow: 0 8px 24px rgba(23, 32, 42, .04);
+    }
+    .wide { grid-column: 1 / -1; }
+    .label { color: var(--muted); font-size: .82rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .value { margin-top: 5px; font-size: 1.04rem; }
+    .formula {
+      overflow-wrap: anywhere;
+      padding: 14px;
+      border-radius: 10px;
+      background: #f1f4f3;
+      font: 15px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .metric-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
+    .metric { padding: 12px; border-radius: 10px; background: #f7f7f5; }
+    .metric strong { display: block; margin-top: 4px; font-size: 1.15rem; }
+    .pill {
+      display: inline-block;
+      margin: 5px 6px 0 0;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #0b5f59;
+      font-size: .82rem;
+      font-weight: 700;
+    }
+    .pill.warn { color: var(--warn); background: var(--warn-soft); }
+    .controls { display: flex; flex-wrap: wrap; gap: 10px; }
+    button {
+      min-height: 42px;
+      padding: 9px 14px;
+      border: 1px solid #9aa5a2;
+      border-radius: 9px;
+      color: var(--ink);
+      background: white;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button:hover, button:focus-visible { border-color: var(--accent); outline: 3px solid var(--accent-soft); }
+    button.active { border-color: var(--accent); color: white; background: var(--accent); }
+    button[disabled] { cursor: not-allowed; opacity: .48; }
+    .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .walkthrough { display: none; }
+    .walkthrough.active { display: block; }
+    .steps { display: grid; gap: 10px; margin-top: 15px; }
+    .step { display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; }
+    .step-number { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; color: var(--accent); background: var(--accent-soft); font-weight: 800; }
+    .step.done { background: #f0fdf4; }
+    .step.done .step-number { color: white; background: #15803d; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { padding: 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: .82rem; text-transform: uppercase; }
+    .verdict { border-color: #77b8b2; background: linear-gradient(135deg, #fff, #e8f7f5); }
+    .history { max-height: 230px; overflow: auto; margin: 10px 0 0; padding-left: 22px; color: var(--muted); }
+    .history li { margin: 5px 0; }
+    @media (max-width: 760px) {
+      .grid, .metric-row { grid-template-columns: 1fr; }
+      .step { grid-template-columns: 34px 1fr; }
+      .step button { grid-column: 2; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">Throwaway logic prototype - ticket 05</div>
+      <h1>Which correction should become canonical?</h1>
+      <p class="lede">This demo compares the smallest common-weight repairs of the source out quasi-Gini functional. The question is whether the candidates are internal means with both compatibility identities and a finite diagonal, and which candidate best preserves the source's SmartDCA parameter semantics.</p>
+      <div class="notice"><strong>Boundary carried forward from ticket 04:</strong> choosing a mean does not prove economic dominance over DCA. Any practical allocation still needs an explicit causal budget map and a restricted path class or performance criterion.</div>
+    </header>
+
+    <section class="section">
+      <h2>Current state</h2>
+      <div class="grid">
+        <article class="card">
+          <div class="label">Selected normalization</div>
+          <div class="value" id="candidateName">Numerator-preserving repair (lambda = 1)</div>
+          <div id="candidateTags"><span class="pill">internal mean</span><span class="pill">preserves source numerator</span><span class="pill">canonical convention</span></div>
+        </article>
+        <article class="card">
+          <div class="label">Prototype input</div>
+          <div class="value" id="inputState"><strong>Nontrivial comparison</strong><br>x = [1, 2, 4], w = [1, 2, 1], f(x) = 1 + x<br>alpha = 3, beta = 1, d = 2</div>
+        </article>
+        <article class="card wide">
+          <div class="label">Common-weight form</div>
+          <div class="formula" id="formulaState">h_lambda(x) = f(x)^beta [f(x)/x]^{lambda(d-1)}; M_lambda = [sum w h_lambda(x) x^d / sum w h_lambda(x)]^(1/d), lambda = 1</div>
+        </article>
+        <article class="card wide">
+          <div class="label">Computed state</div>
+          <div class="metric-row" id="metrics"><div class="metric"><span class="label">Source value</span><strong>3.281651</strong></div><div class="metric"><span class="label">Corrected value</span><strong>2.69679945</strong></div><div class="metric"><span class="label">Input interval</span><strong>[1, 4]</strong></div><div class="metric"><span class="label">Internal?</span><strong>yes</strong></div></div>
+        </article>
+        <article class="card">
+          <div class="label">Diagonal at alpha = beta = q</div>
+          <div class="value" id="diagonalState">The finite extension is a weighted geometric mean with weights proportional to w x f(x)^(q-1).</div>
+        </article>
+        <article class="card">
+          <div class="label">SmartDCA implication</div>
+          <div class="value" id="smartDcaState">Retains f(r)^(alpha - 1) = f(r)^rho as the observable current-price score. All common-weight candidates are causal as scores; a fully funded purchase map and off-slice accounting identity remain later work.</div>
+        </article>
+        <article class="card wide verdict">
+          <div class="label">Decision</div>
+          <div class="value" id="decisionState"><strong>Recommended convention:</strong> choose lambda = 1. Of the two one-sided repairs, it is the one that leaves the source numerator—and therefore the alpha-1 = rho score exponent—unchanged. Causality alone does not select it.</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section card">
+      <h2>Free play</h2>
+      <p>Switch the repair or the stress case in any order. Every action recomputes and exposes the full state above.</p>
+      <h3 style="margin-top:18px">Repair</h3>
+      <div class="controls" id="candidateControls" style="margin-top:10px"></div>
+      <h3 style="margin-top:18px">Stress case</h3>
+      <div class="controls" id="caseControls" style="margin-top:10px"></div>
+    </section>
+
+    <section class="section card">
+      <h2>Guided walkthroughs</h2>
+      <div class="tabs" id="walkthroughTabs"></div>
+      <div id="walkthroughPanels"></div>
+    </section>
+
+    <section class="section card">
+      <h2>Comparison snapshot</h2>
+      <table>
+        <thead><tr><th>Candidate</th><th>One-sided edit</th><th>Diagonal weights</th><th>Original alpha-1 score retained?</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr><td>lambda = 0</td><td>Changes the numerator; preserves the source denominator.</td><td>w f(x)<sup>q</sup></td><td>No; the operational exponent becomes beta.</td><td>Viable, not canonical.</td></tr>
+          <tr><td>lambda = 1/2</td><td>Changes both sums symmetrically.</td><td>w x<sup>1/2</sup>f(x)<sup>q-1/2</sup></td><td>No unique operational advantage.</td><td>Viable, extra convention.</td></tr>
+          <tr><td>lambda = 1</td><td>Preserves the source numerator; changes the denominator.</td><td>w x f(x)<sup>q-1</sup></td><td>Yes; f(r)<sup>alpha-1</sup> = f(r)<sup>rho</sup>.</td><td><strong>Canonical by semantic continuity.</strong></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section card">
+      <h2>Action history</h2>
+      <ol class="history" id="history"></ol>
+    </section>
+  </main>
+
+  <script>
+    // Portable pure module: no DOM access.
+    const NormalizationModel = (() => {
+      const candidates = {
+        denominator: {
+          id: "denominator",
+          lambda: 0,
+          name: "Denominator-preserving repair (lambda = 0)",
+          tags: ["internal mean", "preserves source denominator"],
+          smartDca: "Uses the score f(r)^beta. It is causal, but it breaks the source link alpha - 1 = rho that governs the out-SmartDCA purchase score.",
+        },
+        balanced: {
+          id: "balanced",
+          lambda: 0.5,
+          name: "Balanced repair (lambda = 1/2)",
+          tags: ["internal mean", "changes both sums"],
+          smartDca: "Uses a blended score. It is mathematically valid but adds an otherwise unsupported convention and has no unique causal advantage.",
+        },
+        numerator: {
+          id: "numerator",
+          lambda: 1,
+          name: "Numerator-preserving repair (lambda = 1)",
+          tags: ["internal mean", "preserves source numerator", "canonical convention"],
+          smartDca: "Retains f(r)^(alpha - 1) = f(r)^rho as the observable current-price score. All common-weight candidates are causal as scores; a fully funded purchase map and off-slice accounting identity remain later work.",
+        },
+      };
+
+      const cases = {
+        constant: { id: "constant", name: "Constant-vector failure", x: [3, 3, 3], w: [1, 2, 1], alpha: 3, beta: 1, fName: "1 + x", f: x => 1 + x },
+        nontrivial: { id: "nontrivial", name: "Nontrivial comparison", x: [1, 2, 4], w: [1, 2, 1], alpha: 3, beta: 1, fName: "1 + x", f: x => 1 + x },
+        identity: { id: "identity", name: "Identity-transform boundary", x: [1, 2, 5], w: [1, 3, 2], alpha: 2.5, beta: -0.5, fName: "x", f: x => x },
+        lehmer: { id: "lehmer", name: "Out quasi-Lehmer line", x: [1, 3, 8], w: [2, 1, 1], alpha: 2, beta: 1, fName: "1 + x", f: x => 1 + x },
+        diagonal: { id: "diagonal", name: "Near-diagonal limit", x: [1, 2, 5], w: [1, 2, 1], alpha: 0.7001, beta: 0.7, q: 0.7, fName: "1 + x", f: x => 1 + x },
+      };
+
+      const sum = xs => xs.reduce((a, b) => a + b, 0);
+      const weighted = (x, w, g) => sum(x.map((v, i) => w[i] * g(v)));
+
+      function sourceFunctional(c) {
+        const d = c.alpha - c.beta;
+        const n = weighted(c.x, c.w, x => x * c.f(x) ** (c.alpha - 1));
+        const z = weighted(c.x, c.w, x => c.f(x) ** c.beta);
+        return (n / z) ** (1 / d);
+      }
+
+      function commonWeight(c, lambda, x) {
+        const d = c.alpha - c.beta;
+        return c.f(x) ** c.beta * (c.f(x) / x) ** (lambda * (d - 1));
+      }
+
+      function correctedMean(c, lambda) {
+        const d = c.alpha - c.beta;
+        if (Math.abs(d) < 1e-12) return diagonalMean(c, lambda, c.alpha);
+        const n = weighted(c.x, c.w, x => commonWeight(c, lambda, x) * x ** d);
+        const z = weighted(c.x, c.w, x => commonWeight(c, lambda, x));
+        return (n / z) ** (1 / d);
+      }
+
+      function diagonalMean(c, lambda, q) {
+        const weights = c.x.map((x, i) => c.w[i] * x ** lambda * c.f(x) ** (q - lambda));
+        return Math.exp(sum(c.x.map((x, i) => weights[i] * Math.log(x))) / sum(weights));
+      }
+
+      function classicalGini(c) {
+        const d = c.alpha - c.beta;
+        return (weighted(c.x, c.w, x => x ** c.alpha) / weighted(c.x, c.w, x => x ** c.beta)) ** (1 / d);
+      }
+
+      function outLehmer(c) {
+        return weighted(c.x, c.w, x => x * c.f(x) ** c.beta) / weighted(c.x, c.w, x => c.f(x) ** c.beta);
+      }
+
+      const initialState = { candidateId: "numerator", caseId: "nontrivial", activeWalkthrough: "meanhood", step: 0, history: ["Started with the recommended numerator-preserving repair."] };
+
+      function reduce(state, action) {
+        if (action.type === "selectCandidate") {
+          const name = candidates[action.id].name;
+          return { ...state, candidateId: action.id, history: [...state.history, `Selected ${name}.`] };
+        }
+        if (action.type === "selectCase") {
+          const name = cases[action.id].name;
+          return { ...state, caseId: action.id, history: [...state.history, `Loaded ${name}.`] };
+        }
+        if (action.type === "startWalkthrough") {
+          return { ...initialState, activeWalkthrough: action.id, step: 0, history: [...state.history, `Started the ${action.id} walkthrough.`] };
+        }
+        if (action.type === "walkStep") {
+          const next = reduce(state, action.action);
+          return { ...next, step: state.step + 1 };
+        }
+        return state;
+      }
+
+      function view(state) {
+        const candidate = candidates[state.candidateId];
+        const c = cases[state.caseId];
+        const lambda = candidate.lambda;
+        const corrected = correctedMean(c, lambda);
+        const source = sourceFunctional(c);
+        const q = c.q ?? (c.alpha + c.beta) / 2;
+        const diagonal = diagonalMean(c, lambda, q);
+        const min = Math.min(...c.x);
+        const max = Math.max(...c.x);
+        const identityGap = c.fName === "x" ? Math.abs(corrected - classicalGini(c)) : null;
+        const lehmerGap = Math.abs((c.alpha - c.beta) - 1) < 1e-12 ? Math.abs(corrected - outLehmer(c)) : null;
+        return { state, candidate, c, corrected, source, diagonal, min, max, identityGap, lehmerGap };
+      }
+
+      return { candidates, cases, initialState, reduce, view };
+    })();
+  </script>
+
+  <script>
+    const walkthroughs = {
+      meanhood: {
+        title: "1. Meanhood",
+        description: "Push the source and corrected formulas through a constant vector. A mean must return the common input value exactly.",
+        steps: [
+          { label: "Load the constant vector", action: { type: "selectCase", id: "constant" } },
+          { label: "Try the denominator-preserving repair", action: { type: "selectCandidate", id: "denominator" } },
+          { label: "Try the numerator-preserving repair", action: { type: "selectCandidate", id: "numerator" } },
+        ],
+      },
+      compatibility: {
+        title: "2. Compatibility",
+        description: "Check the two required boundaries. Every common-weight repair collapses to weighted Gini for f(x)=x and to out quasi-Lehmer for alpha-beta=1.",
+        steps: [
+          { label: "Load the identity transform", action: { type: "selectCase", id: "identity" } },
+          { label: "Switch to the balanced repair", action: { type: "selectCandidate", id: "balanced" } },
+          { label: "Load the out quasi-Lehmer line", action: { type: "selectCase", id: "lehmer" } },
+        ],
+      },
+      diagonal: {
+        title: "3. Diagonal",
+        description: "Approach alpha=beta. Unlike the source formula, each corrected common-weight formula converges to a finite weighted geometric mean.",
+        steps: [
+          { label: "Load the near-diagonal case", action: { type: "selectCase", id: "diagonal" } },
+          { label: "Inspect lambda = 0 weights", action: { type: "selectCandidate", id: "denominator" } },
+          { label: "Inspect lambda = 1 weights", action: { type: "selectCandidate", id: "numerator" } },
+        ],
+      },
+      decision: {
+        title: "4. Tie-breaker",
+        description: "All three repairs pass meanhood and compatibility checks, and all can supply causal scores. The canonical convention comes from preserving the source numerator and its alpha-1 = rho parameter meaning.",
+        steps: [
+          { label: "Compare a nontrivial input", action: { type: "selectCase", id: "nontrivial" } },
+          { label: "See the extra balanced convention", action: { type: "selectCandidate", id: "balanced" } },
+          { label: "Select the canonical repair", action: { type: "selectCandidate", id: "numerator" } },
+        ],
+      },
+    };
+
+    let state = NormalizationModel.initialState;
+    const fmt = x => Number.isFinite(x) ? x.toFixed(8).replace(/0+$/, "").replace(/\.$/, "") : "undefined";
+    const dispatch = action => { state = NormalizationModel.reduce(state, action); render(); };
+
+    function render() {
+      const v = NormalizationModel.view(state);
+      const d = v.c.alpha - v.c.beta;
+      document.querySelector("#candidateName").textContent = v.candidate.name;
+      document.querySelector("#candidateTags").innerHTML = v.candidate.tags.map(t => `<span class="pill">${t}</span>`).join("");
+      document.querySelector("#inputState").innerHTML = `<strong>${v.c.name}</strong><br>x = [${v.c.x.join(", ")}], w = [${v.c.w.join(", ")}], f(x) = ${v.c.fName}<br>alpha = ${v.c.alpha}, beta = ${v.c.beta}, d = ${fmt(d)}`;
+      document.querySelector("#formulaState").textContent = `h_lambda(x) = f(x)^beta [f(x)/x]^{lambda(d-1)};  M_lambda = [sum w h_lambda(x) x^d / sum w h_lambda(x)]^(1/d),  lambda = ${v.candidate.lambda}`;
+      const checks = [
+        ["Source value", fmt(v.source)],
+        ["Corrected value", fmt(v.corrected)],
+        ["Input interval", `[${v.min}, ${v.max}]`],
+        ["Internal?", v.corrected >= v.min - 1e-10 && v.corrected <= v.max + 1e-10 ? "yes" : "no"],
+      ];
+      document.querySelector("#metrics").innerHTML = checks.map(([k, val]) => `<div class="metric"><span class="label">${k}</span><strong>${val}</strong></div>`).join("");
+      const extra = v.identityGap !== null ? ` Identity-transform gap from weighted Gini: ${fmt(v.identityGap)}.` : v.lehmerGap !== null ? ` Gap from weighted out quasi-Lehmer: ${fmt(v.lehmerGap)}.` : "";
+      document.querySelector("#diagonalState").textContent = `At q = ${v.c.q ?? "(alpha+beta)/2"}, the finite extension is ${fmt(v.diagonal)}. Its weights are proportional to w x^lambda f(x)^(q-lambda).${extra}`;
+      document.querySelector("#smartDcaState").textContent = v.candidate.smartDca;
+      document.querySelector("#decisionState").innerHTML = v.candidate.id === "numerator" ? "<strong>Recommended convention:</strong> choose lambda = 1. Of the two one-sided repairs, it is the one that leaves the source numerator—and therefore the alpha-1 = rho score exponent—unchanged. Causality alone does not select it." : "This repair is mathematically viable and can supply a causal score. It is not selected because it changes the source numerator or adds an extra convention.";
+      document.querySelectorAll("[data-candidate]").forEach(b => b.classList.toggle("active", b.dataset.candidate === state.candidateId));
+      document.querySelectorAll("[data-case]").forEach(b => b.classList.toggle("active", b.dataset.case === state.caseId));
+      document.querySelectorAll("[data-walkthrough]").forEach(b => b.classList.toggle("active", b.dataset.walkthrough === state.activeWalkthrough));
+      document.querySelectorAll(".walkthrough").forEach(p => p.classList.toggle("active", p.dataset.panel === state.activeWalkthrough));
+      document.querySelectorAll(`[data-panel="${state.activeWalkthrough}"] .step`).forEach((row, i) => row.classList.toggle("done", i < state.step));
+      document.querySelectorAll(`[data-panel="${state.activeWalkthrough}"] .step button`).forEach((b, i) => b.disabled = i !== state.step);
+      document.querySelector("#history").innerHTML = state.history.map(x => `<li>${x}</li>`).join("");
+    }
+
+    function buildControls() {
+      const candidates = Object.values(NormalizationModel.candidates);
+      document.querySelector("#candidateControls").innerHTML = candidates.map(c => `<button data-candidate="${c.id}">${c.name}</button>`).join("");
+      document.querySelectorAll("[data-candidate]").forEach(b => b.addEventListener("click", () => dispatch({ type: "selectCandidate", id: b.dataset.candidate })));
+      const cases = Object.values(NormalizationModel.cases);
+      document.querySelector("#caseControls").innerHTML = cases.map(c => `<button data-case="${c.id}">${c.name}</button>`).join("");
+      document.querySelectorAll("[data-case]").forEach(b => b.addEventListener("click", () => dispatch({ type: "selectCase", id: b.dataset.case })));
+
+      document.querySelector("#walkthroughTabs").innerHTML = Object.entries(walkthroughs).map(([id, w]) => `<button data-walkthrough="${id}">${w.title}</button>`).join("");
+      document.querySelector("#walkthroughPanels").innerHTML = Object.entries(walkthroughs).map(([id, w]) => `<div class="walkthrough" data-panel="${id}"><p>${w.description}</p><div class="steps">${w.steps.map((s, i) => `<div class="step"><span class="step-number">${i + 1}</span><span>${s.label}</span><button data-step="${id}:${i}">Run step</button></div>`).join("")}</div></div>`).join("");
+      document.querySelectorAll("[data-walkthrough]").forEach(b => b.addEventListener("click", () => dispatch({ type: "startWalkthrough", id: b.dataset.walkthrough })));
+      document.querySelectorAll("[data-step]").forEach(b => b.addEventListener("click", () => {
+        const [id, raw] = b.dataset.step.split(":");
+        dispatch({ type: "walkStep", action: walkthroughs[id].steps[Number(raw)].action });
+      }));
+    }
+
+    buildControls();
+    render();
+  </script>
+</body>
+</html>

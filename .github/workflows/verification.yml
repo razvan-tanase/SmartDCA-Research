@@ -1,0 +1,23 @@
+name: Verification
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run reproducibility checks
+        run: |
+          python reproducibility/checks/check_pathwise_dca_dominance.py
+          python reproducibility/checks/check_corrected_out_quasi_gini_homogeneity.py
+          python reproducibility/checks/check_epsilon_dca_safety_guardrail.py
+          python reproducibility/checks/check_guarded_corrected_mean_smartdca.py
