@@ -103,81 +103,37 @@ _Avoid_: proof of economic superiority
 ## Knowledge system language
 
 **Wiki repository**:
-The complete SmartDCA Git repository, treated as a human- and agent-navigable knowledge system whose root is an OKF v0.2 Knowledge Bundle.
-_Avoid_: a separate wiki beside the research repository, a public website by default
+The complete SmartDCA research repository treated as a maintained knowledge system for people and agents.
+_Avoid_: separate public website by default, disposable retrieval cache
 
 **Knowledge concept**:
-A non-reserved Markdown document identified by its repository-relative path without `.md`, with OKF frontmatter and a human-readable Markdown body.
-_Avoid_: retrieval chunk, embedding, arbitrary token window
+A self-contained maintained unit of knowledge with a stable identity and an explicit role in the project.
+_Avoid_: retrieval chunk, arbitrary token window
 
 **Knowledge role**:
-The SmartDCA authority classification `canonical`, `evidence`, or `operational`; it states whether a concept is a preferred answer source, supporting material, or project-control record independently of its type, lifecycle, and trust.
-_Avoid_: using `type`, `status`, directory location, or verification tier as a substitute for authority
-
-**Stable concept**:
-A concept whose OKF lifecycle status is stable after its required mechanical validation and, for high-risk semantic content, independent semantic review.
-_Avoid_: mechanically valid means mathematically verified, generated means trusted
-
-**SmartDCA OKF profile**:
-The project-local restrictions layered on OKF v0.2: a registered concept-type vocabulary, required descriptive and authority metadata, conditional provenance and verification, and repository-wide validation.
-_Avoid_: a replacement for OKF, optional documentation convention
-
-**Registered concept type**:
-A permitted `type` value that identifies a concept's document kind independently of its knowledge role; new values require an explicit profile change. The registered vocabulary includes `synthesis` for reviewed cross-source integration and conflict resolution.
-_Avoid_: ad hoc type label, directory-derived authority
+The authority classification `canonical`, `evidence`, or `operational`; it distinguishes a preferred answer source from supporting material and project-control records.
+_Avoid_: treating every document as equally authoritative
 
 **Semantic concept boundary**:
-A document boundary justified by independent identity and at least one need for reuse, provenance, verification, lifecycle, or retrieval across multiple questions.
-_Avoid_: fixed token boundary, one file per heading, retrieval chunk
+A boundary justified by independent identity plus a need for reuse, provenance, verification, lifecycle, or retrieval across multiple questions.
+_Avoid_: fixed-size split, one unit per heading
 
 **Immutable source artifact**:
-An imported external source preserved without content edits after ingestion; a revised upstream edition is stored as a new versioned artifact.
-_Avoid_: freezing internal research notes, silently replacing an imported edition
-
-**Claim-level provenance**:
-A Markdown footnote on a substantive claim whose label joins to the corresponding entry in OKF `sources`; it supplements rather than replaces document-level provenance.
-_Avoid_: citation decoration without a source entry, a citation on every sentence by default
+An imported external source preserved without content edits after ingestion; a revised upstream edition is a new artifact.
+_Avoid_: freezing internal research notes, silently replacing an edition
 
 **Canonical home**:
-The single canonical concept that agents prefer when answering a normalized research claim; evidence and operational records may retain local context but link back to it.
+The single canonical concept that agents prefer when answering a normalized research claim; evidence and operational records may retain local context but point back to it.
 _Avoid_: deleting provenance-bearing repetition, several equally authoritative copies
 
 **Synthesis concept**:
-A high-risk concept that integrates multiple sources or project results, including explicit resolution of contradictory claims, and requires independent semantic review before becoming stable.
+A high-risk concept that integrates multiple sources or project results, including explicit resolution of contradictory claims.
 _Avoid_: silently rewriting a source summary, unresolved conflict presented as settled
 
 **Superseded concept**:
-A previously stable concept retained at its original Concept ID with deprecated status, a reason, and a `superseded_by` link to its successor.
-_Avoid_: deleting stable knowledge, overwriting history without a successor link
-
-**Structural freeze**:
-The checkpoint after metadata migration, green validation, complete role classification and indexing, and one successful ingest-query-lint cycle, after which redundancy cleanup may begin even though research content continues to evolve.
-_Avoid_: permanent content finality, cleanup during schema migration
-
-**Promoted query result**:
-A reusable query-derived comparison, derivation, synthesis, or resolved research question normalized into a concept with explicit type, role, provenance, index placement, and required validation.
-_Avoid_: saved chat transcript, automatic persistence of every answer
-
-**Knowledge index**:
-The root `index.md` inventory that routes agents first to stable canonical concepts while keeping drafts, deprecated concepts, evidence, and operational records separately discoverable.
-_Avoid_: research frontier, alphabetical file dump
-
-**Durable knowledge operation**:
-An ingest, promoted query, lint or audit, migration, verification, deprecation, or supersession that changes or evaluates maintained knowledge and receives an append-only `log.md` entry.
-_Avoid_: ordinary read-only query, substitute for Git history
+A previously stable concept retained at its original identity with deprecated status, a reason, and a link to its successor.
+_Avoid_: deleting stable knowledge, overwriting history without a successor
 
 **Independent semantic review**:
-Verification by an agent distinct from the concept's producing agent, checking the claim against its sources, proof, computation, and declared scope rather than only its formatting.
-_Avoid_: producer self-review, CI schema validation, confidence score
-
-**Dependency freshness**:
-The review state triggered when a concept's cited dependency changes, is deprecated, or is superseded; timeless mathematical knowledge uses this signal instead of an arbitrary calendar expiry.
-_Avoid_: annual expiration for proofs, assuming an unchanged page has unchanged support
-
-**Batch-ingestion gate**:
-The structural freeze plus three consecutive supervised ingests without schema changes, conformance failures, or high-severity semantic corrections; the first resulting batch remains draft pending batch-level review.
-_Avoid_: calendar-based enablement, one successful ingest
-
-**Source fingerprint**:
-The SHA-256 and accompanying origin, retrieval date, and upstream edition or version metadata used to identify an immutable external source artifact when it may be preserved locally.
-_Avoid_: mutable filename as identity, unauthorized mirror
+Verification by a reviewer distinct from the producing run, checking the claim against its sources, proof, computation, and declared scope.
+_Avoid_: producer self-review, schema validation, confidence score
