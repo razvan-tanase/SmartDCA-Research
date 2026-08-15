@@ -1,0 +1,19 @@
+# Clean redundancy after structural freeze
+
+Type: task
+Status: open
+Blocked by: 16
+Parent: [Find the rigorous out quasi-Gini route to a complete SmartDCA paper](../map.md)
+
+## Question
+
+After ticket 16 certifies structural freeze, audit repeated claims across the glossary, map, tickets, research notes, source summaries, and canonical concepts. Preserve one canonical home per normalized claim, retain only the local context needed for evidence and operational records to remain understandable, add links to canonical concepts, and deprecate or supersede stable concepts without deleting their Concept IDs. Resolve or explicitly retain contradictions, run the full semantic lint and all repository checks, and record the cleanup in `log.md`. Do not alter mathematical conclusions merely to reduce textual repetition.
+
+## Comments
+
+- Created from the accepted ticket-12 architecture.
+- Cleanup remains blocked until structural freeze is explicitly certified.
+
+## Answer
+
+Pending.
