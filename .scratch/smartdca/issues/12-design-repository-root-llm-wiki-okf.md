@@ -20,6 +20,10 @@ Design the repository itself as a human- and agent-navigable LLM-Wiki whose root
 - `AGENTS.md` will hold the short repository-wide contract and link to detailed schema and workflow documents.
 - Agents may publish stable pages after risk-tiered validation: all pages require mechanical validation; definitions, theorems, decisions, and cross-source syntheses additionally require independent semantic review.
 - Full corpus conversion, page splitting, deduplication, and ticket resolution remain pending the rest of the design interview and independent review.
+- The SmartDCA profile uses a small registered `type` vocabulary: `project-overview`, `domain-glossary`, `definition`, `theorem`, `research-note`, `source-summary`, `experiment-report`, `decision-record`, `research-map`, `research-ticket`, `workflow`, and `agent-instructions`.
+- Every concept requires `type`, `title`, `description`, `knowledge_role`, and `status`; `generated`, `sources`, `verified`, and ticket extension fields are conditionally required according to authorship, authority, risk, and operational state.
+- Migration is two-pass: first convert every Markdown file atomically without changing bodies, add the root index, and activate validation; only then split, synthesize, and clean redundancy.
+- CI will fail on structural/profile violations and broken internal links from stable concepts, while draft-only quality gaps may remain warnings.
 
 ## Answer
 
