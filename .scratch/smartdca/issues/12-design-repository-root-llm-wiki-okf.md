@@ -47,6 +47,56 @@ Design the repository itself as a human- and agent-navigable LLM-Wiki whose root
 - Initial roles are canonical for `README.md`, `CONTEXT.md`, and accepted ADRs; evidence for `research/notes/*.md`; operational for `AGENTS.md`, `docs/agents/*.md`, the Wayfinder map, and tickets. Future definitions, theorems, and reviewed syntheses are canonical.
 - Open or claimed tickets are OKF draft and resolved tickets stable; `ticket_status` remains separate. ADR acceptance uses `decision_status`, while OKF `status` remains `draft|stable|deprecated`.
 
+- The validator lands first in report-only mode; the atomic metadata migration, root index/log, and strict CI activation land together so `main` is never intentionally broken.
+- Agents may mark validated branch concepts stable and open a draft PR, while merge into `main` remains an explicit user checkpoint at the ticket significance gate.
+- Every concept declares `profile: smartdca-okf/0.1`; root `index.md` declares `okf_version: "0.2"` in frontmatter and the active SmartDCA profile in its body.
+- Ticket 12 is accepted only after the design, glossary, ADRs, edge cases, migration decomposition, map, independent architecture review, and draft-PR checkpoint agree.
+- Foundation sources are ingested one at a time in this order: Karpathy LLM-Wiki; normative OKF v0.2 spec; OKF v0.2 trust article; official examples/reference implementation; historical v0.1 announcement.
+
 ## Answer
 
-Pending.
+The repository root will become both the SmartDCA LLM-Wiki and a conformant OKF v0.2 Knowledge Bundle governed by the versioned local profile `smartdca-okf/0.1`. Every non-reserved Markdown document is therefore a concept, including hidden Wayfinder state and agent instructions. The wiki is repository-native and optimized first for human and agent navigation; public rendering and external search remain later projections.
+
+### Knowledge model
+
+- `type` identifies document kind from the registered vocabulary: `project-overview`, `domain-glossary`, `definition`, `theorem`, `research-note`, `source-summary`, `synthesis`, `experiment-report`, `decision-record`, `research-map`, `research-ticket`, `workflow`, or `agent-instructions`.
+- `knowledge_role` independently identifies answer authority: `canonical`, `evidence`, or `operational`.
+- OKF `status` records lifecycle: `draft`, `stable`, or `deprecated`; OKF `verified` records trust. Ticket and ADR state use `ticket_status` and `decision_status`, never overloaded OKF fields.
+- Every concept requires `profile`, `type`, `title`, `description`, `knowledge_role`, and `status`. `generated`, `sources`, `verified`, and operational extension fields are conditionally required by authorship, role, risk, and document kind.
+- Stable high-risk definitions, theorems, decisions, and syntheses require mechanical validation and independent semantic review by an actor distinct from the producer. Stable actors are `human:github:razvan-tanase`, `agent:openai:codex`, and `process:github-actions:smartdca-wiki-ci`; execution details remain separate.
+
+### Identity, content, and provenance
+
+Repository-relative paths without `.md` are stable Concept IDs. Documents split only at semantic boundaries justified by independent identity plus reuse, provenance, verification, lifecycle, or cross-query retrieval. A split adds new concepts and retains the old page as evidence, an index, or a deprecated forwarding concept. Stable concepts are never deleted merely because they are superseded.
+
+Each normalized claim has one canonical home. Evidence and operational pages may preserve enough local repetition to remain intelligible but link to the canonical concept. Conflicting claims remain preserved as evidence and are reconciled in a separately reviewed `synthesis`; unresolved syntheses remain draft. Deprecated concepts retain their path, reason, and `superseded_by` link.
+
+Imported external sources are immutable after ingestion. When redistribution permits, the repository preserves a local version identified by origin, retrieval date, upstream edition/version, and SHA-256; otherwise it preserves authoritative URL-based provenance without an unauthorized copy. Canonical high-risk concepts use document-level OKF `sources` and claim-level Markdown footnotes joined to source IDs. Internal tickets, notes, and concepts remain governed, versioned, editable knowledge.
+
+### Navigation and operation
+
+`README.md` remains the human introduction, root `index.md` becomes the complete role-aware query inventory, and the Wayfinder map remains the active research frontier. `AGENTS.md` contains the short invariant contract and links to the normative profile and detailed LLM-Wiki workflow. Root `log.md` appends machine-parseable UTC records for durable knowledge operations, not ordinary read-only queries.
+
+Ingestion begins supervised and one source at a time. Query results are promoted only when reusable and normalized through type, role, provenance, indexing, and risk-tier validation. Lint is event-driven: structural checks on every change; provenance, orphan, canonical-home, and contradiction checks after each ingest or promotion; and full semantic audits at ticket resolution and release. Timeless mathematics has no arbitrary expiry; dependency changes trigger freshness review. Hybrid search is deferred until measured retrieval failures or scale near 100 sources or several hundred concepts.
+
+Batch ingestion is enabled only after structural freeze and three consecutive supervised ingests without schema changes, conformance failures, or high-severity semantic corrections; its first output remains draft pending batch review. Full OKF Attested Computation is deferred until its execution and attestation protocol is specified; existing Python checks remain linked evidence assets.
+
+### Migration and implementation sequence
+
+1. Implement `docs/knowledge/okf-profile.md`, `docs/agents/llm-wiki-workflow.md`, and report-only `tools/okf/validate.py` with pinned YAML support and tests.
+2. In one merge transaction, add metadata to every existing Markdown body without semantic edits, add root `index.md` and `log.md`, and switch CI to strict enforcement.
+3. Ingest the five foundation sources individually in the agreed order.
+4. Extract initial semantic concepts and certify structural freeze after a complete ingest-query-lint cycle.
+5. Only then clean redundancy and apply deprecation or supersession.
+
+Initial roles are canonical for `README.md`, `CONTEXT.md`, and accepted ADRs; evidence for `research/notes/*.md`; and operational for `AGENTS.md`, `docs/agents/*.md`, the map, and tickets. Future definitions, theorems, and reviewed syntheses are canonical. Open or claimed tickets are OKF draft; resolved tickets are stable.
+
+### Required edge-case behavior
+
+- A new untyped Markdown file is reported before migration and fails strict CI after activation.
+- A contradicted source claim remains evidence; a draft synthesis states the conflict until independent review supports a stable resolution.
+- A requested path move preserves the old stable Concept ID as a deprecated forwarding concept with `superseded_by`.
+- A revised external source becomes a new fingerprinted artifact rather than overwriting the ingested edition.
+- An agent-generated theorem records generation and claim-level provenance, remains draft through independent proof/source review, and becomes stable only when verification is recorded.
+
+Implementation proceeds through tickets 13–17. Ticket 11 remains open but blocked until the wiki sequence reaches its cleanup checkpoint.
