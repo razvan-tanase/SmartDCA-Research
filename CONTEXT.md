@@ -123,7 +123,7 @@ The project-local restrictions layered on OKF v0.2: a registered concept-type vo
 _Avoid_: a replacement for OKF, optional documentation convention
 
 **Registered concept type**:
-A permitted `type` value that identifies a concept's document kind independently of its knowledge role; new values require an explicit profile change.
+A permitted `type` value that identifies a concept's document kind independently of its knowledge role; new values require an explicit profile change. The registered vocabulary includes `synthesis` for reviewed cross-source integration and conflict resolution.
 _Avoid_: ad hoc type label, directory-derived authority
 
 **Semantic concept boundary**:
@@ -137,3 +137,15 @@ _Avoid_: freezing internal research notes, silently replacing an imported editio
 **Claim-level provenance**:
 A Markdown footnote on a substantive claim whose label joins to the corresponding entry in OKF `sources`; it supplements rather than replaces document-level provenance.
 _Avoid_: citation decoration without a source entry, a citation on every sentence by default
+
+**Canonical home**:
+The single canonical concept that agents prefer when answering a normalized research claim; evidence and operational records may retain local context but link back to it.
+_Avoid_: deleting provenance-bearing repetition, several equally authoritative copies
+
+**Synthesis concept**:
+A high-risk concept that integrates multiple sources or project results, including explicit resolution of contradictory claims, and requires independent semantic review before becoming stable.
+_Avoid_: silently rewriting a source summary, unresolved conflict presented as settled
+
+**Superseded concept**:
+A previously stable concept retained at its original Concept ID with deprecated status, a reason, and a `superseded_by` link to its successor.
+_Avoid_: deleting stable knowledge, overwriting history without a successor link
