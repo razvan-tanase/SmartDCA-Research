@@ -17,6 +17,7 @@ Design the repository itself as a human- and agent-navigable LLM-Wiki whose root
 - Implementation-ticket decomposition is specified below, but later work is not created or modified while this architecture ticket remains claimed.
 - Independent OKF and SmartDCA standards/specification reviews completed on 2026-08-15. All actionable findings were corrected, and both final re-reviews returned PASS with no remaining finding.
 - The five implementation tickets are created only now, during resolution, and remain open with sequential blockers.
+- Draft checkpoint: [Design repository-root LLM-Wiki with OKF v0.2](https://github.com/razvan-tanase/SmartDCA-Research/pull/1). Merging remains the user's significance-gate decision.
 
 ## Answer
 
@@ -110,6 +111,10 @@ This architecture ticket ends with the reviewed design and its significance gate
 5. After structural freeze, clean redundancy and apply deprecation or supersession without altering mathematical conclusions merely to shorten text.
 
 [Characterize the two-purchase DCA win/loss boundary](11-characterize-two-purchase-dca-win-loss-boundary.md) remains open and is blocked by [Clean redundancy after structural freeze](17-clean-redundancy-after-structural-freeze.md).
+
+### Publication checkpoint
+
+Agents may classify reviewed knowledge as stable and commit it to a ticket branch without page-by-page human approval. They may open a draft pull request automatically, but merging into `main` remains an explicit user decision at the ticket significance gate. The preserved checkpoint for this architecture is [draft PR 1](https://github.com/razvan-tanase/SmartDCA-Research/pull/1).
 
 ### Required edge-case behavior
 
