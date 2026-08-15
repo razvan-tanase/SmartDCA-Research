@@ -16,8 +16,8 @@ sufficient condition for
 W_2^S>W_2^{DCA},
 \]
 
-expressed in the observable price ratios, deposits, safety factor, and the
-ticket-10 score. Prove that the strict-win and strict-loss regions are each
+expressed in the observable price ratios, deposits, safety factor, and the score from
+[Choose the guarded corrected-mean SmartDCA score](10-choose-guarded-corrected-mean-score.md). Prove that the strict-win and strict-loss regions are each
 nonempty when \(0<\lambda<1\), characterize their boundary and the
 \(\lambda=1\) collapse, and determine exactly where the corrected-mean score
 changes the result relative to a neutral \(a_t=1/2\) selector. Do not
