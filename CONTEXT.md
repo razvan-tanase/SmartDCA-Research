@@ -125,3 +125,15 @@ _Avoid_: a replacement for OKF, optional documentation convention
 **Registered concept type**:
 A permitted `type` value that identifies a concept's document kind independently of its knowledge role; new values require an explicit profile change.
 _Avoid_: ad hoc type label, directory-derived authority
+
+**Semantic concept boundary**:
+A document boundary justified by independent identity and at least one need for reuse, provenance, verification, lifecycle, or retrieval across multiple questions.
+_Avoid_: fixed token boundary, one file per heading, retrieval chunk
+
+**Immutable source artifact**:
+An imported external source preserved without content edits after ingestion; a revised upstream edition is stored as a new versioned artifact.
+_Avoid_: freezing internal research notes, silently replacing an imported edition
+
+**Claim-level provenance**:
+A Markdown footnote on a substantive claim whose label joins to the corresponding entry in OKF `sources`; it supplements rather than replaces document-level provenance.
+_Avoid_: citation decoration without a source entry, a citation on every sentence by default
