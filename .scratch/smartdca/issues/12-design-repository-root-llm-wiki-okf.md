@@ -30,6 +30,10 @@ Design the repository itself as a human- and agent-navigable LLM-Wiki whose root
 - Each normalized claim has one canonical home. Evidence and operational records retain only the local context needed to remain understandable and link to the canonical concept.
 - Conflicting source claims remain preserved as evidence; a separately reviewed `synthesis` concept states the resolution, links both directions, and remains draft while the conflict is unresolved. `synthesis` is added to the registered type vocabulary.
 - A replaced stable concept is retained at its Concept ID with `status: deprecated`, a `superseded_by` extension, a brief reason, and a link to its successor; stable concepts are not deleted.
+- Redundancy cleanup begins only after metadata migration, green CI, complete role classification and indexing, and one successful end-to-end ingest-query-lint cycle establish a structural freeze; the research itself need not be finished.
+- Initial ingestion is supervised and one source at a time. Batch ingestion is deferred until repeated successful cycles show that the schema and validators handle the corpus safely.
+- Query outputs are promoted only when they add reusable knowledge not already captured and are normalized through type, role, provenance, index placement, and risk-tier validation; ordinary answers remain ephemeral.
+- Root `index.md` is a complete inventory grouped first by knowledge role and then topic or type, with link, title, one-line description, type, status, and concise trust/provenance indicators; stable canonical concepts are presented first.
 
 ## Answer
 
