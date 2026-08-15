@@ -11,7 +11,7 @@ After [Extract initial semantic concepts and certify structural freeze](16-extra
 
 ## Comments
 
-- Created during resolution of the independently reviewed ticket-12 architecture.
+- Created during resolution of [Design a repository-root LLM-Wiki using OKF v0.2](12-design-repository-root-llm-wiki-okf.md).
 - Cleanup remains blocked until structural freeze is explicitly certified.
 
 ## Answer
