@@ -13,7 +13,7 @@ For each source, preserve exact upstream bytes under a non-`.md` path only when 
 
 ## Comments
 
-- Created during resolution of the independently reviewed ticket-12 architecture.
+- Created during resolution of [Design a repository-root LLM-Wiki using OKF v0.2](12-design-repository-root-llm-wiki-okf.md).
 - Normative specification claims must remain distinct from blog explanation and non-normative examples.
 
 ## Answer
