@@ -99,3 +99,21 @@ _Avoid_: asset value with cash omitted
 **Average acquisition cost**:
 Total cash spent on the asset divided by total asset units acquired. It is a structural accounting quantity, not by itself a budget-equivalent performance measure.
 _Avoid_: proof of economic superiority
+
+## Knowledge system language
+
+**Wiki repository**:
+The complete SmartDCA Git repository, treated as a human- and agent-navigable knowledge system whose root is an OKF v0.2 Knowledge Bundle.
+_Avoid_: a separate wiki beside the research repository, a public website by default
+
+**Knowledge concept**:
+A non-reserved Markdown document identified by its repository-relative path without `.md`, with OKF frontmatter and a human-readable Markdown body.
+_Avoid_: retrieval chunk, embedding, arbitrary token window
+
+**Knowledge role**:
+The SmartDCA authority classification `canonical`, `evidence`, or `operational`; it states whether a concept is a preferred answer source, supporting material, or project-control record independently of its type, lifecycle, and trust.
+_Avoid_: using `type`, `status`, directory location, or verification tier as a substitute for authority
+
+**Stable concept**:
+A concept whose OKF lifecycle status is stable after its required mechanical validation and, for high-risk semantic content, independent semantic review.
+_Avoid_: mechanically valid means mathematically verified, generated means trusted
