@@ -161,3 +161,11 @@ _Avoid_: saved chat transcript, automatic persistence of every answer
 **Knowledge index**:
 The root `index.md` inventory that routes agents first to stable canonical concepts while keeping drafts, deprecated concepts, evidence, and operational records separately discoverable.
 _Avoid_: research frontier, alphabetical file dump
+
+**Durable knowledge operation**:
+An ingest, promoted query, lint or audit, migration, verification, deprecation, or supersession that changes or evaluates maintained knowledge and receives an append-only `log.md` entry.
+_Avoid_: ordinary read-only query, substitute for Git history
+
+**Independent semantic review**:
+Verification by an agent distinct from the concept's producing agent, checking the claim against its sources, proof, computation, and declared scope rather than only its formatting.
+_Avoid_: producer self-review, CI schema validation, confidence score
