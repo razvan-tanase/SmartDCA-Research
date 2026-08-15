@@ -24,6 +24,9 @@ Design the repository itself as a human- and agent-navigable LLM-Wiki whose root
 - Every concept requires `type`, `title`, `description`, `knowledge_role`, and `status`; `generated`, `sources`, `verified`, and ticket extension fields are conditionally required according to authorship, authority, risk, and operational state.
 - Migration is two-pass: first convert every Markdown file atomically without changing bodies, add the root index, and activate validation; only then split, synthesize, and clean redundancy.
 - CI will fail on structural/profile violations and broken internal links from stable concepts, while draft-only quality gaps may remain warnings.
+- Documents split only at semantic boundaries that warrant independent identity, reuse, provenance, verification, lifecycle, or cross-query retrieval; no word- or token-count threshold defines a concept.
+- Imported external source artifacts are immutable after ingestion; changed upstream editions become new versioned artifacts. Internal tickets, research notes, and canonical concepts remain editable through their governed workflows and Git history.
+- Canonical high-risk concepts use document-level OKF `sources` plus claim-level Markdown footnotes joined to source IDs; one-source summaries may use document-level attribution unless a claim needs separate qualification.
 
 ## Answer
 
