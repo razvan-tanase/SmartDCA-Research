@@ -117,3 +117,11 @@ _Avoid_: using `type`, `status`, directory location, or verification tier as a s
 **Stable concept**:
 A concept whose OKF lifecycle status is stable after its required mechanical validation and, for high-risk semantic content, independent semantic review.
 _Avoid_: mechanically valid means mathematically verified, generated means trusted
+
+**SmartDCA OKF profile**:
+The project-local restrictions layered on OKF v0.2: a registered concept-type vocabulary, required descriptive and authority metadata, conditional provenance and verification, and repository-wide validation.
+_Avoid_: a replacement for OKF, optional documentation convention
+
+**Registered concept type**:
+A permitted `type` value that identifies a concept's document kind independently of its knowledge role; new values require an explicit profile change.
+_Avoid_: ad hoc type label, directory-derived authority
