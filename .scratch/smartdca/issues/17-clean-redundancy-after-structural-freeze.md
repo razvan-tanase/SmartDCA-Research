@@ -7,7 +7,7 @@ Parent: [Find the rigorous out quasi-Gini route to a complete SmartDCA paper](..
 
 ## Question
 
-After ticket 16 certifies structural freeze, audit repeated claims across the glossary, map, tickets, research notes, source summaries, and canonical concepts. Preserve one canonical home per normalized claim, retain only the local context needed for evidence and operational records to remain understandable, add links to canonical concepts, and deprecate or supersede stable concepts without deleting their Concept IDs. Resolve or explicitly retain contradictions, run the full semantic lint and all repository checks, and record a conformant cleanup event. Do not alter mathematical conclusions merely to reduce textual repetition.
+After [Extract initial semantic concepts and certify structural freeze](16-extract-semantic-concepts-certify-freeze.md) certifies structural freeze, audit repeated claims across the glossary, map, tickets, research notes, source summaries, and canonical concepts. Preserve one canonical home per normalized claim, retain only the local context needed for evidence and operational records to remain understandable, add links to canonical concepts, and deprecate or supersede stable concepts without deleting their Concept IDs. Resolve or explicitly retain contradictions, run the full semantic lint and all repository checks, and record a conformant cleanup event. Do not alter mathematical conclusions merely to reduce textual repetition.
 
 ## Comments
 
