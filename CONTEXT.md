@@ -99,3 +99,41 @@ _Avoid_: asset value with cash omitted
 **Average acquisition cost**:
 Total cash spent on the asset divided by total asset units acquired. It is a structural accounting quantity, not by itself a budget-equivalent performance measure.
 _Avoid_: proof of economic superiority
+
+## Knowledge system language
+
+**Wiki repository**:
+The complete SmartDCA research repository treated as a maintained knowledge system for people and agents.
+_Avoid_: separate public website by default, disposable retrieval cache
+
+**Knowledge concept**:
+A self-contained maintained unit of knowledge with a stable identity and an explicit role in the project.
+_Avoid_: retrieval chunk, arbitrary token window
+
+**Knowledge role**:
+The authority classification `canonical`, `evidence`, or `operational`; it distinguishes a preferred answer source from supporting material and project-control records.
+_Avoid_: treating every document as equally authoritative
+
+**Semantic concept boundary**:
+A boundary justified by independent identity plus a need for reuse, provenance, verification, lifecycle, or retrieval across multiple questions.
+_Avoid_: fixed-size split, one unit per heading
+
+**Immutable source artifact**:
+An imported external source preserved without content edits after ingestion; a revised upstream edition is a new artifact.
+_Avoid_: freezing internal research notes, silently replacing an edition
+
+**Canonical home**:
+The single canonical concept that agents prefer when answering a normalized research claim; evidence and operational records may retain local context but point back to it.
+_Avoid_: deleting provenance-bearing repetition, several equally authoritative copies
+
+**Synthesis concept**:
+A high-risk concept that integrates multiple sources or project results, including explicit resolution of contradictory claims.
+_Avoid_: silently rewriting a source summary, unresolved conflict presented as settled
+
+**Superseded concept**:
+A previously stable concept retained at its original identity with deprecated status, a reason, and a link to its successor.
+_Avoid_: deleting stable knowledge, overwriting history without a successor
+
+**Independent semantic review**:
+Verification by a reviewer distinct from the producing run, checking the claim against its sources, proof, computation, and declared scope.
+_Avoid_: producer self-review, schema validation, confidence score
