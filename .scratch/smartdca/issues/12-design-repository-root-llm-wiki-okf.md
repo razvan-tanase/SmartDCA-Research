@@ -34,6 +34,10 @@ Design the repository itself as a human- and agent-navigable LLM-Wiki whose root
 - Initial ingestion is supervised and one source at a time. Batch ingestion is deferred until repeated successful cycles show that the schema and validators handle the corpus safely.
 - Query outputs are promoted only when they add reusable knowledge not already captured and are normalized through type, role, provenance, index placement, and risk-tier validation; ordinary answers remain ephemeral.
 - Root `index.md` is a complete inventory grouped first by knowledge role and then topic or type, with link, title, one-line description, type, status, and concise trust/provenance indicators; stable canonical concepts are presented first.
+- Append-only root `log.md` records durable knowledge operations with UTC machine-parseable headings; ordinary read-only queries are not logged because Git already records file diffs and the log records intent.
+- Lint is event-driven: every change gets structural/profile/link/index checks; every ingest or promoted query gets provenance, orphan, canonical-home, and contradiction checks; every ticket resolution and release gets a full semantic audit.
+- Stable actors are `human:github:razvan-tanase`, `agent:openai:codex`, and `process:github-actions:smartdca-wiki-ci`; execution details live in extensions or the log. Semantic verification must come from a reviewer distinct from the producing agent, and CI does not count as semantic review.
+- Retrieval starts with `index.md` and repository search. Hybrid search is a later recorded decision triggered by measured failures or scale near 100 sources or several hundred concepts.
 
 ## Answer
 
