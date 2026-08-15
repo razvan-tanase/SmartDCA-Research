@@ -7,7 +7,7 @@ Parent: [Find the rigorous out quasi-Gini route to a complete SmartDCA paper](..
 
 ## Question
 
-For the exact guarded corrected-mean rule fixed in ticket 10, restrict first to
+For the exact guarded corrected-mean rule fixed in [Choose the guarded corrected-mean SmartDCA score](10-choose-guarded-corrected-mean-score.md), restrict first to
 two purchase dates with positive prices \((p_1,p_2)\), nonnegative deposits
 \((d_1,d_2)\), and a positive evaluation price \(P\). Derive a necessary and
 sufficient condition for
@@ -25,10 +25,10 @@ generalize to arbitrary horizons or make a stochastic claim in this ticket.
 
 ## Comments
 
-- Opened after ticket 10 supplied a fully specified causal rule with exact accounting.
+- Opened after [Choose the guarded corrected-mean SmartDCA score](10-choose-guarded-corrected-mean-score.md) supplied a fully specified causal rule with exact accounting.
 - This is the smallest decisive test of whether the corrected-mean discretion creates a mathematically informative strict-improvement region.
-- It remains unclaimed until the user passes ticket 10's significance gate.
-- On 2026-08-15 the user paused the research frontier for the repository-root LLM-Wiki sequence; this ticket resumes only after ticket 17 completes post-freeze cleanup.
+- It remains unclaimed until the user passes the significance gate for [Choose the guarded corrected-mean SmartDCA score](10-choose-guarded-corrected-mean-score.md).
+- On 2026-08-15 the user paused the research frontier for the repository-root LLM-Wiki sequence; this ticket resumes only after [Clean redundancy after structural freeze](17-clean-redundancy-after-structural-freeze.md) completes.
 
 ## Answer
 
