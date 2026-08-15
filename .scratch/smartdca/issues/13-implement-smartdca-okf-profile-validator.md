@@ -1,7 +1,7 @@
 # Implement the SmartDCA OKF profile and report-only validator
 
 Type: task
-Status: open
+Status: claimed
 Blocked by: 12
 Parent: [Find the rigorous out quasi-Gini route to a complete SmartDCA paper](../map.md)
 
@@ -14,6 +14,7 @@ The validator must report base OKF v0.2 and `smartdca-okf/0.1` results separatel
 ## Comments
 
 - Created during resolution of [Design a repository-root LLM-Wiki using OKF v0.2](12-design-repository-root-llm-wiki-okf.md).
+- Claimed on 2026-08-15 after the user chose **Continue** and [PR 1](https://github.com/razvan-tanase/SmartDCA-Research/pull/1) merged the reviewed architecture into `main`.
 - Repository tooling remains separate from scientific checks under `reproducibility/checks/`.
 - [Atomically migrate the repository to SmartDCA OKF 0.1](14-atomically-migrate-repository-to-okf.md), not this work, activates strict validation after the atomic corpus migration.
 
