@@ -93,10 +93,10 @@ def load_frontmatter(path: Path, relative: str, findings: list[Finding]) -> Docu
     except UnicodeDecodeError:
         add(findings, "OKF006", relative, "Markdown documents must be valid UTF-8")
         return Document(path, relative, None, "")
-    if not text.startswith("---\n"):
+    lines = text.splitlines(keepends=True)
+    if not lines or lines[0].rstrip("\r\n") != "---":
         add(findings, "OKF001", relative, "concept must start with YAML frontmatter")
         return Document(path, relative, None, text)
-    lines = text.splitlines(keepends=True)
     closing = next((i for i, line in enumerate(lines[1:], 1) if line.rstrip("\r\n") == "---"), None)
     if closing is None:
         add(findings, "OKF002", relative, "frontmatter is missing its closing delimiter")
@@ -580,6 +580,13 @@ def validate_profile_index(reserved: dict[str, Document], concepts: list[Documen
         if values["path"].startswith("/"):
             add(findings, "SDCA045", "index.md", f"index row {line_number} must use a bundle-relative link without a leading slash")
         path = values["path"].lstrip("/")
+        if (
+            not path.endswith(".md")
+            or ".." in PurePosixPath(path).parts
+            or path != posixpath.normpath(path)
+        ):
+            add(findings, "SDCA045", "index.md", f"index row {line_number} must link a safe bundle-relative .md path")
+            continue
         if path in rows:
             add(findings, "SDCA044", "index.md", f"concept is listed more than once: {path}")
         rows[path] = (values, current_role)
