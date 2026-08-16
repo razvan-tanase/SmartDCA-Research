@@ -93,10 +93,10 @@ def load_frontmatter(path: Path, relative: str, findings: list[Finding]) -> Docu
     except UnicodeDecodeError:
         add(findings, "OKF006", relative, "Markdown documents must be valid UTF-8")
         return Document(path, relative, None, "")
-    if not text.startswith("---\n"):
+    lines = text.splitlines(keepends=True)
+    if not lines or lines[0].rstrip("\r\n") != "---":
         add(findings, "OKF001", relative, "concept must start with YAML frontmatter")
         return Document(path, relative, None, text)
-    lines = text.splitlines(keepends=True)
     closing = next((i for i, line in enumerate(lines[1:], 1) if line.rstrip("\r\n") == "---"), None)
     if closing is None:
         add(findings, "OKF002", relative, "frontmatter is missing its closing delimiter")
