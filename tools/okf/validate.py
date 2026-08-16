@@ -580,6 +580,13 @@ def validate_profile_index(reserved: dict[str, Document], concepts: list[Documen
         if values["path"].startswith("/"):
             add(findings, "SDCA045", "index.md", f"index row {line_number} must use a bundle-relative link without a leading slash")
         path = values["path"].lstrip("/")
+        if (
+            not path.endswith(".md")
+            or ".." in PurePosixPath(path).parts
+            or path != posixpath.normpath(path)
+        ):
+            add(findings, "SDCA045", "index.md", f"index row {line_number} must link a safe bundle-relative .md path")
+            continue
         if path in rows:
             add(findings, "SDCA044", "index.md", f"concept is listed more than once: {path}")
         rows[path] = (values, current_role)
