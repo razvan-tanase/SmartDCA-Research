@@ -1,3 +1,13 @@
+---
+profile: smartdca-okf/0.3
+type: research-ticket
+title: "Prove the sharp epsilon-DCA safety guardrail"
+description: "Resolved task ticket proving the sharp epsilon-DCA safety guardrail and its unit-coverage form."
+knowledge_role: operational
+status: stable
+ticket_type: task
+ticket_status: resolved
+---
 # Prove the sharp epsilon-DCA safety guardrail
 
 Type: task

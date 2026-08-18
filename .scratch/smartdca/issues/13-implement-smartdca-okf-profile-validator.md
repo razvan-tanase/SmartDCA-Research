@@ -1,3 +1,13 @@
+---
+profile: smartdca-okf/0.3
+type: research-ticket
+title: "Implement the SmartDCA OKF profile and report-only validator"
+description: "Resolved task ticket implementing the SmartDCA OKF profile and its report-only validator."
+knowledge_role: operational
+status: stable
+ticket_type: task
+ticket_status: resolved
+---
 # Implement the SmartDCA OKF profile and report-only validator
 
 Type: task

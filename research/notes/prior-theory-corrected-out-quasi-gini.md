@@ -1,6 +1,48 @@
+---
+profile: smartdca-okf/0.3
+type: research-note
+title: "Prior theory for the proposed corrected out quasi-Gini normalization"
+description: "Primary-source positioning identifying the corrected normalization as a known weighted Bajraktarevic mean."
+knowledge_role: evidence
+status: stable
+sources:
+  - id: ticket-03
+    title: "Locate prior theory for a corrected out quasi-Gini mean"
+    resource: .scratch/smartdca/issues/03-locate-prior-theory-for-correction
+    source_kind: internal
+  - id: source-summary
+    title: "Source summary: SmartDCA superiority (arXiv:2308.05200v1)"
+    resource: references/summaries/smartdca-superiority-source-paper
+    source_kind: internal
+  - id: primary-literature
+    title: "Beckenbach-Gini-Lehmer, Bajraktarevic, and weighted Gini mean literature"
+    resource: "primary mathematical and financial literature cited inline in this note"
+    source_kind: scope
+generated:
+  by: claude-code/smartdca-wiki-0.1
+  at: 2026-08-16T10:20:00Z
+generation_run: urn:uuid:51b6a4df-c98b-4784-83e4-3b068e4014ab
+verified:
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T07:38:00Z
+    review_run: urn:uuid:16bd7b25-9e03-4aef-9c9a-5301cb317903
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T09:48:00Z
+    review_run: urn:uuid:9a0f9f9a-73a7-4e3f-931d-a34c08fad81a
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T10:30:00Z
+    review_run: urn:uuid:46a8aeeb-e6d2-49da-a062-28c4c51c1348
+---
 # Prior theory for the proposed corrected out quasi-Gini normalization
 
+Canonical home: [The corrected out quasi-Gini mean](../definitions/corrected-out-quasi-gini-mean.md). That concept carries the definition and its identities; this note carries the literature positioning that identifies it as a known weighted Bajraktarevic mean. The source construction this repair replaces is read at paper level in [its source summary](../../references/summaries/smartdca-superiority-source-paper.md) and classified by [the source out-functional mean classification](../theorems/source-out-functional-mean-classification.md).
+
 Research date: 2026-08-15
+
+Short citation labels below name the first published year of a reference. Where a
+publisher issued an article online before assigning it to an issue, the full reference in
+the source-to-coverage map carries both, so “Páles--Pasteczka 2023” and the
+“*Ann. Oper. Res.* 332 (2024)” row are the same paper under one DOI.
 
 ## Bottom line
 
@@ -358,7 +400,7 @@ that is a search result, not a novelty proof.
 | [Aczél--Daróczy, “Über verallgemeinerte quasilineare Mittelwerte, die mit Gewichtsfunktionen gebildet sind,” *Publ. Math. Debrecen* 10 (1963), 171--190](https://doi.org/10.5486/PMD.1963.10.1-4.24) | Equality and homogeneity theory for function-weighted quasi-linear means; homogeneous Bajraktarević mappings are Gini mappings. | General homogeneity is substantially prior theory, not a fresh axiom problem. | High. |
 | [Páles--Pasteczka, “Characterization of the Hardy Property of Means and the Best Hardy Constants,” *Math. Inequal. Appl.* 19 (2016), 1141--1158](https://doi.org/10.7153/MIA-19-84) | Explicit Gini diagonal, Bajraktarević definition, and recall of the homogeneous-classification theorem. | Authoritative formula and terminology check. | Very high. |
 | [Páles--Pasteczka, “On Kedlaya-Type Inequalities for Weighted Means,” *J. Inequal. Appl.* 2018:99](https://doi.org/10.1186/s13660-018-1685-z) | Weighted Gini formula off and on the diagonal; \(G_{p,0}=P_p\); deviation, concavity, and monotonicity framework. | Exact weighted classical and diagonal coverage; gives property pointers. | Very high. |
-| [Páles--Pasteczka, “Decision Making via Generalized Bajraktarević Means,” *Ann. Oper. Res.* (2023)](https://doi.org/10.1007/s10479-023-05582-1) | General weighted Bajraktarević construction; weighted Gini off-diagonal and diagonal; exact Gini comparison and coordinate-monotonicity criteria recalled in Section 7.2. | Confirms the weighted framework and sharp classical \(G_{p,q}\) property regions used here. | Very high. |
+| [Páles--Pasteczka, “Decision Making via Generalized Bajraktarević Means,” *Ann. Oper. Res.* 332 (2024), 461--480, online first 2023](https://doi.org/10.1007/s10479-023-05582-1) | General weighted Bajraktarević construction; weighted Gini off-diagonal and diagonal; exact Gini comparison and coordinate-monotonicity criteria recalled in Section 7.2. | Confirms the weighted framework and sharp classical \(G_{p,q}\) property regions used here. | Very high. |
 | [Páles--Zakaria, “On the Equality of Bajraktarević Means to Quasi-Arithmetic Means,” *Results Math.* 75 (2020), paper 19](https://doi.org/10.1007/s00025-019-1141-5) | Weighted \(A_{\varphi,R}\) and symmetric \(B_{F,H}\) definitions, exact hypotheses, equality theory. | Supplies the decisive exact identification (3)--(4), including external weights and merely positive function weights. | Very high. |
 | [Páles--Zakaria, “On the Local and Global Comparison of Generalized Bajraktarević Means,” *J. Math. Anal. Appl.* 455 (2017), 792--815](https://doi.org/10.1016/j.jmaa.2017.05.073) | Local and global comparison conditions for generalized Bajraktarević means. | General comparison is prior theory; the constrained family must be specialized against these criteria. | High. |
 | [Matkowski--Wróbel, “On the Beckenbach--Gini--Lehmer Means and Means Mappings,” *Mathematics* 8 (2020), 1569](https://doi.org/10.3390/math8091569) | B--G--L arithmetic-generator means, complementary means, homogeneity, and arithmetic-invariant mean-type mappings. | Exact for the unweighted \(d=1\) slice and structurally relevant to weighted extensions; not exact coverage of all \(d\). | High. |
@@ -377,6 +419,16 @@ that is a search result, not a novelty proof.
 | Does the limited search establish novelty of the constrained family or SmartDCA application? | No. | Very high. |
 
 ## What may still remain worth doing, stated safely
+
+This section is the recommendation as it stood on the research date. Items 2 and 3 have
+since been discharged and are retained here as the provenance of those decisions rather
+than as open work: the diagonal extension of item 2 is now part of
+[the corrected mean's canonical definition](../definitions/corrected-out-quasi-gini-mean.md),
+and the homogeneity half of item 3 is settled exactly by
+[the homogeneity characterization](../theorems/corrected-mean-homogeneity-characterization.md),
+which confirms the prediction below that the power case collapses onto classical weighted
+Gini theory. Items 1 and 4, and the coordinatewise-monotonicity half of item 3, remain
+open.
 
 1. **Family-level coupling.** For a fixed \(\alpha\ne1\), the substitution
    \(R_\alpha(t)=t f(t)^{\alpha-1}\) is essentially a reparameterization of a
@@ -409,3 +461,15 @@ Recommended naming in the next ticket is therefore **“the corrected out
 quasi-Gini Bajraktarević subfamily”**, followed immediately by the exact
 identification (3). Use **“weighted Gini”** for the power-transform special cases
 and **“Beckenbach--Gini--Lehmer”** for the (d=1) slice.
+
+That recommendation was adopted in substance and not in wording, and the divergence is
+recorded here rather than quietly reconciled. The settled canonical name is **“the
+corrected out quasi-Gini mean”**, fixed by
+[the definition concept](../definitions/corrected-out-quasi-gini-mean.md) and by the
+glossary; the Bajraktarević identification the recommendation was protecting is carried
+instead in that concept's *What this definition does not claim* section, which states
+outright that the object is not a new class of means. The shorter name was preferred
+because it names the construction by what it repairs, while the safety the longer name
+bought is supplied by the scope-limit section rather than by the title. The subordinate
+instructions stand unchanged: “weighted Gini” for power transforms,
+“Beckenbach--Gini--Lehmer” for the \(d=1\) slice.

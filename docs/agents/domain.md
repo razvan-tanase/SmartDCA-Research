@@ -1,3 +1,12 @@
+---
+profile: smartdca-okf/0.3
+type: agent-instructions
+title: "Domain documentation"
+description: "Single-context rule for reading the glossary and ADRs before domain work."
+knowledge_role: operational
+status: stable
+original_record: true
+---
 # Domain documentation
 
 This is a single-context research repository.

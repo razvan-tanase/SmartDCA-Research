@@ -1,14 +1,88 @@
+---
+profile: smartdca-okf/0.3
+type: specification
+title: "SmartDCA Open Knowledge Format profile"
+description: "Normative smartdca-okf/0.3 profile specializing Open Knowledge Format v0.2 for this bundle."
+knowledge_role: canonical
+status: stable
+sources:
+  - id: okf-spec
+    title: "Open Knowledge Format v0.2 specification"
+    resource: https://raw.githubusercontent.com/GoogleCloudPlatform/knowledge-catalog/main/okf/SPEC.md
+    source_kind: external
+    retrieved_at: 2026-08-16T08:10:00Z
+    upstream_version: "0.2"
+    sha256: 5a3311d270bebb16d558010e75064f5b75323f284992641732b1c8097511f948
+    local_artifact: references/raw/okf-spec/0.2/SPEC.md.raw
+  - id: ticket-12
+    title: "Design a repository-root LLM-Wiki using OKF v0.2"
+    resource: .scratch/smartdca/issues/12-design-repository-root-llm-wiki-okf
+    source_kind: internal
+  - id: ticket-13
+    title: "Implement the SmartDCA OKF profile and report-only validator"
+    resource: .scratch/smartdca/issues/13-implement-smartdca-okf-profile-validator
+    source_kind: internal
+  - id: adr-0002
+    title: "Make the repository root an OKF knowledge bundle"
+    resource: docs/adr/0002-repository-root-okf-knowledge-bundle
+    source_kind: internal
+  - id: adr-0003
+    title: "Separate document kind, authority, lifecycle, and trust"
+    resource: docs/adr/0003-separate-knowledge-authority-and-trust
+    source_kind: internal
+  - id: adr-0004
+    title: "Preserve path-based concept identity through supersession"
+    resource: docs/adr/0004-preserve-path-based-concept-identity
+    source_kind: internal
+  - id: adr-0005
+    title: "Assign source-summary and synthesis paths in profile 0.2"
+    resource: docs/adr/0005-assign-source-summary-and-synthesis-paths
+    source_kind: internal
+  - id: adr-0006
+    title: "Assign definition, theorem, and experiment-report paths in profile 0.3"
+    resource: docs/adr/0006-assign-definition-theorem-and-experiment-report-paths
+    source_kind: internal
+generated:
+  by: claude-code/smartdca-wiki-0.1
+  at: 2026-08-16T10:24:00Z
+generation_run: urn:uuid:51b6a4df-c98b-4784-83e4-3b068e4014ab
+verified:
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T07:46:00Z
+    review_run: urn:uuid:b5b1666e-e77c-41a4-8781-fb0d5a965582
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T07:46:00Z
+    review_run: urn:uuid:da31a04e-0105-4659-9d05-895a4364b107
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T07:55:00Z
+    review_run: urn:uuid:e4ba41a1-1d8a-4cf6-b7a1-2c42a746b28f
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T08:26:00Z
+    review_run: urn:uuid:84b7d96d-6547-4bbf-b78e-f4334f5f3c41
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T09:09:00Z
+    review_run: urn:uuid:37f6c387-3dc8-4d4f-83ca-f782eb3453a5
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T09:26:00Z
+    review_run: urn:uuid:0b6608b4-7e9f-4ba5-a07e-d6e8537908fd
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T10:06:00Z
+    review_run: urn:uuid:6186d423-474a-44ee-8d3d-c36f938ad51a
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T10:32:00Z
+    review_run: urn:uuid:6e8b3b72-0624-46b2-91ff-071b4879d9d4
+---
 # SmartDCA Open Knowledge Format profile
 
-This document is the normative local profile for the repository-root SmartDCA knowledge bundle. It specializes [Open Knowledge Format (OKF) v0.2](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md) as `smartdca-okf/0.1` and transcribes the accepted design in [Design a repository-root LLM-Wiki using OKF v0.2](../../.scratch/smartdca/issues/12-design-repository-root-llm-wiki-okf.md).
+This document is the normative local profile for the repository-root SmartDCA knowledge bundle. It specializes [Open Knowledge Format (OKF) v0.2](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)[^okf-spec] as `smartdca-okf/0.3` and transcribes the accepted design in [Design a repository-root LLM-Wiki using OKF v0.2](../../.scratch/smartdca/issues/12-design-repository-root-llm-wiki-okf.md)[^ticket-12].
 
 The words MUST, MUST NOT, REQUIRED, SHOULD, SHOULD NOT, and MAY are normative. Base OKF and this profile are separate validation layers: a document can conform to OKF while failing this profile.
 
 ## Bundle and identity
 
-The repository root is the bundle root. Every UTF-8 file whose final suffix is `.md` is either a concept or a reserved file, including Markdown below hidden directories. `index.md` and `log.md` are reserved at every depth; all other Markdown files are concepts.
+The repository root is the bundle root, by the decision in [Make the repository root an OKF knowledge bundle](../adr/0002-repository-root-okf-knowledge-bundle.md)[^adr-0002]. Every UTF-8 file whose final suffix is `.md` is either a concept or a reserved file, including Markdown below hidden directories. `index.md` and `log.md` are reserved at every depth; all other Markdown files are concepts.
 
-A Concept ID is the bundle-relative path without the `.md` suffix. A published Concept ID is stable. Moving a stable concept creates the new concept and retains the old path as a deprecated forwarding concept with `superseded_by`; it does not delete or silently redirect the old identity.
+A Concept ID is the bundle-relative path without the `.md` suffix. A published Concept ID is stable. Moving a stable concept creates the new concept and retains the old path as a deprecated forwarding concept with `superseded_by`; it does not delete or silently redirect the old identity. That is the durable-identity decision in [Preserve path-based concept identity through supersession](../adr/0004-preserve-path-based-concept-identity.md)[^adr-0004].
 
 External Markdown snapshots are not concepts. Their exact upstream bytes MUST use a non-`.md` final suffix, normally `.md.raw`, under a versioned path such as `references/raw/<source>/<version>/source.md.raw`. A separate conformant concept summarizes and cites the snapshot.
 
@@ -35,7 +109,7 @@ Every concept MUST have these fields:
 
 | Field | Rule |
 |---|---|
-| `profile` | Exactly `smartdca-okf/0.1`. |
+| `profile` | Exactly `smartdca-okf/0.3`. |
 | `type` | One registered type below. |
 | `title` | Non-empty human-readable string. |
 | `description` | Non-empty, one-line retrieval description. |
@@ -67,7 +141,7 @@ Adding a type, changing an enum, or assigning a new Markdown path requires a pro
 - `evidence` holds proofs, experiments, source analysis, or detailed reasoning; and
 - `operational` holds project state or instructions and is not a preferred research answer.
 
-`status` is only OKF lifecycle. `verified` is trust. Ticket and ADR state use their extensions below and MUST NOT be encoded by overloading `status`.
+`status` is only OKF lifecycle. `verified` is trust. Ticket and ADR state use their extensions below and MUST NOT be encoded by overloading `status`. Keeping these four axes independent is the decision in [Separate document kind, authority, lifecycle, and trust](../adr/0003-separate-knowledge-authority-and-trust.md)[^adr-0003].
 
 ## Provenance
 
@@ -81,6 +155,7 @@ Canonical and evidence concepts MUST carry a non-empty `sources` list unless `or
 | `title` | Required non-empty display label. |
 | `resource` | Required non-empty OKF resource: URL, scope descriptor, or internal concept path. |
 | `source_kind` | Exactly `internal`, `external`, or `scope`. |
+| `author` | Optional. When present it MUST follow the actor convention below, so OKF's own `team:<id>` example spelling is reported here. |
 
 An `internal` resource MUST resolve to a concept. A stable concept MUST NOT depend on a draft or deprecated concept. If an internal dependency's `generated.at` is later than the dependent concept's latest verification, the dependent is stale and MUST return to draft or be re-reviewed.
 
@@ -95,15 +170,15 @@ An `external` source is an immutable snapshot identity and additionally requires
 
 A revised external source creates a new versioned artifact and fingerprint. Existing artifacts are never overwritten. When redistribution is unsuitable, omit `local_artifact` but retain the origin, retrieval time, version, and fingerprint calculated from the fetched bytes.
 
-Claim attribution uses Markdown footnotes whose labels equal `sources[].id`. Every body footnote label MUST resolve to a source. Every external source MUST be joined from at least one body footnote. Every source on a canonical high-risk concept MUST likewise be joined from the claim body, including internal sources. Footnote prose is explanatory; the source mapping is authoritative.
+Claim attribution uses Markdown footnotes whose labels equal `sources[].id`. Links and footnote labels inside a fenced code block or an inline code span are illustrative syntax and are neither references nor joins. Every body footnote label MUST resolve to a source. Every external source MUST be joined from at least one body footnote. Every source on a canonical high-risk concept MUST likewise be joined from the claim body, including internal sources. Footnote prose is explanatory; the source mapping is authoritative.
 
 ## Generation, verification, and freshness
 
-When an agent meaningfully creates or changes content, `generated` MUST be a mapping with a valid actor in `by` and an ISO 8601 datetime in `at`. It MUST be accompanied by `generation_run: urn:uuid:<uuid>`.
+When an agent meaningfully creates or changes content, `generated` MUST be a mapping with a valid actor in `by` and an ISO 8601 datetime in `at`. It MUST be accompanied by `generation_run: urn:uuid:<uuid>`. `generated` records the actor and time of the last meaningful change, not original authorship, and its absence means no agent change has been recorded under this profile rather than that the concept was written by a human.
 
 Actors follow OKF:
 
-- agent or tool: `<producer>/<version>`; the registered local producer is `openai-codex/smartdca-wiki-0.1`;
+- agent or tool: `<producer>/<version>`; the registered local producers are `openai-codex/smartdca-wiki-0.1` and `claude-code/smartdca-wiki-0.1`;
 - human: `human:<id>`; the registered project owner is `human:github:razvan-tanase`;
 - process: `process:<id>`; structural CI is `process:github-actions:smartdca-wiki-ci`.
 
@@ -130,9 +205,19 @@ A `decision-record` requires `decision_status: proposed|accepted|deprecated|supe
 
 `superseded_by`, when present, requires `status: deprecated` and names an existing repository-relative successor Concept ID without `.md`.
 
-## Initial path mapping
+## Profile versioning
 
-These assignments are exhaustive for profile 0.1. A non-reserved Markdown path not matched here fails the profile even if all of its metadata is otherwise valid.
+A profile version is the value every concept declares in `profile`; the schema rule requiring a version change is stated once, above.
+
+`smartdca-okf/0.2` made exactly three changes, recorded in [Assign source-summary and synthesis paths in profile 0.2](../adr/0005-assign-source-summary-and-synthesis-paths.md)[^adr-0005]: it assigned `references/summaries/*.md` and `research/synthesis/*.md`, it stated the one-source rule for a summary, and it added this section. No other rule of 0.1 changed, so a 0.1 concept satisfies 0.2 as soon as its `profile` value is relabelled. Separately from the rule set, this document's own OKF citation stopped being declared scope and became the fingerprinted snapshot; that is provenance, not a rule change.
+
+`smartdca-okf/0.3` makes exactly one change, recorded in [Assign definition, theorem, and experiment-report paths in profile 0.3](../adr/0006-assign-definition-theorem-and-experiment-report-paths.md)[^adr-0006]: it assigns `research/definitions/*.md`, `research/theorems/*.md`, and `reports/experiments/*.md`. No other rule of 0.2 changes, so a 0.2 concept satisfies 0.3 as soon as its `profile` value is relabelled. Every registered type now has a destination, so the path mapping below is complete rather than partial and no further path assignment is pending.
+
+Relabelling across profile versions is a metadata migration: it does not update `generated.at`, demote a high-risk concept to draft, or invalidate a recorded verification. Only a concept whose body actually changed in the same transaction carries a new generation time.
+
+## Path mapping
+
+These assignments are exhaustive and complete for profile 0.3: every registered type has a destination. A non-reserved Markdown path not matched here fails the profile even if all of its metadata is otherwise valid.
 
 | Path | Type | Role | Lifecycle rule |
 |---|---|---|---|
@@ -140,6 +225,9 @@ These assignments are exhaustive for profile 0.1. A non-reserved Markdown path n
 | `CONTEXT.md` | `domain-glossary` | canonical | Draft until sources and bootstrap semantic review are recorded. |
 | `docs/adr/*.md` | `decision-record` | canonical | Accepted records become stable only after independent review; otherwise draft or deprecated as mapped above. |
 | `research/notes/*.md` | `research-note` | evidence | Stable only when the linked resolved ticket and review are documented; otherwise draft. |
+| `research/definitions/*.md` | `definition` | canonical | Draft until a review independent of the run that wrote it promotes it. |
+| `research/theorems/*.md` | `theorem` | canonical | Draft until a review independent of the run that wrote it promotes it. |
+| `reports/experiments/*.md` | `experiment-report` | evidence | Stable only when the run's inputs, code version, seeds, and review are documented; otherwise draft. |
 | `AGENTS.md` | `agent-instructions` | operational | Stable. |
 | `docs/agents/domain.md` | `agent-instructions` | operational | Stable. |
 | `docs/agents/triage-labels.md` | `domain-glossary` | operational | Stable. |
@@ -149,9 +237,15 @@ These assignments are exhaustive for profile 0.1. A non-reserved Markdown path n
 | `.scratch/smartdca/map.md` | `research-map` | operational | Stable authoritative frontier. |
 | `.scratch/smartdca/issues/*.md` | `research-ticket` | operational | Resolved is stable; open or claimed is draft. |
 | `docs/knowledge/okf-profile.md` | `specification` | canonical | Draft until independent review; stable after review. |
+| `references/summaries/*.md` | `source-summary` | evidence | Stable only when the ingest's independent review is recorded; otherwise draft. |
+| `research/synthesis/*.md` | `synthesis` | canonical | Draft until a review independent of the run that wrote the resolutions promotes it, and draft for as long as any recorded conflict is unresolved. |
 | Root `index.md`, `log.md` | reserved | reserved | Reserved-file rules below; never concept frontmatter. |
 
-No semantic destination for future `definition`, `theorem`, `source-summary`, `synthesis`, or `experiment-report` files is registered yet. The extraction work must make and version that path decision before adding those files.
+A `source-summary` concept covers exactly one ingested source and MUST NOT digest several. One source MAY comprise more than one artifact of a single upstream edition — a specification plus a worked example from the same commit, say — in which case every artifact is fingerprinted as its own `external` entry under the one summary. It lives beside the immutable `references/raw/` snapshots it fingerprints, inside the `references/` tree that base OKF already reserves by convention for mirrored external material. It never restates a mathematical result as project knowledge; the extraction work does that.
+
+A `definition` concept is the canonical home of one named construction: the object, its domain and parameter conditions, any limiting extension it needs to be total, and the identities it must preserve. A `theorem` concept is the canonical home of one proved statement: its hypotheses, the exact claim, whether the characterization is sharp, and what it does not establish. Neither carries the proof. The proof, the counterexamples, the numerical boundary work, and the literature positioning stay in the `research/notes/*.md` evidence they cite, which is why a definition or theorem concept is short and its note is long.
+
+An `experiment-report` concept records one executed run: its estimand, data provenance, code version, seeds, and failure cases. It is evidence and never promotes a simulation to a proof.
 
 ## Stable links and supersession
 
@@ -171,7 +265,7 @@ okf_version: "0.2"
 ---
 ```
 
-Its body declares the active profile as `` `smartdca-okf/0.1` `` and contains exactly one section for each role in this order:
+Its body declares the active profile as `` `smartdca-okf/0.3` `` and contains exactly one section for each role in this order:
 
 ```markdown
 ## Canonical
@@ -207,12 +301,34 @@ Install the pinned dependency and run the public command from the bundle root:
 python -m pip install -r tools/okf/requirements.txt
 python tools/okf/validate.py .
 python tools/okf/validate.py . --format json
+python tools/okf/validate.py . --strict
 ```
 
-[Implement the SmartDCA OKF profile and report-only validator](../../.scratch/smartdca/issues/13-implement-smartdca-okf-profile-validator.md) exposes report mode only. Content findings always return process status 0; an invalid invocation or nonexistent bundle root returns 2. Human text and JSON both identify `base_okf` and `smartdca_profile` separately. Strict failure and CI activation belong exclusively to [Atomically migrate the repository to SmartDCA OKF 0.1](../../.scratch/smartdca/issues/14-atomically-migrate-repository-to-okf.md) after the atomic metadata migration.
+The validator has two modes. Report mode is the default: content findings always return process status 0, so nonconformance is inventory rather than a gate. Strict mode returns 1 when either layer reports a conformance finding and 0 otherwise; advisory base warnings never change the status because OKF keeps optional-family guidance soft. In both modes an invalid invocation or nonexistent bundle root returns 2, and human text and JSON identify `base_okf` and `smartdca_profile` separately.
 
-The validator scans the complete repository tree except `.git`, validates every final-suffix `.md` file, and intentionally does not treat `.md.raw` artifacts as concepts. Automated fixtures exercise the base permissiveness contract, the complete initial path mapping, registered types, conditional fields, actor and run identities, source kinds and fingerprints, footnote joins, re-verification, supersession, ticket and ADR states, dependency freshness, stable links, reserved files, index coverage/order, raw snapshots, and all five accepted edge cases.
+[Implement the SmartDCA OKF profile and report-only validator](../../.scratch/smartdca/issues/13-implement-smartdca-okf-profile-validator.md)[^ticket-13] exposed report mode only. [Atomically migrate the repository to SmartDCA OKF 0.1](../../.scratch/smartdca/issues/14-atomically-migrate-repository-to-okf.md) added strict mode and, in the same merge transaction as the corpus migration, made `python tools/okf/validate.py . --strict` a blocking CI step alongside the validator fixtures. Every later change to a Markdown concept therefore has to conform before it can merge.
+
+The validator scans the complete repository tree except `.git`, validates every final-suffix `.md` file, and intentionally does not treat `.md.raw` artifacts as concepts. Automated fixtures exercise the base permissiveness contract, the complete path mapping, registered types, conditional fields, actor and run identities, source kinds and fingerprints, footnote joins, re-verification, supersession, ticket and ADR states, dependency freshness, stable links, reserved files, index coverage/order, raw snapshots, and all five accepted edge cases.
+
+## Structural freeze
+
+Structural freeze is a certification that nothing further is owed to this schema at the time it is made: no field, enum, registered type, path assignment, role, index or log grammar, validator rule, or retrieval mechanism is known to be required. It certifies the container, not the contents.
+
+Freeze MUST NOT be read as a commitment to never change this profile. A later revision is always permitted through the ordinary mechanism above — bump the version, record the decision, relabel. Freeze creates no barrier to that and imposes no penalty for it.
+
+A schema change made after a freeze has exactly two consequences, and no others. The freeze claim lapses on the date of that change and MUST be re-certified before anything that depends on it proceeds. The supervised-ingest streak restarts from zero. Concepts already published stay valid; a lapsed freeze never invalidates content, retracts a verification, or demotes a concept.
 
 ## Deferred capabilities
 
 Hybrid search is deferred until measured retrieval failures, about 100 sources, or several hundred concepts. Batch ingestion is deferred until structural freeze and the supervised-ingest gate. Full OKF Attested Computation is deferred until the runtime, inputs, receipt, verdict, and attester protocol is specified. Existing Python checks remain linked evidence rather than attested computations.
+
+## Sources
+
+[^okf-spec]: [Open Knowledge Format v0.2 specification](../../references/summaries/okf-v0-2-specification.md), ingested snapshot at [`references/raw/okf-spec/0.2/SPEC.md.raw`](../../references/raw/okf-spec/0.2/SPEC.md.raw)
+[^ticket-12]: [Design a repository-root LLM-Wiki using OKF v0.2](../../.scratch/smartdca/issues/12-design-repository-root-llm-wiki-okf.md)
+[^ticket-13]: [Implement the SmartDCA OKF profile and report-only validator](../../.scratch/smartdca/issues/13-implement-smartdca-okf-profile-validator.md)
+[^adr-0002]: [Make the repository root an OKF knowledge bundle](../adr/0002-repository-root-okf-knowledge-bundle.md)
+[^adr-0003]: [Separate document kind, authority, lifecycle, and trust](../adr/0003-separate-knowledge-authority-and-trust.md)
+[^adr-0004]: [Preserve path-based concept identity through supersession](../adr/0004-preserve-path-based-concept-identity.md)
+[^adr-0005]: [Assign source-summary and synthesis paths in profile 0.2](../adr/0005-assign-source-summary-and-synthesis-paths.md)
+[^adr-0006]: [Assign definition, theorem, and experiment-report paths in profile 0.3](../adr/0006-assign-definition-theorem-and-experiment-report-paths.md)

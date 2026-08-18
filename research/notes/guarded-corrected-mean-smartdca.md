@@ -1,4 +1,47 @@
+---
+profile: smartdca-okf/0.3
+type: research-note
+title: "A guarded corrected-mean SmartDCA rule"
+description: "The canonical guarded corrected-mean score inside the epsilon-DCA guardrail with exact accounting."
+knowledge_role: evidence
+status: stable
+sources:
+  - id: ticket-10
+    title: "Choose the guarded corrected-mean SmartDCA score"
+    resource: .scratch/smartdca/issues/10-choose-guarded-corrected-mean-score
+    source_kind: internal
+  - id: guardrail
+    title: "Sharp causal epsilon-DCA safety and its unit-coverage guardrail"
+    resource: research/notes/sharp-epsilon-dca-safety-guardrail
+    source_kind: internal
+  - id: homogeneity
+    title: "Primary-source note: homogeneity of the canonical corrected out quasi-Gini mean"
+    resource: research/notes/ticket-07-homogeneity-primary-sources
+    source_kind: internal
+generated:
+  by: openai-codex/smartdca-wiki-0.1
+  at: 2026-08-16T11:24:00Z
+generation_run: urn:uuid:1d09cb3f-94ee-4b73-b0f2-393b4227167d
+verified:
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T07:38:00Z
+    review_run: urn:uuid:16bd7b25-9e03-4aef-9c9a-5301cb317903
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T09:48:00Z
+    review_run: urn:uuid:9a0f9f9a-73a7-4e3f-931d-a34c08fad81a
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T10:30:00Z
+    review_run: urn:uuid:46a8aeeb-e6d2-49da-a062-28c4c51c1348
+  - by: openai-codex/smartdca-wiki-0.1
+    at: 2026-08-16T11:14:00Z
+    review_run: urn:uuid:5fdc289a-b5ff-4e1f-9d84-777c58a093f2
+  - by: openai-codex/smartdca-wiki-0.1
+    at: 2026-08-16T11:30:00Z
+    review_run: urn:uuid:d55d437b-21a4-4ffb-b393-de516fb58c2d
+---
 # A guarded corrected-mean SmartDCA rule
+
+Canonical home: [The guarded corrected-mean SmartDCA rule](../definitions/guarded-corrected-mean-smartdca-rule.md). That concept carries the rule; this note carries its propositions, comparative statics, and exact accounting derivations.
 
 ## 1. Setting
 
@@ -12,8 +55,9 @@ Fix a safety factor \(\lambda=1-\varepsilon\in(0,1]\). At purchase date
 K_{t-1}=Q_{t-1}-\lambda Q_{t-1}^{DCA}\ge0
 \]
 
-for the unit-coverage cushion. Ticket 09 proves that the exact safe purchase
-interval is
+for the unit-coverage cushion.
+[The epsilon-DCA unit-coverage guardrail](../theorems/epsilon-dca-safety-unit-guardrail.md)
+proves that the exact safe purchase interval is
 
 \[
 m_t=\left[\lambda d_t-p_tK_{t-1}\right]_+,
@@ -48,8 +92,9 @@ R_{t-1}
 \tag{2}
 \]
 
-using the numerator-preserving definition from ticket 05, including its
-function-weighted geometric extension when \(\alpha=\beta\). Define the
+using the numerator-preserving
+[corrected out quasi-Gini mean](../definitions/corrected-out-quasi-gini-mean.md), including
+its function-weighted geometric extension when \(\alpha=\beta\). Define the
 current relative price by
 
 \[
@@ -65,7 +110,9 @@ conversion leaves every \(z_i\), hence the entire rule, unchanged even when
 the corrected mean is not homogeneous. Third, the reference excludes the
 current price. Thus, holding the past fixed, changing \(p_t\) changes \(r_t\)
 but not its own benchmark. An unnormalized price-level reference would require
-the homogeneity conditions from ticket 07; a current-inclusive reference would
+the exceptional conditions of
+[the homogeneity characterization](../theorems/corrected-mean-homogeneity-characterization.md);
+a current-inclusive reference would
 also inherit the corrected mean's generally unresolved coordinatewise
 monotonicity.
 
@@ -235,7 +282,9 @@ K_t
 \]
 
 Thus (5) is only a selector inside the complete safe interval; boundedness of
-\(a_t\) and ticket 09's theorem imply the universal epsilon-DCA floor.
+\(a_t\) and
+[the guardrail theorem](../theorems/epsilon-dca-safety-unit-guardrail.md)
+imply the universal epsilon-DCA floor.
 
 For a positive evaluation price \(P\), terminal wealth satisfies
 
@@ -272,9 +321,12 @@ greater terminal wealth when spending differs.
 ## 7. Boundary example and scope
 
 At \(t=1\), \(m_1=\lambda d_1\), so the neutral convention invests
-\((1+\lambda)d_1/2\). At \(\lambda=1\), ticket 09 forces the discretionary
-interval to collapse along every reachable history and the rule is DCA,
-regardless of the score. For \(0<\lambda<1\), the interval is generally
+\((1+\lambda)d_1/2\). At \(\lambda=1\),
+[the guardrail theorem](../theorems/epsilon-dca-safety-unit-guardrail.md)
+forces the discretionary interval to collapse along every reachable history and the rule is
+DCA, regardless of the score — which is
+[the impossibility boundary](../theorems/causal-dca-dominance-impossibility.md)
+showing through. For \(0<\lambda<1\), the interval is generally
 nontrivial and (5) supplies a causal corrected-mean allocation inside it.
 
 The companion script checks the compatibility identities, constant and short
@@ -287,13 +339,19 @@ rejects nonzero gaps below \(10^{-10}\) with an instruction to use arbitrary
 precision. This is a numerical restriction of the verifier, not a restriction
 of the mathematical rule.
 
-No strict outperformance claim is made here. Relative to DCA itself, the
-accounting identity is
+This construction note makes no universal or stochastic outperformance claim.
+Relative to DCA itself, the accounting identity is
 
 \[
 W_t^S-W_t^{DCA}=C_t+P(Q_t-Q_t^{DCA})
 \]
 
-but no sign is asserted for it in this ticket. A later ticket must state and
-prove a favorable path class, stochastic estimand, or utility criterion before
-calling this rule an improvement.
+Ticket 10 left that sign open. It is now resolved at
+[two purchase dates](two-purchase-dca-win-loss-boundary.md), where both strict
+signs occur and \(\beta\) drops out because the lagged reference is a
+singleton, and at
+[three purchase dates](three-purchase-corrected-mean-effect.md), where an
+exact criterion isolates the first two-input reference and an all-rational
+countercyclical witness flips the DCA classification by changing only
+\(\beta\). No arbitrary-horizon or stochastic sign is asserted, and the
+rule's only universal guarantee remains the \(\lambda\) floor.

@@ -12,7 +12,7 @@ VALIDATOR = Path(__file__).parents[1] / "validate.py"
 
 
 class ValidatorCliTests(unittest.TestCase):
-    def run_validator(self, files, baseline_files=None):
+    def run_cli(self, files, *arguments, baseline_files=None):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             if baseline_files is not None:
@@ -28,13 +28,17 @@ class ValidatorCliTests(unittest.TestCase):
             self.write_files(root, files)
 
             completed = subprocess.run(
-                [sys.executable, str(VALIDATOR), str(root), "--format", "json"],
+                [sys.executable, str(VALIDATOR), str(root), "--format", "json", *arguments],
                 check=False,
                 capture_output=True,
                 text=True,
             )
-            self.assertEqual(completed.returncode, 0, completed.stderr)
-            return json.loads(completed.stdout)
+            return completed.returncode, json.loads(completed.stdout)
+
+    def run_validator(self, files, baseline_files=None):
+        status, report = self.run_cli(files, baseline_files=baseline_files)
+        self.assertEqual(status, 0, report)
+        return report
 
     def write_files(self, root, files):
         for relative_path, content in files.items():
@@ -80,7 +84,7 @@ class ValidatorCliTests(unittest.TestCase):
             ---
             # SmartDCA knowledge index
 
-            Active profile: `smartdca-okf/0.1`.
+            Active profile: `smartdca-okf/0.3`.
 
         """).lstrip()
         return header + "\n\n".join(sections) + "\n"
@@ -96,7 +100,7 @@ class ValidatorCliTests(unittest.TestCase):
     def project_overview(self):
         return """
             ---
-            profile: smartdca-okf/0.1
+            profile: smartdca-okf/0.3
             type: project-overview
             title: Project overview
             description: The root orientation page for the research project.
@@ -114,7 +118,7 @@ class ValidatorCliTests(unittest.TestCase):
     def concept(self, *, type_name, title, description, role, status, extra="", body=""):
         lines = [
             "---",
-            "profile: smartdca-okf/0.1",
+            "profile: smartdca-okf/0.3",
             f"type: {type_name}",
             f"title: {title}",
             f"description: {description}",
@@ -226,7 +230,7 @@ class ValidatorCliTests(unittest.TestCase):
         files = self.valid_minimal_bundle()
         files["README.md"] = """
             ---
-            profile: smartdca-okf/0.1
+            profile: smartdca-okf/0.3
             type: theorem
             title: Wrong path type
             description: This path is deliberately misclassified.
@@ -241,7 +245,7 @@ class ValidatorCliTests(unittest.TestCase):
         self.assertIn("SDCA010", self.codes(report))
         self.assertIn("SDCA011", self.codes(report))
 
-    def test_complete_initial_path_mapping_accepts_each_assigned_path(self):
+    def test_complete_path_mapping_accepts_each_assigned_path(self):
         definitions = [
             ("README.md", "project-overview", "Project", "Root orientation.", "canonical", "stable", "verified:\n  - by: human:github:razvan-tanase\n    at: 2026-08-15T12:00:00Z\n    review_run: urn:uuid:aaaaaaaa-aaaa-7aaa-8aaa-aaaaaaaaaaaa", ""),
             ("CONTEXT.md", "domain-glossary", "Context", "Canonical terminology.", "canonical", "draft", "", ""),
@@ -256,6 +260,11 @@ class ValidatorCliTests(unittest.TestCase):
             (".scratch/smartdca/issues/99-example.md", "research-ticket", "Open ticket", "Example open work item.", "operational", "draft", "ticket_type: task\nticket_status: open", "Type: task\nStatus: open"),
             ("docs/adr/0099-example.md", "decision-record", "Proposed decision", "Example proposed decision.", "canonical", "draft", "decision_status: proposed", ""),
             ("research/notes/example.md", "research-note", "Research evidence", "Example detailed evidence.", "evidence", "draft", "", ""),
+            ("references/summaries/example.md", "source-summary", "Ingested source", "Example single-source summary.", "evidence", "draft", "", ""),
+            ("research/synthesis/example.md", "synthesis", "Cross-source synthesis", "Example cross-source integration.", "canonical", "draft", "", ""),
+            ("research/definitions/example.md", "definition", "Named construction", "Example canonical definition.", "canonical", "draft", "", ""),
+            ("research/theorems/example.md", "theorem", "Proved statement", "Example canonical theorem.", "canonical", "draft", "", ""),
+            ("reports/experiments/example.md", "experiment-report", "Executed run", "Example experiment report.", "evidence", "draft", "", ""),
         ]
         files = {}
         rows = []
@@ -267,6 +276,44 @@ class ValidatorCliTests(unittest.TestCase):
 
         report = self.run_validator(files)
         self.assertTrue(report["smartdca_profile"]["ok"], report["smartdca_profile"]["findings"])
+
+    def test_profile_03_semantic_paths_pin_their_type_and_role(self):
+        """Each 0.3 path must report the exact rule it breaks, per path.
+
+        Asserting the codes only in aggregate would still pass if one path
+        were mapped to the wrong type and role entirely, so every case is
+        checked against the findings recorded for its own file.
+        """
+        cases = [
+            ("research/theorems/wrong.md", "research-note", "evidence", {"SDCA010", "SDCA011"}),
+            ("research/definitions/wrong.md", "theorem", "canonical", {"SDCA010"}),
+            ("reports/experiments/wrong.md", "experiment-report", "canonical", {"SDCA011"}),
+        ]
+        for path, type_name, role, expected in cases:
+            with self.subTest(path=path):
+                title = f"Misplaced {type_name}"
+                description = f"Fixture placing a {type_name} at {path}."
+                row = {
+                    "path": "README.md",
+                    "title": "Project overview",
+                    "description": "The root orientation page for the research project.",
+                    "type": "project-overview",
+                    "role": "canonical",
+                    "status": "stable",
+                }
+                misplaced_row = {"path": path, "title": title, "description": description, "type": type_name, "role": role, "status": "draft"}
+                files = self.valid_minimal_bundle()
+                files[path] = self.concept(type_name=type_name, title=title, description=description, role=role, status="draft")
+                files["index.md"] = self.valid_index([row, misplaced_row])
+                report = self.run_validator(files)
+
+                reported = {
+                    finding["code"]
+                    for finding in report["smartdca_profile"]["findings"]
+                    if finding["path"] == path
+                }
+                self.assertEqual(reported & {"SDCA010", "SDCA011"}, expected)
+                self.assertNotIn("SDCA012", reported)
 
     def test_every_registered_type_is_recognized_before_a_path_is_assigned(self):
         registered = [
@@ -295,7 +342,7 @@ class ValidatorCliTests(unittest.TestCase):
         files = {
             "research/notes/source.md": f"""
                 ---
-                profile: smartdca-okf/0.1
+                profile: smartdca-okf/0.3
                 type: research-note
                 title: Source-backed note
                 description: Evidence derived from a frozen external source.
@@ -341,7 +388,7 @@ class ValidatorCliTests(unittest.TestCase):
     def test_agent_generated_theorem_requires_distinct_fresh_semantic_review(self):
         theorem = """
             ---
-            profile: smartdca-okf/0.1
+            profile: smartdca-okf/0.3
             type: theorem
             title: Generated theorem
             description: A high-risk canonical theorem with claim provenance.
@@ -367,7 +414,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         proof = """
             ---
-            profile: smartdca-okf/0.1
+            profile: smartdca-okf/0.3
             type: research-note
             title: Internal proof record
             description: Detailed evidence for the generated theorem.
@@ -417,7 +464,7 @@ class ValidatorCliTests(unittest.TestCase):
     def test_ticket_and_adr_extensions_mirror_body_state(self):
         ticket = """
             ---
-            profile: smartdca-okf/0.1
+            profile: smartdca-okf/0.3
             type: research-ticket
             title: Resolved ticket
             description: A resolved research task and its answer.
@@ -434,7 +481,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         adr = """
             ---
-            profile: smartdca-okf/0.1
+            profile: smartdca-okf/0.3
             type: decision-record
             title: Accepted decision
             description: A reviewed architectural decision.
@@ -466,7 +513,7 @@ class ValidatorCliTests(unittest.TestCase):
     def test_dependency_changes_make_a_stable_dependent_stale(self):
         dependency = """
             ---
-            profile: smartdca-okf/0.1
+            profile: smartdca-okf/0.3
             type: research-note
             title: Dependency
             description: Evidence changed after its dependent was reviewed.
@@ -484,7 +531,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         dependent = """
             ---
-            profile: smartdca-okf/0.1
+            profile: smartdca-okf/0.3
             type: theorem
             title: Dependent theorem
             description: A theorem whose dependency changed after review.
@@ -552,7 +599,7 @@ class ValidatorCliTests(unittest.TestCase):
     def test_conflict_synthesis_remains_draft_and_path_moves_keep_forwarders(self):
         evidence = """
             ---
-            profile: smartdca-okf/0.1
+            profile: smartdca-okf/0.3
             type: research-note
             title: Evidence {number}
             description: One side of a preserved source conflict.
@@ -570,7 +617,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         synthesis = """
             ---
-            profile: smartdca-okf/0.1
+            profile: smartdca-okf/0.3
             type: synthesis
             title: Unresolved synthesis
             description: The conflict is preserved pending independent review.
@@ -588,7 +635,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         successor = """
             ---
-            profile: smartdca-okf/0.1
+            profile: smartdca-okf/0.3
             type: research-note
             title: New concept path
             description: The current home of a moved stable concept.
@@ -606,7 +653,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         forwarder = """
             ---
-            profile: smartdca-okf/0.1
+            profile: smartdca-okf/0.3
             type: research-note
             title: Old concept path
             description: Deprecated forwarding concept preserving stable identity.
@@ -653,7 +700,7 @@ class ValidatorCliTests(unittest.TestCase):
         raw_v2 = b"version two\n"
         concept = f"""
             ---
-            profile: smartdca-okf/0.1
+            profile: smartdca-okf/0.3
             type: research-note
             title: Versioned source summary
             description: Two immutable editions of one external source.
@@ -708,7 +755,7 @@ class ValidatorCliTests(unittest.TestCase):
         files = self.valid_minimal_bundle()
         files["README.md"] = """
             ---
-            profile: smartdca-okf/0.1
+            profile: smartdca-okf/0.3
             type: project-overview
             title: Project overview
             description: A deliberately invalid conditional-metadata fixture.
@@ -737,6 +784,113 @@ class ValidatorCliTests(unittest.TestCase):
         self.assertIn("SDCA033", codes)
         self.assertIn("SDCA041", codes)
         self.assertNotIn("SDCA026", codes)
+
+    def test_fenced_examples_are_not_links_or_footnote_joins(self):
+        files = self.valid_minimal_bundle()
+        indent = " " * 12
+        fenced = "\n".join(
+            indent + line
+            for line in (
+                "# Project overview",
+                "",
+                "```markdown",
+                "- [<title>](<bundle-relative .md path>) — illustrative row",
+                "- [concept](path.md) with a [^label] example",
+                "```",
+            )
+        )
+        files["README.md"] = files["README.md"].replace(indent + "# Project overview", fenced)
+        report = self.run_validator(files)
+
+        self.assertTrue(report["smartdca_profile"]["ok"], report["smartdca_profile"]["findings"])
+
+    def test_inline_code_spans_are_not_links_or_footnote_joins(self):
+        files = self.valid_minimal_bundle()
+        indent = " " * 12
+        prose = "\n".join(
+            indent + line
+            for line in (
+                "# Project overview",
+                "",
+                "Log bullets carry no `[change](missing.md)` URL and no `[^label]` join.",
+            )
+        )
+        files["README.md"] = files["README.md"].replace(indent + "# Project overview", prose)
+        report = self.run_validator(files)
+
+        self.assertTrue(report["smartdca_profile"]["ok"], report["smartdca_profile"]["findings"])
+
+    def test_a_longer_fence_is_not_closed_by_a_shorter_marker(self):
+        files = self.valid_minimal_bundle()
+        indent = " " * 12
+        fenced = "\n".join(
+            indent + line
+            for line in (
+                "# Project overview",
+                "",
+                "````markdown",
+                "```",
+                "- [concept](path.md) stays inside the outer fence",
+                "```",
+                "````",
+                "",
+                "A real [glossary](CONTEXT.md) link follows the block.",
+            )
+        )
+        files["README.md"] = files["README.md"].replace(indent + "# Project overview", fenced)
+        files["CONTEXT.md"] = self.concept(
+            type_name="domain-glossary",
+            title="Context",
+            description="Draft canonical terminology.",
+            role="canonical",
+            status="draft",
+        )
+        files["index.md"] = self.valid_index(
+            [
+                {"path": "README.md", "title": "Project overview", "description": "The root orientation page for the research project.", "type": "project-overview", "role": "canonical", "status": "stable"},
+                {"path": "CONTEXT.md", "title": "Context", "description": "Draft canonical terminology.", "type": "domain-glossary", "role": "canonical", "status": "draft"},
+            ]
+        )
+        report = self.run_validator(files)
+
+        self.assertTrue(report["smartdca_profile"]["ok"], report["smartdca_profile"]["findings"])
+
+    def test_strict_mode_blocks_a_nonconformant_bundle_while_report_mode_does_not(self):
+        conformant = self.valid_minimal_bundle()
+        status, report = self.run_cli(conformant, "--strict")
+        self.assertEqual(status, 0, report)
+        self.assertEqual(report["mode"], "strict")
+
+        nonconformant = dict(conformant)
+        nonconformant["research/notes/untyped.md"] = "# Untyped new page\n"
+        strict_status, strict_report = self.run_cli(nonconformant, "--strict")
+        self.assertEqual(strict_status, 1)
+        self.assertFalse(strict_report["base_okf"]["ok"])
+        self.assertFalse(strict_report["smartdca_profile"]["ok"])
+
+        report_status, report_only = self.run_cli(nonconformant)
+        self.assertEqual(report_status, 0)
+        self.assertEqual(report_only["mode"], "report")
+        self.assertEqual(report_only["smartdca_profile"]["findings"], strict_report["smartdca_profile"]["findings"])
+
+    def test_strict_mode_blocks_a_profile_only_violation(self):
+        files = self.valid_minimal_bundle()
+        files["README.md"] = files["README.md"].replace("profile: smartdca-okf/0.3", "profile: smartdca-okf/0.9")
+        status, report = self.run_cli(files, "--strict")
+
+        self.assertEqual(status, 1)
+        self.assertTrue(report["base_okf"]["ok"])
+        self.assertIn("SDCA003", self.codes(report))
+
+    def test_strict_mode_still_rejects_an_invalid_invocation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            completed = subprocess.run(
+                [sys.executable, str(VALIDATOR), str(Path(directory) / "missing"), "--strict"],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+        self.assertEqual(completed.returncode, 2)
 
     def test_index_requires_complete_coverage_and_stable_canonical_first(self):
         files = self.valid_minimal_bundle()

@@ -1,3 +1,13 @@
+---
+profile: smartdca-okf/0.3
+type: research-ticket
+title: "Audit whether the source out quasi-Gini functional is a mean"
+description: "Resolved research ticket classifying exactly when the source out quasi-Gini functional is a mean."
+knowledge_role: operational
+status: stable
+ticket_type: research
+ticket_status: resolved
+---
 # Audit whether the source out quasi-Gini functional is a mean
 
 Type: research

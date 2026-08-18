@@ -1,3 +1,13 @@
+---
+profile: smartdca-okf/0.3
+type: research-ticket
+title: "Design a repository-root LLM-Wiki using OKF v0.2"
+description: "Resolved grilling ticket designing the repository-root LLM-Wiki as an OKF v0.2 knowledge bundle."
+knowledge_role: operational
+status: stable
+ticket_type: grilling
+ticket_status: resolved
+---
 # Design a repository-root LLM-Wiki using OKF v0.2
 
 Type: grilling

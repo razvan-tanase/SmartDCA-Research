@@ -19,7 +19,7 @@ from urllib.parse import unquote, urlsplit
 import yaml
 
 
-PROFILE_VERSION = "smartdca-okf/0.1"
+PROFILE_VERSION = "smartdca-okf/0.3"
 RESERVED_NAMES = {"index.md", "log.md"}
 REGISTERED_TYPES = {
     "project-overview", "specification", "domain-glossary", "definition", "theorem",
@@ -71,6 +71,10 @@ class Finding:
     message: str
 
 
+CODE_FENCE = re.compile(r"\s*(`{3,}|~{3,})")
+CODE_SPAN = re.compile(r"(`+)(?:(?!\1).)*?\1")
+
+
 @dataclass
 class Document:
     path: Path
@@ -81,6 +85,33 @@ class Document:
     @property
     def concept_id(self) -> str:
         return self.relative.removesuffix(".md")
+
+    @property
+    def prose_lines(self) -> list[str]:
+        """The body lines with code removed.
+
+        Links and footnote labels inside a fenced block or an inline code span
+        are illustrative syntax, not references, so link and provenance checks
+        must ignore them. A fence closes only on a marker of the same character
+        that is at least as long as the one that opened it.
+        """
+        lines: list[str] = []
+        opening: str | None = None
+        for line in self.body.splitlines():
+            marker = CODE_FENCE.match(line)
+            fence = marker.group(1) if marker else None
+            if opening is None:
+                if fence is None:
+                    lines.append(CODE_SPAN.sub(" ", line))
+                else:
+                    opening = fence
+            elif fence is not None and fence[0] == opening[0] and len(fence) >= len(opening):
+                opening = None
+        return lines
+
+    @property
+    def prose(self) -> str:
+        return "\n".join(self.prose_lines)
 
 
 def add(findings: list[Finding], code: str, path: str, message: str) -> None:
@@ -221,6 +252,16 @@ def expected_path_rule(relative: str) -> tuple[str, str, str | None] | None:
         return "decision-record", "canonical", None
     if re.fullmatch(r"research/notes/[^/]+\.md", relative):
         return "research-note", "evidence", None
+    if re.fullmatch(r"research/definitions/[^/]+\.md", relative):
+        return "definition", "canonical", None
+    if re.fullmatch(r"research/theorems/[^/]+\.md", relative):
+        return "theorem", "canonical", None
+    if re.fullmatch(r"reports/experiments/[^/]+\.md", relative):
+        return "experiment-report", "evidence", None
+    if re.fullmatch(r"research/synthesis/[^/]+\.md", relative):
+        return "synthesis", "canonical", None
+    if re.fullmatch(r"references/summaries/[^/]+\.md", relative):
+        return "source-summary", "evidence", None
     if re.fullmatch(r"\.scratch/smartdca/issues/[^/]+\.md", relative):
         return "research-ticket", "operational", None
     return None
@@ -346,7 +387,7 @@ def is_subsequence(earlier: list[str], current: list[str]) -> bool:
 
 def linked_concepts(document: Document, by_relative: dict[str, Document]) -> list[Document]:
     linked: list[Document] = []
-    for target in MARKDOWN_LINK.findall(document.body):
+    for target in MARKDOWN_LINK.findall(document.prose):
         split = urlsplit(target)
         if split.scheme or split.netloc or not split.path.endswith(".md"):
             continue
@@ -460,7 +501,7 @@ def validate_sources(root: Path, document: Document, metadata: dict[str, Any], b
                         elif tracked_artifact_was_modified(root, artifact):
                             add(findings, "SDCA023", document.relative, f"immutable local artifact has been modified in Git history or the worktree: {artifact}")
     references: set[str] = set()
-    for line in document.body.splitlines():
+    for line in document.prose_lines:
         if not re.match(r"^\s*\[\^[^\]]+\]:", line):
             references.update(FOOTNOTE.findall(line))
     missing = references - ids
@@ -515,7 +556,7 @@ def validate_supersession(document: Document, metadata: dict[str, Any], by_id: d
 def validate_stable_links(root: Path, document: Document, metadata: dict[str, Any], findings: list[Finding]) -> None:
     if metadata.get("status") != "stable":
         return
-    for target in MARKDOWN_LINK.findall(document.body):
+    for target in MARKDOWN_LINK.findall(document.prose):
         resolved = local_link_target(root, document, target)
         if resolved is None:
             continue
@@ -686,7 +727,7 @@ def validate_profile(root: Path, documents: list[Document]) -> list[Finding]:
             if metadata.get("knowledge_role") != expected_role:
                 add(findings, "SDCA011", document.relative, f"path requires knowledge_role {expected_role}")
             if expected_status is not None and metadata.get("status") != expected_status:
-                add(findings, "SDCA013", document.relative, f"the initial path mapping requires status {expected_status}")
+                add(findings, "SDCA013", document.relative, f"the path mapping requires status {expected_status}")
         if document.relative == "CONTEXT.md" and metadata.get("status") == "stable" and not metadata.get("sources"):
             add(findings, "SDCA014", document.relative, "stable canonical terminology requires recorded bootstrap sources")
         generated = metadata.get("generated")
@@ -777,11 +818,11 @@ def section(findings: list[Finding], warnings: list[Finding] | None = None) -> d
     }
 
 
-def build_report(root: Path) -> dict[str, Any]:
+def build_report(root: Path, strict: bool = False) -> dict[str, Any]:
     base_findings, base_warnings, documents = validate_base(root)
     profile_findings = validate_profile(root, documents)
     return {
-        "mode": "report", "root": str(root),
+        "mode": "strict" if strict else "report", "root": str(root),
         "base_okf": section(base_findings, base_warnings),
         "smartdca_profile": section(profile_findings),
         "inventory": {
@@ -793,7 +834,8 @@ def build_report(root: Path) -> dict[str, Any]:
 
 
 def render_text(report: dict[str, Any]) -> str:
-    lines = ["SmartDCA OKF validation (report only)"]
+    strict = report["mode"] == "strict"
+    lines = [f"SmartDCA OKF validation ({'blocking' if strict else 'report only'})"]
     for key, label in (("base_okf", "Base OKF v0.2"), ("smartdca_profile", PROFILE_VERSION)):
         result = report[key]
         lines.append(f"\n{label}: {'PASS' if result['ok'] else 'FINDINGS'} ({result['finding_count']})")
@@ -808,6 +850,11 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("root", nargs="?", default=".", type=Path)
     parser.add_argument("--format", choices=("text", "json"), default="text")
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="fail with status 1 when either layer reports a conformance finding",
+    )
     return parser.parse_args(argv)
 
 
@@ -816,12 +863,14 @@ def main(argv: list[str] | None = None) -> int:
     if not args.root.is_dir():
         print(f"error: bundle root is not a directory: {args.root}", file=sys.stderr)
         return 2
-    report = build_report(args.root)
+    report = build_report(args.root, strict=args.strict)
     if args.format == "json":
         json.dump(report, sys.stdout, indent=2, sort_keys=True)
         sys.stdout.write("\n")
     else:
         sys.stdout.write(render_text(report))
+    if args.strict and not (report["base_okf"]["ok"] and report["smartdca_profile"]["ok"]):
+        return 1
     return 0
 
 

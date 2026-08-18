@@ -1,6 +1,49 @@
+---
+profile: smartdca-okf/0.3
+type: research-note
+title: "Sharp causal epsilon-DCA safety and its unit-coverage guardrail"
+description: "Proof that universal epsilon-DCA safety is exactly a causal cumulative-unit coverage guardrail."
+knowledge_role: evidence
+status: stable
+sources:
+  - id: ticket-09
+    title: "Prove the sharp epsilon-DCA safety guardrail"
+    resource: .scratch/smartdca/issues/09-prove-sharp-epsilon-dca-safety-guardrail
+    source_kind: internal
+  - id: causal-boundary
+    title: "Pathwise DCA dominance under causal budget feasibility"
+    resource: research/notes/pathwise-dca-dominance-under-causal-budget
+    source_kind: internal
+generated:
+  by: openai-codex/smartdca-wiki-0.1
+  at: 2026-08-16T11:04:00Z
+generation_run: urn:uuid:15b108f2-1ab8-4916-965a-89faffe7b3f6
+verified:
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T07:38:00Z
+    review_run: urn:uuid:16bd7b25-9e03-4aef-9c9a-5301cb317903
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T09:48:00Z
+    review_run: urn:uuid:9a0f9f9a-73a7-4e3f-931d-a34c08fad81a
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T10:30:00Z
+    review_run: urn:uuid:46a8aeeb-e6d2-49da-a062-28c4c51c1348
+  - by: openai-codex/smartdca-wiki-0.1
+    at: 2026-08-16T11:14:00Z
+    review_run: urn:uuid:5fdc289a-b5ff-4e1f-9d84-777c58a093f2
+---
 # Sharp causal epsilon-DCA safety and its unit-coverage guardrail
 
+Canonical home: [Epsilon-DCA safety is exactly a causal unit-coverage guardrail](../theorems/epsilon-dca-safety-unit-guardrail.md). That concept carries the equivalence and the exact worst-case factor; this note carries both directions of the proof and the boundary cases.
+
 ## Scope and model
+
+The comparison model is the one whose canonical statement is the *Statement* section of
+[Causal DCA dominance impossibility](../theorems/causal-dca-dominance-impossibility.md); it
+is written out again here because the equivalence proof argues directly from the
+recursions. The cushion is written \(K_{t-1}\) throughout, matching
+[the guarded SmartDCA rule](../definitions/guarded-corrected-mean-smartdca-rule.md), which
+reserves \(R_{t-1}\) for the lagged corrected-mean reference.
 
 Fix a finite horizon with purchase dates \(t=1,\ldots,n\), where \(n\ge1\).
 At date \(t\), an exogenous deposit \(d_t\ge0\) and price \(p_t>0\) are
@@ -144,20 +187,20 @@ large enough.
 Define the unit-coverage cushion
 
 \[
-R_{t-1}:=Q_{t-1}-\lambda A_{t-1}.
+K_{t-1}:=Q_{t-1}-\lambda A_{t-1}.
 \]
 
-Given coverage through date \(t-1\), \(R_{t-1}\ge0\). Using the recursions for
+Given coverage through date \(t-1\), \(K_{t-1}\ge0\). Using the recursions for
 \(Q_t\) and \(A_t\), condition (2) at date \(t\) is equivalent to
 
 \[
-x_t\ge\lambda d_t-p_tR_{t-1}.
+x_t\ge\lambda d_t-p_tK_{t-1}.
 \]
 
 Together with \(x_t\ge0\), this is exactly (3). Since
-\(R_{t-1}\ge0\), the inequalities in (4) follow, proving that the minimum
+\(K_{t-1}\ge0\), the inequalities in (4) follow, proving that the minimum
 purchase never exceeds even the new deposit, much less all available cash.
-Induction from \(R_0=0\) proves that any causal choice from the interval in
+Induction from \(K_0=0\) proves that any causal choice from the interval in
 (5) preserves coverage. Conversely, every safe purchase lies in that interval
 and therefore has representation (5), with the evident endpoint convention
 when the interval has zero length.
@@ -194,9 +237,9 @@ than merely sufficient.
 ### Exact boundary \(\lambda=1\)
 
 At the first date, (3) requires \(x_1\ge d_1\), while funding requires
-\(x_1\le d_1\). Hence \(x_1=d_1\), \(C_1=0\), and \(R_1=0\). Induction gives
-\(x_t=d_t\) at every date. Thus 1-DCA safety uniquely recovers DCA and ticket
-04's impossibility boundary.
+\(x_1\le d_1\). Hence \(x_1=d_1\), \(C_1=0\), and \(K_1=0\). Induction gives
+\(x_t=d_t\) at every date. Thus 1-DCA safety uniquely recovers DCA and
+[the causal DCA dominance impossibility](../theorems/causal-dca-dominance-impossibility.md).
 
 ### Every \(0<\lambda<1\) admits a non-DCA strategy
 
@@ -275,10 +318,18 @@ continuations, and construction are in
 
 The theorem does not establish that a corrected quasi-Gini score improves DCA.
 It creates a sharp separation of responsibilities: the guardrail supplies the
-model-free downside factor, while a later theorem must define a bounded causal
+model-free downside factor, while separate results must define a bounded causal
 score \(a_t\), prove its economic/accounting identities, and characterize the
 paths or stochastic objective on which the discretionary allocation adds
-value. Ticket 08's source audit found no exact published DCA statement of this
-characterization, but non-discovery is not proof of novelty; it should remain
-positioned as a DCA-specific robust-superhedging result until a broader
-citation review accompanies the manuscript.
+value. The first two are discharged by
+[the guarded corrected-mean SmartDCA rule](../definitions/guarded-corrected-mean-smartdca-rule.md);
+[the exact two-purchase DCA boundary](../theorems/two-purchase-guarded-smartdca-boundary.md)
+now supplies a necessary-and-sufficient realized-path criterion at the smallest
+horizon and proves that both strict signs occur. A favourable path class with
+a uniform strict conclusion, a stochastic estimand, or a utility criterion is
+still open, as is any nontrivial effect of the multi-input corrected mean,
+because \(\beta\) drops out at two purchases.
+[The novelty audit](ticket-08-causal-dca-novelty-primary-sources.md) found no exact
+published DCA statement of this characterization, but non-discovery is not proof of
+novelty; it should remain positioned as a DCA-specific robust-superhedging result until a
+broader citation review accompanies the manuscript.
