@@ -21,3 +21,21 @@ jobs:
           python reproducibility/checks/check_corrected_out_quasi_gini_homogeneity.py
           python reproducibility/checks/check_epsilon_dca_safety_guardrail.py
           python reproducibility/checks/check_guarded_corrected_mean_smartdca.py
+          python reproducibility/checks/check_two_purchase_dca_win_loss_boundary.py
+          python reproducibility/checks/check_three_purchase_corrected_mean_effect.py
+
+  knowledge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install knowledge tooling
+        run: python -m pip install -r tools/okf/requirements.txt
+      - name: Run validator fixtures
+        run: python -m unittest tools.okf.tests.test_validate_cli
+      - name: Enforce SmartDCA OKF conformance
+        run: python tools/okf/validate.py . --strict
