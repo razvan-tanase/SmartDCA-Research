@@ -27,15 +27,25 @@ jobs:
         run: |
           set -euo pipefail
           archive="SmartDCA-Research-main.zip"
-          test -f "$archive"
+          if [ ! -f "$archive" ]; then
+            exit 0
+          fi
+
           tmp="$(mktemp -d)"
           unzip -q "$archive" -d "$tmp"
           src="$tmp/SmartDCA-Research-main"
           test -d "$src"
 
-          # Remove everything except Git metadata, then restore the exact archive tree.
+          # GITHUB_TOKEN cannot modify workflow files in this repository. Preserve
+          # them during the bulk sync; the GitHub app will reconcile them afterward.
+          mkdir -p "$tmp/preserved"
+          cp -a .github/workflows "$tmp/preserved/workflows"
+
           find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
           cp -a "$src"/. .
+          rm -rf .github/workflows
+          mkdir -p .github
+          cp -a "$tmp/preserved/workflows" .github/workflows
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
