@@ -1,3 +1,13 @@
+---
+profile: smartdca-okf/0.3
+type: research-ticket
+title: "Test pathwise DCA dominance under causal budget feasibility"
+description: "Resolved research ticket testing pathwise DCA dominance under causal budget feasibility."
+knowledge_role: operational
+status: stable
+ticket_type: research
+ticket_status: resolved
+---
 # Test pathwise DCA dominance under causal budget feasibility
 
 Type: research

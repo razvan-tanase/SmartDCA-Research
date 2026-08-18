@@ -1,3 +1,13 @@
+---
+profile: smartdca-okf/0.3
+type: research-ticket
+title: "Audit the novelty of the causal DCA boundary and choose a constructive relaxation"
+description: "Resolved research ticket auditing causal DCA novelty and choosing a constructive relaxation."
+knowledge_role: operational
+status: stable
+ticket_type: research
+ticket_status: resolved
+---
 # Audit the novelty of the causal DCA boundary and choose a constructive relaxation
 
 Type: research

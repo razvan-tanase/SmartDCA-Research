@@ -1,3 +1,13 @@
+---
+profile: smartdca-okf/0.3
+type: research-ticket
+title: "Decide whether the source-audit gap is significant enough to continue"
+description: "Resolved grilling ticket accepting the source-audit gap as significant enough to continue."
+knowledge_role: operational
+status: stable
+ticket_type: grilling
+ticket_status: resolved
+---
 # Decide whether the source-audit gap is significant enough to continue
 
 Type: grilling

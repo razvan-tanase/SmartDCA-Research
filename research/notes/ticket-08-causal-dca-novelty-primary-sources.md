@@ -1,11 +1,55 @@
+---
+profile: smartdca-okf/0.3
+type: research-note
+title: "Primary-source audit of the causal DCA boundary and constructive relaxations"
+description: "Novelty audit positioning the causal DCA boundary and ordering the admissible constructive relaxations."
+knowledge_role: evidence
+status: stable
+sources:
+  - id: ticket-08
+    title: "Audit the novelty of the causal DCA boundary and choose a constructive relaxation"
+    resource: .scratch/smartdca/issues/08-audit-causal-dca-novelty-and-relaxation
+    source_kind: internal
+  - id: causal-boundary
+    title: "Pathwise DCA dominance under causal budget feasibility"
+    resource: research/notes/pathwise-dca-dominance-under-causal-budget
+    source_kind: internal
+  - id: primary-literature
+    title: "primary pointwise no-arbitrage and DCA minimax sources"
+    resource: "primary mathematical and financial literature cited inline in this note"
+    source_kind: scope
+generated:
+  by: openai-codex/smartdca-wiki-0.1
+  at: 2026-08-16T11:04:00Z
+generation_run: urn:uuid:15b108f2-1ab8-4916-965a-89faffe7b3f6
+verified:
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T07:38:00Z
+    review_run: urn:uuid:16bd7b25-9e03-4aef-9c9a-5301cb317903
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T09:48:00Z
+    review_run: urn:uuid:9a0f9f9a-73a7-4e3f-931d-a34c08fad81a
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T10:30:00Z
+    review_run: urn:uuid:46a8aeeb-e6d2-49da-a062-28c4c51c1348
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T10:48:00Z
+    review_run: urn:uuid:efbd9162-3fdb-43a6-a3c7-7ef6b7141532
+  - by: openai-codex/smartdca-wiki-0.1
+    at: 2026-08-16T11:14:00Z
+    review_run: urn:uuid:5fdc289a-b5ff-4e1f-9d84-777c58a093f2
+---
 # Primary-source audit of the causal DCA boundary and constructive relaxations
+
+Canonical home: [Causal DCA dominance impossibility](../theorems/causal-dca-dominance-impossibility.md) for the positioning and [Epsilon-DCA safety is exactly a causal unit-coverage guardrail](../theorems/epsilon-dca-safety-unit-guardrail.md) for the relaxation this note selected. This note carries the novelty audit and the ordering of admissible relaxations.
 
 Research date: 2026-08-15
 
 ## Executive verdict
 
-I did not locate a primary source that states ticket 04's theorem in its full
-DCA-specific form: arbitrary finite positive price paths, arbitrary exogenous
+I did not locate a primary source that states
+[the causal DCA dominance impossibility](../theorems/causal-dca-dominance-impossibility.md)
+in its full DCA-specific form: arbitrary finite positive price paths, arbitrary exogenous
 deposits, decisions after observing the current price but before future prices,
 cash carry without interest, long-only buy-only purchases, no borrowing, the
 same horizon, and terminal wealth including cash.
@@ -23,7 +67,12 @@ ticket-specific reduction**:
 
 Burzoni, Frittelli, Hou, Maggis, and Obłój define that arbitrage and prove that
 it is absent precisely when every scenario is charged by a finite-support
-martingale measure ([Definition 1 and Proposition 1, 2019](https://doi.org/10.1287/moor.2018.0956)).
+martingale measure ([Burzoni et al. 2019, Definition 2.2 and Proposition 2.5](https://doi.org/10.1287/moor.2018.0956)).
+The two results are numbered Definition 1 and Proposition 1 in the authors' arXiv preprint
+and Definition 2.2 and Proposition 2.5 in the journal article; this note cites the journal
+numbering wherever it cites the DOI, matching
+[the ticket-04 positioning note](pathwise-dca-dominance-primary-sources.md), and keeps the
+preprint numbering only where it cites the preprint PDF.
 Every finite strictly positive price path is charged by such a measure on the
 full positive path space. Therefore their result rules out strict universal
 outperformance after the reduction. The additional conclusion that equality of
@@ -64,6 +113,10 @@ as \(\varepsilon\downarrow0\).
 
 ## The theorem being positioned
 
+The canonical statement of the positioned theorem, and of the comparison model it uses, is
+[Causal DCA dominance impossibility](../theorems/causal-dca-dominance-impossibility.md);
+the restatement below fixes the notation this audit's reduction argues in.
+
 At purchase dates $t=1,\ldots,n$, let $p_t>0$ be the observed price and
 $d_t\ge0$ the exogenous deposit. A candidate spends $x_t$, holds cash
 $C_t=C_{t-1}+d_t-x_t\ge0$, and accumulates units
@@ -77,7 +130,7 @@ W^S=C_n+p_{n+1}Q_n,
 W^{DCA}=p_{n+1}\sum_{t=1}^n\frac{d_t}{p_t}.
 \]
 
-Ticket 04 proves that if $W^S\ge W^{DCA}$ for every positive price path and
+That theorem proves that if $W^S\ge W^{DCA}$ for every positive price path and
 every deposit sequence, then $x_t=d_t$ after every history. The candidate is
 DCA, equality holds on every path, and strict improvement anywhere is
 impossible.
@@ -113,7 +166,7 @@ positive at one scenario
 
 ### Why every positive path is martingale-supported
 
-Burzoni et al.'s Proposition 1 says there is no one-point arbitrage on a
+Burzoni et al.'s Proposition 2.5 says there is no one-point arbitrage on a
 scenario set precisely when every scenario belongs to the support of a
 finite-support martingale measure. The full finite positive path space has this
 property. Given a target path, at each target node with current price $s>0$:
@@ -158,7 +211,7 @@ hypotheses.
 
 | Area and primary source | Precise setting/result used here | Relation to ticket 04 |
 |---|---|---|
-| Pointwise/model-free finance: [Burzoni et al. (2019)](https://doi.org/10.1287/moor.2018.0956) | Finite-horizon predictable self-financing trading on a scenario set; a one-point arbitrage is nonnegative everywhere and positive somewhere. Proposition 1 characterizes its absence by finite-support martingale measures charging every scenario. | **Direct corollary envelope** after common deposits are cancelled. No DCA, deposit process, buy-only candidate, or transaction-level equality statement appears in the paper. |
+| Pointwise/model-free finance: [Burzoni et al. (2019)](https://doi.org/10.1287/moor.2018.0956) | Finite-horizon predictable self-financing trading on a scenario set; a one-point arbitrage is nonnegative everywhere and positive somewhere. Proposition 2.5 characterizes its absence by finite-support martingale measures charging every scenario. | **Direct corollary envelope** after common deposits are cancelled. No DCA, deposit process, buy-only candidate, or transaction-level equality statement appears in the paper. |
 | Probability-free finance: [Riedel (2015)](https://arxiv.org/abs/1107.1078) | A probability-free FTAP in a topological state space; full-support martingale measures arise endogenously under continuity assumptions. | Conceptual precursor/analogy. Burzoni et al. is the cleaner direct source because it uses one-point arbitrage and scenario-by-scenario martingale support. |
 | DCA/minimax regret: [Pye (1971)](https://doi.org/10.1287/mnsc.17.7.379) | A fixed sum must be irreversibly converted into stock over a fixed number of periods. Under an arithmetic random walk with symmetric maximum up/down changes, dollar averaging is a **nonsequential minimax-regret** policy; Pye also derives a sequential minimax threshold policy tied to the running maximum. | **Closest DCA-specific criterion precedent**, but still an analogy. It starts with one lump sum, assumes a bounded/symmetric price-change model, optimizes regret rather than terminal wealth relative to same-deposit DCA, and does not assert universal dominance. |
 | Classical DCA choice theory: [Constantinides (1979)](https://doi.org/10.2307/2330513) | Treats DCA as a policy depending on total wealth and wealth composition and shows it is dominated by optimal sequential and optimal nonsequential investment policies in the paper's expected-utility portfolio-choice setting. | Analogy. “Dominated” is model- and utility-based, not terminal-wealth dominance on every path; the capital is available for portfolio choice rather than arriving as ticket-04 deposits. |
@@ -200,6 +253,24 @@ terminal wealth.
 | Enlarge funding/tradables | Permit borrowing, shorting, derivatives, or unequal deposits. | Options or leverage can create other dominance/preference results. | Changes the economic comparison rather than finding an implementable SmartDCA rule under the agreed model. |
 
 ## Recommendation: the epsilon-relative floor
+
+This section and the next were written as targets for the following ticket, and their
+mathematical content has since been proved. It is retained in the future tense as the
+provenance of the choice rather than rewritten as a result: the canonical home of what was
+proved is [the epsilon-DCA unit-coverage guardrail](../theorems/epsilon-dca-safety-unit-guardrail.md),
+and the bounded component it asked for is
+[the guarded corrected-mean SmartDCA rule](../definitions/guarded-corrected-mean-smartdca-rule.md).
+Requirements 1 to 4 of the recommended target below were delivered exactly. Requirement 5
+was not delivered by the guardrail or score construction. The later
+[two-purchase DCA boundary](../theorems/two-purchase-guarded-smartdca-boundary.md)
+now gives the exact realized-path strict-win condition at the smallest horizon,
+but it also proves that the strict-loss region is nonempty and that \(\beta\)
+drops out. A uniformly favourable path class, stochastic estimand, or utility
+criterion therefore remains open even though ticket 11 itself is resolved.
+Two of this section's guesses were also overtaken: the guardrail is not the DCA-anchored
+sleeve construction sketched here but the strictly larger class of all prefix-covering
+strategies, of which the sleeve is one member; and the floor turned out to be exactly
+attained rather than merely respected, so \(\lambda\) is sharp and not conservative.
 
 The next constructive theorem should use a **multiplicative downside budget
 relative to DCA**, not a stochastic objective or a narrow price class.
@@ -278,12 +349,19 @@ position before a broader citation search is “a sharp DCA-specific
 characterization suggested by the general no-arbitrage envelope,” not an
 established novelty claim.
 
+Both (\*) and (\*\*) were subsequently proved as stated, together with the third
+equivalent form and the exact worst-case factor, and are now owned by
+[the epsilon-DCA unit-coverage guardrail](../theorems/epsilon-dca-safety-unit-guardrail.md).
+The proposed adversarial check above is the argument that the proof uses. The novelty
+position in the paragraph above is unchanged by that proof and still stands.
+
 This recommendation is weakest in three useful senses:
 
 - **one threshold changes:** all paths and all implementation/accounting rules
   remain fixed, while the factor $1$ becomes $1-\varepsilon$;
 - **arbitrarily close to the boundary:** ε can be selected as small as desired,
-  whereas ε=0 is exactly ticket 04's impossibility boundary; and
+  whereas ε=0 is exactly
+  [the impossibility boundary](../theorems/causal-dca-dominance-impossibility.md); and
 - **scale-free:** unlike a fixed additive regret allowance, the guarantee remains
   meaningful when prices and deposits are unbounded.
 

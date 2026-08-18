@@ -1,3 +1,12 @@
+---
+profile: smartdca-okf/0.3
+type: workflow
+title: "Wayfinder ticket workflow"
+description: "Authoritative ticket lifecycle from orientation through the user significance gate."
+knowledge_role: operational
+status: stable
+original_record: true
+---
 # Wayfinder ticket workflow
 
 Use this lifecycle whenever work touches a ticket under `.scratch/<effort>/issues/`. The map is the index; the ticket is the single source of truth for its question and answer.

@@ -1,6 +1,15 @@
+---
+profile: smartdca-okf/0.3
+type: workflow
+title: "Issue tracker: Local Markdown"
+description: "Where research maps, tickets, and their state fields live and how they are named."
+knowledge_role: operational
+status: stable
+original_record: true
+---
 # Issue tracker: Local Markdown
 
-Research maps, specifications, and tickets for this repository live as Markdown under `.scratch/`. GitHub hosts and reviews the repository; the versioned ticket files remain the authoritative project state.
+Research maps, specifications, and tickets for this repository live as Markdown under `.scratch/`. Stripe's internal GitHub Enterprise (`git.corp.stripe.com`) hosts and reviews the repository; the versioned ticket files remain the authoritative project state.
 
 ## Conventions
 

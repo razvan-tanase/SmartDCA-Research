@@ -1,3 +1,13 @@
+---
+profile: smartdca-okf/0.3
+type: research-ticket
+title: "Retrospectively validate the source audit and continuation gate"
+description: "Resolved task ticket retrospectively validating the source audit and its continuation gate."
+knowledge_role: operational
+status: stable
+ticket_type: task
+ticket_status: resolved
+---
 # Retrospectively validate the source audit and continuation gate
 
 Type: task

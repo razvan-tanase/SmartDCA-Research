@@ -1,3 +1,26 @@
+---
+profile: smartdca-okf/0.3
+type: workflow
+title: "SmartDCA LLM-Wiki workflow"
+description: "How agents author, ingest, promote, review, and supersede knowledge in the wiki."
+knowledge_role: operational
+status: stable
+original_record: true
+generated:
+  by: claude-code/smartdca-wiki-0.1
+  at: 2026-08-16T10:04:00Z
+generation_run: urn:uuid:efe6420b-e236-40b6-96d4-c92a95d505d2
+verified:
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T07:46:00Z
+    review_run: urn:uuid:b5b1666e-e77c-41a4-8781-fb0d5a965582
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T07:46:00Z
+    review_run: urn:uuid:da31a04e-0105-4659-9d05-895a4364b107
+  - by: claude-code/smartdca-wiki-0.1
+    at: 2026-08-16T10:06:00Z
+    review_run: urn:uuid:6186d423-474a-44ee-8d3d-c36f938ad51a
+---
 # SmartDCA LLM-Wiki workflow
 
 This workflow maintains the repository-root LLM-Wiki defined by the normative [SmartDCA OKF profile](../knowledge/okf-profile.md). It complements, and does not replace, the [Wayfinder ticket workflow](wayfinder-ticket-workflow.md): Wayfinder governs work state; the profile governs knowledge representation.
@@ -31,7 +54,7 @@ This workflow maintains the repository-root LLM-Wiki defined by the normative [S
 7. Update the root index row and append a root log event in the same change.
 8. Run report validation and inspect both layers.
 
-Existing document bodies are preserved byte-for-byte during the atomic migration except for the prepended frontmatter. Later semantic edits follow normal review rules.
+The atomic migration preserved every existing body. It changed a body only where the profile itself required attribution the body did not yet carry — the canonical glossary gained footnote joins to its recorded sources — or where a concept stated project state that the migration itself changed. No content was split, synthesized, deduplicated, or rewritten. Later semantic edits follow normal review rules.
 
 ## Ingest one external source
 
@@ -87,14 +110,17 @@ Run:
 ```bash
 python -m unittest tools.okf.tests.test_validate_cli
 python tools/okf/validate.py .
+python tools/okf/validate.py . --strict
 ```
 
 Structural checks run on every knowledge change. Provenance, orphan, canonical-home, and contradiction checks run after every ingest or promotion. A full semantic audit runs at ticket resolution and release.
 
-[Implement the SmartDCA OKF profile and report-only validator](../../.scratch/smartdca/issues/13-implement-smartdca-okf-profile-validator.md) is report-only: findings are inventory, not a blocking exit. [Atomically migrate the repository to SmartDCA OKF 0.1](../../.scratch/smartdca/issues/14-atomically-migrate-repository-to-okf.md) migrates every concept, creates the complete index and log, performs required bootstrap reviews, and only then enables strict CI. Never enable blocking validation while any existing concept remains intentionally unmigrated.
+[Atomically migrate the repository to SmartDCA OKF 0.1](../../.scratch/smartdca/issues/14-atomically-migrate-repository-to-okf.md) migrated every concept, created the complete index and log, performed the required bootstrap reviews, and activated strict validation in the same merge transaction. Blocking validation is now the default: use report mode while iterating, but a change that leaves any concept nonconformant cannot merge. Adding a Markdown file at an unassigned path fails CI until the profile assigns its path, type, and role.
 
 ## Scale gates
 
 Keep ingestion supervised until structural freeze and three consecutive supervised ingests complete without schema changes, conformance failures, or high-severity semantic corrections. The ingestion ticket records the three-ingest evidence; the structural-freeze ticket evaluates the full gate. The first batch remains draft pending batch-level review.
+
+Structural freeze is revocable by design, on the terms the profile states. If later work needs a schema change, make it: bump the profile version and record the decision as usual. Do not treat a standing freeze as a reason to avoid a change the work genuinely needs, and do not work around the schema to protect the claim. Instead record that the freeze lapsed, restart the ingest streak, and re-certify before resuming anything the freeze gated.
 
 Do not add hybrid search before measured retrieval failures or scale near 100 sources or several hundred concepts. Do not label current Python evidence as OKF Attested Computation until a runtime and attestation protocol is specified.

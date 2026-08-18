@@ -1,3 +1,13 @@
+---
+profile: smartdca-okf/0.3
+type: research-ticket
+title: "Choose the corrected out quasi-Gini definition"
+description: "Resolved prototype ticket choosing the canonical corrected out quasi-Gini definition."
+knowledge_role: operational
+status: stable
+ticket_type: prototype
+ticket_status: resolved
+---
 # Choose the corrected out quasi-Gini definition
 
 Type: prototype

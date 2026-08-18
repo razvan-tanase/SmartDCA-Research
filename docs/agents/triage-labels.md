@@ -1,3 +1,12 @@
+---
+profile: smartdca-okf/0.3
+type: domain-glossary
+title: "Triage labels"
+description: "Operational mapping from canonical triage roles to this project's labels."
+knowledge_role: operational
+status: stable
+original_record: true
+---
 # Triage labels
 
 | Canonical role | Project label | Meaning |
