@@ -1,0 +1,40 @@
+name: Sync authoritative archive
+
+on:
+  push:
+    branches:
+      - agent/sync-authoritative-knowledge
+    paths:
+      - .github/workflows/sync-authoritative-archive.yml
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Replace repository tree from authoritative archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="SmartDCA-Research-main.zip"
+          test -f "$archive"
+          tmp="$(mktemp -d)"
+          unzip -q "$archive" -d "$tmp"
+          src="$tmp/SmartDCA-Research-main"
+          test -d "$src"
+
+          # Remove everything except Git metadata, then restore the exact archive tree.
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -a "$src"/. .
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && exit 0
+          git commit -m "Sync repository to authoritative knowledge snapshot"
+          git push origin HEAD:agent/sync-authoritative-knowledge
