@@ -6,16 +6,21 @@ on:
       - agent/sync-authoritative-knowledge
     paths:
       - .github/workflows/sync-authoritative-archive.yml
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: write
 
 jobs:
   sync:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: agent/sync-authoritative-knowledge
           fetch-depth: 0
       - name: Replace repository tree from authoritative archive
         shell: bash
@@ -38,5 +43,3 @@ jobs:
           git diff --cached --quiet && exit 0
           git commit -m "Sync repository to authoritative knowledge snapshot"
           git push origin HEAD:agent/sync-authoritative-knowledge
-
-# Trigger after workflow installation.
