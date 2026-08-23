@@ -2,16 +2,16 @@
 profile: smartdca-okf/0.4
 type: research-ticket
 title: "Establish the arbitrary-horizon accounting and verification seam"
-description: "Open task ticket proving the arbitrary-horizon cash-timing identity and delivering the exact-rational three-policy verification seam."
+description: "Claimed task ticket proving the arbitrary-horizon cash-timing identity and delivering the exact-rational three-policy verification seam."
 knowledge_role: operational
 status: draft
 original_record: true
 ticket_type: task
-ticket_status: open
+ticket_status: claimed
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T21:32:47Z
-generation_run: urn:uuid:ff59c0f2-6dfc-4e4e-8604-62961e607c7f
+  at: 2026-08-23T22:00:38Z
+generation_run: urn:uuid:ff3c5463-21cb-44f5-8d2e-3923115666ad
 verified:
   - by: openai-codex/writing-for-agents-0.1
     at: 2026-08-23T21:32:48Z
@@ -20,7 +20,7 @@ verified:
 # 01 — Establish the arbitrary-horizon accounting and verification seam
 
 Type: task
-Status: open
+Status: claimed
 Label: ready-for-agent
 Blocked by: `.scratch/smartdca/issues/18-isolate-three-purchase-corrected-mean-effect`
 Parent: [Arbitrary-horizon guarded SmartDCA performance](../spec.md)
