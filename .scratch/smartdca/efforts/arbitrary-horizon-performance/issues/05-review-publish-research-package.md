@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: research-ticket
 title: "Review and publish the arbitrary-horizon research package"
 description: "Open task ticket independently reviewing and publishing the arbitrary-horizon research package for the thesis narrative."
@@ -10,20 +10,20 @@ ticket_type: task
 ticket_status: open
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T19:40:02Z
-generation_run: urn:uuid:b31074e1-661f-4af8-98db-6fa1ebfc5f17
+  at: 2026-08-23T20:17:00Z
+generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
 ---
-# 25 — Review and publish the arbitrary-horizon research package
+# 05 — Review and publish the arbitrary-horizon research package
 
 Type: task
 Status: open
 Label: ready-for-agent
-Blocked by: 24
-Parent: [Test arbitrary-horizon guarded SmartDCA performance on single-valley paths](20-test-arbitrary-horizon-guarded-smartdca-single-valley.md)
+Blocked by: 04
+Parent: [Arbitrary-horizon guarded SmartDCA performance](../spec.md)
 
 ## Question
 
-Independently review the complete arbitrary-horizon result against ticket 20,
+Independently review the complete arbitrary-horizon result against the effort specification,
 the project standards, the established financial model, and every supporting
 exact witness. Resolve all actionable findings, publish the accepted result in
 the correct knowledge layers, and express its significance in a concise
@@ -53,5 +53,5 @@ presentation on proof details.
 
 ## Comments
 
-- Created from the approved tracer-bullet decomposition of ticket 20 on
+- Created from the approved tracer-bullet decomposition of the effort specification on
   2026-08-23.

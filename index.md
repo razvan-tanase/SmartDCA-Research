@@ -4,7 +4,7 @@ okf_version: "0.2"
 # SmartDCA knowledge index
 
 This is the complete inventory of the repository-root knowledge bundle. Its active
-profile is `smartdca-okf/0.3`, defined normatively in
+profile is `smartdca-okf/0.4`, defined normatively in
 [the SmartDCA OKF profile](docs/knowledge/okf-profile.md). Entries are grouped first by
 knowledge role and then by concept type; within the canonical role, stable concepts
 precede every other lifecycle state. [`README.md`](README.md) is the human
@@ -23,7 +23,7 @@ authoritative metadata.
 
 ### specification
 
-- [SmartDCA Open Knowledge Format profile](docs/knowledge/okf-profile.md) — Normative smartdca-okf/0.3 profile specializing Open Knowledge Format v0.2 for this bundle. — type: specification; status: stable; trust: reviewed 2026-08-16; provenance: cites the fingerprinted OKF v0.2 snapshot and internal concepts
+- [SmartDCA Open Knowledge Format profile](docs/knowledge/okf-profile.md) — Normative smartdca-okf/0.4 profile specializing Open Knowledge Format v0.2 for this bundle. — type: specification; status: stable; trust: reviewed 2026-08-23; provenance: cites the fingerprinted OKF v0.2 snapshot and internal concepts
 
 ### decision-record
 
@@ -33,6 +33,7 @@ authoritative metadata.
 - [Preserve path-based concept identity through supersession](docs/adr/0004-preserve-path-based-concept-identity.md) — Decision preserving path-based Concept IDs and replacing concepts through supersession, never moves. — type: decision-record; status: stable; trust: reviewed 2026-08-16; provenance: original record, Git history
 - [Assign source-summary and synthesis paths in profile 0.2](docs/adr/0005-assign-source-summary-and-synthesis-paths.md) — Decision assigning ingest summary and synthesis paths and relabelling the bundle as smartdca-okf/0.2. — type: decision-record; status: stable; trust: reviewed 2026-08-16; provenance: original record, Git history
 - [Assign definition, theorem, and experiment-report paths in profile 0.3](docs/adr/0006-assign-definition-theorem-and-experiment-report-paths.md) — Decision assigning the three remaining semantic type paths and relabelling the bundle as smartdca-okf/0.3. — type: decision-record; status: stable; trust: reviewed 2026-08-16; provenance: original record, Git history
+- [Adopt effort-scoped work tracking](docs/adr/0007-adopt-effort-scoped-work-tracking.md) — Decision to give each active research effort its own approved specification, map, and locally numbered ticket directory. — type: decision-record; status: stable; trust: reviewed 2026-08-23; provenance: original record, user approval
 
 ### definition
 
@@ -96,6 +97,11 @@ authoritative metadata.
 ### research-map
 
 - [Find the rigorous out quasi-Gini route to a complete SmartDCA paper](.scratch/smartdca/map.md) — Authoritative Wayfinder map holding the destination, settled decisions, and active research frontier. — type: research-map; status: stable; trust: unreviewed; provenance: Git history
+- [Arbitrary-horizon performance effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md) — Operational map of the approved arbitrary-horizon guarded SmartDCA performance effort and its blocking frontier. — type: research-map; status: stable; trust: unreviewed; provenance: approved effort structure
+
+### work-specification
+
+- [Test arbitrary-horizon guarded SmartDCA performance on single-valley paths](.scratch/smartdca/efforts/arbitrary-horizon-performance/spec.md) — Approved effort contract for a falsification-oriented arbitrary-horizon performance boundary for the guarded corrected-mean SmartDCA rule. — type: work-specification; status: stable; trust: user-approved 2026-08-23; provenance: synthesized from the thesis-frontier discussion
 
 ### research-ticket
 
@@ -118,9 +124,8 @@ authoritative metadata.
 - [Clean redundancy after structural freeze](.scratch/smartdca/issues/17-clean-redundancy-after-structural-freeze.md) — Resolved task ticket cleaning redundancy and applying supersession after structural freeze. — type: research-ticket; status: stable; trust: unreviewed; provenance: Git history
 - [Isolate the first nontrivial corrected-mean effect at three purchases](.scratch/smartdca/issues/18-isolate-three-purchase-corrected-mean-effect.md) — Resolved task ticket isolating the first beta-dependent guarded SmartDCA boundary at three purchases. — type: research-ticket; status: stable; trust: unreviewed; provenance: Git history
 - [Audit and sharpen agent-facing wiki instructions](.scratch/smartdca/issues/19-audit-agent-facing-writing.md) — Resolved task ticket auditing the full wiki for agent-consumed writing and sharpening the active instruction surfaces. — type: research-ticket; status: stable; trust: unreviewed; provenance: Git history
-- [Test arbitrary-horizon guarded SmartDCA performance on single-valley paths](.scratch/smartdca/issues/20-test-arbitrary-horizon-guarded-smartdca-single-valley.md) — Open research ticket seeking a falsification-oriented arbitrary-horizon performance boundary for the guarded corrected-mean SmartDCA rule. — type: research-ticket; status: draft; trust: unreviewed; provenance: Git history
-- [Establish the arbitrary-horizon accounting and verification seam](.scratch/smartdca/issues/21-establish-arbitrary-horizon-accounting-verification-seam.md) — Open task ticket proving the arbitrary-horizon cash-timing identity and delivering the exact-rational three-policy verification seam. — type: research-ticket; status: draft; trust: unreviewed; provenance: Git history
-- [Falsify the weak single-valley advantage conjecture](.scratch/smartdca/issues/22-falsify-weak-single-valley-advantage.md) — Open task ticket falsifying the weak single-valley advantage conjecture with deterministic exact-rational search. — type: research-ticket; status: draft; trust: unreviewed; provenance: Git history
-- [Characterize the cash single-crossing mechanism](.scratch/smartdca/issues/23-characterize-cash-single-crossing-mechanism.md) — Open research ticket proving or disproving the cash single-crossing mechanism and extracting a strategy-independent path condition. — type: research-ticket; status: draft; trust: unreviewed; provenance: Git history
-- [Prove the arbitrary-horizon performance boundary](.scratch/smartdca/issues/24-prove-arbitrary-horizon-performance-boundary.md) — Open research ticket proving a sharp arbitrary-horizon guarded SmartDCA performance theorem or negative boundary. — type: research-ticket; status: draft; trust: unreviewed; provenance: Git history
-- [Review and publish the arbitrary-horizon research package](.scratch/smartdca/issues/25-review-publish-arbitrary-horizon-research-package.md) — Open task ticket independently reviewing and publishing the arbitrary-horizon research package for the thesis narrative. — type: research-ticket; status: draft; trust: unreviewed; provenance: Git history
+- [Establish the arbitrary-horizon accounting and verification seam](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/01-establish-accounting-verification-seam.md) — Open task ticket proving the arbitrary-horizon cash-timing identity and delivering the exact-rational three-policy verification seam. — type: research-ticket; status: draft; trust: unreviewed; provenance: Git history
+- [Falsify the weak single-valley advantage conjecture](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/02-falsify-weak-single-valley-advantage.md) — Open task ticket falsifying the weak single-valley advantage conjecture with deterministic exact-rational search. — type: research-ticket; status: draft; trust: unreviewed; provenance: Git history
+- [Characterize the cash single-crossing mechanism](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/03-characterize-cash-single-crossing-mechanism.md) — Open research ticket proving or disproving the cash single-crossing mechanism and extracting a strategy-independent path condition. — type: research-ticket; status: draft; trust: unreviewed; provenance: Git history
+- [Prove the arbitrary-horizon performance boundary](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/04-prove-arbitrary-horizon-performance-boundary.md) — Open research ticket proving a sharp arbitrary-horizon guarded SmartDCA performance theorem or negative boundary. — type: research-ticket; status: draft; trust: unreviewed; provenance: Git history
+- [Review and publish the arbitrary-horizon research package](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/05-review-publish-research-package.md) — Open task ticket independently reviewing and publishing the arbitrary-horizon research package for the thesis narrative. — type: research-ticket; status: draft; trust: unreviewed; provenance: Git history

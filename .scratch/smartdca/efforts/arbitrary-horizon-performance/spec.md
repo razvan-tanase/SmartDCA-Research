@@ -1,25 +1,20 @@
 ---
-profile: smartdca-okf/0.3
-type: research-ticket
+profile: smartdca-okf/0.4
+type: work-specification
 title: "Test arbitrary-horizon guarded SmartDCA performance on single-valley paths"
-description: "Open research ticket seeking a falsification-oriented arbitrary-horizon performance boundary for the guarded corrected-mean SmartDCA rule."
+description: "Approved effort contract for a falsification-oriented arbitrary-horizon performance boundary for the guarded corrected-mean SmartDCA rule."
 knowledge_role: operational
-status: draft
+status: stable
 original_record: true
-ticket_type: research
-ticket_status: open
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T19:25:11Z
-generation_run: urn:uuid:af075d63-4217-4274-879e-4e82a9d238d8
+  at: 2026-08-23T20:29:00Z
+generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
 ---
-# Test arbitrary-horizon guarded SmartDCA performance on single-valley paths
+# Arbitrary-horizon guarded SmartDCA performance
 
-Type: research
-Status: open
-Label: ready-for-agent
-Blocked by: 18
-Parent: [Find the rigorous out quasi-Gini route to a complete SmartDCA paper](../map.md)
+Approval: approved by the user on 2026-08-23
+Parent: [SmartDCA research map](../../map.md)
 
 ## Question
 
@@ -84,7 +79,7 @@ economically interpretable conditions such as a bounded rebound,
 reference-crossing behavior, deposit regularity, or a restriction on repeated
 floor activation.
 
-The ticket is complete with either:
+The effort is complete with either:
 
 - a necessary-and-sufficient or otherwise sharp arbitrary-horizon theorem on a
   nonempty, independently defined path class; or
@@ -122,7 +117,7 @@ The ticket is complete with either:
 ## Implementation Decisions
 
 - Inherit the established comparison model: positive finite prices, exogenous deposits, causal long-only buy-only purchases, no leverage, cash carried without interest, and terminal wealth including cash.
-- Treat the epsilon-DCA unit guardrail as fixed infrastructure. This ticket evaluates the discretionary allocation and does not reopen the safety theorem.
+- Treat the epsilon-DCA unit guardrail as fixed infrastructure. This effort evaluates the discretionary allocation and does not reopen the safety theorem.
 - Use a weak single-valley definition initially: purchase prices are nonincreasing through one trough and nondecreasing afterward. Record separately whether strict slopes, a genuine decline, or a genuine recovery are needed.
 - Prove the arbitrary-horizon cash-timing identity before specializing the strategy. Derive its two-strategy form by replacing cash with the difference between the two strategies' cash paths.
 - Compare three policies under identical deposits and prices: DCA, the guarded corrected-mean rule, and the neutral guarded selector with discretionary score \(1/2\).
@@ -135,8 +130,8 @@ The ticket is complete with either:
 - Prefer a necessary-and-sufficient statement. If that is not feasible, require a proved sufficient condition, a proved obstruction showing why it is not necessary, and a nonempty strict region.
 - Develop coordinatewise comparative statics of the corrected mean only when the arbitrary-horizon proof requires them. Do not resume detached axiom enumeration.
 - Preserve a negative conclusion as a first-class result when single-valley structure is insufficient; do not replace it with an unsupported favorable narrative.
-- Record detailed derivations and counterexamples as evidence, extract a concise canonical theorem only after proof and review, and keep operational state in this ticket.
-- Stop this ticket after one defensible arbitrary-horizon boundary. Dynamic safety ratchets and optimization over all safe policies require later tickets.
+- Record detailed derivations and counterexamples as evidence, extract a concise canonical theorem only after proof and review, and keep operational state in the effort map and tickets.
+- Stop this effort after one defensible arbitrary-horizon boundary. Dynamic safety ratchets and optimization over all safe policies require later efforts.
 
 ## Testing Decisions
 
@@ -170,7 +165,7 @@ The ticket is complete with either:
 
 ## Further Notes
 
-This ticket is the mathematical bridge in the thesis narrative:
+This effort is the mathematical bridge in the thesis narrative:
 
 > impossible exact dominance → sharp attainable safety → adaptive guarded rule →
 > arbitrary-horizon performance boundary → empirical evaluation.
@@ -179,16 +174,16 @@ A strict positive result is not required. Showing that single-valley paths are
 insufficient, and identifying the exact missing structure, advances the
 research by making the boundary reusable for the next researcher.
 
-The existing [guardrail theorem](../../../research/theorems/epsilon-dca-safety-unit-guardrail.md)
+The existing [guardrail theorem](../../../../research/theorems/epsilon-dca-safety-unit-guardrail.md)
 already covers every finite horizon. The existing
-[three-purchase theorem](../../../research/theorems/three-purchase-corrected-mean-effect.md)
-shows that the corrected mean can change a realized outcome. This ticket must
+[three-purchase theorem](../../../../research/theorems/three-purchase-corrected-mean-effect.md)
+shows that the corrected mean can change a realized outcome. This effort must
 connect those two facts without overstating either one.
 
 The user and verification seam are already agreed: one reproducible
 arbitrary-horizon research package must connect the identity, exact-rational
 falsification search, final positive or negative theorem, evidence record, and
-canonical summary. Isolated formulas or scripts do not complete the ticket.
+canonical summary. Isolated formulas or scripts do not complete the effort.
 
 ## Comments
 

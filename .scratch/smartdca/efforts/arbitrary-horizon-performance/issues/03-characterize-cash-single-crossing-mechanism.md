@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: research-ticket
 title: "Characterize the cash single-crossing mechanism"
 description: "Open research ticket proving or disproving the cash single-crossing mechanism and extracting a strategy-independent path condition."
@@ -10,16 +10,16 @@ ticket_type: research
 ticket_status: open
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T19:40:02Z
-generation_run: urn:uuid:b31074e1-661f-4af8-98db-6fa1ebfc5f17
+  at: 2026-08-23T20:17:00Z
+generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
 ---
-# 23 — Characterize the cash single-crossing mechanism
+# 03 — Characterize the cash single-crossing mechanism
 
 Type: research
 Status: open
 Label: ready-for-agent
-Blocked by: 22
-Parent: [Test arbitrary-horizon guarded SmartDCA performance on single-valley paths](20-test-arbitrary-horizon-guarded-smartdca-single-valley.md)
+Blocked by: 02
+Parent: [Arbitrary-horizon guarded SmartDCA performance](../spec.md)
 
 ## Question
 
@@ -51,5 +51,5 @@ support such a class under the initial restrictions.
 
 ## Comments
 
-- Created from the approved tracer-bullet decomposition of ticket 20 on
+- Created from the approved tracer-bullet decomposition of the effort specification on
   2026-08-23.

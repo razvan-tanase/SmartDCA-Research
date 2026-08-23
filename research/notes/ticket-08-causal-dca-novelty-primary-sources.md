@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: research-note
 title: "Primary-source audit of the causal DCA boundary and constructive relaxations"
 description: "Novelty audit positioning the causal DCA boundary and ordering the admissible constructive relaxations."

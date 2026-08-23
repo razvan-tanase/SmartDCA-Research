@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: research-ticket
 title: "Retrospectively validate the source audit and continuation gate"
 description: "Resolved task ticket retrospectively validating the source audit and its continuation gate."

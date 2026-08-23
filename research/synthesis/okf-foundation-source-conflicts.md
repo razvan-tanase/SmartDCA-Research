@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: synthesis
 title: "Conflicts across the OKF foundation sources"
 description: "Cross-source integration of the five foundation sources and the four divergences the local profile has to resolve."
@@ -44,6 +44,9 @@ verified:
   - by: claude-code/smartdca-wiki-0.1
     at: 2026-08-16T10:34:00Z
     review_run: urn:uuid:86b3e187-d6a2-44c5-997c-8c06f5fdbf87
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-23T20:31:00Z
+    review_run: urn:uuid:15c9b810-1adb-4eed-b833-45e31bcad2f1
 ---
 # Conflicts across the OKF foundation sources
 

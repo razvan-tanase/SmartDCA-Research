@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: source-summary
 title: "Source summary: Karpathy's LLM Wiki proposal"
 description: "Summary of the LLM Wiki gist that proposes an LLM-maintained persistent wiki over immutable raw sources."

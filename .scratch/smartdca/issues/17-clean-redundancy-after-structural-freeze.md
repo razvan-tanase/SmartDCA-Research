@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: research-ticket
 title: "Clean redundancy after structural freeze"
 description: "Resolved task ticket cleaning redundancy and applying supersession after structural freeze."

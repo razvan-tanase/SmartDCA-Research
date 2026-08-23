@@ -8,6 +8,12 @@ the newest applicable group. The complete concept inventory is [`index.md`](inde
 
 ## 2026-08-23
 
+- 2026-08-23T20:15:00Z | Decision | Adopt effort-scoped specifications, maps, and locally numbered tickets | [decision](docs/adr/0007-adopt-effort-scoped-work-tracking.md), [profile](docs/knowledge/okf-profile.md)
+- 2026-08-23T20:16:00Z | Migration | Move the draft arbitrary-horizon specification and tickets into their bounded effort | [specification](.scratch/smartdca/efforts/arbitrary-horizon-performance/spec.md), [effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md), [first ticket](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/01-establish-accounting-verification-seam.md)
+- 2026-08-23T20:17:00Z | Update | Relabel the bundle as smartdca-okf/0.4 and lapse the prior structural freeze | [profile](docs/knowledge/okf-profile.md), [index](index.md), [master map](.scratch/smartdca/map.md)
+- 2026-08-23T20:30:00Z | Verification | Review the revised agent contract and effort-scoped ticket workflows | [contract](AGENTS.md), [tracker](docs/agents/issue-tracker.md), [wayfinder](docs/agents/wayfinder-ticket-workflow.md)
+- 2026-08-23T20:31:00Z | Verification | Review and promote the effort-scoped profile, terminology, and decision | [profile](docs/knowledge/okf-profile.md), [glossary](CONTEXT.md), [decision](docs/adr/0007-adopt-effort-scoped-work-tracking.md)
+
 - 2026-08-23T19:40:02Z | Creation | Decompose the arbitrary-horizon frontier into five tracer-bullet tickets | [accounting](.scratch/smartdca/issues/21-establish-arbitrary-horizon-accounting-verification-seam.md), [falsification](.scratch/smartdca/issues/22-falsify-weak-single-valley-advantage.md), [mechanism](.scratch/smartdca/issues/23-characterize-cash-single-crossing-mechanism.md), [boundary](.scratch/smartdca/issues/24-prove-arbitrary-horizon-performance-boundary.md), [review](.scratch/smartdca/issues/25-review-publish-arbitrary-horizon-research-package.md)
 - 2026-08-23T19:40:02Z | Update | Wire the approved arbitrary-horizon blocking frontier | [map](.scratch/smartdca/map.md), [index](index.md)
 

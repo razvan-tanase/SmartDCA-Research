@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: research-ticket
 title: "Decide whether the source-audit gap is significant enough to continue"
 description: "Resolved grilling ticket accepting the source-audit gap as significant enough to continue."

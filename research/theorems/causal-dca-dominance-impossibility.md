@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: theorem
 title: "Causal DCA dominance impossibility"
 description: "DCA is the unique causal fully funded strategy that can weakly dominate DCA in terminal wealth on every positive price path."
