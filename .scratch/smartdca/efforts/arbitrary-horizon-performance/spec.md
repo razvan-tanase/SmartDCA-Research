@@ -8,12 +8,15 @@ status: stable
 original_record: true
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T21:32:47Z
-generation_run: urn:uuid:ff59c0f2-6dfc-4e4e-8604-62961e607c7f
+  at: 2026-08-23T21:46:49Z
+generation_run: urn:uuid:8e4b4958-2ede-401f-888d-1d3f31b1cdfa
 verified:
   - by: openai-codex/writing-for-agents-0.1
     at: 2026-08-23T21:32:48Z
     review_run: urn:uuid:d87a04a7-92ae-43c4-a446-998b6f1a8d14
+  - by: human:github:razvan-tanase
+    at: 2026-08-23T21:46:49Z
+    review_run: urn:uuid:d0e39bb8-dc33-4e02-a42c-71ac62981756
 ---
 # Arbitrary-horizon guarded SmartDCA performance
 
@@ -106,6 +109,37 @@ The effort is complete with either:
 - Express the accepted result as a concise Financial Computing thesis claim,
   with detailed proof machinery remaining in the paper and evidence record.
 
+## User Stories
+
+These approved stories preserve the stakeholder rationale behind the concise
+outcomes above. Consult them when interpreting scope, reviewing completeness,
+or translating the result into the thesis and defense narrative.
+
+1. As a master's researcher, I want one arbitrary-horizon result, so that the thesis advances beyond finite examples without becoming an open-ended mathematics project.
+2. As a master's researcher, I want the result tied to an investment-cycle use case, so that the defense can center on a Financial Computing problem rather than proof technique.
+3. As a master's researcher, I want negative findings to count as valid outcomes, so that the work reports discovery honestly instead of forcing a superiority claim.
+4. As a thesis committee member, I want the practical question stated before the mathematics, so that I can understand why the theorem matters.
+5. As a thesis committee member, I want the safety mechanism separated from the discretionary signal, so that I can distinguish what is guaranteed from what is merely adaptive.
+6. As a paper reader, I want an arbitrary-horizon cash-timing identity, so that I can see exactly how delayed investment creates gains or losses relative to DCA.
+7. As a paper reader, I want the favorable path class defined independently of terminal performance, so that the theorem is not tautological.
+8. As a paper reader, I want every evaluation-price condition stated explicitly, so that the result's economic scope is visible.
+9. As a paper reader, I want the corrected rule compared with both DCA and the neutral guarded selector, so that the contribution of the score is not confused with the contribution of the guardrail.
+10. As a future researcher, I want exact counterexamples preserved, so that failed conjectures become reusable boundary knowledge.
+11. As a future researcher, I want the smallest failed path and parameter configuration, so that I can identify which assumption breaks the conjecture.
+12. As a future researcher, I want any refined condition to be economically interpretable, so that later work can connect it to empirical market regimes.
+13. As an implementing agent, I want a fixed initial parameter region, so that the first search does not mix transform, monotonicity, and financial questions.
+14. As an implementing agent, I want exact-rational calculations, so that classifications near a boundary do not depend on floating-point error.
+15. As an implementing agent, I want every guardrail branch exposed in the scenario output, so that floor activation cannot silently explain an apparent score effect.
+16. As an implementing agent, I want a deterministic finite search grid, so that another agent can reproduce every candidate and counterexample.
+17. As a proof reviewer, I want the general accounting identity verified independently from the strategy formula, so that an allocation bug cannot validate its own theorem.
+18. As a proof reviewer, I want constant paths, boundary parameters, ties, and nontrivial examples checked, so that the declared domain is fully covered.
+19. As a proof reviewer, I want computational evidence kept separate from proof, so that exhaustive search over a finite grid is not presented as an arbitrary-horizon theorem.
+20. As an empirical researcher, I want the surviving theoretical path conditions recorded explicitly, so that a later empirical study can measure how often and how strongly they occur.
+21. As an empirical researcher, I want the safety parameter kept visible, so that later experiments can study the trade-off between DCA coverage and adaptive freedom.
+22. As a future strategy designer, I want the score's performance compared within the complete safe-policy interface, so that later work can replace the corrected mean without re-proving the guardrail.
+23. As a thesis author, I want the final result expressible without detailed proof machinery, so that it can become a clear defense slide while the full proof remains available in the paper.
+24. As a thesis author, I want one explicit stopping condition, so that this frontier investigation does not delay the empirical study indefinitely.
+
 ## Implementation Decisions
 
 - Inherit the established comparison model: positive finite prices, exogenous deposits, causal long-only buy-only purchases, no leverage, cash carried without interest, and terminal wealth including cash.
@@ -184,3 +218,5 @@ canonical summary. Completion requires this integrated package.
 - The user confirmed that the previously proposed arbitrary-horizon frontier
   still stands and should now be pursued inside the Financial Computing
   narrative.
+- The 24 approved user stories were restored verbatim on 2026-08-24 at the
+  user's request after their earlier consolidation-only treatment.

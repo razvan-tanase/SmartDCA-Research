@@ -8,6 +8,8 @@ the newest applicable group. The complete concept inventory is [`index.md`](inde
 
 ## 2026-08-23
 
+- 2026-08-23T21:46:49Z | Update | Restore all approved user stories and upgrade GitHub Actions to Node 24-compatible releases | [effort specification](.scratch/smartdca/efforts/arbitrary-horizon-performance/spec.md), [verification workflow](.github/workflows/verification.yml)
+
 - 2026-08-23T21:32:48Z | Verification | Review every `.scratch` Markdown path and verify the active instruction surfaces with Writing for Agents | [master map](.scratch/smartdca/map.md), [effort specification](.scratch/smartdca/efforts/arbitrary-horizon-performance/spec.md), [effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md), [ticket route](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/01-establish-accounting-verification-seam.md)
 - 2026-08-23T21:32:47Z | Update | Sharpen the active `.scratch` effort contract, map, and tickets for agent execution | [master map](.scratch/smartdca/map.md), [effort specification](.scratch/smartdca/efforts/arbitrary-horizon-performance/spec.md), [effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md), [first ticket](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/01-establish-accounting-verification-seam.md)
 
