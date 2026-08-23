@@ -103,7 +103,7 @@ tests = Path("tools/okf/tests/test_validate_cli.py")
 text = tests.read_text(encoding="utf-8")
 text, count = re.subn(
     r'    def project_overview\(self\):\n.*?(?=    def concept\()',
-    '    def project_overview(self):\n        return "# Project overview\\n"\n\n',
+    '    def project_overview(self):\n        return "# Project overview"\n\n',
     text,
     count=1,
     flags=re.S,
