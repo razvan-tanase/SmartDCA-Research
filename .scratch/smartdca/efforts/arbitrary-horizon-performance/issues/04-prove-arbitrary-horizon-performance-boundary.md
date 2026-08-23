@@ -10,14 +10,17 @@ ticket_type: research
 ticket_status: open
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T20:17:00Z
-generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
+  at: 2026-08-23T21:32:47Z
+generation_run: urn:uuid:ff59c0f2-6dfc-4e4e-8604-62961e607c7f
+verified:
+  - by: openai-codex/writing-for-agents-0.1
+    at: 2026-08-23T21:32:48Z
+    review_run: urn:uuid:d87a04a7-92ae-43c4-a446-998b6f1a8d14
 ---
 # 04 — Prove the arbitrary-horizon performance boundary
 
 Type: research
 Status: open
-Label: ready-for-agent
 Blocked by: 03
 Parent: [Arbitrary-horizon guarded SmartDCA performance](../spec.md)
 

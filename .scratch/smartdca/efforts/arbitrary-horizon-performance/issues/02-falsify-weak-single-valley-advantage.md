@@ -10,14 +10,17 @@ ticket_type: task
 ticket_status: open
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T20:17:00Z
-generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
+  at: 2026-08-23T21:32:47Z
+generation_run: urn:uuid:ff59c0f2-6dfc-4e4e-8604-62961e607c7f
+verified:
+  - by: openai-codex/writing-for-agents-0.1
+    at: 2026-08-23T21:32:48Z
+    review_run: urn:uuid:d87a04a7-92ae-43c4-a446-998b6f1a8d14
 ---
 # 02 — Falsify the weak single-valley advantage conjecture
 
 Type: task
 Status: open
-Label: ready-for-agent
 Blocked by: 01
 Parent: [Arbitrary-horizon guarded SmartDCA performance](../spec.md)
 
@@ -31,8 +34,8 @@ before attempting a general proof and minimize every decisive witness.
 
 ## What to build
 
-A reproducible falsification report answers what the declared finite search
-does and does not establish. If the conjecture fails, the report supplies the
+A reproducible falsification report states the scope and limits of the declared
+finite search. If the conjecture fails, the report supplies the
 smallest exact counterexample under the declared ordering. If it survives, the
 report preserves the complete search domain and states explicitly that finite
 non-discovery is not proof.
@@ -43,10 +46,10 @@ non-discovery is not proof.
 - [ ] The search covers declared rational grids at horizons four through eight with equal positive deposits, declared countercyclical parameters, the identity transform, and an explicit evaluation-price grid.
 - [ ] The grid, enumeration order, pruning rules, and computational limits are recorded.
 - [ ] Results distinguish corrected-versus-DCA and corrected-versus-neutral comparisons.
-- [ ] Guardrail-floor activation is recorded so an apparent score effect cannot be attributed silently to the floor.
+- [ ] Guardrail-floor activation is recorded, and every reported score effect identifies whether floor activation contributed.
 - [ ] Any counterexample is minimized by horizon, price complexity, parameter complexity, and deposit complexity.
 - [ ] Every reported witness is replayed as a named exact regression case.
-- [ ] If no counterexample is found, the resolution reports only survival of the finite search and makes no arbitrary-horizon claim.
+- [ ] If no counterexample is found, the resolution limits its claim to survival of the declared finite search.
 
 ## Comments
 

@@ -10,14 +10,17 @@ ticket_type: research
 ticket_status: open
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T20:17:00Z
-generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
+  at: 2026-08-23T21:32:47Z
+generation_run: urn:uuid:ff59c0f2-6dfc-4e4e-8604-62961e607c7f
+verified:
+  - by: openai-codex/writing-for-agents-0.1
+    at: 2026-08-23T21:32:48Z
+    review_run: urn:uuid:d87a04a7-92ae-43c4-a446-998b6f1a8d14
 ---
 # 03 — Characterize the cash single-crossing mechanism
 
 Type: research
 Status: open
-Label: ready-for-agent
 Blocked by: 02
 Parent: [Arbitrary-horizon guarded SmartDCA performance](../spec.md)
 
@@ -41,7 +44,7 @@ support such a class under the initial restrictions.
 ## Acceptance criteria
 
 - [ ] Cash-path differences and the meaning and location of a single crossing are defined for every finite horizon.
-- [ ] The weak single-valley conjecture is proved or disproved using exact assumptions and witnesses.
+- [ ] The cash single-crossing conjecture on weak single-valley paths is proved or disproved using exact assumptions and witnesses.
 - [ ] The role of repeated guardrail-floor activation is separated from the role of the discretionary score.
 - [ ] Any comparative-static property of the corrected mean used by the argument is proved on the exact parameter region required.
 - [ ] Every failed statement is accompanied by a minimized exact counterexample satisfying all declared assumptions.

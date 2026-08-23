@@ -8,6 +8,9 @@ the newest applicable group. The complete concept inventory is [`index.md`](inde
 
 ## 2026-08-23
 
+- 2026-08-23T21:32:48Z | Verification | Review every `.scratch` Markdown path and verify the active instruction surfaces with Writing for Agents | [master map](.scratch/smartdca/map.md), [effort specification](.scratch/smartdca/efforts/arbitrary-horizon-performance/spec.md), [effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md), [ticket route](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/01-establish-accounting-verification-seam.md)
+- 2026-08-23T21:32:47Z | Update | Sharpen the active `.scratch` effort contract, map, and tickets for agent execution | [master map](.scratch/smartdca/map.md), [effort specification](.scratch/smartdca/efforts/arbitrary-horizon-performance/spec.md), [effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md), [first ticket](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/01-establish-accounting-verification-seam.md)
+
 - 2026-08-23T20:15:00Z | Decision | Adopt effort-scoped specifications, maps, and locally numbered tickets | [decision](docs/adr/0007-adopt-effort-scoped-work-tracking.md), [profile](docs/knowledge/okf-profile.md)
 - 2026-08-23T20:16:00Z | Migration | Move the draft arbitrary-horizon specification and tickets into their bounded effort | [specification](.scratch/smartdca/efforts/arbitrary-horizon-performance/spec.md), [effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md), [first ticket](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/01-establish-accounting-verification-seam.md)
 - 2026-08-23T20:17:00Z | Update | Relabel the bundle as smartdca-okf/0.4 and lapse the prior structural freeze | [profile](docs/knowledge/okf-profile.md), [index](index.md), [master map](.scratch/smartdca/map.md)

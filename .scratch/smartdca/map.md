@@ -7,8 +7,12 @@ knowledge_role: operational
 status: stable
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T20:17:00Z
-generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
+  at: 2026-08-23T21:32:47Z
+generation_run: urn:uuid:ff59c0f2-6dfc-4e4e-8604-62961e607c7f
+verified:
+  - by: openai-codex/writing-for-agents-0.1
+    at: 2026-08-23T21:32:48Z
+    review_run: urn:uuid:d87a04a7-92ae-43c4-a446-998b6f1a8d14
 ---
 # Find the rigorous out quasi-Gini route to a complete SmartDCA paper
 
@@ -32,8 +36,7 @@ A thesis- and paper-grade, self-contained Financial Computing study suitable for
 - Negative and impossibility results are acceptable central contributions.
 - Experiments illustrate and stress-test theory; they do not prove universal claims. The eventual workflow is Google Colab-compatible, seeded, provenance-documented, and includes synthetic/adversarial paths plus controlled S&P 500 and Bitcoin source comparisons.
 - Execution through a proof-complete manuscript and reproducibility package is part of this map, overriding Wayfinder's planning-only default.
-- Every ticket follows the authoritative [Wayfinder ticket workflow](../../docs/agents/wayfinder-ticket-workflow.md): one claimed ticket, evidence-backed resolution, synchronized map, preserved checkpoint, and an explicit user significance gate before the next claim. Parallel work requires explicit approval.
-- Consult the research, domain-modeling, PDF, and relevant artifact skills as each ticket requires.
+- **Ticket execution:** follow the authoritative [Wayfinder ticket workflow](../../docs/agents/wayfinder-ticket-workflow.md) whenever claiming, executing, reviewing, resolving, or advancing an active ticket. It owns the lifecycle, skill routing, synchronization, checkpoint, and user significance gate.
 
 ## Decisions so far
 
@@ -75,7 +78,7 @@ A thesis- and paper-grade, self-contained Financial Computing study suitable for
 - Deferred unless required by the manuscript: the remaining generic axiom and parameter-region theorems after homogeneity.
 - The behavior of the corrected-mean reference under changes in lagged prices outside parameter/transform regions where coordinatewise monotonicity is known.
 - Three supervised one-source ingests, all after the freeze certification, are needed before the batch-ingestion gate reopens; the batch's first cohort still remains draft pending batch-level review when it does.
-- Whether any of the seventeen ticket answers should be rewritten to link the canonical concepts extracted later. The cleanup deliberately left them as history; reversing that judgement is a separate decision, not an oversight.
+- Whether any resolved legacy ticket answer should be rewritten to link the canonical concepts extracted later. The cleanup deliberately left those answers as history; reversing that judgement is a separate decision, not an oversight.
 - Sixteen tickets carry no `generated`/`generation_run` despite agent-written bodies, a standing profile nonconformance the structural validator cannot detect. The cleanup fixed only [the ticket that made the finding](issues/17-clean-redundancy-after-structural-freeze.md) rather than back-filling times and run identifiers that are not recorded anywhere.
 - The exact empirical estimands, datasets, transaction-cost assumptions, robustness grid, and statistical reporting protocol.
 - The manuscript outline, target venue, literature positioning, proof organization, reproducibility package, and final verification process.

@@ -8,8 +8,12 @@ status: stable
 original_record: true
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T20:17:00Z
-generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
+  at: 2026-08-23T21:32:47Z
+generation_run: urn:uuid:ff59c0f2-6dfc-4e4e-8604-62961e607c7f
+verified:
+  - by: openai-codex/writing-for-agents-0.1
+    at: 2026-08-23T21:32:48Z
+    review_run: urn:uuid:d87a04a7-92ae-43c4-a446-998b6f1a8d14
 ---
 # Arbitrary-horizon performance effort map
 
@@ -17,7 +21,9 @@ generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
 
 The approved scope, completion boundary, testing decisions, and exclusions live
 in the [effort specification](spec.md). The project-wide scientific context
-lives in the [SmartDCA research map](../../map.md).
+lives in the [SmartDCA research map](../../map.md). Follow the
+[Wayfinder ticket workflow](../../../../docs/agents/wayfinder-ticket-workflow.md)
+whenever claiming, executing, resolving, or advancing a ticket in this route.
 
 ## Ticket route
 
@@ -31,6 +37,7 @@ lives in the [SmartDCA research map](../../map.md).
 
 ## Active frontier
 
-Ticket 01 is ready. Tickets 02–05 remain blocked in the order shown above.
-Local ticket numbers are meaningful only inside this effort; blockers outside
-the effort use their full Concept ID.
+Only ticket 01 may be claimed. Its external dependency is resolved; tickets
+02–05 remain blocked in the order shown above. Local ticket numbers are
+meaningful only inside this effort; blockers outside the effort use their full
+Concept ID.

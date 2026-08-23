@@ -8,8 +8,12 @@ status: stable
 original_record: true
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T20:29:00Z
-generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
+  at: 2026-08-23T21:32:47Z
+generation_run: urn:uuid:ff59c0f2-6dfc-4e4e-8604-62961e607c7f
+verified:
+  - by: openai-codex/writing-for-agents-0.1
+    at: 2026-08-23T21:32:48Z
+    review_run: urn:uuid:d87a04a7-92ae-43c4-a446-998b6f1a8d14
 ---
 # Arbitrary-horizon guarded SmartDCA performance
 
@@ -42,9 +46,9 @@ epsilon-DCA unit guardrail. The next step must show what the adaptive component
 contributes beyond that guardrail, or establish a clear boundary showing why an
 apparently favorable path class is still insufficient.
 
-Extending the existing algebra to exactly four purchases would not solve this
-problem. The needed result must apply to every finite horizon in a path class
-defined independently of the strategy's realized wealth gap.
+The required result applies to every finite horizon in a path class defined
+independently of the strategy's realized wealth gap; a four-purchase extension
+alone is outside the completion boundary.
 
 ## Solution
 
@@ -87,49 +91,37 @@ The effort is complete with either:
   insufficient, together with an exact counterexample and the sharpest
   independently defined additional condition justified by the investigation.
 
-## User Stories
+## Outcome requirements
 
-1. As a master's researcher, I want one arbitrary-horizon result, so that the thesis advances beyond finite examples without becoming an open-ended mathematics project.
-2. As a master's researcher, I want the result tied to an investment-cycle use case, so that the defense can center on a Financial Computing problem rather than proof technique.
-3. As a master's researcher, I want negative findings to count as valid outcomes, so that the work reports discovery honestly instead of forcing a superiority claim.
-4. As a thesis committee member, I want the practical question stated before the mathematics, so that I can understand why the theorem matters.
-5. As a thesis committee member, I want the safety mechanism separated from the discretionary signal, so that I can distinguish what is guaranteed from what is merely adaptive.
-6. As a paper reader, I want an arbitrary-horizon cash-timing identity, so that I can see exactly how delayed investment creates gains or losses relative to DCA.
-7. As a paper reader, I want the favorable path class defined independently of terminal performance, so that the theorem is not tautological.
-8. As a paper reader, I want every evaluation-price condition stated explicitly, so that the result's economic scope is visible.
-9. As a paper reader, I want the corrected rule compared with both DCA and the neutral guarded selector, so that the contribution of the score is not confused with the contribution of the guardrail.
-10. As a future researcher, I want exact counterexamples preserved, so that failed conjectures become reusable boundary knowledge.
-11. As a future researcher, I want the smallest failed path and parameter configuration, so that I can identify which assumption breaks the conjecture.
-12. As a future researcher, I want any refined condition to be economically interpretable, so that later work can connect it to empirical market regimes.
-13. As an implementing agent, I want a fixed initial parameter region, so that the first search does not mix transform, monotonicity, and financial questions.
-14. As an implementing agent, I want exact-rational calculations, so that classifications near a boundary do not depend on floating-point error.
-15. As an implementing agent, I want every guardrail branch exposed in the scenario output, so that floor activation cannot silently explain an apparent score effect.
-16. As an implementing agent, I want a deterministic finite search grid, so that another agent can reproduce every candidate and counterexample.
-17. As a proof reviewer, I want the general accounting identity verified independently from the strategy formula, so that an allocation bug cannot validate its own theorem.
-18. As a proof reviewer, I want constant paths, boundary parameters, ties, and nontrivial examples checked, so that the declared domain is fully covered.
-19. As a proof reviewer, I want computational evidence kept separate from proof, so that exhaustive search over a finite grid is not presented as an arbitrary-horizon theorem.
-20. As an empirical researcher, I want the surviving theoretical path conditions recorded explicitly, so that a later empirical study can measure how often and how strongly they occur.
-21. As an empirical researcher, I want the safety parameter kept visible, so that later experiments can study the trade-off between DCA coverage and adaptive freedom.
-22. As a future strategy designer, I want the score's performance compared within the complete safe-policy interface, so that later work can replace the corrected mean without re-proving the guardrail.
-23. As a thesis author, I want the final result expressible without detailed proof machinery, so that it can become a clear defense slide while the full proof remains available in the paper.
-24. As a thesis author, I want one explicit stopping condition, so that this frontier investigation does not delay the empirical study indefinitely.
+- Deliver one arbitrary-horizon positive or negative boundary tied to an
+  interpretable investment-cycle use case.
+- Separate the inherited epsilon-DCA safety guarantee from the performance of
+  the discretionary corrected-mean score.
+- Compare the corrected rule with both DCA and the neutral guarded selector
+  under identical prices, deposits, and evaluation conditions.
+- Define every path class and evaluation-price condition independently of the
+  resulting terminal-wealth sign.
+- Preserve exact counterexamples, deterministic search inputs, proof evidence,
+  and independent verification as one reproducible package.
+- Express the accepted result as a concise Financial Computing thesis claim,
+  with detailed proof machinery remaining in the paper and evidence record.
 
 ## Implementation Decisions
 
 - Inherit the established comparison model: positive finite prices, exogenous deposits, causal long-only buy-only purchases, no leverage, cash carried without interest, and terminal wealth including cash.
-- Treat the epsilon-DCA unit guardrail as fixed infrastructure. This effort evaluates the discretionary allocation and does not reopen the safety theorem.
+- Keep the epsilon-DCA unit guardrail fixed as inherited infrastructure; evaluate only the discretionary allocation.
 - Use a weak single-valley definition initially: purchase prices are nonincreasing through one trough and nondecreasing afterward. Record separately whether strict slopes, a genuine decline, or a genuine recovery are needed.
 - Prove the arbitrary-horizon cash-timing identity before specializing the strategy. Derive its two-strategy form by replacing cash with the difference between the two strategies' cash paths.
 - Compare three policies under identical deposits and prices: DCA, the guarded corrected-mean rule, and the neutral guarded selector with discretionary score \(1/2\).
-- Begin with \(f=\mathrm{id}\), equal positive deposits, \(0<\lambda<1\), \(\alpha<1\), and a coordinatewise-monotone weighted Gini parameter region. General transforms and unequal deposits are admitted only after the restricted question is settled.
-- Treat cash-path single crossing around the trough as a conjectured mechanism, not an assumption disguised as a result.
+- Begin with \(f=\mathrm{id}\), equal positive deposits, \(0<\lambda<1\), \(\alpha<1\), and a coordinatewise-monotone weighted Gini parameter region. Defer general transforms and unequal deposits until the restricted question is settled.
+- Treat cash-path single crossing around the trough as a conjectured mechanism and require proof before using it in a theorem.
 - Search horizons four through eight over a declared finite rational grid before committing to a general proof. Record the grid, enumeration order, and all pruning rules.
 - Exercise every reachable guardrail-floor branch and distinguish score effects from floor effects in the result record.
 - When the initial conjecture fails, minimize the counterexample lexicographically by horizon, price complexity, parameter complexity, and deposit complexity before proposing a narrower class.
 - Admit a narrowing condition only when it is stated using observable price, deposit, reference, or guardrail structure rather than the sign of eventual relative wealth.
 - Prefer a necessary-and-sufficient statement. If that is not feasible, require a proved sufficient condition, a proved obstruction showing why it is not necessary, and a nonempty strict region.
-- Develop coordinatewise comparative statics of the corrected mean only when the arbitrary-horizon proof requires them. Do not resume detached axiom enumeration.
-- Preserve a negative conclusion as a first-class result when single-valley structure is insufficient; do not replace it with an unsupported favorable narrative.
+- Develop coordinatewise comparative statics of the corrected mean only when the arbitrary-horizon proof requires them; keep generic axiom enumeration deferred.
+- Preserve a negative conclusion as a first-class result when single-valley structure is insufficient.
 - Record detailed derivations and counterexamples as evidence, extract a concise canonical theorem only after proof and review, and keep operational state in the effort map and tickets.
 - Stop this effort after one defensible arbitrary-horizon boundary. Dynamic safety ratchets and optimization over all safe policies require later efforts.
 
@@ -144,9 +136,9 @@ The effort is complete with either:
 - Verify constant prices, a trough at either endpoint, flat segments around the trough, exact ties, zero discretionary interval where reachable, and the \(\lambda=1\) DCA collapse as boundary checks.
 - Verify that every generated test path satisfies the declared single-valley predicate independently of the strategy result.
 - Verify the corrected and neutral selectors from the same starting ledger and guardrail implementation, while calculating DCA independently.
-- Keep the exhaustive search deterministic and exact; no random seed or floating-point tolerance may control a reported classification.
+- Run the exhaustive search with deterministic enumeration and exact rational arithmetic; every reported classification must be independent of random seeds and floating-point tolerances.
 - For every counterexample used in the result, replay it as a named regression case and verify every assumption mechanically.
-- For every positive theorem, test samples inside, on the boundary of, and outside the claimed class; outside-class failures do not refute a scoped theorem but must remain visible.
+- For every positive theorem, test samples inside, on the boundary of, and outside the claimed class, and keep outside-class failures visible.
 - Run an independent mathematical review that re-derives the accounting identity, checks every proof case, and reproduces each exact witness without relying on the producing derivation.
 - Run the repository's structural and scientific verification gates after all documentation and evidence are synchronized.
 
@@ -170,9 +162,9 @@ This effort is the mathematical bridge in the thesis narrative:
 > impossible exact dominance → sharp attainable safety → adaptive guarded rule →
 > arbitrary-horizon performance boundary → empirical evaluation.
 
-A strict positive result is not required. Showing that single-valley paths are
-insufficient, and identifying the exact missing structure, advances the
-research by making the boundary reusable for the next researcher.
+Either a strict positive result or a rigorous insufficiency result completes
+the scientific objective. In the negative branch, identify the exact missing
+structure so the boundary remains reusable for the next researcher.
 
 The existing [guardrail theorem](../../../../research/theorems/epsilon-dca-safety-unit-guardrail.md)
 already covers every finite horizon. The existing
@@ -183,7 +175,7 @@ connect those two facts without overstating either one.
 The user and verification seam are already agreed: one reproducible
 arbitrary-horizon research package must connect the identity, exact-rational
 falsification search, final positive or negative theorem, evidence record, and
-canonical summary. Isolated formulas or scripts do not complete the effort.
+canonical summary. Completion requires this integrated package.
 
 ## Comments
 
