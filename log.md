@@ -8,6 +8,7 @@ the newest applicable group. The complete concept inventory is [`index.md`](inde
 
 ## 2026-08-23
 
+- 2026-08-23T16:17:07Z | Claim | Claim the agent-facing writing audit ticket | [ticket](.scratch/smartdca/issues/19-audit-agent-facing-writing.md)
 - 2026-08-23T15:45:00Z | Update | Treat README as repository interface outside the OKF concept corpus | [README](README.md), [profile](docs/knowledge/okf-profile.md)
 
 ## 2026-08-16
