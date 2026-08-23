@@ -8,6 +8,14 @@ the newest applicable group. The complete concept inventory is [`index.md`](inde
 
 ## 2026-08-23
 
+- 2026-08-23T22:36:40Z | Update | Promote the cash-timing theorem, evidence seam, and glossary term after independent semantic review | [theorem](research/theorems/arbitrary-horizon-cash-timing-identity.md), [evidence](research/notes/arbitrary-horizon-accounting-verification-seam.md), [glossary](CONTEXT.md), [index](index.md)
+- 2026-08-23T22:36:39Z | Verification | Independent Standards and Spec re-review confirms the accounting seam, radical boundaries, exact witnesses, and synchronized resolution | [ticket](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/01-establish-accounting-verification-seam.md), [theorem](research/theorems/arbitrary-horizon-cash-timing-identity.md), [evidence](research/notes/arbitrary-horizon-accounting-verification-seam.md), [effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md), [glossary](CONTEXT.md)
+
+- 2026-08-23T22:31:24Z | Resolution | Resolve the arbitrary-horizon accounting seam and expose the falsification ticket as the next unclaimed frontier | [ticket](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/01-establish-accounting-verification-seam.md), [effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md)
+- 2026-08-23T22:31:24Z | Update | Correct the exact-rational boundary behavior and independent-review findings in the accounting seam | [evidence](research/notes/arbitrary-horizon-accounting-verification-seam.md), [check](reproducibility/checks/check_arbitrary_horizon_accounting_verification.py)
+
+- 2026-08-23T22:13:42Z | Creation | Add the arbitrary-horizon cash-timing theorem, evidence note, and exact-rational three-policy seam | [theorem](research/theorems/arbitrary-horizon-cash-timing-identity.md), [evidence](research/notes/arbitrary-horizon-accounting-verification-seam.md)
+
 - 2026-08-23T22:00:38Z | Update | Claim the arbitrary-horizon accounting and verification seam | [ticket](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/01-establish-accounting-verification-seam.md), [effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md)
 
 - 2026-08-23T21:46:49Z | Update | Restore all approved user stories and upgrade GitHub Actions to Node 24-compatible releases | [effort specification](.scratch/smartdca/efforts/arbitrary-horizon-performance/spec.md), [verification workflow](.github/workflows/verification.yml)

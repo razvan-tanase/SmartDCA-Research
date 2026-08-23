@@ -17,10 +17,6 @@ authoritative metadata.
 ## Canonical
 
 
-### domain-glossary
-
-- [Quasi-Gini SmartDCA Research](CONTEXT.md) — Canonical mathematical, financial, and knowledge-system vocabulary with its forbidden alternatives. — type: domain-glossary; status: stable; trust: reviewed 2026-08-16; provenance: cites internal concepts
-
 ### specification
 
 - [SmartDCA Open Knowledge Format profile](docs/knowledge/okf-profile.md) — Normative smartdca-okf/0.4 profile specializing Open Knowledge Format v0.2 for this bundle. — type: specification; status: stable; trust: reviewed 2026-08-23; provenance: cites the fingerprinted OKF v0.2 snapshot and internal concepts
@@ -40,6 +36,10 @@ authoritative metadata.
 - [The corrected out quasi-Gini mean](research/definitions/corrected-out-quasi-gini-mean.md) — Canonical definition of the numerator-preserving corrected out quasi-Gini mean and its diagonal extension. — type: definition; status: stable; trust: reviewed 2026-08-16; provenance: cites internal tickets and evidence notes
 - [The guarded corrected-mean SmartDCA rule](research/definitions/guarded-corrected-mean-smartdca-rule.md) — Canonical definition of the guarded SmartDCA rule: the epsilon-DCA safety floor plus the bounded corrected-mean score inside it. — type: definition; status: stable; trust: reviewed 2026-08-16; provenance: cites internal tickets and evidence notes
 
+### synthesis
+
+- [Conflicts across the OKF foundation sources](research/synthesis/okf-foundation-source-conflicts.md) — Cross-source integration of the five foundation sources and the four divergences the local profile has to resolve. — type: synthesis; status: stable; trust: reviewed 2026-08-16; provenance: cites the five ingested source summaries and the local profile
+
 ### theorem
 
 - [Exact mean classification of the source out quasi-Gini functional](research/theorems/source-out-functional-mean-classification.md) — The source Eq. (70) out functional is a mean exactly when the transform is the identity or the parameter gap is one. — type: theorem; status: stable; trust: reviewed 2026-08-16; provenance: cites the audit evidence and the ingested source summary
@@ -48,10 +48,11 @@ authoritative metadata.
 - [Homogeneity characterization of the corrected out quasi-Gini mean](research/theorems/corrected-mean-homogeneity-characterization.md) — The corrected mean is degree-one homogeneous exactly when the transform cancels or is normalized-multiplicative, hence a power under project regularity. — type: theorem; status: stable; trust: reviewed 2026-08-16; provenance: cites internal proof and primary-source evidence
 - [Two-purchase guarded SmartDCA has an exact DCA boundary](research/theorems/two-purchase-guarded-smartdca-boundary.md) — The two-purchase guarded rule beats DCA exactly below an explicit affine evaluation-price boundary, with a sharp neutral-score comparison. — type: theorem; status: stable; trust: reviewed 2026-08-16; provenance: cites internal proof evidence and its ticket
 - [Three-purchase guarded SmartDCA has an exact beta-sensitive DCA boundary](research/theorems/three-purchase-corrected-mean-effect.md) — At three purchases the DCA wealth boundary depends on beta only through the first two-input corrected reference and can flip exactly. — type: theorem; status: stable; trust: reviewed 2026-08-16; provenance: cites internal proof evidence and its ticket
+- [Arbitrary-horizon terminal wealth has an exact cash-timing identity](research/theorems/arbitrary-horizon-cash-timing-identity.md) — Every fully funded finite-horizon strategy's terminal wealth is DCA wealth plus an exact functional of its carried-cash path. — type: theorem; status: stable; trust: independently reviewed 2026-08-23; provenance: cites internal proof evidence, model, and ticket
 
-### synthesis
+### domain-glossary
 
-- [Conflicts across the OKF foundation sources](research/synthesis/okf-foundation-source-conflicts.md) — Cross-source integration of the five foundation sources and the four divergences the local profile has to resolve. — type: synthesis; status: stable; trust: reviewed 2026-08-16; provenance: cites the five ingested source summaries and the local profile
+- [Quasi-Gini SmartDCA Research](CONTEXT.md) — Canonical mathematical, financial, and knowledge-system vocabulary with its forbidden alternatives. — type: domain-glossary; status: stable; trust: independently reviewed 2026-08-23; provenance: cites internal concepts
 
 ## Evidence
 
@@ -76,6 +77,7 @@ authoritative metadata.
 - [Primary-source audit of the causal DCA boundary and constructive relaxations](research/notes/ticket-08-causal-dca-novelty-primary-sources.md) — Novelty audit positioning the causal DCA boundary and ordering the admissible constructive relaxations. — type: research-note; status: stable; trust: reviewed 2026-08-16; provenance: cites internal concepts and declared scope
 - [Exact two-purchase DCA win/loss boundary](research/notes/two-purchase-dca-win-loss-boundary.md) — Derivation of the necessary-and-sufficient two-purchase wealth boundary and exact neutral-score comparison. — type: research-note; status: stable; trust: reviewed 2026-08-16; provenance: cites internal concepts
 - [Exact three-purchase corrected-mean effect](research/notes/three-purchase-corrected-mean-effect.md) — Derivation of the exact three-purchase DCA boundary and an all-rational beta-driven classification flip. — type: research-note; status: stable; trust: reviewed 2026-08-16; provenance: cites internal concepts
+- [Arbitrary-horizon cash-timing identity and exact-rational verification seam](research/notes/arbitrary-horizon-accounting-verification-seam.md) — Proof of the finite-horizon cash-timing identities and specification of the exact-rational DCA, corrected, and neutral ledger interface. — type: research-note; status: stable; trust: independently reviewed 2026-08-23; provenance: cites internal concepts and exact checks
 
 ## Operational
 
@@ -124,7 +126,7 @@ authoritative metadata.
 - [Clean redundancy after structural freeze](.scratch/smartdca/issues/17-clean-redundancy-after-structural-freeze.md) — Resolved task ticket cleaning redundancy and applying supersession after structural freeze. — type: research-ticket; status: stable; trust: unreviewed; provenance: Git history
 - [Isolate the first nontrivial corrected-mean effect at three purchases](.scratch/smartdca/issues/18-isolate-three-purchase-corrected-mean-effect.md) — Resolved task ticket isolating the first beta-dependent guarded SmartDCA boundary at three purchases. — type: research-ticket; status: stable; trust: unreviewed; provenance: Git history
 - [Audit and sharpen agent-facing wiki instructions](.scratch/smartdca/issues/19-audit-agent-facing-writing.md) — Resolved task ticket auditing the full wiki for agent-consumed writing and sharpening the active instruction surfaces. — type: research-ticket; status: stable; trust: unreviewed; provenance: Git history
-- [Establish the arbitrary-horizon accounting and verification seam](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/01-establish-accounting-verification-seam.md) — Claimed task ticket proving the arbitrary-horizon cash-timing identity and delivering the exact-rational three-policy verification seam. — type: research-ticket; status: draft; trust: writing-reviewed 2026-08-23; provenance: Git history
+- [Establish the arbitrary-horizon accounting and verification seam](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/01-establish-accounting-verification-seam.md) — Resolved task ticket proving the arbitrary-horizon cash-timing identity and delivering the exact-rational three-policy verification seam. — type: research-ticket; status: stable; trust: independently reviewed 2026-08-23; provenance: Git history
 - [Falsify the weak single-valley advantage conjecture](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/02-falsify-weak-single-valley-advantage.md) — Open task ticket falsifying the weak single-valley advantage conjecture with deterministic exact-rational search. — type: research-ticket; status: draft; trust: writing-reviewed 2026-08-23; provenance: Git history
 - [Characterize the cash single-crossing mechanism](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/03-characterize-cash-single-crossing-mechanism.md) — Open research ticket proving or disproving the cash single-crossing mechanism and extracting a strategy-independent path condition. — type: research-ticket; status: draft; trust: writing-reviewed 2026-08-23; provenance: Git history
 - [Prove the arbitrary-horizon performance boundary](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/04-prove-arbitrary-horizon-performance-boundary.md) — Open research ticket proving a sharp arbitrary-horizon guarded SmartDCA performance theorem or negative boundary. — type: research-ticket; status: draft; trust: writing-reviewed 2026-08-23; provenance: Git history
