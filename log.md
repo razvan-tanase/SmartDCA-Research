@@ -8,6 +8,9 @@ the newest applicable group. The complete concept inventory is [`index.md`](inde
 
 ## 2026-08-23
 
+- 2026-08-23T19:40:02Z | Creation | Decompose the arbitrary-horizon frontier into five tracer-bullet tickets | [accounting](.scratch/smartdca/issues/21-establish-arbitrary-horizon-accounting-verification-seam.md), [falsification](.scratch/smartdca/issues/22-falsify-weak-single-valley-advantage.md), [mechanism](.scratch/smartdca/issues/23-characterize-cash-single-crossing-mechanism.md), [boundary](.scratch/smartdca/issues/24-prove-arbitrary-horizon-performance-boundary.md), [review](.scratch/smartdca/issues/25-review-publish-arbitrary-horizon-research-package.md)
+- 2026-08-23T19:40:02Z | Update | Wire the approved arbitrary-horizon blocking frontier | [map](.scratch/smartdca/map.md), [index](index.md)
+
 - 2026-08-23T19:25:11Z | Creation | Specify the arbitrary-horizon guarded SmartDCA frontier | [ticket](.scratch/smartdca/issues/20-test-arbitrary-horizon-guarded-smartdca-single-valley.md), [index](index.md)
 - 2026-08-23T19:25:11Z | Update | Reframe the research destination around safe adaptive DCA for the Financial Computing thesis narrative | [map](.scratch/smartdca/map.md)
 
