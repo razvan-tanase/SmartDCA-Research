@@ -1,0 +1,38 @@
+name: Run README interface fix
+
+on:
+  push:
+    branches:
+      - agent/readme-repository-interface
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/readme-repository-interface
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install validator dependency
+        run: python -m pip install -r tools/okf/requirements.txt
+      - name: Execute migration logic
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          source = Path('.github/workflows/fix-readme-interface.yml').read_text(encoding='utf-8').splitlines()
+          start = next(i for i, line in enumerate(source) if line == '        run: |') + 1
+          body = []
+          for line in source[start:]:
+              if line and not line.startswith('          '):
+                  break
+              body.append(line[10:] if line.startswith('          ') else '')
+          Path('/tmp/readme-migration.sh').write_text('\n'.join(body) + '\n', encoding='utf-8')
+          PY
+          bash /tmp/readme-migration.sh
