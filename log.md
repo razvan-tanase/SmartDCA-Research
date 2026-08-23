@@ -8,6 +8,10 @@ the newest applicable group. The complete concept inventory is [`index.md`](inde
 
 ## 2026-08-23
 
+- 2026-08-23T16:21:37Z | Resolution | Complete the repository-wide agent-facing writing audit | [ticket](.scratch/smartdca/issues/19-audit-agent-facing-writing.md), [map](.scratch/smartdca/map.md)
+- 2026-08-23T16:21:37Z | Verification | Review all active agent instructions with the Writing for Agents criteria | [contract](AGENTS.md), [domain](docs/agents/domain.md), [tracker](docs/agents/issue-tracker.md), [wiki](docs/agents/llm-wiki-workflow.md), [labels](docs/agents/triage-labels.md), [wayfinder](docs/agents/wayfinder-ticket-workflow.md)
+- 2026-08-23T16:18:42Z | Update | Sharpen triggers, information hierarchy, completion criteria, and review routing across active agent instructions | [contract](AGENTS.md), [domain](docs/agents/domain.md), [tracker](docs/agents/issue-tracker.md), [wiki](docs/agents/llm-wiki-workflow.md), [labels](docs/agents/triage-labels.md), [wayfinder](docs/agents/wayfinder-ticket-workflow.md)
+- 2026-08-23T16:17:07Z | Claim | Claim the agent-facing writing audit ticket | [ticket](.scratch/smartdca/issues/19-audit-agent-facing-writing.md)
 - 2026-08-23T15:45:00Z | Update | Treat README as repository interface outside the OKF concept corpus | [README](README.md), [profile](docs/knowledge/okf-profile.md)
 
 ## 2026-08-16

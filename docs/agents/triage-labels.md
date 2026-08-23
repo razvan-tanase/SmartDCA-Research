@@ -6,8 +6,18 @@ description: "Operational mapping from canonical triage roles to this project's 
 knowledge_role: operational
 status: stable
 original_record: true
+generated:
+  by: openai-codex/smartdca-wiki-0.1
+  at: 2026-08-23T16:18:42Z
+generation_run: urn:uuid:fc39df1d-3e43-487c-8bc6-9a1e72abaff8
+verified:
+  - by: openai-codex/smartdca-wiki-0.1
+    at: 2026-08-23T16:21:37Z
+    review_run: urn:uuid:66222a92-a082-4617-b191-77c124239e73
 ---
 # Triage labels
+
+Use this mapping only when a triage workflow emits a canonical role.
 
 | Canonical role | Project label | Meaning |
 |---|---|---|
@@ -17,4 +27,4 @@ original_record: true
 | `ready-for-human` | `ready-for-human` | Human action is required. |
 | `wontfix` | `wontfix` | The item will not be actioned. |
 
-Use the project label corresponding to the role named by a triage workflow.
+Apply the project label in the same row as the emitted role. The mapping is complete when every emitted role has exactly one project-label translation.

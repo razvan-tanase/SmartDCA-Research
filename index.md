@@ -80,18 +80,18 @@ authoritative metadata.
 
 ### agent-instructions
 
-- [Agent contract](AGENTS.md) — Root invariant contract every agent reads before changing SmartDCA work or knowledge. — type: agent-instructions; status: stable; trust: unreviewed; provenance: original record, Git history
-- [Domain documentation](docs/agents/domain.md) — Single-context rule for reading the glossary and ADRs before domain work. — type: agent-instructions; status: stable; trust: unreviewed; provenance: original record, Git history
+- [Agent contract](AGENTS.md) — Root invariant contract every agent reads before changing SmartDCA work or knowledge. — type: agent-instructions; status: stable; trust: reviewed 2026-08-23; provenance: original record, Git history
+- [Domain documentation](docs/agents/domain.md) — Single-context rule for reading the glossary and ADRs before domain work. — type: agent-instructions; status: stable; trust: reviewed 2026-08-23; provenance: original record, Git history
 
 ### workflow
 
-- [Issue tracker: Local Markdown](docs/agents/issue-tracker.md) — Where research maps, tickets, and their state fields live and how they are named. — type: workflow; status: stable; trust: unreviewed; provenance: original record, Git history
-- [SmartDCA LLM-Wiki workflow](docs/agents/llm-wiki-workflow.md) — How agents author, ingest, promote, review, and supersede knowledge in the wiki. — type: workflow; status: stable; trust: reviewed 2026-08-16; provenance: original record, Git history
-- [Wayfinder ticket workflow](docs/agents/wayfinder-ticket-workflow.md) — Authoritative ticket lifecycle from orientation through the user significance gate. — type: workflow; status: stable; trust: unreviewed; provenance: original record, Git history
+- [Issue tracker: Local Markdown](docs/agents/issue-tracker.md) — Where research maps, tickets, and their state fields live and how they are named. — type: workflow; status: stable; trust: reviewed 2026-08-23; provenance: original record, Git history
+- [SmartDCA LLM-Wiki workflow](docs/agents/llm-wiki-workflow.md) — How agents author, ingest, promote, review, and supersede knowledge in the wiki. — type: workflow; status: stable; trust: reviewed 2026-08-23; provenance: original record, Git history
+- [Wayfinder ticket workflow](docs/agents/wayfinder-ticket-workflow.md) — Authoritative ticket lifecycle from orientation through the user significance gate. — type: workflow; status: stable; trust: reviewed 2026-08-23; provenance: original record, Git history
 
 ### domain-glossary
 
-- [Triage labels](docs/agents/triage-labels.md) — Operational mapping from canonical triage roles to this project's labels. — type: domain-glossary; status: stable; trust: unreviewed; provenance: original record, Git history
+- [Triage labels](docs/agents/triage-labels.md) — Operational mapping from canonical triage roles to this project's labels. — type: domain-glossary; status: stable; trust: reviewed 2026-08-23; provenance: original record, Git history
 
 ### research-map
 
@@ -117,3 +117,4 @@ authoritative metadata.
 - [Extract initial semantic concepts and certify structural freeze](.scratch/smartdca/issues/16-extract-semantic-concepts-certify-freeze.md) — Resolved task ticket extracting initial semantic concepts and certifying structural freeze. — type: research-ticket; status: stable; trust: unreviewed; provenance: Git history
 - [Clean redundancy after structural freeze](.scratch/smartdca/issues/17-clean-redundancy-after-structural-freeze.md) — Resolved task ticket cleaning redundancy and applying supersession after structural freeze. — type: research-ticket; status: stable; trust: unreviewed; provenance: Git history
 - [Isolate the first nontrivial corrected-mean effect at three purchases](.scratch/smartdca/issues/18-isolate-three-purchase-corrected-mean-effect.md) — Resolved task ticket isolating the first beta-dependent guarded SmartDCA boundary at three purchases. — type: research-ticket; status: stable; trust: unreviewed; provenance: Git history
+- [Audit and sharpen agent-facing wiki instructions](.scratch/smartdca/issues/19-audit-agent-facing-writing.md) — Resolved task ticket auditing the full wiki for agent-consumed writing and sharpening the active instruction surfaces. — type: research-ticket; status: stable; trust: unreviewed; provenance: Git history

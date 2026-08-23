@@ -7,9 +7,9 @@ knowledge_role: operational
 status: stable
 original_record: true
 generated:
-  by: claude-code/smartdca-wiki-0.1
-  at: 2026-08-16T10:04:00Z
-generation_run: urn:uuid:efe6420b-e236-40b6-96d4-c92a95d505d2
+  by: openai-codex/smartdca-wiki-0.1
+  at: 2026-08-23T16:18:42Z
+generation_run: urn:uuid:fc39df1d-3e43-487c-8bc6-9a1e72abaff8
 verified:
   - by: claude-code/smartdca-wiki-0.1
     at: 2026-08-16T07:46:00Z
@@ -20,10 +20,13 @@ verified:
   - by: claude-code/smartdca-wiki-0.1
     at: 2026-08-16T10:06:00Z
     review_run: urn:uuid:6186d423-474a-44ee-8d3d-c36f938ad51a
+  - by: openai-codex/smartdca-wiki-0.1
+    at: 2026-08-23T16:21:37Z
+    review_run: urn:uuid:66222a92-a082-4617-b191-77c124239e73
 ---
 # SmartDCA LLM-Wiki workflow
 
-This workflow maintains the repository-root LLM-Wiki defined by the normative [SmartDCA OKF profile](../knowledge/okf-profile.md). It complements, and does not replace, the [Wayfinder ticket workflow](wayfinder-ticket-workflow.md): Wayfinder governs work state; the profile governs knowledge representation.
+Use this workflow when a concept, path, metadata field, provenance join, lifecycle state, index row, or log event changes. The normative [SmartDCA OKF profile](../knowledge/okf-profile.md) defines representation; the [Wayfinder ticket workflow](wayfinder-ticket-workflow.md) governs work state.
 
 ## Invariants
 
@@ -34,36 +37,38 @@ This workflow maintains the repository-root LLM-Wiki defined by the normative [S
 - One normalized claim has one canonical home. Evidence and operational records preserve history and link to it.
 - Published Concept IDs are stable. Supersession preserves the old path.
 - External snapshots are immutable, fingerprinted bytes under a non-`.md` suffix.
-- A high-risk concept cannot become stable through its generating run or structural CI.
+- A high-risk concept becomes stable only after a qualifying semantic review run distinct from generation. Structural CI supplies conformance evidence.
 
-## Orient and select work
+## 1. Orient
 
-1. Read `.scratch/smartdca/map.md`, the claimed ticket, `CONTEXT.md`, and the relevant ADRs.
-2. Read the profile before creating, moving, deprecating, or changing lifecycle metadata on a concept.
-3. Claim exactly one ticket and preserve its existing body contract.
-4. Keep knowledge-system tooling separate from scientific checks under `reproducibility/checks/`.
+1. Follow the Wayfinder workflow until exactly one eligible ticket is claimed.
+2. Read the index row, canonical home, linked evidence, and internal dependencies for every claim the ticket may change.
+3. Read the profile sections governing the target path, type, lifecycle, provenance, and trust.
+4. Keep knowledge-system validation under `tools/okf/` separate from scientific checks under `reproducibility/checks/`.
 
-## Author or revise a concept
+**Complete when:** the ticket, canonical home, evidence, dependencies, target path, and applicable profile rules are all identified.
+
+## 2. Author or revise a concept
 
 1. Identify the claim's canonical home and existing evidence before writing.
 2. Confirm the target path is assigned by the active profile. If not, make a versioned profile/path decision first.
-3. Split only on a semantic boundary with independent identity plus reuse, provenance, review, lifecycle, or retrieval value. Do not split by token count alone.
+3. Keep one concept unless a semantic boundary has independent identity and at least one of reuse, provenance, review, lifecycle, or retrieval value.
 4. Add the required universal metadata and the path-specific type, role, and lifecycle state.
-5. Record provenance. Use `original_record: true` only for an internally authored record; otherwise add complete sources and claim-level footnote joins.
-6. For an agent's meaningful change, update `generated.at` and `generation_run`. Demote changed high-risk content to draft.
+5. Record provenance: use `original_record: true` for an internally authored record; for derived content, record complete sources and join each derived claim to its source ID with a footnote.
+6. For a meaningful agent change, update `generated.at` and `generation_run`; set changed high-risk content to draft until review.
 7. Update the root index row and append a root log event in the same change.
 8. Run report validation and inspect both layers.
 
-The atomic migration preserved every existing body. It changed a body only where the profile itself required attribution the body did not yet carry — the canonical glossary gained footnote joins to its recorded sources — or where a concept stated project state that the migration itself changed. No content was split, synthesized, deduplicated, or rewritten. Later semantic edits follow normal review rules.
+**Complete when:** the claim has one canonical home, metadata and provenance satisfy the profile, the index and log agree with the concept, and report validation has no unexplained finding.
 
-## Ingest one external source
+## 3. Ingest one external source
 
-Ingestion starts supervised, one source per ticket step:
+Ingest under supervision, one source per ticket step:
 
 1. Fetch the authoritative resource and retain the exact response bytes used for analysis.
 2. Determine an upstream version; record `unversioned` when no stable identifier exists.
 3. Calculate SHA-256 over the unmodified bytes.
-4. When redistribution permits, save those bytes at a new versioned non-`.md` path such as `references/raw/<source>/<version>/source.md.raw`. Never overwrite an earlier edition.
+4. When redistribution permits, save those bytes at a new versioned non-`.md` path such as `references/raw/<source>/<version>/source.md.raw`; preserve every earlier edition at its existing path.
 5. Create a conformant summary concept with `source_kind: external`, origin URL, retrieval time, upstream version, fingerprint, and optional local artifact path.
 6. Attribute externally derived claims with footnotes joined to source IDs.
 7. Run structural validation plus provenance, orphan, canonical-home, and contradiction review.
@@ -71,18 +76,22 @@ Ingestion starts supervised, one source per ticket step:
 
 Create a synthesis only when cross-source integration or conflict resolution is reusable. A contradiction remains preserved in evidence; an unresolved synthesis remains draft.
 
-## Promote query results
+**Complete when:** the source has one fingerprinted summary, every retained byte artifact is immutable and versioned, every derived claim is joined to a source ID, and structural plus semantic ingest reviews pass.
+
+## 4. Promote a query result
 
 Ordinary answers are ephemeral. Promote a query result only when it reveals reusable knowledge not already captured.
 
 1. Search the index and canonical concepts first, then follow internal sources into evidence.
-2. Prefer stable canonical concepts. Surface lifecycle, trust, freshness, and unresolved conflict rather than hiding them.
-3. If the result merely restates existing knowledge, do not create a concept; record that promotion was correctly skipped when a ticket requires the decision.
-4. If reusable knowledge is missing, create or update the canonical home, attach provenance, keep it draft as required, and run the authoring workflow.
+2. Prefer stable canonical concepts and surface lifecycle, trust, freshness, and unresolved conflict.
+3. When the result restates existing knowledge, keep the answer ephemeral and record the non-promotion decision if the ticket requires it.
+4. When reusable knowledge is missing, create or update its canonical home, attach provenance, apply the required draft state, and run the authoring procedure.
 
-## Review and promote
+**Complete when:** reusable new knowledge has a canonical home, while a restatement leaves no duplicate concept.
 
-Mechanical validation is necessary but never a semantic review.
+## 5. Review and promote
+
+Treat mechanical validation as conformance evidence and semantic review as claim approval.
 
 1. Review the current content against its sources and internal dependencies.
 2. Use a `review_run` distinct from the generation run. The GitHub Actions process actor cannot qualify.
@@ -93,9 +102,11 @@ Mechanical validation is necessary but never a semantic review.
 
 When a dependency changes after verification, demote the dependent or perform a new review. Re-verification may add an event without changing `generated.at` when the content itself did not change.
 
-## Deprecate, supersede, or move
+**Complete when:** the review covers current content and dependencies, every substantive conflict is resolved or preserved, the profile permits the lifecycle state, and index trust plus log history match the verification.
 
-Never delete a stable concept merely because a better version exists.
+## 6. Deprecate, supersede, or move
+
+Preserve a stable concept's published identity when a successor replaces it.
 
 1. Create the successor at an assigned path.
 2. Change the old concept to `status: deprecated`.
@@ -103,7 +114,9 @@ Never delete a stable concept merely because a better version exists.
 4. Retain a short forwarding body link and the historical provenance.
 5. Update both index rows and append a `Supersession` event.
 
-## Validation cadence
+**Complete when:** both Concept IDs resolve, the predecessor forwards to the successor with its history intact, and the index and log describe the transition.
+
+## 7. Publish gate
 
 Run:
 
@@ -115,12 +128,14 @@ python tools/okf/validate.py . --strict
 
 Structural checks run on every knowledge change. Provenance, orphan, canonical-home, and contradiction checks run after every ingest or promotion. A full semantic audit runs at ticket resolution and release.
 
-[Atomically migrate the repository to SmartDCA OKF 0.1](../../.scratch/smartdca/issues/14-atomically-migrate-repository-to-okf.md) migrated every concept, created the complete index and log, performed the required bootstrap reviews, and activated strict validation in the same merge transaction. Blocking validation is now the default: use report mode while iterating, but a change that leaves any concept nonconformant cannot merge. Adding a Markdown file at an unassigned path fails CI until the profile assigns its path, type, and role.
+Use report mode while iterating. Strict validation is the merge gate; a new Markdown concept first needs a profile-assigned path, type, and role.
+
+**Complete when:** unit tests pass, report findings are understood, strict validation exits zero, the semantic review required by the risk tier is recorded, and the ticket, map, index, log, and changed concepts agree.
 
 ## Scale gates
 
-Keep ingestion supervised until structural freeze and three consecutive supervised ingests complete without schema changes, conformance failures, or high-severity semantic corrections. The ingestion ticket records the three-ingest evidence; the structural-freeze ticket evaluates the full gate. The first batch remains draft pending batch-level review.
+Keep ingestion supervised until structural freeze and three consecutive supervised ingests complete without schema changes, conformance failures, or high-severity semantic corrections. Record the streak in its ingestion ticket; evaluate the gate in the structural-freeze ticket. Keep the first batch draft until batch-level review.
 
-Structural freeze is revocable by design, on the terms the profile states. If later work needs a schema change, make it: bump the profile version and record the decision as usual. Do not treat a standing freeze as a reason to avoid a change the work genuinely needs, and do not work around the schema to protect the claim. Instead record that the freeze lapsed, restart the ingest streak, and re-certify before resuming anything the freeze gated.
+Treat structural freeze as a revocable certification. When work needs a schema change, bump the profile version, record the decision, mark the freeze lapsed, restart the ingest streak, and re-certify before resuming gated work.
 
-Do not add hybrid search before measured retrieval failures or scale near 100 sources or several hundred concepts. Do not label current Python evidence as OKF Attested Computation until a runtime and attestation protocol is specified.
+Introduce hybrid search after measured retrieval failures or scale near 100 sources or several hundred concepts. Reserve `Attested Computation` for evidence with a specified runtime, inputs, receipt, verdict, and attester protocol; current Python checks remain linked executable evidence.
