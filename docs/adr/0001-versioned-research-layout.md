@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: decision-record
 title: "Keep research state and evidence in separate versioned layers"
 description: "Decision keeping map state, detailed reasoning, and executable evidence in separate versioned layers."

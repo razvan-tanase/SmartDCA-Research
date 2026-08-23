@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: theorem
 title: "Homogeneity characterization of the corrected out quasi-Gini mean"
 description: "The corrected mean is degree-one homogeneous exactly when the transform cancels or is normalized-multiplicative, hence a power under project regularity."

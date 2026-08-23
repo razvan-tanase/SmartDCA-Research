@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: research-note
 title: "Audit of the source out quasi-Gini functional"
 description: "Proof that the source Eq. (70) out construction is a mean exactly when f is the identity or alpha minus beta is one."

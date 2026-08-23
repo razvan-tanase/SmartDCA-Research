@@ -1,8 +1,8 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: specification
 title: "SmartDCA Open Knowledge Format profile"
-description: "Normative smartdca-okf/0.3 profile specializing Open Knowledge Format v0.2 for this bundle."
+description: "Normative smartdca-okf/0.4 profile specializing Open Knowledge Format v0.2 for this bundle."
 knowledge_role: canonical
 status: stable
 sources:
@@ -42,10 +42,14 @@ sources:
     title: "Assign definition, theorem, and experiment-report paths in profile 0.3"
     resource: docs/adr/0006-assign-definition-theorem-and-experiment-report-paths
     source_kind: internal
+  - id: adr-0007
+    title: "Adopt effort-scoped work tracking"
+    resource: docs/adr/0007-adopt-effort-scoped-work-tracking
+    source_kind: internal
 generated:
-  by: claude-code/smartdca-wiki-0.1
-  at: 2026-08-16T10:24:00Z
-generation_run: urn:uuid:51b6a4df-c98b-4784-83e4-3b068e4014ab
+  by: openai-codex/smartdca-wiki-0.1
+  at: 2026-08-23T20:17:00Z
+generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
 verified:
   - by: claude-code/smartdca-wiki-0.1
     at: 2026-08-16T07:46:00Z
@@ -74,10 +78,13 @@ verified:
   - by: human:github:razvan-tanase
     at: 2026-08-23T15:45:00Z
     review_run: urn:uuid:f1558f7f-31a3-431b-9ff5-a0fc3c67ae13
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-23T20:31:00Z
+    review_run: urn:uuid:15c9b810-1adb-4eed-b833-45e31bcad2f1
 ---
 # SmartDCA Open Knowledge Format profile
 
-This document is the normative local profile for the repository-root SmartDCA knowledge bundle. It specializes [Open Knowledge Format (OKF) v0.2](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)[^okf-spec] as `smartdca-okf/0.3` and transcribes the accepted design in [Design a repository-root LLM-Wiki using OKF v0.2](../../.scratch/smartdca/issues/12-design-repository-root-llm-wiki-okf.md)[^ticket-12].
+This document is the normative local profile for the repository-root SmartDCA knowledge bundle. It specializes [Open Knowledge Format (OKF) v0.2](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)[^okf-spec] as `smartdca-okf/0.4` and transcribes the accepted design in [Design a repository-root LLM-Wiki using OKF v0.2](../../.scratch/smartdca/issues/12-design-repository-root-llm-wiki-okf.md)[^ticket-12].
 
 The words MUST, MUST NOT, REQUIRED, SHOULD, SHOULD NOT, and MAY are normative. Base OKF and this profile are separate validation layers: a document can conform to OKF while failing this profile.
 
@@ -112,7 +119,7 @@ Every concept MUST have these fields:
 
 | Field | Rule |
 |---|---|
-| `profile` | Exactly `smartdca-okf/0.3`. |
+| `profile` | Exactly `smartdca-okf/0.4`. |
 | `type` | One registered type below. |
 | `title` | Non-empty human-readable string. |
 | `description` | Non-empty, one-line retrieval description. |
@@ -133,6 +140,7 @@ Registered `type` values are:
 - `decision-record`
 - `research-map`
 - `research-ticket`
+- `work-specification`
 - `workflow`
 - `agent-instructions`
 
@@ -216,11 +224,13 @@ A profile version is the value every concept declares in `profile`; the schema r
 
 `smartdca-okf/0.3` makes exactly one change, recorded in [Assign definition, theorem, and experiment-report paths in profile 0.3](../adr/0006-assign-definition-theorem-and-experiment-report-paths.md)[^adr-0006]: it assigns `research/definitions/*.md`, `research/theorems/*.md`, and `reports/experiments/*.md`. No other rule of 0.2 changes, so a 0.2 concept satisfies 0.3 as soon as its `profile` value is relabelled. Every registered type now has a destination, so the path mapping below is complete rather than partial and no further path assignment is pending.
 
+`smartdca-okf/0.4` adopts [effort-scoped work tracking](../adr/0007-adopt-effort-scoped-work-tracking.md)[^adr-0007]. It registers `work-specification`, assigns active effort specifications, maps, and tickets, and restricts the legacy project issue directory to resolved history. Every active effort requires both `spec.md` and `map.md`; tickets may be published only after the specification is stable. This schema change lapses the prior structural-freeze certification and resets the supervised-ingest streak.
+
 Relabelling across profile versions is a metadata migration: it does not update `generated.at`, demote a high-risk concept to draft, or invalidate a recorded verification. Only a concept whose body actually changed in the same transaction carries a new generation time.
 
 ## Path mapping
 
-These assignments are exhaustive for active concept paths in profile 0.3. The registered `project-overview` type currently has no active concept instance because the root `README.md` is repository-interface documentation rather than knowledge corpus content. A non-reserved Markdown concept path not matched here fails the profile even if all of its metadata is otherwise valid.
+These assignments are exhaustive for active concept paths in profile 0.4. The registered `project-overview` type currently has no active concept instance because the root `README.md` is repository-interface documentation rather than knowledge corpus content. A non-reserved Markdown concept path not matched here fails the profile even if all of its metadata is otherwise valid.
 
 | Path | Type | Role | Lifecycle rule |
 |---|---|---|---|
@@ -238,7 +248,10 @@ These assignments are exhaustive for active concept paths in profile 0.3. The re
 | `docs/agents/wayfinder-ticket-workflow.md` | `workflow` | operational | Stable. |
 | `docs/agents/llm-wiki-workflow.md` | `workflow` | operational | Draft until workflow review; stable after review. |
 | `.scratch/smartdca/map.md` | `research-map` | operational | Stable authoritative frontier. |
-| `.scratch/smartdca/issues/*.md` | `research-ticket` | operational | Resolved is stable; open or claimed is draft. |
+| `.scratch/smartdca/issues/*.md` | `research-ticket` | operational | Resolved legacy history only; always stable. |
+| `.scratch/smartdca/efforts/*/spec.md` | `work-specification` | operational | Draft until explicit user approval; stable before tickets are published. |
+| `.scratch/smartdca/efforts/*/map.md` | `research-map` | operational | Stable effort state and routing index. |
+| `.scratch/smartdca/efforts/*/issues/*.md` | `research-ticket` | operational | Resolved is stable; open or claimed is draft. |
 | `docs/knowledge/okf-profile.md` | `specification` | canonical | Draft until independent review; stable after review. |
 | `references/summaries/*.md` | `source-summary` | evidence | Stable only when the ingest's independent review is recorded; otherwise draft. |
 | `research/synthesis/*.md` | `synthesis` | canonical | Draft until a review independent of the run that wrote the resolutions promotes it, and draft for as long as any recorded conflict is unresolved. |
@@ -249,6 +262,8 @@ A `source-summary` concept covers exactly one ingested source and MUST NOT diges
 A `definition` concept is the canonical home of one named construction: the object, its domain and parameter conditions, any limiting extension it needs to be total, and the identities it must preserve. A `theorem` concept is the canonical home of one proved statement: its hypotheses, the exact claim, whether the characterization is sharp, and what it does not establish. Neither carries the proof. The proof, the counterexamples, the numerical boundary work, and the literature positioning stay in the `research/notes/*.md` evidence they cite, which is why a definition or theorem concept is short and its note is long.
 
 An `experiment-report` concept records one executed run: its estimand, data provenance, code version, seeds, and failure cases. It is evidence and never promotes a simulation to a proof.
+
+A `work-specification` is an operational contract for exactly one effort. It records the problem, outcome, acceptance boundary, implementation and testing decisions, and exclusions. It is not claimable and does not carry `ticket_type` or `ticket_status`. An effort may contain tickets only while its specification is stable, which records explicit user approval rather than semantic truth.
 
 ## Stable links and supersession
 
@@ -268,7 +283,7 @@ okf_version: "0.2"
 ---
 ```
 
-Its body declares the active profile as `` `smartdca-okf/0.3` `` and contains exactly one section for each role in this order:
+Its body declares the active profile as `` `smartdca-okf/0.4` `` and contains exactly one section for each role in this order:
 
 ```markdown
 ## Canonical
@@ -321,6 +336,8 @@ Freeze MUST NOT be read as a commitment to never change this profile. A later re
 
 A schema change made after a freeze has exactly two consequences, and no others. The freeze claim lapses on the date of that change and MUST be re-certified before anything that depends on it proceeds. The supervised-ingest streak restarts from zero. Concepts already published stay valid; a lapsed freeze never invalidates content, retracts a verification, or demotes a concept.
 
+Profile 0.4 is such a schema change. As of 2026-08-23 the earlier certification is lapsed, the supervised-ingest streak is zero, and batch ingestion remains closed pending re-certification and a new qualifying streak.
+
 ## Deferred capabilities
 
 Hybrid search is deferred until measured retrieval failures, about 100 sources, or several hundred concepts. Batch ingestion is deferred until structural freeze and the supervised-ingest gate. Full OKF Attested Computation is deferred until the runtime, inputs, receipt, verdict, and attester protocol is specified. Existing Python checks remain linked evidence rather than attested computations.
@@ -335,3 +352,4 @@ Hybrid search is deferred until measured retrieval failures, about 100 sources, 
 [^adr-0004]: [Preserve path-based concept identity through supersession](../adr/0004-preserve-path-based-concept-identity.md)
 [^adr-0005]: [Assign source-summary and synthesis paths in profile 0.2](../adr/0005-assign-source-summary-and-synthesis-paths.md)
 [^adr-0006]: [Assign definition, theorem, and experiment-report paths in profile 0.3](../adr/0006-assign-definition-theorem-and-experiment-report-paths.md)
+[^adr-0007]: [Adopt effort-scoped work tracking](../adr/0007-adopt-effort-scoped-work-tracking.md)

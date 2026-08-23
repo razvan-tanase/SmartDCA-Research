@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: research-ticket
 title: "Test pathwise DCA dominance under causal budget feasibility"
 description: "Resolved research ticket testing pathwise DCA dominance under causal budget feasibility."

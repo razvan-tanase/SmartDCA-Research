@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: research-map
 title: "Find the rigorous out quasi-Gini route to a complete SmartDCA paper"
 description: "Authoritative Wayfinder map holding the destination, settled decisions, and active research frontier."
@@ -7,8 +7,8 @@ knowledge_role: operational
 status: stable
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T19:40:02Z
-generation_run: urn:uuid:b31074e1-661f-4af8-98db-6fa1ebfc5f17
+  at: 2026-08-23T20:17:00Z
+generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
 ---
 # Find the rigorous out quasi-Gini route to a complete SmartDCA paper
 
@@ -66,11 +66,13 @@ A thesis- and paper-grade, self-contained Financial Computing study suitable for
 
 - **Agent-facing writing audit:** All 62 Markdown paths were classified; the six active agent instruction surfaces were sharpened around explicit triggers, authoritative layers, and checkable completion bounds. A stale Stripe hosting claim and duplicated tracker lifecycle rules were removed, while the 18 earlier resolved tickets were preserved as provenance-bearing history. No scientific claim changed. See [Audit and sharpen agent-facing wiki instructions](issues/19-audit-agent-facing-writing.md).
 
+## Active efforts
+
+- [Arbitrary-horizon guarded SmartDCA performance](efforts/arbitrary-horizon-performance/spec.md) is the approved mathematical frontier. Its [effort map](efforts/arbitrary-horizon-performance/map.md) owns tickets 01–05 and their blocking order. The effort must establish a sharp positive or negative arbitrary-horizon performance boundary before empirical evaluation.
+
 ## Not yet specified
 
 - Deferred unless required by the manuscript: the remaining generic axiom and parameter-region theorems after homogeneity.
-- The active next mathematical frontier is specified in [Test arbitrary-horizon guarded SmartDCA performance on single-valley paths](issues/20-test-arbitrary-horizon-guarded-smartdca-single-valley.md). It must identify a sharp, independently defined favorable path class or prove why the initial single-valley class is insufficient; no positive outcome is assumed.
-- The approved tracer-bullet route executes that frontier through [the accounting seam](issues/21-establish-arbitrary-horizon-accounting-verification-seam.md), [single-valley falsification](issues/22-falsify-weak-single-valley-advantage.md), [cash single-crossing characterization](issues/23-characterize-cash-single-crossing-mechanism.md), [the arbitrary-horizon boundary](issues/24-prove-arbitrary-horizon-performance-boundary.md), and [independent publication review](issues/25-review-publish-arbitrary-horizon-research-package.md), in that blocking order.
 - The behavior of the corrected-mean reference under changes in lagged prices outside parameter/transform regions where coordinatewise monotonicity is known.
 - Three supervised one-source ingests, all after the freeze certification, are needed before the batch-ingestion gate reopens; the batch's first cohort still remains draft pending batch-level review when it does.
 - Whether any of the seventeen ticket answers should be rewritten to link the canonical concepts extracted later. The cleanup deliberately left them as history; reversing that judgement is a separate decision, not an oversight.

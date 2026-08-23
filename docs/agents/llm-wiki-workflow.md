@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: workflow
 title: "SmartDCA LLM-Wiki workflow"
 description: "How agents author, ingest, promote, review, and supersede knowledge in the wiki."

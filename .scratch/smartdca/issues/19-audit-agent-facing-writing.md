@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: research-ticket
 title: "Audit and sharpen agent-facing wiki instructions"
 description: "Resolved task ticket auditing the full wiki for agent-consumed writing and sharpening the active instruction surfaces."

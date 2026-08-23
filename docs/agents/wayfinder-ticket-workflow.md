@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: workflow
 title: "Wayfinder ticket workflow"
 description: "Authoritative ticket lifecycle from orientation through the user significance gate."
@@ -8,16 +8,19 @@ status: stable
 original_record: true
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T16:18:42Z
-generation_run: urn:uuid:fc39df1d-3e43-487c-8bc6-9a1e72abaff8
+  at: 2026-08-23T20:29:00Z
+generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
 verified:
   - by: openai-codex/smartdca-wiki-0.1
     at: 2026-08-23T16:21:37Z
     review_run: urn:uuid:66222a92-a082-4617-b191-77c124239e73
+  - by: openai-codex/standards-review-0.1
+    at: 2026-08-23T20:30:00Z
+    review_run: urn:uuid:e99ebedf-be97-4645-9ada-70efce93a3b2
 ---
 # Wayfinder ticket workflow
 
-Use this lifecycle whenever work touches a ticket under `.scratch/<effort>/issues/`. The map indexes the route; the ticket is the single source of truth for its question and answer.
+Use this lifecycle when executing an active ticket under `.scratch/smartdca/efforts/<effort>/issues/`. Resolved records under `.scratch/smartdca/issues/` are read-only historical inputs: consult them when a current dependency requires their detail, but never claim or reopen them through this lifecycle. The master map selects the effort, the effort specification fixes its contract, the effort map indexes its route, and the active ticket is the single source of truth for its question and answer.
 
 ## Invariants
 
@@ -31,9 +34,9 @@ Use this lifecycle whenever work touches a ticket under `.scratch/<effort>/issue
 
 ### 1. Orient
 
-Read the effort's `map.md`, the selected ticket, [Domain documentation](domain.md), and this workflow. Follow the domain procedure to select glossary sections and ADRs. Open a resolved ticket only when the current question depends on its historical detail.
+Read the master map, the effort's `spec.md` and `map.md`, the selected ticket, [Domain documentation](domain.md), and this workflow. Follow the domain procedure to select glossary sections and ADRs. Open a resolved legacy ticket only when the current question depends on its historical detail.
 
-**Complete when:** the destination, current question, assumptions, dependencies, and out-of-scope boundary can each be stated without guessing.
+**Complete when:** the project destination, effort outcome, current question, assumptions, dependencies, and out-of-scope boundary can each be stated without guessing.
 
 ### 2. Select and claim
 
@@ -80,13 +83,13 @@ Check that cited sources support their nearby claims, proofs cover their declare
 
 1. Append the concise resolution under `## Answer` in the ticket.
 2. Change the ticket to `Status: resolved`.
-3. Add one named link and one-line gist to the map's `## Decisions so far`.
+3. Add one named link and one-line gist to the effort map; update the master map only when the cross-effort frontier or a project-level decision changes.
 4. Update `CONTEXT.md` immediately for newly settled terminology.
 5. Add newly visible tickets, wire real blocking dependencies, graduate clarified fog, and move newly excluded work to `## Out of scope`.
 
 Keep detailed reasoning in exactly one place: the ticket or its linked artifact. The map only indexes it.
 
-**Complete when:** the ticket, map, glossary, dependencies, and linked artifacts agree.
+**Complete when:** the ticket, effort map, master map where relevant, glossary, dependencies, and linked artifacts agree.
 
 ### 7. Preserve the checkpoint
 

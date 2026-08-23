@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: research-ticket
 title: "Ingest the LLM-Wiki and OKF foundation sources"
 description: "Resolved research ticket ingesting the five LLM-Wiki and OKF foundation sources one at a time."

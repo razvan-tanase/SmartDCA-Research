@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: theorem
 title: "Two-purchase guarded SmartDCA has an exact DCA boundary"
 description: "The two-purchase guarded rule beats DCA exactly below an explicit affine evaluation-price boundary, with a sharp neutral-score comparison."

@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: research-ticket
 title: "Locate prior theory for a corrected out quasi-Gini mean"
 description: "Resolved research ticket locating prior theory for the corrected out quasi-Gini normalization."

@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: domain-glossary
 title: "Quasi-Gini SmartDCA Research"
 description: "Canonical mathematical, financial, and knowledge-system vocabulary with its forbidden alternatives."
@@ -25,6 +25,10 @@ sources:
   - id: ticket-12
     title: "Design a repository-root LLM-Wiki using OKF v0.2"
     resource: .scratch/smartdca/issues/12-design-repository-root-llm-wiki-okf
+    source_kind: internal
+  - id: adr-0007
+    title: "Adopt effort-scoped work tracking"
+    resource: docs/adr/0007-adopt-effort-scoped-work-tracking
     source_kind: internal
   - id: okf-profile
     title: "SmartDCA Open Knowledge Format profile"
@@ -84,8 +88,8 @@ sources:
     source_kind: internal
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-16T11:24:00Z
-generation_run: urn:uuid:1d09cb3f-94ee-4b73-b0f2-393b4227167d
+  at: 2026-08-23T20:17:00Z
+generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
 verified:
   - by: claude-code/smartdca-wiki-0.1
     at: 2026-08-16T07:46:00Z
@@ -120,6 +124,9 @@ verified:
   - by: openai-codex/smartdca-wiki-0.1
     at: 2026-08-16T11:30:00Z
     review_run: urn:uuid:d55d437b-21a4-4ffb-b393-de516fb58c2d
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-23T20:31:00Z
+    review_run: urn:uuid:15c9b810-1adb-4eed-b833-45e31bcad2f1
 ---
 # Quasi-Gini SmartDCA Research
 
@@ -260,6 +267,30 @@ _Avoid_: proof of economic superiority
 
 ## Knowledge system language
 
+**Project**[^adr-0007]:
+The complete SmartDCA research program, whose master map records settled project-level decisions and the frontier across bounded efforts.
+_Avoid_: treating one effort or one manuscript result as the whole program
+
+**Effort**[^adr-0007]:
+A bounded workstream with one approved specification, one local map, and locally numbered tracer tickets that collectively deliver a declared outcome.
+_Avoid_: an unbounded theme, a synonym for ticket, a directory without a contract
+
+**Work specification**[^adr-0007]:
+The stable user-approved operational contract for one effort: problem, outcome, completion boundary, implementation and testing decisions, and exclusions. It is not a claimable ticket.
+_Avoid_: project-wide vision, ticket status record, canonical scientific claim
+
+**Master research map**[^adr-0007]:
+The project-level map that links efforts and records only cross-effort state and settled project decisions.
+_Avoid_: duplicating every effort's ticket ledger
+
+**Effort research map**[^adr-0007]:
+The operational state and dependency view inside one effort, derived from its specification and tickets.
+_Avoid_: changing the effort contract, carrying unrelated project history
+
+**Ticket**[^adr-0007]:
+A claimable tracer slice inside an effort. Its number is local to that effort; external blockers use full Concept IDs.
+_Avoid_: using a ticket as the effort specification, assuming a number is globally unique
+
 **Wiki repository**[^ticket-12]:
 The complete SmartDCA research repository treated as a maintained knowledge system for people and agents.
 _Avoid_: separate public website by default, disposable retrieval cache
@@ -339,3 +370,4 @@ Each term above is joined to the concept that governs its claim: the canonical h
 [^source-conflicts]: [Conflicts across the OKF foundation sources](research/synthesis/okf-foundation-source-conflicts.md)
 [^homogeneity]: [Primary-source note on homogeneity of the canonical corrected mean](research/notes/ticket-07-homogeneity-primary-sources.md)
 [^guardrail]: [Sharp causal epsilon-DCA safety and its unit-coverage guardrail](research/notes/sharp-epsilon-dca-safety-guardrail.md)
+[^adr-0007]: [Adopt effort-scoped work tracking](docs/adr/0007-adopt-effort-scoped-work-tracking.md)

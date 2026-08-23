@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: research-note
 title: "A guarded corrected-mean SmartDCA rule"
 description: "The canonical guarded corrected-mean score inside the epsilon-DCA guardrail with exact accounting."

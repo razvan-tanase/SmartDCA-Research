@@ -84,7 +84,7 @@ class ValidatorCliTests(unittest.TestCase):
             ---
             # SmartDCA knowledge index
 
-            Active profile: `smartdca-okf/0.3`.
+            Active profile: `smartdca-okf/0.4`.
 
         """).lstrip()
         return header + "\n\n".join(sections) + "\n"
@@ -103,7 +103,7 @@ class ValidatorCliTests(unittest.TestCase):
     def concept(self, *, type_name, title, description, role, status, extra="", body=""):
         lines = [
             "---",
-            "profile: smartdca-okf/0.3",
+            "profile: smartdca-okf/0.4",
             f"type: {type_name}",
             f"title: {title}",
             f"description: {description}",
@@ -215,7 +215,7 @@ class ValidatorCliTests(unittest.TestCase):
         files = self.valid_minimal_bundle()
         files["AGENTS.md"] = """
             ---
-            profile: smartdca-okf/0.3
+            profile: smartdca-okf/0.4
             type: theorem
             title: Wrong path type
             description: This path is deliberately misclassified.
@@ -241,7 +241,10 @@ class ValidatorCliTests(unittest.TestCase):
             ("docs/agents/llm-wiki-workflow.md", "workflow", "LLM Wiki workflow", "Knowledge maintenance workflow.", "operational", "draft", "", ""),
             ("docs/knowledge/okf-profile.md", "specification", "OKF profile", "Normative local profile.", "canonical", "draft", "", ""),
             (".scratch/smartdca/map.md", "research-map", "Research map", "Authoritative project frontier.", "operational", "stable", "", ""),
-            (".scratch/smartdca/issues/99-example.md", "research-ticket", "Open ticket", "Example open work item.", "operational", "draft", "ticket_type: task\nticket_status: open", "Type: task\nStatus: open"),
+            (".scratch/smartdca/issues/99-example.md", "research-ticket", "Resolved legacy ticket", "Example archived work item.", "operational", "stable", "ticket_type: task\nticket_status: resolved", "Type: task\nStatus: resolved"),
+            (".scratch/smartdca/efforts/example/spec.md", "work-specification", "Example effort specification", "Approved contract for an active effort.", "operational", "stable", "", ""),
+            (".scratch/smartdca/efforts/example/map.md", "research-map", "Example effort map", "Current state inside an active effort.", "operational", "stable", "", ""),
+            (".scratch/smartdca/efforts/example/issues/01-example.md", "research-ticket", "Open effort ticket", "Example active work item.", "operational", "draft", "ticket_type: task\nticket_status: open", "Type: task\nStatus: open\nBlocked by: none"),
             ("docs/adr/0099-example.md", "decision-record", "Proposed decision", "Example proposed decision.", "canonical", "draft", "decision_status: proposed", ""),
             ("research/notes/example.md", "research-note", "Research evidence", "Example detailed evidence.", "evidence", "draft", "", ""),
             ("references/summaries/example.md", "source-summary", "Ingested source", "Example single-source summary.", "evidence", "draft", "", ""),
@@ -261,8 +264,8 @@ class ValidatorCliTests(unittest.TestCase):
         report = self.run_validator(files)
         self.assertTrue(report["smartdca_profile"]["ok"], report["smartdca_profile"]["findings"])
 
-    def test_profile_03_semantic_paths_pin_their_type_and_role(self):
-        """Each 0.3 path must report the exact rule it breaks, per path.
+    def test_profile_04_semantic_paths_pin_their_type_and_role(self):
+        """Each 0.4 path must report the exact rule it breaks, per path.
 
         Asserting the codes only in aggregate would still pass if one path
         were mapped to the wrong type and role entirely, so every case is
@@ -301,7 +304,7 @@ class ValidatorCliTests(unittest.TestCase):
 
     def test_every_registered_type_is_recognized_before_a_path_is_assigned(self):
         registered = [
-            "project-overview", "specification", "domain-glossary", "definition", "theorem",
+            "project-overview", "specification", "work-specification", "domain-glossary", "definition", "theorem",
             "research-note", "source-summary", "synthesis", "experiment-report", "decision-record",
             "research-map", "research-ticket", "workflow", "agent-instructions",
         ]
@@ -320,13 +323,151 @@ class ValidatorCliTests(unittest.TestCase):
         self.assertNotIn("SDCA004", self.codes(report))
         self.assertIn("SDCA012", self.codes(report))
 
+    def test_effort_tickets_require_a_specification_and_map(self):
+        files = self.valid_minimal_bundle()
+        path = ".scratch/smartdca/efforts/example/issues/01-example.md"
+        files[path] = self.concept(
+            type_name="research-ticket",
+            title="Open effort ticket",
+            description="An active ticket without its effort anchors.",
+            role="operational",
+            status="draft",
+            extra="ticket_type: task\nticket_status: open",
+            body="Type: task\nStatus: open\nBlocked by: none",
+        )
+        files["index.md"] = self.valid_index([{
+            "path": path,
+            "title": "Open effort ticket",
+            "description": "An active ticket without its effort anchors.",
+            "type": "research-ticket",
+            "role": "operational",
+            "status": "draft",
+        }])
+
+        report = self.run_validator(files)
+        self.assertIn("SDCA049", self.codes(report))
+
+    def test_legacy_ticket_directory_accepts_only_resolved_history(self):
+        files = self.valid_minimal_bundle()
+        path = ".scratch/smartdca/issues/99-open.md"
+        files[path] = self.concept(
+            type_name="research-ticket",
+            title="Open legacy ticket",
+            description="An active ticket in the historical archive.",
+            role="operational",
+            status="draft",
+            extra="ticket_type: task\nticket_status: open",
+            body="Type: task\nStatus: open\nBlocked by: none",
+        )
+        files["index.md"] = self.valid_index([{
+            "path": path,
+            "title": "Open legacy ticket",
+            "description": "An active ticket in the historical archive.",
+            "type": "research-ticket",
+            "role": "operational",
+            "status": "draft",
+        }])
+
+        report = self.run_validator(files)
+        self.assertIn("SDCA048", self.codes(report))
+
+    def test_effort_tickets_require_an_approved_stable_specification(self):
+        files = self.valid_minimal_bundle()
+        spec_path = ".scratch/smartdca/efforts/example/spec.md"
+        map_path = ".scratch/smartdca/efforts/example/map.md"
+        ticket_path = ".scratch/smartdca/efforts/example/issues/01-example.md"
+        files[spec_path] = self.concept(
+            type_name="work-specification",
+            title="Draft effort specification",
+            description="An effort contract still awaiting approval.",
+            role="operational",
+            status="draft",
+        )
+        files[map_path] = self.concept(
+            type_name="research-map",
+            title="Example effort map",
+            description="The state map for the example effort.",
+            role="operational",
+            status="stable",
+        )
+        files[ticket_path] = self.concept(
+            type_name="research-ticket",
+            title="Premature effort ticket",
+            description="A ticket published before its effort contract was approved.",
+            role="operational",
+            status="draft",
+            extra="ticket_type: task\nticket_status: open",
+            body="Type: task\nStatus: open",
+        )
+        rows = [
+            {"path": spec_path, "title": "Draft effort specification", "description": "An effort contract still awaiting approval.", "type": "work-specification", "role": "operational", "status": "draft"},
+            {"path": map_path, "title": "Example effort map", "description": "The state map for the example effort.", "type": "research-map", "role": "operational", "status": "stable"},
+            {"path": ticket_path, "title": "Premature effort ticket", "description": "A ticket published before its effort contract was approved.", "type": "research-ticket", "role": "operational", "status": "draft"},
+        ]
+        files["index.md"] = self.valid_index(rows)
+
+        report = self.run_validator(files)
+        self.assertIn("SDCA050", self.codes(report))
+
+    def test_effort_ticket_filename_must_use_local_number_and_slug(self):
+        files = self.valid_minimal_bundle()
+        spec_path = ".scratch/smartdca/efforts/example/spec.md"
+        map_path = ".scratch/smartdca/efforts/example/map.md"
+        bad_path = ".scratch/smartdca/efforts/example/issues/accounting.md"
+        files[spec_path] = self.concept(type_name="work-specification", title="Example specification", description="The approved example contract.", role="operational", status="stable")
+        files[map_path] = self.concept(type_name="research-map", title="Example map", description="The example effort state.", role="operational", status="stable")
+        files[bad_path] = self.concept(
+            type_name="research-ticket",
+            title="Malformed ticket",
+            description="An active ticket with a malformed path.",
+            role="operational",
+            status="draft",
+            extra="ticket_type: task\nticket_status: open",
+            body="Type: task\nStatus: open\nBlocked by: none",
+        )
+        rows = [
+            {"path": spec_path, "title": "Example specification", "description": "The approved example contract.", "type": "work-specification", "role": "operational", "status": "stable"},
+            {"path": map_path, "title": "Example map", "description": "The example effort state.", "type": "research-map", "role": "operational", "status": "stable"},
+            {"path": bad_path, "title": "Malformed ticket", "description": "An active ticket with a malformed path.", "type": "research-ticket", "role": "operational", "status": "draft"},
+        ]
+        files["index.md"] = self.valid_index(rows)
+
+        report = self.run_validator(files)
+        self.assertIn("SDCA012", self.codes(report))
+
+    def test_effort_ticket_blocker_must_resolve(self):
+        files = self.valid_minimal_bundle()
+        spec_path = ".scratch/smartdca/efforts/example/spec.md"
+        map_path = ".scratch/smartdca/efforts/example/map.md"
+        ticket_path = ".scratch/smartdca/efforts/example/issues/01-accounting.md"
+        files[spec_path] = self.concept(type_name="work-specification", title="Example specification", description="The approved example contract.", role="operational", status="stable")
+        files[map_path] = self.concept(type_name="research-map", title="Example map", description="The example effort state.", role="operational", status="stable")
+        files[ticket_path] = self.concept(
+            type_name="research-ticket",
+            title="Blocked ticket",
+            description="An active ticket with an unresolved blocker.",
+            role="operational",
+            status="draft",
+            extra="ticket_type: task\nticket_status: open",
+            body="Type: task\nStatus: open\nBlocked by: 99",
+        )
+        rows = [
+            {"path": spec_path, "title": "Example specification", "description": "The approved example contract.", "type": "work-specification", "role": "operational", "status": "stable"},
+            {"path": map_path, "title": "Example map", "description": "The example effort state.", "type": "research-map", "role": "operational", "status": "stable"},
+            {"path": ticket_path, "title": "Blocked ticket", "description": "An active ticket with an unresolved blocker.", "type": "research-ticket", "role": "operational", "status": "draft"},
+        ]
+        files["index.md"] = self.valid_index(rows)
+
+        report = self.run_validator(files)
+        self.assertIn("SDCA051", self.codes(report))
+
     def test_external_sources_require_valid_raw_fingerprints_and_footnote_joins(self):
         raw = b"# Frozen upstream bytes\n"
         digest = hashlib.sha256(raw).hexdigest()
         files = {
             "research/notes/source.md": f"""
                 ---
-                profile: smartdca-okf/0.3
+                profile: smartdca-okf/0.4
                 type: research-note
                 title: Source-backed note
                 description: Evidence derived from a frozen external source.
@@ -372,7 +513,7 @@ class ValidatorCliTests(unittest.TestCase):
     def test_agent_generated_theorem_requires_distinct_fresh_semantic_review(self):
         theorem = """
             ---
-            profile: smartdca-okf/0.3
+            profile: smartdca-okf/0.4
             type: theorem
             title: Generated theorem
             description: A high-risk canonical theorem with claim provenance.
@@ -398,7 +539,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         proof = """
             ---
-            profile: smartdca-okf/0.3
+            profile: smartdca-okf/0.4
             type: research-note
             title: Internal proof record
             description: Detailed evidence for the generated theorem.
@@ -448,7 +589,7 @@ class ValidatorCliTests(unittest.TestCase):
     def test_ticket_and_adr_extensions_mirror_body_state(self):
         ticket = """
             ---
-            profile: smartdca-okf/0.3
+            profile: smartdca-okf/0.4
             type: research-ticket
             title: Resolved ticket
             description: A resolved research task and its answer.
@@ -465,7 +606,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         adr = """
             ---
-            profile: smartdca-okf/0.3
+            profile: smartdca-okf/0.4
             type: decision-record
             title: Accepted decision
             description: A reviewed architectural decision.
@@ -497,7 +638,7 @@ class ValidatorCliTests(unittest.TestCase):
     def test_dependency_changes_make_a_stable_dependent_stale(self):
         dependency = """
             ---
-            profile: smartdca-okf/0.3
+            profile: smartdca-okf/0.4
             type: research-note
             title: Dependency
             description: Evidence changed after its dependent was reviewed.
@@ -515,7 +656,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         dependent = """
             ---
-            profile: smartdca-okf/0.3
+            profile: smartdca-okf/0.4
             type: theorem
             title: Dependent theorem
             description: A theorem whose dependency changed after review.
@@ -583,7 +724,7 @@ class ValidatorCliTests(unittest.TestCase):
     def test_conflict_synthesis_remains_draft_and_path_moves_keep_forwarders(self):
         evidence = """
             ---
-            profile: smartdca-okf/0.3
+            profile: smartdca-okf/0.4
             type: research-note
             title: Evidence {number}
             description: One side of a preserved source conflict.
@@ -601,7 +742,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         synthesis = """
             ---
-            profile: smartdca-okf/0.3
+            profile: smartdca-okf/0.4
             type: synthesis
             title: Unresolved synthesis
             description: The conflict is preserved pending independent review.
@@ -619,7 +760,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         successor = """
             ---
-            profile: smartdca-okf/0.3
+            profile: smartdca-okf/0.4
             type: research-note
             title: New concept path
             description: The current home of a moved stable concept.
@@ -637,7 +778,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         forwarder = """
             ---
-            profile: smartdca-okf/0.3
+            profile: smartdca-okf/0.4
             type: research-note
             title: Old concept path
             description: Deprecated forwarding concept preserving stable identity.
@@ -684,7 +825,7 @@ class ValidatorCliTests(unittest.TestCase):
         raw_v2 = b"version two\n"
         concept = f"""
             ---
-            profile: smartdca-okf/0.3
+            profile: smartdca-okf/0.4
             type: research-note
             title: Versioned source summary
             description: Two immutable editions of one external source.
@@ -739,7 +880,7 @@ class ValidatorCliTests(unittest.TestCase):
         files = self.valid_minimal_bundle()
         files["research/notes/invalid.md"] = """
             ---
-            profile: smartdca-okf/0.3
+            profile: smartdca-okf/0.4
             type: research-note
             title: Invalid research note
             description: A deliberately invalid conditional-metadata fixture.
@@ -871,7 +1012,7 @@ class ValidatorCliTests(unittest.TestCase):
             description="Root agent invariants.",
             role="operational",
             status="stable",
-        ).replace("profile: smartdca-okf/0.3", "profile: smartdca-okf/0.9")
+        ).replace("profile: smartdca-okf/0.4", "profile: smartdca-okf/0.9")
         files["index.md"] = self.valid_index([
             {"path": "AGENTS.md", "title": "Agents", "description": "Root agent invariants.", "type": "agent-instructions", "role": "operational", "status": "stable"},
         ])
@@ -946,4 +1087,3 @@ class ValidatorCliTests(unittest.TestCase):
         empty_marker_files["index.md"] = empty_marker_files["index.md"].replace("_None._", "", 1)
         empty_marker = self.run_validator(empty_marker_files)
         self.assertIn("SDCA043", self.codes(empty_marker))
-

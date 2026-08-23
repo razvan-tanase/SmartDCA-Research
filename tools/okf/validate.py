@@ -19,13 +19,13 @@ from urllib.parse import unquote, urlsplit
 import yaml
 
 
-PROFILE_VERSION = "smartdca-okf/0.3"
+PROFILE_VERSION = "smartdca-okf/0.4"
 RESERVED_NAMES = {"index.md", "log.md"}
 NON_CONCEPT_MARKDOWN = {"README.md"}
 REGISTERED_TYPES = {
     "project-overview", "specification", "domain-glossary", "definition", "theorem",
     "research-note", "source-summary", "synthesis", "experiment-report", "decision-record",
-    "research-map", "research-ticket", "workflow", "agent-instructions",
+    "research-map", "research-ticket", "work-specification", "workflow", "agent-instructions",
 }
 KNOWLEDGE_ROLES = {"canonical", "evidence", "operational"}
 LIFECYCLE_STATUSES = {"draft", "stable", "deprecated"}
@@ -270,7 +270,67 @@ def expected_path_rule(relative: str) -> tuple[str, str, str | None] | None:
         return "source-summary", "evidence", None
     if re.fullmatch(r"\.scratch/smartdca/issues/[^/]+\.md", relative):
         return "research-ticket", "operational", None
+    if re.fullmatch(r"\.scratch/smartdca/efforts/[^/]+/spec\.md", relative):
+        return "work-specification", "operational", None
+    if re.fullmatch(r"\.scratch/smartdca/efforts/[^/]+/map\.md", relative):
+        return "research-map", "operational", "stable"
+    if re.fullmatch(r"\.scratch/smartdca/efforts/[^/]+/issues/\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*\.md", relative):
+        return "research-ticket", "operational", None
     return None
+
+
+def validate_effort_layout(concepts: list[Document], findings: list[Finding]) -> None:
+    by_relative = {document.relative: document for document in concepts}
+    by_id = {document.concept_id: document for document in concepts}
+    effort_slugs: set[str] = set()
+    for document in concepts:
+        match = re.match(r"^\.scratch/smartdca/efforts/([^/]+)/", document.relative)
+        if match:
+            effort_slugs.add(match.group(1))
+        if (
+            re.fullmatch(r"\.scratch/smartdca/issues/[^/]+\.md", document.relative)
+            and (document.metadata or {}).get("ticket_status") != "resolved"
+        ):
+            add(findings, "SDCA048", document.relative, "the legacy ticket directory accepts resolved history only")
+    for slug in sorted(effort_slugs):
+        spec_path = f".scratch/smartdca/efforts/{slug}/spec.md"
+        map_path = f".scratch/smartdca/efforts/{slug}/map.md"
+        missing = [path for path in (spec_path, map_path) if path not in by_relative]
+        if missing:
+            add(findings, "SDCA049", f".scratch/smartdca/efforts/{slug}", "effort is missing required anchors: " + ", ".join(missing))
+        has_tickets = any(
+            document.relative.startswith(f".scratch/smartdca/efforts/{slug}/issues/")
+            for document in concepts
+        )
+        spec = by_relative.get(spec_path)
+        if has_tickets and spec is not None and (spec.metadata or {}).get("status") != "stable":
+            add(findings, "SDCA050", spec_path, "an effort specification must be stable before its tickets are published")
+        ticket_prefix = f".scratch/smartdca/efforts/{slug}/issues/"
+        effort_tickets = [document for document in concepts if document.relative.startswith(ticket_prefix)]
+        local_numbers = {
+            match.group(1): document
+            for document in effort_tickets
+            if (match := re.fullmatch(r".*/(\d{2})-[a-z0-9]+(?:-[a-z0-9]+)*\.md", document.relative))
+        }
+        for ticket in effort_tickets:
+            blocker_match = re.search(r"^Blocked by:\s*(.+?)\s*$", ticket.body, re.M)
+            if blocker_match is None:
+                add(findings, "SDCA051", ticket.relative, "effort ticket must declare Blocked by")
+                continue
+            blockers = [value.strip().strip("`") for value in blocker_match.group(1).split(",")]
+            if blockers == ["none"]:
+                continue
+            for blocker in blockers:
+                if re.fullmatch(r"\d{2}", blocker):
+                    target = local_numbers.get(blocker)
+                elif re.fullmatch(r"\.scratch/smartdca/(?:issues/[^/]+|efforts/[^/]+/issues/[^/]+)", blocker):
+                    target = by_id.get(blocker)
+                    if target is not None and target.relative.startswith(ticket_prefix):
+                        target = None
+                else:
+                    target = None
+                if target is None or (target.metadata or {}).get("type") != "research-ticket":
+                    add(findings, "SDCA051", ticket.relative, f"blocker must resolve as a local number or external ticket Concept ID: {blocker}")
 
 
 def as_datetime(value: Any) -> datetime | None:
@@ -702,6 +762,7 @@ def validate_profile(root: Path, documents: list[Document]) -> list[Finding]:
     reserved = {doc.relative: doc for doc in documents if doc.relative in RESERVED_NAMES}
     by_id = {doc.concept_id: doc for doc in concepts}
     by_relative = {doc.relative: doc for doc in concepts}
+    validate_effort_layout(concepts, findings)
     dependencies: dict[str, list[Document]] = {}
     verifications: dict[str, list[tuple[dict[str, Any], datetime]]] = {}
     for document in concepts:

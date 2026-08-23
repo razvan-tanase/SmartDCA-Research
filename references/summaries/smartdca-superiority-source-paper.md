@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: source-summary
 title: "Source summary: SmartDCA superiority (arXiv:2308.05200v1)"
 description: "Summary of the source paper this project audits, its six theorems, its price-per-unit criterion, and what it does not settle."

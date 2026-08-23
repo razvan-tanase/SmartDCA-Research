@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: source-summary
 title: "Source summary: Google's OKF v0.2 trust-signals article"
 description: "Summary of the non-normative Google Cloud article explaining why OKF v0.2 adds provenance, trust, and attestation."

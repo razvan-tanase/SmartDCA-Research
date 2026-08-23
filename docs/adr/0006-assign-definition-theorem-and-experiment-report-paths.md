@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: decision-record
 title: "Assign definition, theorem, and experiment-report paths in profile 0.3"
 description: "Decision assigning the three remaining semantic type paths and relabelling the bundle as smartdca-okf/0.3."

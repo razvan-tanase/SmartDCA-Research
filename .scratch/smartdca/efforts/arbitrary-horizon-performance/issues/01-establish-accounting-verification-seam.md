@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: research-ticket
 title: "Establish the arbitrary-horizon accounting and verification seam"
 description: "Open task ticket proving the arbitrary-horizon cash-timing identity and delivering the exact-rational three-policy verification seam."
@@ -10,16 +10,16 @@ ticket_type: task
 ticket_status: open
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T19:40:02Z
-generation_run: urn:uuid:b31074e1-661f-4af8-98db-6fa1ebfc5f17
+  at: 2026-08-23T20:17:00Z
+generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
 ---
-# 21 — Establish the arbitrary-horizon accounting and verification seam
+# 01 — Establish the arbitrary-horizon accounting and verification seam
 
 Type: task
 Status: open
 Label: ready-for-agent
-Blocked by: 18
-Parent: [Test arbitrary-horizon guarded SmartDCA performance on single-valley paths](20-test-arbitrary-horizon-guarded-smartdca-single-valley.md)
+Blocked by: `.scratch/smartdca/issues/18-isolate-three-purchase-corrected-mean-effect`
+Parent: [Arbitrary-horizon guarded SmartDCA performance](../spec.md)
 
 ## Question
 
@@ -51,5 +51,5 @@ ledger must verify each other from independent accounting routes.
 
 ## Comments
 
-- Created from the approved tracer-bullet decomposition of ticket 20 on
+- Created from the approved tracer-bullet decomposition of the effort specification on
   2026-08-23.

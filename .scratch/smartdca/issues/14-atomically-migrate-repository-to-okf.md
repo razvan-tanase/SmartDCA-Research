@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.3
+profile: smartdca-okf/0.4
 type: research-ticket
 title: "Atomically migrate the repository to SmartDCA OKF 0.1"
 description: "Task ticket atomically migrating every concept to smartdca-okf/0.1 and activating blocking CI."
