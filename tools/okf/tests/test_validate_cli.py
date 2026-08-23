@@ -793,6 +793,24 @@ class ValidatorCliTests(unittest.TestCase):
 
         self.assertTrue(report["smartdca_profile"]["ok"], report["smartdca_profile"]["findings"])
 
+    def test_inline_code_spans_are_not_links_or_footnote_joins(self):
+        files = self.valid_minimal_bundle()
+        prose = "Inline code `[missing](missing.md)` and `[^missing]` are examples."
+        files["AGENTS.md"] = self.concept(
+            type_name="agent-instructions",
+            title="Agents",
+            description="Root agent invariants.",
+            role="operational",
+            status="stable",
+            body=prose,
+        )
+        files["index.md"] = self.valid_index([
+            {"path": "AGENTS.md", "title": "Agents", "description": "Root agent invariants.", "type": "agent-instructions", "role": "operational", "status": "stable"},
+        ])
+        report = self.run_validator(files)
+
+        self.assertTrue(report["smartdca_profile"]["ok"], report["smartdca_profile"]["findings"])
+
     def test_a_longer_fence_is_not_closed_by_a_shorter_marker(self):
         files = self.valid_minimal_bundle()
         fenced = """
@@ -922,4 +940,10 @@ class ValidatorCliTests(unittest.TestCase):
         ]).replace("(AGENTS.md)", "(/AGENTS.md)")
         absolute = self.run_validator(absolute_files)
         self.assertIn("SDCA045", self.codes(absolute))
+
+
+        empty_marker_files = self.valid_minimal_bundle()
+        empty_marker_files["index.md"] = empty_marker_files["index.md"].replace("_None._", "", 1)
+        empty_marker = self.run_validator(empty_marker_files)
+        self.assertIn("SDCA043", self.codes(empty_marker))
 
