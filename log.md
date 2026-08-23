@@ -1,9 +1,14 @@
 # SmartDCA knowledge log
 
+
 This is the immutable event history of the repository-root knowledge bundle. Date
 groups are newest first, entries are flat bullets with a full UTC timestamp, and
 existing events are never edited, reordered, or deleted. New events are inserted into
 the newest applicable group. The complete concept inventory is [`index.md`](index.md).
+
+## 2026-08-23
+
+- 2026-08-23T15:45:00Z | Update | Treat README as repository interface outside the OKF concept corpus | [README](README.md), [profile](docs/knowledge/okf-profile.md)
 
 ## 2026-08-16
 

@@ -98,22 +98,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
 
     def project_overview(self):
-        return """
-            ---
-            profile: smartdca-okf/0.3
-            type: project-overview
-            title: Project overview
-            description: The root orientation page for the research project.
-            knowledge_role: canonical
-            status: stable
-            original_record: true
-            verified:
-              - by: human:github:razvan-tanase
-                at: 2026-08-15T12:00:00Z
-                review_run: urn:uuid:aaaaaaaa-aaaa-7aaa-8aaa-aaaaaaaaaaaa
-            ---
-            # Project overview
-        """
+        return "# Project overview"
 
     def concept(self, *, type_name, title, description, role, status, extra="", body=""):
         lines = [
@@ -134,17 +119,9 @@ class ValidatorCliTests(unittest.TestCase):
         return "\n".join(lines) + "\n"
 
     def valid_minimal_bundle(self):
-        row = {
-            "path": "README.md",
-            "title": "Project overview",
-            "description": "The root orientation page for the research project.",
-            "type": "project-overview",
-            "role": "canonical",
-            "status": "stable",
-        }
         return {
             "README.md": self.project_overview(),
-            "index.md": self.valid_index([row]),
+            "index.md": self.valid_index([]),
             "log.md": self.valid_log(),
         }
 
@@ -220,6 +197,14 @@ class ValidatorCliTests(unittest.TestCase):
         self.assertIn("OKF001", self.codes(report, "base_okf"))
         self.assertIn("SDCA001", self.codes(report))
 
+    def test_plain_root_readme_is_not_a_concept(self):
+        files = self.valid_minimal_bundle()
+        report = self.run_validator(files)
+
+        self.assertTrue(report["base_okf"]["ok"], report["base_okf"]["findings"])
+        self.assertTrue(report["smartdca_profile"]["ok"], report["smartdca_profile"]["findings"])
+        self.assertNotIn("OKF001", self.codes(report, "base_okf"))
+
     def test_complete_minimal_smartdca_bundle_passes(self):
         report = self.run_validator(self.valid_minimal_bundle())
 
@@ -228,7 +213,7 @@ class ValidatorCliTests(unittest.TestCase):
 
     def test_path_mapping_and_universal_fields_are_enforced(self):
         files = self.valid_minimal_bundle()
-        files["README.md"] = """
+        files["AGENTS.md"] = """
             ---
             profile: smartdca-okf/0.3
             type: theorem
@@ -247,7 +232,6 @@ class ValidatorCliTests(unittest.TestCase):
 
     def test_complete_path_mapping_accepts_each_assigned_path(self):
         definitions = [
-            ("README.md", "project-overview", "Project", "Root orientation.", "canonical", "stable", "verified:\n  - by: human:github:razvan-tanase\n    at: 2026-08-15T12:00:00Z\n    review_run: urn:uuid:aaaaaaaa-aaaa-7aaa-8aaa-aaaaaaaaaaaa", ""),
             ("CONTEXT.md", "domain-glossary", "Context", "Canonical terminology.", "canonical", "draft", "", ""),
             ("AGENTS.md", "agent-instructions", "Agents", "Root agent invariants.", "operational", "stable", "", ""),
             ("docs/agents/domain.md", "agent-instructions", "Domain workflow", "Domain document workflow.", "operational", "stable", "", ""),
@@ -593,7 +577,7 @@ class ValidatorCliTests(unittest.TestCase):
         files["references/raw/upstream/source.md.raw"] = b"# no frontmatter because these are exact upstream bytes\n"
         report = self.run_validator(files)
 
-        self.assertEqual(report["inventory"]["markdown_files"], 3)
+        self.assertEqual(report["inventory"]["markdown_files"], 2)
         self.assertTrue(report["smartdca_profile"]["ok"], report["smartdca_profile"]["findings"])
 
     def test_conflict_synthesis_remains_draft_and_path_moves_keep_forwarders(self):
@@ -753,13 +737,13 @@ class ValidatorCliTests(unittest.TestCase):
 
     def test_invalid_conditional_metadata_and_stable_links_are_reported(self):
         files = self.valid_minimal_bundle()
-        files["README.md"] = """
+        files["research/notes/invalid.md"] = """
             ---
             profile: smartdca-okf/0.3
-            type: project-overview
-            title: Project overview
+            type: research-note
+            title: Invalid research note
             description: A deliberately invalid conditional-metadata fixture.
-            knowledge_role: canonical
+            knowledge_role: evidence
             status: stable
             original_record: not-a-boolean
             generated: {by: invalid-actor, at: yesterday}
@@ -769,10 +753,10 @@ class ValidatorCliTests(unittest.TestCase):
               - {id: scope, title: Scope, resource: all project queries, source_kind: scope}
               - {id: missing-resource, title: Missing resource, source_kind: internal}
             ---
-            # Project overview
+            # Invalid research note
             See [missing](missing.md).
         """
-        rows = [{"path": "README.md", "title": "Project overview", "description": "A deliberately invalid conditional-metadata fixture.", "type": "project-overview", "role": "canonical", "status": "stable"}]
+        rows = [{"path": "research/notes/invalid.md", "title": "Invalid research note", "description": "A deliberately invalid conditional-metadata fixture.", "type": "research-note", "role": "evidence", "status": "stable"}]
         files["index.md"] = self.valid_index(rows)
         report = self.run_validator(files)
 
@@ -787,57 +771,47 @@ class ValidatorCliTests(unittest.TestCase):
 
     def test_fenced_examples_are_not_links_or_footnote_joins(self):
         files = self.valid_minimal_bundle()
-        indent = " " * 12
-        fenced = "\n".join(
-            indent + line
-            for line in (
-                "# Project overview",
-                "",
-                "```markdown",
-                "- [<title>](<bundle-relative .md path>) — illustrative row",
-                "- [concept](path.md) with a [^label] example",
-                "```",
-            )
+        prose = """
+            ```markdown
+            [missing](missing.md)
+            [^missing]
+            ```
+            Inline code `[also missing](also-missing.md)` and `[^also-missing]` are examples.
+        """
+        files["AGENTS.md"] = self.concept(
+            type_name="agent-instructions",
+            title="Agents",
+            description="Root agent invariants.",
+            role="operational",
+            status="stable",
+            body=prose,
         )
-        files["README.md"] = files["README.md"].replace(indent + "# Project overview", fenced)
-        report = self.run_validator(files)
-
-        self.assertTrue(report["smartdca_profile"]["ok"], report["smartdca_profile"]["findings"])
-
-    def test_inline_code_spans_are_not_links_or_footnote_joins(self):
-        files = self.valid_minimal_bundle()
-        indent = " " * 12
-        prose = "\n".join(
-            indent + line
-            for line in (
-                "# Project overview",
-                "",
-                "Log bullets carry no `[change](missing.md)` URL and no `[^label]` join.",
-            )
-        )
-        files["README.md"] = files["README.md"].replace(indent + "# Project overview", prose)
+        files["index.md"] = self.valid_index([
+            {"path": "AGENTS.md", "title": "Agents", "description": "Root agent invariants.", "type": "agent-instructions", "role": "operational", "status": "stable"},
+        ])
         report = self.run_validator(files)
 
         self.assertTrue(report["smartdca_profile"]["ok"], report["smartdca_profile"]["findings"])
 
     def test_a_longer_fence_is_not_closed_by_a_shorter_marker(self):
         files = self.valid_minimal_bundle()
-        indent = " " * 12
-        fenced = "\n".join(
-            indent + line
-            for line in (
-                "# Project overview",
-                "",
-                "````markdown",
-                "```",
-                "- [concept](path.md) stays inside the outer fence",
-                "```",
-                "````",
-                "",
-                "A real [glossary](CONTEXT.md) link follows the block.",
-            )
+        fenced = """
+            ````markdown
+            ```
+            - [concept](path.md) stays inside the outer fence
+            ```
+            ````
+
+            A real [glossary](CONTEXT.md) link follows the block.
+        """
+        files["AGENTS.md"] = self.concept(
+            type_name="agent-instructions",
+            title="Agents",
+            description="Root agent invariants.",
+            role="operational",
+            status="stable",
+            body=fenced,
         )
-        files["README.md"] = files["README.md"].replace(indent + "# Project overview", fenced)
         files["CONTEXT.md"] = self.concept(
             type_name="domain-glossary",
             title="Context",
@@ -845,12 +819,10 @@ class ValidatorCliTests(unittest.TestCase):
             role="canonical",
             status="draft",
         )
-        files["index.md"] = self.valid_index(
-            [
-                {"path": "README.md", "title": "Project overview", "description": "The root orientation page for the research project.", "type": "project-overview", "role": "canonical", "status": "stable"},
-                {"path": "CONTEXT.md", "title": "Context", "description": "Draft canonical terminology.", "type": "domain-glossary", "role": "canonical", "status": "draft"},
-            ]
-        )
+        files["index.md"] = self.valid_index([
+            {"path": "CONTEXT.md", "title": "Context", "description": "Draft canonical terminology.", "type": "domain-glossary", "role": "canonical", "status": "draft"},
+            {"path": "AGENTS.md", "title": "Agents", "description": "Root agent invariants.", "type": "agent-instructions", "role": "operational", "status": "stable"},
+        ])
         report = self.run_validator(files)
 
         self.assertTrue(report["smartdca_profile"]["ok"], report["smartdca_profile"]["findings"])
@@ -875,7 +847,16 @@ class ValidatorCliTests(unittest.TestCase):
 
     def test_strict_mode_blocks_a_profile_only_violation(self):
         files = self.valid_minimal_bundle()
-        files["README.md"] = files["README.md"].replace("profile: smartdca-okf/0.3", "profile: smartdca-okf/0.9")
+        files["AGENTS.md"] = self.concept(
+            type_name="agent-instructions",
+            title="Agents",
+            description="Root agent invariants.",
+            role="operational",
+            status="stable",
+        ).replace("profile: smartdca-okf/0.3", "profile: smartdca-okf/0.9")
+        files["index.md"] = self.valid_index([
+            {"path": "AGENTS.md", "title": "Agents", "description": "Root agent invariants.", "type": "agent-instructions", "role": "operational", "status": "stable"},
+        ])
         status, report = self.run_cli(files, "--strict")
 
         self.assertEqual(status, 1)
@@ -894,11 +875,31 @@ class ValidatorCliTests(unittest.TestCase):
 
     def test_index_requires_complete_coverage_and_stable_canonical_first(self):
         files = self.valid_minimal_bundle()
-        context = self.concept(type_name="domain-glossary", title="Context", description="Draft canonical terminology.", role="canonical", status="draft")
+        context = self.concept(
+            type_name="domain-glossary",
+            title="Context",
+            description="Draft canonical terminology.",
+            role="canonical",
+            status="draft",
+        )
+        definition = self.concept(
+            type_name="definition",
+            title="Stable definition",
+            description="A stable canonical definition used for ordering tests.",
+            role="canonical",
+            status="stable",
+            extra="""
+                verified:
+                  - by: human:reviewer
+                    at: 2026-08-15T12:00:00Z
+                    review_run: urn:uuid:99999999-9999-4999-8999-999999999999
+            """,
+        )
         files["CONTEXT.md"] = context
+        files["research/definitions/stable.md"] = definition
         rows = [
             {"path": "CONTEXT.md", "title": "Context", "description": "Draft canonical terminology.", "type": "domain-glossary", "role": "canonical", "status": "draft"},
-            {"path": "README.md", "title": "Project overview", "description": "The root orientation page for the research project.", "type": "project-overview", "role": "canonical", "status": "stable"},
+            {"path": "research/definitions/stable.md", "title": "Stable definition", "description": "A stable canonical definition used for ordering tests.", "type": "definition", "role": "canonical", "status": "stable"},
         ]
         files["index.md"] = self.valid_index(rows)
         ordering = self.run_validator(files)
@@ -909,15 +910,16 @@ class ValidatorCliTests(unittest.TestCase):
         self.assertIn("SDCA044", self.codes(coverage))
 
         absolute_files = self.valid_minimal_bundle()
-        absolute_files["index.md"] = absolute_files["index.md"].replace("(README.md)", "(/README.md)")
+        absolute_files["AGENTS.md"] = self.concept(
+            type_name="agent-instructions",
+            title="Agents",
+            description="Root agent invariants.",
+            role="operational",
+            status="stable",
+        )
+        absolute_files["index.md"] = self.valid_index([
+            {"path": "AGENTS.md", "title": "Agents", "description": "Root agent invariants.", "type": "agent-instructions", "role": "operational", "status": "stable"},
+        ]).replace("(AGENTS.md)", "(/AGENTS.md)")
         absolute = self.run_validator(absolute_files)
         self.assertIn("SDCA045", self.codes(absolute))
 
-        empty_marker_files = self.valid_minimal_bundle()
-        empty_marker_files["index.md"] = empty_marker_files["index.md"].replace("_None._", "", 1)
-        empty_marker = self.run_validator(empty_marker_files)
-        self.assertIn("SDCA043", self.codes(empty_marker))
-
-
-if __name__ == "__main__":
-    unittest.main()

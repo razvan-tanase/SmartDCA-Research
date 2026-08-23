@@ -16,9 +16,6 @@ authoritative metadata.
 
 ## Canonical
 
-### project-overview
-
-- [SmartDCA Research](README.md) — Human introduction to the project, its established results, layout, and verification commands. — type: project-overview; status: stable; trust: reviewed 2026-08-16; provenance: original record, Git history
 
 ### domain-glossary
 

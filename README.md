@@ -1,38 +1,3 @@
----
-profile: smartdca-okf/0.3
-type: project-overview
-title: "SmartDCA Research"
-description: "Human introduction to the project, its established results, layout, and verification commands."
-knowledge_role: canonical
-status: stable
-original_record: true
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-16T11:24:00Z
-generation_run: urn:uuid:1d09cb3f-94ee-4b73-b0f2-393b4227167d
-verified:
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T07:46:00Z
-    review_run: urn:uuid:b5b1666e-e77c-41a4-8781-fb0d5a965582
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T07:46:00Z
-    review_run: urn:uuid:da31a04e-0105-4659-9d05-895a4364b107
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T09:10:00Z
-    review_run: urn:uuid:e26b6a0b-a55b-47f0-ae7f-88873e0ac8ab
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T09:48:00Z
-    review_run: urn:uuid:3b0e6083-180e-43b5-9314-df22687e68de
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T10:34:00Z
-    review_run: urn:uuid:86b3e187-d6a2-44c5-997c-8c06f5fdbf87
-  - by: openai-codex/smartdca-wiki-0.1
-    at: 2026-08-16T11:14:00Z
-    review_run: urn:uuid:5fdc289a-b5ff-4e1f-9d84-777c58a093f2
-  - by: openai-codex/smartdca-wiki-0.1
-    at: 2026-08-16T11:30:00Z
-    review_run: urn:uuid:d55d437b-21a4-4ffb-b393-de516fb58c2d
----
 # SmartDCA Research
 
 A proof-first research project auditing and extending the out quasi-Gini construction in *SmartDCA superiority* (Calvet, Herranz-Celotti, and Valimamode, arXiv:2308.05200v1).

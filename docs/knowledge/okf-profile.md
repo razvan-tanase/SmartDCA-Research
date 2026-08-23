@@ -71,6 +71,9 @@ verified:
   - by: claude-code/smartdca-wiki-0.1
     at: 2026-08-16T10:32:00Z
     review_run: urn:uuid:6e8b3b72-0624-46b2-91ff-071b4879d9d4
+  - by: human:github:razvan-tanase
+    at: 2026-08-23T15:45:00Z
+    review_run: urn:uuid:f1558f7f-31a3-431b-9ff5-a0fc3c67ae13
 ---
 # SmartDCA Open Knowledge Format profile
 
@@ -80,7 +83,7 @@ The words MUST, MUST NOT, REQUIRED, SHOULD, SHOULD NOT, and MAY are normative. B
 
 ## Bundle and identity
 
-The repository root is the bundle root, by the decision in [Make the repository root an OKF knowledge bundle](../adr/0002-repository-root-okf-knowledge-bundle.md)[^adr-0002]. Every UTF-8 file whose final suffix is `.md` is either a concept or a reserved file, including Markdown below hidden directories. `index.md` and `log.md` are reserved at every depth; all other Markdown files are concepts.
+The repository root is the bundle root, by the decision in [Make the repository root an OKF knowledge bundle](../adr/0002-repository-root-okf-knowledge-bundle.md)[^adr-0002]. The root `README.md` is repository-interface documentation for humans and GitHub and is deliberately outside the OKF concept corpus; it MUST NOT carry concept frontmatter. Every other UTF-8 file whose final suffix is `.md` is either a concept or a reserved file, including Markdown below hidden directories. `index.md` and `log.md` are reserved at every depth; all remaining Markdown files are concepts.
 
 A Concept ID is the bundle-relative path without the `.md` suffix. A published Concept ID is stable. Moving a stable concept creates the new concept and retains the old path as a deprecated forwarding concept with `superseded_by`; it does not delete or silently redirect the old identity. That is the durable-identity decision in [Preserve path-based concept identity through supersession](../adr/0004-preserve-path-based-concept-identity.md)[^adr-0004].
 
@@ -88,7 +91,7 @@ External Markdown snapshots are not concepts. Their exact upstream bytes MUST us
 
 ## Base OKF v0.2 conformance
 
-The base layer implements OKF v0.2 conformance without importing stricter SmartDCA rules. It requires parseable top-of-file YAML frontmatter and a non-empty `type` for every non-reserved Markdown file, plus the reserved-file structures defined by OKF.
+The base layer implements OKF v0.2 conformance without importing stricter SmartDCA rules. It requires parseable top-of-file YAML frontmatter and a non-empty `type` for every Markdown concept file, plus the reserved-file structures defined by OKF. The root `README.md` is not passed to base concept validation.
 
 The base layer MUST accept:
 
@@ -217,11 +220,11 @@ Relabelling across profile versions is a metadata migration: it does not update 
 
 ## Path mapping
 
-These assignments are exhaustive and complete for profile 0.3: every registered type has a destination. A non-reserved Markdown path not matched here fails the profile even if all of its metadata is otherwise valid.
+These assignments are exhaustive for active concept paths in profile 0.3. The registered `project-overview` type currently has no active concept instance because the root `README.md` is repository-interface documentation rather than knowledge corpus content. A non-reserved Markdown concept path not matched here fails the profile even if all of its metadata is otherwise valid.
 
 | Path | Type | Role | Lifecycle rule |
 |---|---|---|---|
-| `README.md` | `project-overview` | canonical | Stable original record after migration review. |
+| `README.md` | repository interface | not a concept | No YAML concept frontmatter; human/GitHub landing page only. |
 | `CONTEXT.md` | `domain-glossary` | canonical | Draft until sources and bootstrap semantic review are recorded. |
 | `docs/adr/*.md` | `decision-record` | canonical | Accepted records become stable only after independent review; otherwise draft or deprecated as mapped above. |
 | `research/notes/*.md` | `research-note` | evidence | Stable only when the linked resolved ticket and review are documented; otherwise draft. |
@@ -308,7 +311,7 @@ The validator has two modes. Report mode is the default: content findings always
 
 [Implement the SmartDCA OKF profile and report-only validator](../../.scratch/smartdca/issues/13-implement-smartdca-okf-profile-validator.md)[^ticket-13] exposed report mode only. [Atomically migrate the repository to SmartDCA OKF 0.1](../../.scratch/smartdca/issues/14-atomically-migrate-repository-to-okf.md) added strict mode and, in the same merge transaction as the corpus migration, made `python tools/okf/validate.py . --strict` a blocking CI step alongside the validator fixtures. Every later change to a Markdown concept therefore has to conform before it can merge.
 
-The validator scans the complete repository tree except `.git`, validates every final-suffix `.md` file, and intentionally does not treat `.md.raw` artifacts as concepts. Automated fixtures exercise the base permissiveness contract, the complete path mapping, registered types, conditional fields, actor and run identities, source kinds and fingerprints, footnote joins, re-verification, supersession, ticket and ADR states, dependency freshness, stable links, reserved files, index coverage/order, raw snapshots, and all five accepted edge cases.
+The validator scans the complete repository tree except `.git`, validates every final-suffix `.md` file except the root repository-interface `README.md`, and intentionally does not treat `.md.raw` artifacts as concepts. Automated fixtures exercise the base permissiveness contract, the complete path mapping, registered types, conditional fields, actor and run identities, source kinds and fingerprints, footnote joins, re-verification, supersession, ticket and ADR states, dependency freshness, stable links, reserved files, index coverage/order, raw snapshots, and all five accepted edge cases.
 
 ## Structural freeze
 
