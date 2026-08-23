@@ -7,8 +7,8 @@ knowledge_role: operational
 status: stable
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T16:21:37Z
-generation_run: urn:uuid:fc39df1d-3e43-487c-8bc6-9a1e72abaff8
+  at: 2026-08-23T19:25:11Z
+generation_run: urn:uuid:af075d63-4217-4274-879e-4e82a9d238d8
 ---
 # Find the rigorous out quasi-Gini route to a complete SmartDCA paper
 
@@ -16,7 +16,7 @@ Label: wayfinder:map
 
 ## Destination
 
-A journal-grade, self-contained scientific paper suitable for arXiv and peer review that develops a genuine two-parameter out quasi-Gini mean, derives a sequentially admissible and fully funded SmartDCA rule with exact accounting, establishes the strongest valid comparison with DCA (including an impossibility boundary if universal dominance fails), and supports the theory with reproducible experiments.
+A thesis- and paper-grade, self-contained Financial Computing study suitable for arXiv, peer review, and a master's defense that asks whether DCA can be made adaptive without losing a transparent model-free safety guarantee. The paper should tell the progression from attempted SmartDCA superiority, through correction of the source out quasi-Gini functional and the causal DCA impossibility boundary, to the sharp epsilon-DCA unit guardrail and the guarded corrected-mean SmartDCA rule; add one bounded arbitrary-horizon result, positive or negative, support the theory with reproducible experiments, and use proofs as evidence for the use-case narrative rather than as the presentation's center.
 
 ## Notes
 
@@ -69,7 +69,7 @@ A journal-grade, self-contained scientific paper suitable for arXiv and peer rev
 ## Not yet specified
 
 - Deferred unless required by the manuscript: the remaining generic axiom and parameter-region theorems after homogeneity.
-- The favorable path class, stochastic estimand, or utility objective on which the guarded SmartDCA rule can strictly improve on DCA without weakening its universal safety floor.
+- The active next mathematical frontier is specified in [Test arbitrary-horizon guarded SmartDCA performance on single-valley paths](issues/20-test-arbitrary-horizon-guarded-smartdca-single-valley.md). It must identify a sharp, independently defined favorable path class or prove why the initial single-valley class is insufficient; no positive outcome is assumed.
 - The behavior of the corrected-mean reference under changes in lagged prices outside parameter/transform regions where coordinatewise monotonicity is known.
 - Three supervised one-source ingests, all after the freeze certification, are needed before the batch-ingestion gate reopens; the batch's first cohort still remains draft pending batch-level review when it does.
 - Whether any of the seventeen ticket answers should be rewritten to link the canonical concepts extracted later. The cleanup deliberately left them as history; reversing that judgement is a separate decision, not an oversight.

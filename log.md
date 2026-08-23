@@ -8,6 +8,9 @@ the newest applicable group. The complete concept inventory is [`index.md`](inde
 
 ## 2026-08-23
 
+- 2026-08-23T19:25:11Z | Creation | Specify the arbitrary-horizon guarded SmartDCA frontier | [ticket](.scratch/smartdca/issues/20-test-arbitrary-horizon-guarded-smartdca-single-valley.md), [index](index.md)
+- 2026-08-23T19:25:11Z | Update | Reframe the research destination around safe adaptive DCA for the Financial Computing thesis narrative | [map](.scratch/smartdca/map.md)
+
 - 2026-08-23T16:21:37Z | Resolution | Complete the repository-wide agent-facing writing audit | [ticket](.scratch/smartdca/issues/19-audit-agent-facing-writing.md), [map](.scratch/smartdca/map.md)
 - 2026-08-23T16:21:37Z | Verification | Review all active agent instructions with the Writing for Agents criteria | [contract](AGENTS.md), [domain](docs/agents/domain.md), [tracker](docs/agents/issue-tracker.md), [wiki](docs/agents/llm-wiki-workflow.md), [labels](docs/agents/triage-labels.md), [wayfinder](docs/agents/wayfinder-ticket-workflow.md)
 - 2026-08-23T16:18:42Z | Update | Sharpen triggers, information hierarchy, completion criteria, and review routing across active agent instructions | [contract](AGENTS.md), [domain](docs/agents/domain.md), [tracker](docs/agents/issue-tracker.md), [wiki](docs/agents/llm-wiki-workflow.md), [labels](docs/agents/triage-labels.md), [wayfinder](docs/agents/wayfinder-ticket-workflow.md)
