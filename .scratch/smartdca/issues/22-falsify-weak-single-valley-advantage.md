@@ -1,0 +1,54 @@
+---
+profile: smartdca-okf/0.3
+type: research-ticket
+title: "Falsify the weak single-valley advantage conjecture"
+description: "Open task ticket falsifying the weak single-valley advantage conjecture with deterministic exact-rational search."
+knowledge_role: operational
+status: draft
+original_record: true
+ticket_type: task
+ticket_status: open
+generated:
+  by: openai-codex/smartdca-wiki-0.1
+  at: 2026-08-23T19:40:02Z
+generation_run: urn:uuid:b31074e1-661f-4af8-98db-6fa1ebfc5f17
+---
+# 22 — Falsify the weak single-valley advantage conjecture
+
+Type: task
+Status: open
+Label: ready-for-agent
+Blocked by: 21
+Parent: [Test arbitrary-horizon guarded SmartDCA performance on single-valley paths](20-test-arbitrary-horizon-guarded-smartdca-single-valley.md)
+
+## Question
+
+Using the verified arbitrary-horizon seam, determine whether weak single-valley
+purchase-price paths alone are sufficient to give the guarded corrected-mean
+rule a predictable terminal-wealth advantage over DCA or the neutral guarded
+selector in the restricted countercyclical setting. Search deterministically
+before attempting a general proof and minimize every decisive witness.
+
+## What to build
+
+A reproducible falsification report answers what the declared finite search
+does and does not establish. If the conjecture fails, the report supplies the
+smallest exact counterexample under the declared ordering. If it survives, the
+report preserves the complete search domain and states explicitly that finite
+non-discovery is not proof.
+
+## Acceptance criteria
+
+- [ ] The weak single-valley predicate is defined independently of strategy output and validated for every generated path.
+- [ ] The search covers declared rational grids at horizons four through eight with equal positive deposits, declared countercyclical parameters, the identity transform, and an explicit evaluation-price grid.
+- [ ] The grid, enumeration order, pruning rules, and computational limits are recorded.
+- [ ] Results distinguish corrected-versus-DCA and corrected-versus-neutral comparisons.
+- [ ] Guardrail-floor activation is recorded so an apparent score effect cannot be attributed silently to the floor.
+- [ ] Any counterexample is minimized by horizon, price complexity, parameter complexity, and deposit complexity.
+- [ ] Every reported witness is replayed as a named exact regression case.
+- [ ] If no counterexample is found, the resolution reports only survival of the finite search and makes no arbitrary-horizon claim.
+
+## Comments
+
+- Created from the approved tracer-bullet decomposition of ticket 20 on
+  2026-08-23.
