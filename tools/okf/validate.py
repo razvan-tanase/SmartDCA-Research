@@ -21,6 +21,7 @@ import yaml
 
 PROFILE_VERSION = "smartdca-okf/0.3"
 RESERVED_NAMES = {"index.md", "log.md"}
+NON_CONCEPT_MARKDOWN = {"README.md"}
 REGISTERED_TYPES = {
     "project-overview", "specification", "domain-glossary", "definition", "theorem",
     "research-note", "source-summary", "synthesis", "experiment-report", "decision-record",
@@ -35,7 +36,6 @@ DECISION_STATUSES = {"proposed", "accepted", "deprecated", "superseded"}
 HIGH_RISK_TYPES = {"domain-glossary", "definition", "theorem", "synthesis", "decision-record"}
 SEMANTIC_CI_ACTOR = "process:github-actions:smartdca-wiki-ci"
 EXACT_PATH_RULES = {
-    "README.md": ("project-overview", "canonical", "stable"),
     "CONTEXT.md": ("domain-glossary", "canonical", None),
     "AGENTS.md": ("agent-instructions", "operational", "stable"),
     "docs/agents/domain.md": ("agent-instructions", "operational", "stable"),
@@ -144,7 +144,13 @@ def load_frontmatter(path: Path, relative: str, findings: list[Finding]) -> Docu
 
 
 def markdown_files(root: Path) -> list[Path]:
-    return sorted(path for path in root.rglob("*.md") if path.is_file() and ".git" not in path.relative_to(root).parts)
+    return sorted(
+        path
+        for path in root.rglob("*.md")
+        if path.is_file()
+        and ".git" not in path.relative_to(root).parts
+        and path.relative_to(root).as_posix() not in NON_CONCEPT_MARKDOWN
+    )
 
 
 def validate_base_log(relative: str, body: str, findings: list[Finding]) -> None:
