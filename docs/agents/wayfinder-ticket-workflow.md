@@ -6,16 +6,24 @@ description: "Authoritative ticket lifecycle from orientation through the user s
 knowledge_role: operational
 status: stable
 original_record: true
+generated:
+  by: openai-codex/smartdca-wiki-0.1
+  at: 2026-08-23T16:18:42Z
+generation_run: urn:uuid:fc39df1d-3e43-487c-8bc6-9a1e72abaff8
+verified:
+  - by: openai-codex/smartdca-wiki-0.1
+    at: 2026-08-23T16:21:37Z
+    review_run: urn:uuid:66222a92-a082-4617-b191-77c124239e73
 ---
 # Wayfinder ticket workflow
 
-Use this lifecycle whenever work touches a ticket under `.scratch/<effort>/issues/`. The map is the index; the ticket is the single source of truth for its question and answer.
+Use this lifecycle whenever work touches a ticket under `.scratch/<effort>/issues/`. The map indexes the route; the ticket is the single source of truth for its question and answer.
 
 ## Invariants
 
 - Work on one ticket at a time unless the user explicitly authorizes a batch.
 - Keep at most one ticket in `Status: claimed`.
-- Use ticket names in user-facing text; identifiers appear only inside links or dependency metadata.
+- Lead user-facing text with ticket names; keep identifiers in links and dependency metadata.
 - Resolve the current ticket completely before modifying the substance of a later ticket.
 - End every resolved ticket at the significance gate. The next ticket remains unclaimed until the user explicitly continues.
 
@@ -23,7 +31,7 @@ Use this lifecycle whenever work touches a ticket under `.scratch/<effort>/issue
 
 ### 1. Orient
 
-Read the effort's `map.md`, the selected ticket, `CONTEXT.md`, relevant ADRs, and this workflow. Read related resolved tickets only when the current question depends on their detail.
+Read the effort's `map.md`, the selected ticket, [Domain documentation](domain.md), and this workflow. Follow the domain procedure to select glossary sections and ADRs. Open a resolved ticket only when the current question depends on its historical detail.
 
 **Complete when:** the destination, current question, assumptions, dependencies, and out-of-scope boundary can each be stated without guessing.
 
@@ -35,10 +43,10 @@ Use a user-named ticket when it is open and unblocked. Otherwise choose the firs
 
 ### 3. Choose the execution branch
 
-- `research`: use the research skill and a background agent; prefer primary sources and write one cited Markdown note.
+- `research`: use the research skill, prefer primary sources, and write one cited Markdown note; delegate only when the request or loaded skill requires it.
 - `prototype`: use the prototype skill with the user and link the concrete artifact.
 - `grilling`: use the grilling and domain-modeling skills in a live user exchange.
-- `task`: execute the prerequisite work or give the human a precise checklist when human action is required.
+- `task`: execute the bounded work; when it requires human action, provide a checklist whose completion can be verified.
 
 Load every skill named by the map or selected branch before acting. Keep all work inside the current ticket's question.
 
@@ -54,18 +62,19 @@ For mathematical tickets, test constant inputs, boundary parameters, limiting ca
 
 ### 5. Review and verify
 
-When a subagent or background agent produced or changed any deliverable, the parent executor must independently review that work before accepting it. The producing agent's self-check is evidence, not final approval.
+When delegated work produced or changed a deliverable, an executor other than its producer reviews it before acceptance. The producing agent's self-check remains supporting evidence.
 
 Use the review skill appropriate to the artifact:
 
 - For repository code changes, invoke the `code-review` skill against a fixed point and the originating ticket or specification.
+- For agent instructions or workflows, invoke the Writing for Agents skill against the complete active instruction surface.
 - For research, proofs, experiments, documents, and other non-code artifacts, invoke the applicable domain-specific review skill when one is available. Otherwise, the parent executor performs and records an independent domain-specific review.
 
 Review against both the ticket's specification and the project's documented standards. Resolve every actionable finding, or record it explicitly as an unresolved blocker, before continuing.
 
 Check that cited sources support their nearby claims, proofs cover their declared domains, counterexamples satisfy every stated assumption, artifact links resolve, and no later ticket was substantively advanced. Re-run any relevant calculations or tests after fixes.
 
-**Complete when:** someone other than the producing agent has reviewed every delegated deliverable, all actionable findings are resolved or explicitly block the ticket, all checks pass, and the result can be reviewed without relying on hidden conversation context.
+**Complete when:** every delegated deliverable has a reviewer other than its producer, every actionable finding is resolved or explicitly blocks the ticket, all checks pass, and the result can be reviewed without hidden conversation context.
 
 ### 6. Record and synchronize
 
@@ -81,9 +90,9 @@ Keep detailed reasoning in exactly one place: the ticket or its linked artifact.
 
 ### 7. Preserve the checkpoint
 
-Save every changed reusable file through the project's persistent-file workflow and verify that each promised file is accessible. Preserve existing file identity when updating an earlier artifact.
+Commit every changed reusable file through the authorized repository workflow. Inspect the final diff, preserve existing file identity, and verify the published branch or pull-request link when publication is part of the request.
 
-**Complete when:** every changed project artifact is available and no intended update remains only in transient working state.
+**Complete when:** every intended file is present in the final diff, every promised remote artifact is accessible, and no intended update exists only in transient state.
 
 ### 8. Significance gate
 
@@ -100,7 +109,7 @@ An explicit grilling checkpoint ticket may record a particularly important gate;
 
 ### 9. Advance
 
-After **Continue**, reload the map, recompute the frontier from current file state, and restart at **Orient**. After **Narrow**, **Pivot**, or **Stop**, update the map first and then follow the resulting frontier or finish.
+After **Continue**, reload the map, recompute the frontier from current file state, and restart at **Orient**. After **Narrow**, **Pivot**, or **Stop**, update the map first, then follow the resulting frontier or finish.
 
 **Complete when:** the next eligible ticket is identified from the updated map, never from stale conversation memory.
 
