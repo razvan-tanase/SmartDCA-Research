@@ -2,7 +2,7 @@
 
 A proof-first research project auditing and extending the out quasi-Gini construction in *SmartDCA superiority* (Calvet, Herranz-Celotti, and Valimamode, arXiv:2308.05200v1).
 
-The project currently establishes six theorems and two constructions, each with its own canonical page:
+The project currently establishes nine theorems and two constructions, each with its own canonical page:
 
 - [the exact mean classification](research/theorems/source-out-functional-mean-classification.md) of the source paper's Eq. (70);
 - [the corrected out quasi-Gini mean](research/definitions/corrected-out-quasi-gini-mean.md), conservatively identified as a weighted Bajraktarević mean rather than a new mean class;
@@ -10,18 +10,50 @@ The project currently establishes six theorems and two constructions, each with 
 - [the causal DCA dominance impossibility](research/theorems/causal-dca-dominance-impossibility.md), showing universal dominance forces DCA itself;
 - [the sharp epsilon-DCA unit-coverage guardrail](research/theorems/epsilon-dca-safety-unit-guardrail.md);
 - [the guarded corrected-mean SmartDCA rule](research/definitions/guarded-corrected-mean-smartdca-rule.md) inside that guardrail, with exact cash, unit, terminal-wealth, and acquisition-cost accounting;
-- [the exact two-purchase DCA boundary](research/theorems/two-purchase-guarded-smartdca-boundary.md), including the score's sharp comparison with a neutral selector; and
-- [the exact three-purchase beta-sensitive boundary](research/theorems/three-purchase-corrected-mean-effect.md), including a countercyclical path on which changing only beta flips a DCA loss into a win.
+- [the exact two-purchase DCA boundary](research/theorems/two-purchase-guarded-smartdca-boundary.md), including the score's sharp comparison with a neutral selector;
+- [the exact three-purchase beta-sensitive boundary](research/theorems/three-purchase-corrected-mean-effect.md), including a countercyclical path on which changing only beta flips a DCA loss into a win;
+- [the arbitrary-horizon cash-timing identity](research/theorems/arbitrary-horizon-cash-timing-identity.md), which decomposes every fully funded strategy's terminal-wealth gap into exact coefficients on carried cash;
+- [the reference-aligned cash single-crossing theorem](research/theorems/reference-aligned-guardrail-cash-single-crossing.md), including the exact way policy-specific floors can defeat the unqualified mechanism; and
+- [the exact arbitrary-horizon terminal-inventory boundary](research/theorems/arbitrary-horizon-performance-boundary.md), which classifies every realized corrected-rule gap against DCA and the neutral selector from terminal cash, terminal units, and the common evaluation price.
 
-The two- and three-purchase theorems give explicit realized-path criteria and
-prove that both strict-win and strict-loss regions are nonempty. No result
-claims universal, arbitrary-horizon, or stochastic outperformance.
+The finite examples prove that both strict-win and strict-loss regions are
+nonempty. The arbitrary-horizon result is an exact ledger-conditioned
+classification, not a universal or stochastic outperformance claim.
+
+## Thesis-facing result
+
+The research began with the ambition of making DCA adaptive while retaining a
+universal superiority guarantee. Fair same-deposit accounting showed why that
+ambition fails: under causal, fully funded, long-only trading, exact pathwise
+dominance forces the strategy to be DCA itself. The project therefore pivoted
+from guaranteed superiority to guaranteed safety and proved the sharp
+epsilon-DCA unit guardrail, which reserves a protected DCA allocation while
+leaving a funded interval for the corrected-mean score.
+
+The arbitrary-horizon investigation then asked whether a realistic
+single-valley investment cycle was enough to make that adaptive allocation
+predictably beneficial. It is not. The accepted result is sharper: for every
+finite realized purchase path, the corrected rule's terminal-wealth gap
+against DCA or the neutral guarded selector is exactly
+\(H+P U\), where \(H\) is its terminal cash difference, \(U\) its terminal
+unit difference, and \(P\) the common evaluation price. This advances the work
+by cleanly separating the model-free safety guarantee supplied by the floor
+from the path-dependent performance of the adaptive score, and it gives the
+later empirical study an auditable boundary to measure rather than a vague
+superiority claim. The [canonical theorem](research/theorems/arbitrary-horizon-performance-boundary.md)
+links the complete proof, exact witnesses, executable checks, and independent
+publication review.
 
 ## Current frontier
 
-Tickets 01–18 are resolved. The latest mathematical result is
-[Isolate the first nontrivial corrected-mean effect at three purchases](.scratch/smartdca/issues/18-isolate-three-purchase-corrected-mean-effect.md).
-No next ticket is claimed pending its significance gate.
+All five tickets in the
+[arbitrary-horizon performance effort](.scratch/smartdca/efforts/arbitrary-horizon-performance/spec.md)
+are resolved. Its accepted checkpoint is the independently reviewed exact
+terminal-inventory boundary above; weak or strict single-valley geometry and
+cash single crossing alone are insufficient to sign performance. No next
+ticket or effort is claimed pending the user significance gate. The empirical
+study, dynamic safety ratchet, minimax policy design, and manuscript assembly
+remain separate future work.
 
 The authoritative project state is the [Wayfinder map](.scratch/smartdca/map.md). The complete inventory of every knowledge concept is the root [index](index.md).
 
@@ -58,9 +90,13 @@ python reproducibility/checks/check_guarded_corrected_mean_smartdca.py
 python reproducibility/checks/check_two_purchase_dca_win_loss_boundary.py
 python reproducibility/checks/check_three_purchase_corrected_mean_effect.py
 python -m reproducibility.checks.check_arbitrary_horizon_accounting_verification
+python -m reproducibility.checks.check_weak_single_valley_falsification
+python -m reproducibility.checks.check_cash_single_crossing_mechanism
+python -m reproducibility.checks.check_arbitrary_horizon_performance_boundary
+python reproducibility/checks/check_arbitrary_horizon_publication_review.py
 ```
 
-GitHub Actions runs all seven checks on every push and pull request, together with the knowledge-system fixtures and strict [SmartDCA OKF](docs/knowledge/okf-profile.md) validation.
+GitHub Actions runs all eleven checks on every push and pull request, together with the knowledge-system fixtures and strict [SmartDCA OKF](docs/knowledge/okf-profile.md) validation.
 
 ## Research workflow
 
