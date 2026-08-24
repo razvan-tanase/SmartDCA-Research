@@ -57,9 +57,10 @@ python reproducibility/checks/check_epsilon_dca_safety_guardrail.py
 python reproducibility/checks/check_guarded_corrected_mean_smartdca.py
 python reproducibility/checks/check_two_purchase_dca_win_loss_boundary.py
 python reproducibility/checks/check_three_purchase_corrected_mean_effect.py
+python -m reproducibility.checks.check_arbitrary_horizon_accounting_verification
 ```
 
-GitHub Actions runs all six checks on every push and pull request, together with the knowledge-system fixtures and strict [SmartDCA OKF](docs/knowledge/okf-profile.md) validation.
+GitHub Actions runs all seven checks on every push and pull request, together with the knowledge-system fixtures and strict [SmartDCA OKF](docs/knowledge/okf-profile.md) validation.
 
 ## Research workflow
 

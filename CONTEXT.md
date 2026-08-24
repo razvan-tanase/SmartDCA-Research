@@ -82,14 +82,22 @@ sources:
     title: "Exact three-purchase corrected-mean effect"
     resource: research/notes/three-purchase-corrected-mean-effect
     source_kind: internal
+  - id: cash-timing-identity
+    title: "Arbitrary-horizon terminal wealth has an exact cash-timing identity"
+    resource: research/theorems/arbitrary-horizon-cash-timing-identity
+    source_kind: internal
+  - id: cash-timing-note
+    title: "Arbitrary-horizon cash-timing identity and exact-rational verification seam"
+    resource: research/notes/arbitrary-horizon-accounting-verification-seam
+    source_kind: internal
   - id: source-conflicts
     title: "Conflicts across the OKF foundation sources"
     resource: research/synthesis/okf-foundation-source-conflicts
     source_kind: internal
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T20:17:00Z
-generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
+  at: 2026-08-23T22:31:24Z
+generation_run: urn:uuid:62ed4e2a-e3aa-4fb9-933c-8335a647cadc
 verified:
   - by: claude-code/smartdca-wiki-0.1
     at: 2026-08-16T07:46:00Z
@@ -127,6 +135,9 @@ verified:
   - by: openai-codex/spec-review-0.1
     at: 2026-08-23T20:31:00Z
     review_run: urn:uuid:15c9b810-1adb-4eed-b833-45e31bcad2f1
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-23T22:36:39Z
+    review_run: urn:uuid:7d7be1a1-3482-44ae-be16-e07cd8bc3010
 ---
 # Quasi-Gini SmartDCA Research
 
@@ -257,6 +268,13 @@ from a DCA loss at \(\beta=-1\) to a win at \(\beta=1\).
 _Avoid_: beta superiority, monotone benefit from increasing beta,
 arbitrary-horizon boundary, stochastic outperformance
 
+**Arbitrary-horizon cash-timing identity**[^cash-timing-identity][^cash-timing-note]:
+The exact decomposition of a fully funded strategy's terminal wealth into DCA
+wealth plus coefficients on its carried-cash path; subtracting two such paths
+gives the corresponding two-strategy identity at every finite horizon.
+_Avoid_: score-specific performance formula, stochastic attribution,
+cash-timing advantage
+
 **Terminal wealth**[^impossibility][^causal-boundary]:
 Unspent cash plus the value of accumulated asset units at the common evaluation price.
 _Avoid_: asset value with cash omitted
@@ -367,6 +385,8 @@ Each term above is joined to the concept that governs its claim: the canonical h
 [^two-purchase-boundary-note]: [Exact two-purchase DCA win/loss boundary](research/notes/two-purchase-dca-win-loss-boundary.md)
 [^three-purchase-effect]: [Three-purchase guarded SmartDCA has an exact beta-sensitive DCA boundary](research/theorems/three-purchase-corrected-mean-effect.md)
 [^three-purchase-effect-note]: [Exact three-purchase corrected-mean effect](research/notes/three-purchase-corrected-mean-effect.md)
+[^cash-timing-identity]: [Arbitrary-horizon terminal wealth has an exact cash-timing identity](research/theorems/arbitrary-horizon-cash-timing-identity.md)
+[^cash-timing-note]: [Arbitrary-horizon cash-timing identity and exact-rational verification seam](research/notes/arbitrary-horizon-accounting-verification-seam.md)
 [^source-conflicts]: [Conflicts across the OKF foundation sources](research/synthesis/okf-foundation-source-conflicts.md)
 [^homogeneity]: [Primary-source note on homogeneity of the canonical corrected mean](research/notes/ticket-07-homogeneity-primary-sources.md)
 [^guardrail]: [Sharp causal epsilon-DCA safety and its unit-coverage guardrail](research/notes/sharp-epsilon-dca-safety-guardrail.md)
