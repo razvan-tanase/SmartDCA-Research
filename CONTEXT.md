@@ -90,14 +90,22 @@ sources:
     title: "Arbitrary-horizon cash-timing identity and exact-rational verification seam"
     resource: research/notes/arbitrary-horizon-accounting-verification-seam
     source_kind: internal
+  - id: cash-crossing-theorem
+    title: "Reference-aligned guardrail feedback preserves cash single crossing"
+    resource: research/theorems/reference-aligned-guardrail-cash-single-crossing
+    source_kind: internal
+  - id: cash-crossing-note
+    title: "Differential guardrail feedback defeats cash single crossing"
+    resource: research/notes/cash-single-crossing-mechanism
+    source_kind: internal
   - id: source-conflicts
     title: "Conflicts across the OKF foundation sources"
     resource: research/synthesis/okf-foundation-source-conflicts
     source_kind: internal
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T22:31:24Z
-generation_run: urn:uuid:62ed4e2a-e3aa-4fb9-933c-8335a647cadc
+  at: 2026-08-24T11:05:28Z
+generation_run: urn:uuid:8ebc8071-ab67-4268-a7ca-41e133539603
 verified:
   - by: claude-code/smartdca-wiki-0.1
     at: 2026-08-16T07:46:00Z
@@ -138,6 +146,9 @@ verified:
   - by: openai-codex/spec-review-0.1
     at: 2026-08-23T22:36:39Z
     review_run: urn:uuid:7d7be1a1-3482-44ae-be16-e07cd8bc3010
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-24T11:10:20Z
+    review_run: urn:uuid:b3dae0f4-d2b0-4258-a251-f697f9c36cc2
 ---
 # Quasi-Gini SmartDCA Research
 
@@ -275,6 +286,21 @@ gives the corresponding two-strategy identity at every finite horizon.
 _Avoid_: score-specific performance formula, stochastic attribution,
 cash-timing advantage
 
+**Corrected-neutral cash single crossing**[^cash-crossing-theorem][^cash-crossing-note]:
+After zeros are deleted, corrected-minus-neutral carried cash has a block of
+minus signs followed by a block of plus signs, with either block possibly
+empty. On a weak single-valley path the corrected score has this direction,
+but the guarded cash path need not: policy-specific clipped floors can create
+a second reversal. A sufficient observable condition is **reference-aligned
+guardrail feedback**: at one score-crossing boundary, the
+corrected-minus-neutral clipped-floor difference is nonnegative before the
+boundary and nonpositive after it. Equal clipped floors are a special case,
+but the condition is not necessary because same-period score forcing can
+outweigh a misaligned floor component.
+_Avoid_: cash single crossing on every weak or strict single-valley path,
+attributing a cash reversal to the score when floor amounts diverge,
+terminal-wealth advantage from cash signs alone
+
 **Terminal wealth**[^impossibility][^causal-boundary]:
 Unspent cash plus the value of accumulated asset units at the common evaluation price.
 _Avoid_: asset value with cash omitted
@@ -387,6 +413,8 @@ Each term above is joined to the concept that governs its claim: the canonical h
 [^three-purchase-effect-note]: [Exact three-purchase corrected-mean effect](research/notes/three-purchase-corrected-mean-effect.md)
 [^cash-timing-identity]: [Arbitrary-horizon terminal wealth has an exact cash-timing identity](research/theorems/arbitrary-horizon-cash-timing-identity.md)
 [^cash-timing-note]: [Arbitrary-horizon cash-timing identity and exact-rational verification seam](research/notes/arbitrary-horizon-accounting-verification-seam.md)
+[^cash-crossing-theorem]: [Reference-aligned guardrail feedback preserves cash single crossing](research/theorems/reference-aligned-guardrail-cash-single-crossing.md)
+[^cash-crossing-note]: [Differential guardrail feedback defeats cash single crossing](research/notes/cash-single-crossing-mechanism.md)
 [^source-conflicts]: [Conflicts across the OKF foundation sources](research/synthesis/okf-foundation-source-conflicts.md)
 [^homogeneity]: [Primary-source note on homogeneity of the canonical corrected mean](research/notes/ticket-07-homogeneity-primary-sources.md)
 [^guardrail]: [Sharp causal epsilon-DCA safety and its unit-coverage guardrail](research/notes/sharp-epsilon-dca-safety-guardrail.md)
