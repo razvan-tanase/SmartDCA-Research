@@ -26,6 +26,7 @@ jobs:
           python -m reproducibility.checks.check_arbitrary_horizon_accounting_verification
           python -m reproducibility.checks.check_weak_single_valley_falsification
           python -m reproducibility.checks.check_cash_single_crossing_mechanism
+          python -m reproducibility.checks.check_arbitrary_horizon_performance_boundary
 
   knowledge:
     runs-on: ubuntu-latest

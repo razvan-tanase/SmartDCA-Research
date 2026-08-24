@@ -20,6 +20,17 @@ class ExactRationalError(ValueError):
     """Raised when a valid rational input would require irrational rounding."""
 
 
+def classify_gap(gap: Fraction) -> Classification:
+    """Classify an exact wealth gap without duplicating sign conventions."""
+    if not isinstance(gap, Fraction):
+        raise TypeError("gap must be a Fraction")
+    if gap > ZERO:
+        return "win"
+    if gap < ZERO:
+        return "loss"
+    return "tie"
+
+
 @dataclass(frozen=True)
 class RationalScenario:
     prices: tuple[Fraction, ...]
@@ -117,11 +128,7 @@ class WealthGap:
 
     @property
     def classification(self) -> Classification:
-        if self.direct > ZERO:
-            return "win"
-        if self.direct < ZERO:
-            return "loss"
-        return "tie"
+        return classify_gap(self.direct)
 
 
 @dataclass(frozen=True)

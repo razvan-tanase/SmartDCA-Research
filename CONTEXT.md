@@ -98,14 +98,22 @@ sources:
     title: "Differential guardrail feedback defeats cash single crossing"
     resource: research/notes/cash-single-crossing-mechanism
     source_kind: internal
+  - id: performance-boundary-theorem
+    title: "Terminal cash and units give the exact arbitrary-horizon performance boundary"
+    resource: research/theorems/arbitrary-horizon-performance-boundary
+    source_kind: internal
+  - id: performance-boundary-note
+    title: "Exact arbitrary-horizon evaluation-price boundary for guarded SmartDCA"
+    resource: research/notes/arbitrary-horizon-performance-boundary
+    source_kind: internal
   - id: source-conflicts
     title: "Conflicts across the OKF foundation sources"
     resource: research/synthesis/okf-foundation-source-conflicts
     source_kind: internal
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-24T11:05:28Z
-generation_run: urn:uuid:8ebc8071-ab67-4268-a7ca-41e133539603
+  at: 2026-08-24T20:11:40Z
+generation_run: urn:uuid:6a0602e3-5197-442d-bfc1-256ac8a382ba
 verified:
   - by: claude-code/smartdca-wiki-0.1
     at: 2026-08-16T07:46:00Z
@@ -149,6 +157,12 @@ verified:
   - by: openai-codex/spec-review-0.1
     at: 2026-08-24T11:10:20Z
     review_run: urn:uuid:b3dae0f4-d2b0-4258-a251-f697f9c36cc2
+  - by: openai-codex/standards-review-0.1
+    at: 2026-08-24T20:11:40Z
+    review_run: urn:uuid:2d41dd92-0f83-4940-9eff-8eba11d4196d
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-24T20:11:40Z
+    review_run: urn:uuid:c830b658-ad37-43ba-b537-690dda4f5455
 ---
 # Quasi-Gini SmartDCA Research
 
@@ -301,6 +315,20 @@ _Avoid_: cash single crossing on every weak or strict single-valley path,
 attributing a cash reversal to the score when floor amounts diverge,
 terminal-wealth advantage from cash signs alone
 
+**Arbitrary-horizon terminal-inventory boundary**[^performance-boundary-theorem][^performance-boundary-note]:
+For either DCA or the neutral guarded selector \(T\), let
+\(H_T=C_n^c-C_n^T\) and \(U_T=Q_n^c-Q_n^T\) be the terminal corrected-minus-
+comparator cash and unit differences fixed by the causal purchase ledgers.
+Then \(W_n^c(P)-W_n^T(P)=H_T+P U_T\) for every positive evaluation price, so
+the signs of \((H_T,U_T)\) and their positive root, when one exists, give the
+exact necessary-and-sufficient win/tie/loss classification at every finite
+horizon. The cash-timing identity independently reconstructs \(U_T\). On a
+weak single-valley path evaluated at \(P=p_n\), this becomes the exact balance
+between signed reciprocal-price exposure on the decline and recovery.
+Reference-aligned cash single crossing does not determine that balance.
+_Avoid_: cash signs imply wealth order, corrected-score safety guarantee,
+universal or stochastic outperformance, price-only boundary
+
 **Terminal wealth**[^impossibility][^causal-boundary]:
 Unspent cash plus the value of accumulated asset units at the common evaluation price.
 _Avoid_: asset value with cash omitted
@@ -415,6 +443,8 @@ Each term above is joined to the concept that governs its claim: the canonical h
 [^cash-timing-note]: [Arbitrary-horizon cash-timing identity and exact-rational verification seam](research/notes/arbitrary-horizon-accounting-verification-seam.md)
 [^cash-crossing-theorem]: [Reference-aligned guardrail feedback preserves cash single crossing](research/theorems/reference-aligned-guardrail-cash-single-crossing.md)
 [^cash-crossing-note]: [Differential guardrail feedback defeats cash single crossing](research/notes/cash-single-crossing-mechanism.md)
+[^performance-boundary-theorem]: [Terminal cash and units give the exact arbitrary-horizon performance boundary](research/theorems/arbitrary-horizon-performance-boundary.md)
+[^performance-boundary-note]: [Exact arbitrary-horizon evaluation-price boundary for guarded SmartDCA](research/notes/arbitrary-horizon-performance-boundary.md)
 [^source-conflicts]: [Conflicts across the OKF foundation sources](research/synthesis/okf-foundation-source-conflicts.md)
 [^homogeneity]: [Primary-source note on homogeneity of the canonical corrected mean](research/notes/ticket-07-homogeneity-primary-sources.md)
 [^guardrail]: [Sharp causal epsilon-DCA safety and its unit-coverage guardrail](research/notes/sharp-epsilon-dca-safety-guardrail.md)
