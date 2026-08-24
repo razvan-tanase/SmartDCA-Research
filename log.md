@@ -6,6 +6,18 @@ groups are newest first, entries are flat bullets with a full UTC timestamp, and
 existing events are never edited, reordered, or deleted. New events are inserted into
 the newest applicable group. The complete concept inventory is [`index.md`](index.md).
 
+## 2026-08-24
+
+- 2026-08-24T08:38:49Z | Verification | Post-resolution Standards and Spec review closes evidence freshness, confirms the exact falsification record, and leaves ticket 03 open and unclaimed | [ticket](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/02-falsify-weak-single-valley-advantage.md), [experiment](reports/experiments/weak-single-valley-falsification.md), [evidence](research/notes/weak-single-valley-advantage-falsification.md), [effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md)
+- 2026-08-24T08:33:04Z | Resolution | Resolve the weak single-valley falsification ticket, promote its exact evidence, and expose the cash-path mechanism ticket as the next unclaimed frontier | [ticket](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/02-falsify-weak-single-valley-advantage.md), [experiment](reports/experiments/weak-single-valley-falsification.md), [evidence](research/notes/weak-single-valley-advantage-falsification.md), [effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md)
+- 2026-08-24T08:32:57Z | Verification | Independent Standards and Spec re-review confirms exact guardrail attribution, complete named witness replay, final fingerprints, and synchronized provenance | [ticket](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/02-falsify-weak-single-valley-advantage.md), [experiment](reports/experiments/weak-single-valley-falsification.md), [evidence](research/notes/weak-single-valley-advantage-falsification.md)
+
+- 2026-08-24T08:28:53Z | Update | Replace the floor-divergence proxy with an exact floor-disabled attribution, replay every emitted witness, and refresh the reproducibility record after independent review | [experiment](reports/experiments/weak-single-valley-falsification.md), [evidence](research/notes/weak-single-valley-advantage-falsification.md), [check](reproducibility/checks/check_weak_single_valley_falsification.py)
+
+- 2026-08-24T08:05:04Z | Creation | Add the exact weak single-valley falsification search, run report, and counterexample note | [experiment](reports/experiments/weak-single-valley-falsification.md), [evidence](research/notes/weak-single-valley-advantage-falsification.md), [check](reproducibility/checks/check_weak_single_valley_falsification.py)
+
+- 2026-08-24T07:45:23Z | Update | Claim the weak single-valley advantage falsification ticket | [ticket](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/02-falsify-weak-single-valley-advantage.md), [effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md)
+
 ## 2026-08-23
 
 - 2026-08-23T22:36:40Z | Update | Promote the cash-timing theorem, evidence seam, and glossary term after independent semantic review | [theorem](research/theorems/arbitrary-horizon-cash-timing-identity.md), [evidence](research/notes/arbitrary-horizon-accounting-verification-seam.md), [glossary](CONTEXT.md), [index](index.md)

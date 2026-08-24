@@ -470,8 +470,12 @@ def _corrected_reference(
     )
 
 
-def _guarded_ledger(
-    scenario: RationalScenario, dca: PolicyLedger, *, neutral: bool
+def _score_ledger(
+    scenario: RationalScenario,
+    dca: PolicyLedger,
+    *,
+    neutral: bool,
+    guardrail_enabled: bool,
 ) -> PolicyLedger:
     cash = ZERO
     units = ZERO
@@ -485,7 +489,7 @@ def _guarded_ledger(
         coverage_before = units - scenario.safety_factor * dca_units
         available_cash = cash + deposit
         raw_floor = scenario.safety_factor * deposit - price * coverage_before
-        floor = max(ZERO, raw_floor)
+        floor = max(ZERO, raw_floor) if guardrail_enabled else ZERO
         discretionary_cash = available_cash - floor
 
         normalized_lagged = tuple(
@@ -527,7 +531,7 @@ def _guarded_ledger(
                 coverage_before=coverage_before,
                 raw_guardrail_floor=raw_floor,
                 guardrail_floor=floor,
-                floor_active=raw_floor > ZERO,
+                floor_active=guardrail_enabled and raw_floor > ZERO,
                 discretionary_cash=discretionary_cash,
                 purchase=purchase,
                 cash=cash,
@@ -553,8 +557,23 @@ def _guarded_ledger(
     )
 
 
-def evaluate_scenario(scenario: RationalScenario) -> ScenarioLedger:
+def evaluate_scenario(
+    scenario: RationalScenario, *, guardrail_enabled: bool = True
+) -> ScenarioLedger:
+    """Evaluate all policies, optionally disabling the floor for attribution."""
+    if not isinstance(guardrail_enabled, bool):
+        raise TypeError("guardrail_enabled must be a bool")
     dca = _dca_ledger(scenario)
-    corrected = _guarded_ledger(scenario, dca, neutral=False)
-    neutral = _guarded_ledger(scenario, dca, neutral=True)
+    corrected = _score_ledger(
+        scenario,
+        dca,
+        neutral=False,
+        guardrail_enabled=guardrail_enabled,
+    )
+    neutral = _score_ledger(
+        scenario,
+        dca,
+        neutral=True,
+        guardrail_enabled=guardrail_enabled,
+    )
     return ScenarioLedger(scenario, dca, corrected, neutral)
