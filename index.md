@@ -56,6 +56,10 @@ authoritative metadata.
 
 ## Evidence
 
+### experiment-report
+
+- [Exact-rational weak single-valley falsification search](reports/experiments/weak-single-valley-falsification.md) — Deterministic finite search falsifying corrected-rule advantage over DCA and the neutral guarded selector on weak single-valley paths. — type: experiment-report; status: stable; trust: independently reviewed 2026-08-24; provenance: cites internal concepts and exact checks
+
 ### source-summary
 
 - [Source summary: Karpathy's LLM Wiki proposal](references/summaries/karpathy-llm-wiki.md) — Summary of the LLM Wiki gist that proposes an LLM-maintained persistent wiki over immutable raw sources. — type: source-summary; status: stable; trust: reviewed 2026-08-16; provenance: fingerprinted external snapshot, bytes not redistributable
@@ -78,6 +82,7 @@ authoritative metadata.
 - [Exact two-purchase DCA win/loss boundary](research/notes/two-purchase-dca-win-loss-boundary.md) — Derivation of the necessary-and-sufficient two-purchase wealth boundary and exact neutral-score comparison. — type: research-note; status: stable; trust: reviewed 2026-08-16; provenance: cites internal concepts
 - [Exact three-purchase corrected-mean effect](research/notes/three-purchase-corrected-mean-effect.md) — Derivation of the exact three-purchase DCA boundary and an all-rational beta-driven classification flip. — type: research-note; status: stable; trust: reviewed 2026-08-16; provenance: cites internal concepts
 - [Arbitrary-horizon cash-timing identity and exact-rational verification seam](research/notes/arbitrary-horizon-accounting-verification-seam.md) — Proof of the finite-horizon cash-timing identities and specification of the exact-rational DCA, corrected, and neutral ledger interface. — type: research-note; status: stable; trust: independently reviewed 2026-08-23; provenance: cites internal concepts and exact checks
+- [Weak single-valley prices do not determine guarded SmartDCA advantage](research/notes/weak-single-valley-advantage-falsification.md) — Exact counterexamples showing that weak and strict single-valley paths do not guarantee corrected-rule wealth advantage over DCA or the neutral guarded selector. — type: research-note; status: stable; trust: independently reviewed 2026-08-24; provenance: cites internal concepts and exact checks
 
 ## Operational
 
@@ -99,7 +104,7 @@ authoritative metadata.
 ### research-map
 
 - [Find the rigorous out quasi-Gini route to a complete SmartDCA paper](.scratch/smartdca/map.md) — Authoritative Wayfinder map holding the destination, settled decisions, and active research frontier. — type: research-map; status: stable; trust: reviewed 2026-08-23; provenance: Git history
-- [Arbitrary-horizon performance effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md) — Operational map of the approved arbitrary-horizon guarded SmartDCA performance effort and its blocking frontier. — type: research-map; status: stable; trust: reviewed 2026-08-23; provenance: approved effort structure
+- [Arbitrary-horizon performance effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md) — Operational map of the approved arbitrary-horizon guarded SmartDCA performance effort and its blocking frontier. — type: research-map; status: stable; trust: independently reviewed 2026-08-24; provenance: approved effort structure
 
 ### work-specification
 
@@ -127,7 +132,7 @@ authoritative metadata.
 - [Isolate the first nontrivial corrected-mean effect at three purchases](.scratch/smartdca/issues/18-isolate-three-purchase-corrected-mean-effect.md) — Resolved task ticket isolating the first beta-dependent guarded SmartDCA boundary at three purchases. — type: research-ticket; status: stable; trust: unreviewed; provenance: Git history
 - [Audit and sharpen agent-facing wiki instructions](.scratch/smartdca/issues/19-audit-agent-facing-writing.md) — Resolved task ticket auditing the full wiki for agent-consumed writing and sharpening the active instruction surfaces. — type: research-ticket; status: stable; trust: unreviewed; provenance: Git history
 - [Establish the arbitrary-horizon accounting and verification seam](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/01-establish-accounting-verification-seam.md) — Resolved task ticket proving the arbitrary-horizon cash-timing identity and delivering the exact-rational three-policy verification seam. — type: research-ticket; status: stable; trust: independently reviewed 2026-08-23; provenance: Git history
-- [Falsify the weak single-valley advantage conjecture](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/02-falsify-weak-single-valley-advantage.md) — Open task ticket falsifying the weak single-valley advantage conjecture with deterministic exact-rational search. — type: research-ticket; status: draft; trust: writing-reviewed 2026-08-23; provenance: Git history
+- [Falsify the weak single-valley advantage conjecture](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/02-falsify-weak-single-valley-advantage.md) — Resolved task ticket falsifying the weak single-valley advantage conjecture with deterministic exact-rational search. — type: research-ticket; status: stable; trust: independently reviewed 2026-08-24; provenance: Git history
 - [Characterize the cash single-crossing mechanism](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/03-characterize-cash-single-crossing-mechanism.md) — Open research ticket proving or disproving the cash single-crossing mechanism and extracting a strategy-independent path condition. — type: research-ticket; status: draft; trust: writing-reviewed 2026-08-23; provenance: Git history
 - [Prove the arbitrary-horizon performance boundary](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/04-prove-arbitrary-horizon-performance-boundary.md) — Open research ticket proving a sharp arbitrary-horizon guarded SmartDCA performance theorem or negative boundary. — type: research-ticket; status: draft; trust: writing-reviewed 2026-08-23; provenance: Git history
 - [Review and publish the arbitrary-horizon research package](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/05-review-publish-research-package.md) — Open task ticket independently reviewing and publishing the arbitrary-horizon research package for the thesis narrative. — type: research-ticket; status: draft; trust: writing-reviewed 2026-08-23; provenance: Git history
