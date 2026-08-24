@@ -8,8 +8,8 @@ status: stable
 original_record: true
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-24T11:10:20Z
-generation_run: urn:uuid:36919ee8-c8d4-411c-b5f3-2bab3af11974
+  at: 2026-08-24T20:11:40Z
+generation_run: urn:uuid:6a0602e3-5197-442d-bfc1-256ac8a382ba
 verified:
   - by: openai-codex/writing-for-agents-0.1
     at: 2026-08-23T21:32:48Z
@@ -35,6 +35,12 @@ verified:
   - by: openai-codex/spec-review-0.1
     at: 2026-08-24T11:10:20Z
     review_run: urn:uuid:70aff5a0-c58b-47c8-a8ea-7d4016beba2c
+  - by: openai-codex/standards-review-0.1
+    at: 2026-08-24T20:11:40Z
+    review_run: urn:uuid:2d41dd92-0f83-4940-9eff-8eba11d4196d
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-24T20:11:40Z
+    review_run: urn:uuid:c830b658-ad37-43ba-b537-690dda4f5455
 ---
 # Arbitrary-horizon performance effort map
 
@@ -53,16 +59,17 @@ whenever claiming, executing, resolving, or advancing a ticket in this route.
 | [01](issues/01-establish-accounting-verification-seam.md) | Prove the cash-timing identity and build the exact-rational verification seam. | resolved | `.scratch/smartdca/issues/18-isolate-three-purchase-corrected-mean-effect` |
 | [02](issues/02-falsify-weak-single-valley-advantage.md) | Search for and minimize counterexamples to the weak single-valley conjecture. | resolved | 01 |
 | [03](issues/03-characterize-cash-single-crossing-mechanism.md) | Prove or disprove the proposed cash-path mechanism. | resolved | 02 |
-| [04](issues/04-prove-arbitrary-horizon-performance-boundary.md) | State and prove the strongest surviving arbitrary-horizon boundary. | open | 03 |
-| [05](issues/05-review-publish-research-package.md) | Independently review and publish the accepted result. | open | 04 |
+| [04](issues/04-prove-arbitrary-horizon-performance-boundary.md) | State and prove the strongest surviving arbitrary-horizon boundary. | resolved | 03 |
+| [05](issues/05-review-publish-research-package.md) | Independently review and publish the accepted result. | open, unclaimed | 04 (resolved) |
 
 ## Active frontier
 
-Ticket 03 is resolved: the corrected score crosses neutral once on weak
-single-valley paths, while differential clipped-floor feedback can make
-guarded cash reverse twice. Reference-aligned guardrail feedback is sufficient
-but not necessary; exact cases show both a strict interior and the
-component-cancellation obstruction to necessity. Ticket 04 is now the next
-unclaimed, unblocked frontier; ticket 05 remains blocked by ticket 04. Local
-ticket numbers are meaningful only inside this effort; blockers outside the
-effort use their full Concept ID.
+Ticket 04 is resolved. Its reviewed
+[theorem](../../../../research/theorems/arbitrary-horizon-performance-boundary.md)
+gives the exact affine evaluation-price boundary from terminal cash and units,
+while its [evidence](../../../../research/notes/arbitrary-horizon-performance-boundary.md)
+specializes the result to a reciprocal-exposure balance on single-valley paths
+and proves that reference-aligned cash crossing alone remains insufficient.
+Ticket 05 is open, unblocked, and unclaimed pending the user significance
+gate. Local ticket numbers are meaningful only inside this effort; blockers
+outside the effort use their full Concept ID.
