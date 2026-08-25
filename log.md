@@ -6,6 +6,10 @@ groups are newest first, entries are flat bullets with a full UTC timestamp, and
 existing events are never edited, reordered, or deleted. New events are inserted into
 the newest applicable group. The complete concept inventory is [`index.md`](index.md).
 
+## 2026-08-25
+
+- 2026-08-25T07:38:45Z | Creation | Approve the safety-adaptivity empirical evaluation contract, record its end-to-end verification seam, and expose it for tracer-ticket decomposition | [specification](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec.md), [effort map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md), [master map](.scratch/smartdca/map.md), [index](index.md)
+
 ## 2026-08-24
 
 - 2026-08-24T21:31:57Z | Resolution | Resolve the final arbitrary-horizon ticket, publish the reviewed terminal-inventory package, complete the effort, and stop with no successor claimed at the user significance gate | [ticket](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/05-review-publish-research-package.md), [effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md), [master map](.scratch/smartdca/map.md), [theorem](research/theorems/arbitrary-horizon-performance-boundary.md), [review](research/notes/arbitrary-horizon-research-package-review.md), [overview](README.md), [index](index.md)
