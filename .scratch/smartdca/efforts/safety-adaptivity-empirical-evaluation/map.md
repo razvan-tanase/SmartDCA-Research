@@ -2,18 +2,21 @@
 profile: smartdca-okf/0.4
 type: research-map
 title: "Safety-adaptivity empirical evaluation effort map"
-description: "Approved empirical effort awaiting tracer-ticket decomposition."
+description: "Approved seven-ticket route from preregistration through independent empirical publication."
 knowledge_role: operational
 status: stable
 original_record: true
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T07:38:45Z
-generation_run: urn:uuid:c739616e-4c43-44c3-8d81-8985ee081e54
+  at: 2026-08-25T07:52:38Z
+generation_run: urn:uuid:a5d8aafb-5c01-48a5-8177-23ed524a00a7
 verified:
   - by: human:github:razvan-tanase
     at: 2026-08-25T07:38:45Z
     review_run: urn:uuid:c8afb7ab-b24c-4fd7-a244-7db644525f3c
+  - by: human:github:razvan-tanase
+    at: 2026-08-25T07:52:38Z
+    review_run: urn:uuid:090561f8-809a-4a62-91ad-8057714a54b6
 ---
 # Safety-adaptivity empirical evaluation effort map
 
@@ -26,14 +29,20 @@ project-wide scientific context lives in the
 
 ## Ticket route
 
-_No tickets have been published._ Use the To Tickets workflow to decompose the
-approved specification into a dependency-ordered tracer route. Until then,
-nothing in this effort is claimable.
+| Ticket | Purpose | Status | Blocked by |
+|---|---|---|---|
+| [01](issues/01-preregister-protocol-establish-canonical-run.md) | Freeze the protocol and establish one complete non-confirmatory empirical run. | open | — |
+| [02](issues/02-evaluate-deterministic-adversarial-paths.md) | Evaluate deterministic synthetic and adversarial path families. | open | 01 |
+| [03](issues/03-evaluate-seeded-stochastic-families.md) | Evaluate seeded stochastic path families. | open | 01 |
+| [04](issues/04-establish-historical-data-episode-seam.md) | Establish fingerprinted historical inputs and rolling episodes without opening confirmatory outcomes. | open | 01 |
+| [05](issues/05-run-confirmatory-historical-evaluation.md) | Execute the frozen rolling S&P 500 and Bitcoin evaluation. | open | 04 |
+| [06](issues/06-synthesize-safety-adaptivity-tradeoff.md) | Synthesize deterministic, stochastic, and historical evidence. | open | 02, 03, 05 |
+| [07](issues/07-review-publish-empirical-package.md) | Independently reproduce, review, and publish the empirical package. | open | 06 |
 
-## Current checkpoint
+## Current frontier
 
-The specification is approved and labeled `ready-for-agent` for decomposition.
-The agreed primary verification seam is one deterministic end-to-end experiment
-runner covering DCA, the neutral guarded selector, and the guarded corrected-mean
-SmartDCA rule with complete ledger and run-manifest outputs.
-
+[Preregister the empirical protocol and establish one canonical run](issues/01-preregister-protocol-establish-canonical-run.md)
+is the sole open, unblocked ticket. No ticket is claimed. After it resolves,
+tickets 02, 03, and 04 become an independent parallel frontier; ticket 05 needs
+only the historical-data seam, while synthesis and publication remain blocked
+until their full evidence dependencies resolve.
