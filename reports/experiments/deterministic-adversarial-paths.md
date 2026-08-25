@@ -31,6 +31,16 @@ generated:
   by: openai-codex/smartdca-wiki-0.1
   at: 2026-08-25T11:10:08Z
 generation_run: urn:uuid:27919a38-c8e3-4937-a663-41c2fbcb6ca6
+verified:
+  - by: openai-codex/standards-review-0.1
+    at: 2026-08-25T11:16:26Z
+    review_run: urn:uuid:34df7016-c817-4ad7-b05a-36773412a89c
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-25T11:12:41Z
+    review_run: urn:uuid:3423b393-7949-4da7-999c-dcfc0747fc29
+  - by: openai-codex/independent-empirical-review-0.1
+    at: 2026-08-25T11:15:20Z
+    review_run: urn:uuid:8a76cee8-e9c9-4ade-9e4d-b08f61a6046c
 ---
 # Deterministic synthetic and adversarial path evaluation
 
