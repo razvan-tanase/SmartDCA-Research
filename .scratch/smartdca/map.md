@@ -7,8 +7,8 @@ knowledge_role: operational
 status: stable
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T07:38:45Z
-generation_run: urn:uuid:f9b14c1b-1dac-4483-9427-8adee5292c2f
+  at: 2026-08-25T07:52:38Z
+generation_run: urn:uuid:a5d8aafb-5c01-48a5-8177-23ed524a00a7
 verified:
   - by: openai-codex/writing-for-agents-0.1
     at: 2026-08-23T21:32:48Z
@@ -25,6 +25,9 @@ verified:
   - by: human:github:razvan-tanase
     at: 2026-08-25T07:38:45Z
     review_run: urn:uuid:c8afb7ab-b24c-4fd7-a244-7db644525f3c
+  - by: human:github:razvan-tanase
+    at: 2026-08-25T07:52:38Z
+    review_run: urn:uuid:090561f8-809a-4a62-91ad-8057714a54b6
 ---
 # Find the rigorous out quasi-Gini route to a complete SmartDCA paper
 
@@ -89,7 +92,7 @@ A thesis- and paper-grade, self-contained Financial Computing study suitable for
 
 ## Active efforts
 
-- [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) is approved and ready for tracer-ticket decomposition. Its [effort map](efforts/safety-adaptivity-empirical-evaluation/map.md) records that no execution ticket is yet published or claimable.
+- [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) now has an approved seven-ticket tracer route. [Preregister the empirical protocol and establish one canonical run](efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md) is the sole open, unblocked frontier; no ticket is claimed.
 
 ## Not yet specified
 
