@@ -1,0 +1,300 @@
+{
+  "schema_version": "smartdca-empirical-protocol/1",
+  "protocol_id": "safety-adaptivity-v1",
+  "protocol_version": 1,
+  "title": "Guarded SmartDCA safety-adaptivity empirical evaluation",
+  "locked": true,
+  "registered_at": "2026-08-25T08:11:32Z",
+  "confirmatory_outcomes_accessed": false,
+  "registration_statement": "This protocol was frozen before any confirmatory historical price outcome or derived policy result was retrieved, computed, or inspected. Confirmatory choices require a new protocol identity rather than an edit after outcome access.",
+  "historical_datasets": [
+    {
+      "dataset_id": "spy-adjusted-daily",
+      "provider": "Alpha Vantage",
+      "documentation_url": "https://www.alphavantage.co/documentation/#dailyadj",
+      "endpoint": "TIME_SERIES_DAILY_ADJUSTED",
+      "request_parameters": {
+        "symbol": "SPY",
+        "outputsize": "full",
+        "datatype": "csv"
+      },
+      "series": "SPY",
+      "asset_semantics": "SPDR S&P 500 ETF Trust as an investable S&P 500 proxy",
+      "price_field": "adjusted_close",
+      "currency": "USD",
+      "timezone": "America/New_York",
+      "adjustment_semantics": "provider adjusted close incorporating historical split and dividend events",
+      "eligible_start": "1993-02-01",
+      "data_cutoff": "2025-12-31",
+      "retrieval_rule": "After protocol lock, make one authenticated full-history CSV request and persist its exact response body before parsing; never place the API key in a receipt.",
+      "fingerprint_rule": "SHA-256 of the exact persisted response-body bytes before parsing",
+      "redistribution": "Do not commit raw provider bytes until ticket 04 records a license review; retain an immutable local input or a receipt sufficient for authorized reacquisition.",
+      "selection_status": "selected-not-retrieved"
+    },
+    {
+      "dataset_id": "btc-usd-daily",
+      "provider": "Alpha Vantage",
+      "documentation_url": "https://www.alphavantage.co/documentation/#currency-daily",
+      "endpoint": "DIGITAL_CURRENCY_DAILY",
+      "request_parameters": {
+        "symbol": "BTC",
+        "market": "USD",
+        "datatype": "csv"
+      },
+      "series": "BTC/USD",
+      "asset_semantics": "Bitcoin spot quoted in US dollars, with no dividend, split, or total-return adjustment",
+      "price_field": "close_usd",
+      "currency": "USD",
+      "timezone": "UTC",
+      "adjustment_semantics": "unadjusted daily spot close quoted in USD and refreshed at midnight UTC",
+      "eligible_start": "2015-01-01",
+      "data_cutoff": "2025-12-31",
+      "retrieval_rule": "After protocol lock, make one authenticated daily CSV request and persist its exact response body before parsing; never place the API key in a receipt.",
+      "fingerprint_rule": "SHA-256 of the exact persisted response-body bytes before parsing",
+      "redistribution": "Do not commit raw provider bytes until ticket 04 records a license review; retain an immutable local input or a receipt sufficient for authorized reacquisition.",
+      "selection_status": "selected-not-retrieved"
+    }
+  ],
+  "retrieval_and_fingerprint": {
+    "credential_environment_variable": "ALPHAVANTAGE_API_KEY",
+    "one_response_per_dataset": true,
+    "required_receipt_fields": [
+      "dataset_id",
+      "provider",
+      "endpoint",
+      "request_parameters_without_credentials",
+      "retrieved_at_utc",
+      "http_status",
+      "content_type",
+      "byte_length",
+      "sha256",
+      "parser_version",
+      "date_min",
+      "date_max"
+    ],
+    "reject_provider_error_payloads": true,
+    "refresh_rule": "A changed response creates a new input version and cannot replace a confirmatory input receipt in place."
+  },
+  "episode_design": {
+    "deposit_cadence": "monthly-first-eligible-observation",
+    "deposit_amount": "1000",
+    "nominal_start_rule": "first calendar day of each month",
+    "deposit_count_rule": "For horizon H, include exactly H deposits at nominal start plus k calendar months for k=0 through H-1; the horizon date receives no deposit.",
+    "episode_start_grid_rule": "For each dataset and horizon H, use every first-of-month nominal start on or after eligible_start whose nominal start plus H calendar months is on or before data_cutoff.",
+    "horizon_date_rule": "The exact horizon date is the nominal episode start plus H calendar months, before any observation-date mapping.",
+    "purchase_mapping": "first eligible observation on or after each nominal monthly deposit date",
+    "horizons_months": [12, 36, 60],
+    "evaluation_convention": "last eligible observation on or before the exact calendar horizon date",
+    "rolling_stride_months": 1,
+    "missing_data_rule": "No interpolation or price carry. SPY purchase mapping may move forward at most 7 calendar days; BTC mapping may move forward at most 1 calendar day. Evaluation mapping may move backward by the same asset-specific tolerance. Otherwise exclude the episode.",
+    "duplicate_mapping_rule": "Reject an episode if two nominal deposit dates map to the same observation.",
+    "information_rule": "A policy receives only observations through the current purchase date.",
+    "terminal_wealth_rule": "unspent cash plus terminal asset units times the common evaluation price"
+  },
+  "coverage": {
+    "parameter": "lambda=1-epsilon",
+    "primary": ["1", "0.9", "0.75", "0.5"],
+    "robustness": ["0.99", "0.95", "0.8", "0.6", "0.25"]
+  },
+  "corrected_mean": {
+    "primary": [
+      {
+        "config_id": "identity-a0-b0",
+        "transform": "identity",
+        "alpha": "0",
+        "beta": "0",
+        "weights": "equal",
+        "selection_reason": "the theoretically admissible countercyclical diagonal baseline, fixed without historical outcome access"
+      }
+    ],
+    "robustness": [
+      {
+        "config_id": "identity-a0-b-1",
+        "transform": "identity",
+        "alpha": "0",
+        "beta": "-1",
+        "weights": "equal"
+      },
+      {
+        "config_id": "identity-a0-b1",
+        "transform": "identity",
+        "alpha": "0",
+        "beta": "1",
+        "weights": "equal"
+      },
+      {
+        "config_id": "identity-a-1-b0",
+        "transform": "identity",
+        "alpha": "-1",
+        "beta": "0",
+        "weights": "equal"
+      },
+      {
+        "config_id": "identity-a1-b0-neutral-boundary",
+        "transform": "identity",
+        "alpha": "1",
+        "beta": "0",
+        "weights": "equal"
+      }
+    ]
+  },
+  "cost_scenarios": [
+    {
+      "cost_id": "frictionless",
+      "fixed_fee": "0",
+      "proportional_bps": "0",
+      "accounting_rule": "asset notional equals the selected cash budget",
+      "theorem_scope": "epsilon-dca"
+    },
+    {
+      "cost_id": "proportional-10bps",
+      "fixed_fee": "0",
+      "proportional_bps": "10",
+      "accounting_rule": "fee equals 10 basis points of asset notional and notional plus fee cannot exceed the selected cash budget",
+      "theorem_scope": "outside-current-safety-theorem"
+    },
+    {
+      "cost_id": "fixed-1-usd",
+      "fixed_fee": "1",
+      "proportional_bps": "0",
+      "accounting_rule": "a one-dollar fee applies only when the selected cash budget exceeds one dollar; otherwise no purchase or fee occurs",
+      "theorem_scope": "outside-current-safety-theorem"
+    }
+  ],
+  "hypotheses": [
+    {
+      "hypothesis_id": "H1-complete-system",
+      "tier": "confirmatory",
+      "comparison": "corrected_guarded_vs_dca",
+      "estimand": "median_relative_terminal_wealth_gap",
+      "alternative": "two-sided",
+      "scope": "each declared asset, primary horizon, and non-unit primary coverage under the primary corrected configuration and frictionless accounting"
+    },
+    {
+      "hypothesis_id": "H2-signal-contribution",
+      "tier": "confirmatory",
+      "comparison": "corrected_guarded_vs_neutral_guarded",
+      "estimand": "median_relative_terminal_wealth_gap",
+      "alternative": "two-sided",
+      "scope": "each declared asset, primary horizon, and non-unit primary coverage under the primary corrected configuration and frictionless accounting"
+    },
+    {
+      "hypothesis_id": "S1-safety-architecture",
+      "tier": "secondary",
+      "comparison": "neutral_guarded_vs_dca",
+      "estimand": "distribution_of_relative_terminal_wealth_gap",
+      "alternative": "descriptive"
+    }
+  ],
+  "estimands": {
+    "primary": [
+      "median_relative_terminal_wealth_gap",
+      "terminal_wealth_ratio_distribution"
+    ],
+    "secondary": [
+      "mean_relative_terminal_wealth_gap",
+      "downside_quantiles_0.05_0.10_0.25",
+      "worst_relative_shortfall",
+      "terminal_cash_drag",
+      "terminal_asset_exposure",
+      "guardrail_activation_frequency",
+      "mean_guardrail_floor",
+      "purchase_count",
+      "total_fees",
+      "terminal_cash_and_unit_attribution",
+      "descriptive_win_tie_loss_rates"
+    ],
+    "relative_gap_denominator": "comparator terminal wealth",
+    "zero_comparator_rule": "exclude with reason comparator_terminal_wealth_nonpositive"
+  },
+  "multiplicity": {
+    "family": "36 confirmatory tests: 2 assets x 3 horizons x 3 non-unit primary coverage levels x 2 confirmatory comparisons",
+    "method": "holm",
+    "alpha": "0.05",
+    "unit_coverage_boundary": "lambda=1 is an accounting invariant and is not included as a statistical test"
+  },
+  "uncertainty": {
+    "method": "circular-moving-block-bootstrap",
+    "replicates": 10000,
+    "seed": 20260825,
+    "rng": "CPython 3.12 random.Random using MT19937 and randrange(N) for each block-start draw",
+    "cell_seed_rule": "For each cell, take the first 16 hexadecimal digits of SHA-256 over UTF-8 '<seed>|<dataset_id>|<horizon_months>|<coverage>|<comparison>|<corrected_mean_config>|<cost_scenario>' as an unsigned base-16 integer; this makes cells order-independent.",
+    "sampling_unit": "ordered monthly episode start",
+    "stratification": "separate asset and horizon",
+    "block_rule": "block length equals the episode horizon measured in one-month rolling-stride units",
+    "block_construction": "Within one dataset-horizon cell, sort the N included episode estimands by nominal start. For each replicate, draw circular block starts independently and uniformly from integers 0 through N-1, append L consecutive values modulo N for each draw, and truncate the final block so the resample contains exactly N values.",
+    "replicate_statistic": "Recompute the registered cell estimand on each N-value resample; the confirmatory statistic is the median relative terminal-wealth gap.",
+    "interval": "two-sided 95 percent percentile interval",
+    "quantile_rule": "For probability p, sort the B uncentered replicate statistics and linearly interpolate at zero-based position (B-1)*p between its floor and ceiling indices.",
+    "p_value": "For observed statistic T and replicate statistics T_b under null value zero, use the centered two-sided tail count abs(T_b-T) >= abs(T).",
+    "p_value_finite_sample_rule": "The unadjusted p-value is (1 + the centered two-sided tail count) / (B + 1).",
+    "holm_order": "Sort by unadjusted p-value, then dataset_id, horizon_months, numeric coverage, comparison in H1-before-H2 order, corrected_mean_config, and cost_scenario; apply standard step-down Holm adjusted p-values with cumulative maxima capped at one."
+  },
+  "analysis_tiers": {
+    "confirmatory": [
+      "H1 and H2 on SPY adjusted daily and BTC/USD daily",
+      "12, 36, and 60 month horizons",
+      "lambda 0.9, 0.75, and 0.5",
+      "identity-a0-b0",
+      "frictionless accounting",
+      "the registered estimands, block bootstrap, and Holm family"
+    ],
+    "secondary": [
+      "lambda=1 transaction-level collapse",
+      "neutral_guarded_vs_dca",
+      "mechanism, downside, exposure, cash, unit, activation, and purchase summaries"
+    ],
+    "robustness": [
+      "the declared robustness coverage grid",
+      "the four declared corrected-mean robustness configurations",
+      "proportional-10bps and fixed-1-usd costs",
+      "6, 24, and 120 month horizons",
+      "quarterly-first-eligible-observation deposits with a three-month rolling stride"
+    ],
+    "exploratory": [
+      "post-hoc regime labels",
+      "calendar subperiods",
+      "additional parameter or path diagnostics"
+    ],
+    "immutability_rule": "Confirmatory datasets, hypotheses, estimands, grids, and inference choices cannot change after confirmatory outcome access. Any change requires a new protocol_id and is not confirmatory under this registration."
+  },
+  "exclusions": [
+    "invalid_schema_or_parameter",
+    "provider_error_payload",
+    "content_fingerprint_mismatch",
+    "series_semantics_mismatch",
+    "observation_not_strictly_positive",
+    "unavailable_mapped_purchase_date",
+    "unavailable_mapped_evaluation_date",
+    "duplicate_mapped_purchase_date",
+    "episode_outside_frozen_date_range",
+    "comparator_terminal_wealth_nonpositive",
+    "numerical_failure",
+    "accounting_invariant_failure",
+    "run_identity_collision"
+  ],
+  "robustness_design": {
+    "horizons_months": [6, 24, 120],
+    "deposit_cadence": "quarterly-first-eligible-observation",
+    "rolling_stride_months": 3
+  },
+  "canonical_run": {
+    "input_id": "canonical-synthetic-recurring-investment",
+    "input_version": "1",
+    "expected_episode_count": 1,
+    "purpose": "exercise the complete runner without inspecting confirmatory historical outcomes",
+    "required_policies": ["dca", "neutral_guarded", "corrected_guarded"],
+    "required_cost_scenarios": ["frictionless", "proportional-10bps", "fixed-1-usd"],
+    "required_coverage": ["1", "0.75"]
+  },
+  "runner_contract": {
+    "engine_version": "smartdca-empirical-runner/1",
+    "identity_inputs": ["engine version", "runner source SHA-256", "canonical protocol bytes SHA-256", "versioned input bytes SHA-256"],
+    "collision_rule": "an existing output directory with the deterministic run identity fails before policy execution",
+    "artifacts": ["manifest", "policy ledgers", "validation receipts", "episode results", "aggregates", "policy table", "figure-ready comparison data"]
+  },
+  "runtime": {
+    "python": "CPython 3.12",
+    "third_party_dependencies": []
+  }
+}
