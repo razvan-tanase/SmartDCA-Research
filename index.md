@@ -111,10 +111,12 @@ authoritative metadata.
 
 - [Find the rigorous out quasi-Gini route to a complete SmartDCA paper](.scratch/smartdca/map.md) — Authoritative Wayfinder map holding the destination, settled decisions, and active research frontier. — type: research-map; status: stable; trust: independently reviewed through ticket 05 on 2026-08-24; provenance: Git history and current effort review
 - [Arbitrary-horizon performance effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md) — Completed route and reviewed publication checkpoint for the arbitrary-horizon guarded SmartDCA performance effort. — type: research-map; status: stable; trust: independently reviewed through ticket 05 on 2026-08-24; provenance: approved effort structure and current ticket reviews
+- [Safety-adaptivity empirical evaluation effort map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md) — Approved empirical effort awaiting tracer-ticket decomposition. — type: research-map; status: stable; trust: user-approved 2026-08-25; provenance: synthesized from the accepted empirical direction
 
 ### work-specification
 
 - [Test arbitrary-horizon guarded SmartDCA performance on single-valley paths](.scratch/smartdca/efforts/arbitrary-horizon-performance/spec.md) — Approved effort contract for a falsification-oriented arbitrary-horizon performance boundary for the guarded corrected-mean SmartDCA rule. — type: work-specification; status: stable; trust: user-approved and writing-reviewed 2026-08-23; provenance: synthesized from the thesis-frontier discussion
+- [Evaluate the safety-adaptivity trade-off of guarded SmartDCA](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec.md) — Approved effort contract for a preregistered empirical comparison of DCA, the neutral guarded selector, and the guarded corrected-mean SmartDCA rule. — type: work-specification; status: stable; trust: user-approved 2026-08-25; provenance: synthesized from the accepted empirical direction and test seam
 
 ### research-ticket
 

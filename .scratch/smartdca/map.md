@@ -7,8 +7,8 @@ knowledge_role: operational
 status: stable
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-24T20:55:04Z
-generation_run: urn:uuid:c8785a76-9c52-4377-ab6e-4a44c3e403e6
+  at: 2026-08-25T07:38:45Z
+generation_run: urn:uuid:f9b14c1b-1dac-4483-9427-8adee5292c2f
 verified:
   - by: openai-codex/writing-for-agents-0.1
     at: 2026-08-23T21:32:48Z
@@ -22,6 +22,9 @@ verified:
   - by: openai-codex/spec-review-0.1
     at: 2026-08-24T21:31:55Z
     review_run: urn:uuid:8da58364-ea0f-42bb-a729-d559abe6e7e7
+  - by: human:github:razvan-tanase
+    at: 2026-08-25T07:38:45Z
+    review_run: urn:uuid:c8afb7ab-b24c-4fd7-a244-7db644525f3c
 ---
 # Find the rigorous out quasi-Gini route to a complete SmartDCA paper
 
@@ -86,8 +89,7 @@ A thesis- and paper-grade, self-contained Financial Computing study suitable for
 
 ## Active efforts
 
-_None._ No subsequent effort or ticket is claimed pending the user significance
-gate. Empirical evaluation requires its own approved specification.
+- [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) is approved and ready for tracer-ticket decomposition. Its [effort map](efforts/safety-adaptivity-empirical-evaluation/map.md) records that no execution ticket is yet published or claimable.
 
 ## Not yet specified
 
@@ -96,7 +98,6 @@ gate. Empirical evaluation requires its own approved specification.
 - Three supervised one-source ingests, all after the freeze certification, are needed before the batch-ingestion gate reopens; the batch's first cohort still remains draft pending batch-level review when it does.
 - Whether any resolved legacy ticket answer should be rewritten to link the canonical concepts extracted later. The cleanup deliberately left those answers as history; reversing that judgement is a separate decision, not an oversight.
 - Sixteen tickets carry no `generated`/`generation_run` despite agent-written bodies, a standing profile nonconformance the structural validator cannot detect. The cleanup fixed only [the ticket that made the finding](issues/17-clean-redundancy-after-structural-freeze.md) rather than back-filling times and run identifiers that are not recorded anywhere.
-- The exact empirical estimands, datasets, transaction-cost assumptions, robustness grid, and statistical reporting protocol.
 - The manuscript outline, target venue, literature positioning, proof organization, reproducibility package, and final verification process.
 
 ## Out of scope
