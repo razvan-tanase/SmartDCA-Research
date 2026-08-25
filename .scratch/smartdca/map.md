@@ -7,8 +7,8 @@ knowledge_role: operational
 status: stable
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T07:52:38Z
-generation_run: urn:uuid:a5d8aafb-5c01-48a5-8177-23ed524a00a7
+  at: 2026-08-25T09:17:46Z
+generation_run: urn:uuid:b56c3499-4470-4347-8007-f98cc2ebbf20
 verified:
   - by: openai-codex/writing-for-agents-0.1
     at: 2026-08-23T21:32:48Z
@@ -28,6 +28,18 @@ verified:
   - by: human:github:razvan-tanase
     at: 2026-08-25T07:52:38Z
     review_run: urn:uuid:090561f8-809a-4a62-91ad-8057714a54b6
+  - by: openai-codex/standards-review-0.1
+    at: 2026-08-25T09:13:48Z
+    review_run: urn:uuid:d5464ec7-704e-42d0-988b-194d9993d244
+  - by: openai-codex/standards-review-0.1
+    at: 2026-08-25T09:13:48Z
+    review_run: urn:uuid:8e4d4bc6-edf2-41c1-8eca-7bef42fbcb46
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-25T09:13:48Z
+    review_run: urn:uuid:ba2f5fd9-b876-4d98-9487-eeb090be48da
+  - by: openai-codex/independent-empirical-review-0.1
+    at: 2026-08-25T09:13:48Z
+    review_run: urn:uuid:5b34f61f-ac0c-47cf-9db5-c1cb150d864c
 ---
 # Find the rigorous out quasi-Gini route to a complete SmartDCA paper
 
@@ -86,13 +98,16 @@ A thesis- and paper-grade, self-contained Financial Computing study suitable for
 
 - **Reviewed arbitrary-horizon performance checkpoint:** The five-ticket effort establishes the exact ledger boundary \(W_n^c(P)-W_n^T(P)=H_T+P U_T\); single-valley geometry and cash crossing alone remain insufficient, while safety remains the guardrail's contribution. See the [resolved publication ticket](efforts/arbitrary-horizon-performance/issues/05-review-publish-research-package.md).
 
+- **Versioned empirical artifact layers:** Outcome-blind registrations live under `experiments/protocols/`, versioned inputs under `experiments/inputs/`, deterministic no-overwrite bundles under `reports/experiments/runs/`, and their reviewable OKF entry points under `reports/experiments/`. Exact byte fingerprints join those layers without treating generated JSON as separate knowledge concepts. See [Place empirical protocols, inputs, and run bundles in versioned layers](../../docs/adr/0008-place-empirical-protocol-input-run-layers.md).
+- **Outcome-blind empirical runner checkpoint:** The frozen protocol, versioned synthetic input, and deterministic three-policy runner now produce the byte-reproducible canonical run `smartdca-run-v1-b029028a9a8e5104359c4999b26e42f1dc81207eb4eb29b1dfba9fcae83473e0`: 36 complete ledgers, 36 included comparisons, 36 strata-preserving aggregate cells, and ten passed validation receipts with no negative cash. Standards, specification, and independent empirical replay all pass. This demonstrates the registered mechanism on one synthetic path only; the [experiment report](../../reports/experiments/canonical-synthetic-run.md) remains draft until ticket 04 supplies the registered historical-slice reproduction. See [Preregister the empirical protocol and establish one canonical run](efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md).
+
 ## Completed efforts
 
 - [Arbitrary-horizon guarded SmartDCA performance](efforts/arbitrary-horizon-performance/spec.md) delivered the reviewed mathematical bridge from model-free safety to realized adaptive performance. Its [effort map](efforts/arbitrary-horizon-performance/map.md) preserves the complete five-ticket route and publication checkpoint.
 
 ## Active efforts
 
-- [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) now has an approved seven-ticket tracer route. [Preregister the empirical protocol and establish one canonical run](efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md) is the sole open, unblocked frontier; no ticket is claimed.
+- [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) has an approved seven-ticket tracer route. [Preregister the empirical protocol and establish one canonical run](efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md) is resolved. Tickets 02, 03, and 04 are open, unblocked, and unclaimed pending the user significance gate; ticket 05 remains blocked by 04, and tickets 06–07 retain their declared dependencies.
 
 ## Not yet specified
 

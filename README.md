@@ -46,14 +46,16 @@ publication review.
 
 ## Current frontier
 
-All five tickets in the
-[arbitrary-horizon performance effort](.scratch/smartdca/efforts/arbitrary-horizon-performance/spec.md)
-are resolved. Its accepted checkpoint is the independently reviewed exact
-terminal-inventory boundary above; weak or strict single-valley geometry and
-cash single crossing alone are insufficient to sign performance. No next
-ticket or effort is claimed pending the user significance gate. The empirical
-study, dynamic safety ratchet, minimax policy design, and manuscript assembly
-remain separate future work.
+The independently reviewed arbitrary-horizon checkpoint is complete. The
+approved [safety-adaptivity empirical effort](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec.md)
+is now active. Its first ticket—[preregister the protocol and establish a
+canonical run](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md)—is
+resolved after Standards, specification, and independent empirical review. The
+confirmatory design is frozen before historical outcome access, and the
+deterministic three-policy runner reproduces its canonical synthetic bundle
+byte for byte. Tickets 02, 03, and 04 are open, unblocked, and unclaimed pending
+the user significance gate; the experiment report remains draft until ticket
+04 supplies the registered historical-slice reproduction.
 
 The authoritative project state is the [Wayfinder map](.scratch/smartdca/map.md). The complete inventory of every knowledge concept is the root [index](index.md).
 
@@ -66,6 +68,8 @@ The authoritative project state is the [Wayfinder map](.scratch/smartdca/map.md)
 | `research/theorems/` | Canonical statements of the results the project has proved. |
 | `research/notes/` | Detailed proofs, theorem notes, and primary-source positioning behind those canonical pages. |
 | `research/prototypes/` | Preserved exploratory artifacts. |
+| `experiments/` | Immutable empirical protocols and versioned runner inputs. |
+| `reports/experiments/` | Reviewable experiment reports and fingerprinted canonical run bundles. |
 | `reproducibility/checks/` | Deterministic and exhaustive verification programs. |
 | `references/` | Source material, immutable fingerprinted external snapshots under `raw/`, and their summaries under `summaries/`. |
 | `research/synthesis/` | Cross-source integration and recorded conflict resolution. |
@@ -76,7 +80,7 @@ The authoritative project state is the [Wayfinder map](.scratch/smartdca/map.md)
 | `index.md` | Complete role-aware inventory of every knowledge concept. |
 | `log.md` | Immutable event history of the knowledge bundle. |
 
-The separation is intentional, and its reasons are recorded in [Keep research state and evidence in separate versioned layers](docs/adr/0001-versioned-research-layout.md): tickets record questions and concise resolutions, research notes hold detailed reasoning once, and executable checks provide reproducible evidence. Since the semantic extraction, `research/definitions/` and `research/theorems/` carry the statements those notes prove, so a reader who wants a result reads the canonical page and a reader who wants the argument follows it into the note.
+The separation is intentional, and its reasons are recorded in [Keep research state and evidence in separate versioned layers](docs/adr/0001-versioned-research-layout.md): tickets record questions and concise resolutions, research notes hold detailed reasoning once, and executable checks provide reproducible evidence. The [empirical artifact-layer decision](docs/adr/0008-place-empirical-protocol-input-run-layers.md) extends that split to immutable protocols, versioned inputs, deterministic run bundles, and their narrative reports. Since the semantic extraction, `research/definitions/` and `research/theorems/` carry the statements those notes prove, so a reader who wants a result reads the canonical page and a reader who wants the argument follows it into the note.
 
 ## Verification
 
@@ -94,9 +98,10 @@ python -m reproducibility.checks.check_weak_single_valley_falsification
 python -m reproducibility.checks.check_cash_single_crossing_mechanism
 python -m reproducibility.checks.check_arbitrary_horizon_performance_boundary
 python reproducibility/checks/check_arbitrary_horizon_publication_review.py
+python -m unittest reproducibility.checks.check_empirical_protocol_canonical_run
 ```
 
-GitHub Actions runs all eleven checks on every push and pull request, together with the knowledge-system fixtures and strict [SmartDCA OKF](docs/knowledge/okf-profile.md) validation.
+GitHub Actions runs all twelve checks on every push and pull request, together with the knowledge-system fixtures and strict [SmartDCA OKF](docs/knowledge/okf-profile.md) validation.
 
 ## Research workflow
 

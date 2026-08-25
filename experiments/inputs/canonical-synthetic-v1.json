@@ -1,0 +1,30 @@
+{
+  "schema_version": "smartdca-versioned-input/1",
+  "input_id": "canonical-synthetic-recurring-investment",
+  "version": "1",
+  "kind": "synthetic",
+  "confirmatory": false,
+  "purpose": "Non-confirmatory hand-authored recurring-investment episode for the preregistered end-to-end runner checkpoint.",
+  "episodes": [
+    {
+      "episode_id": "canonical-safety-adaptivity-path-v1",
+      "family": "non-confirmatory-mechanism-path",
+      "dataset_id": "canonical-synthetic",
+      "horizon_months": 5,
+      "observations": [
+        {"date": "2020-01-01", "price": "100", "deposit": "1000"},
+        {"date": "2020-02-01", "price": "150", "deposit": "1000"},
+        {"date": "2020-03-01", "price": "80", "deposit": "1000"},
+        {"date": "2020-04-01", "price": "130", "deposit": "1000"},
+        {"date": "2020-05-01", "price": "90", "deposit": "1000"}
+      ],
+      "evaluation_date": "2020-06-01",
+      "evaluation_price": "120",
+      "generation": {
+        "method": "hand-authored",
+        "seed": null,
+        "historical_observations_used": false
+      }
+    }
+  ]
+}
