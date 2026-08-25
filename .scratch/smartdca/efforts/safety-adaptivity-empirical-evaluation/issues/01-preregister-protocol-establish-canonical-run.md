@@ -2,21 +2,21 @@
 profile: smartdca-okf/0.4
 type: research-ticket
 title: "Preregister the empirical protocol and establish one canonical run"
-description: "Open task ticket freezing the empirical protocol and extending the verified three-policy ledger into one complete non-confirmatory experiment run."
+description: "Claimed task ticket freezing the empirical protocol and extending the verified three-policy ledger into one complete non-confirmatory experiment run."
 knowledge_role: operational
 status: draft
 original_record: true
 ticket_type: task
-ticket_status: open
+ticket_status: claimed
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T07:52:38Z
-generation_run: urn:uuid:a5d8aafb-5c01-48a5-8177-23ed524a00a7
+  at: 2026-08-25T08:11:32Z
+generation_run: urn:uuid:d18b7494-a955-4ab1-9332-51b3f3f88d85
 ---
 # 01 — Preregister the empirical protocol and establish one canonical run
 
 Type: task
-Status: open
+Status: claimed
 Label: ready-for-agent
 Blocked by: none
 Parent: [Safety-adaptivity empirical evaluation](../spec.md)
