@@ -26,10 +26,14 @@ sources:
     title: "Epsilon-DCA safety is exactly a causal unit-coverage guardrail"
     resource: research/theorems/epsilon-dca-safety-unit-guardrail
     source_kind: internal
+  - id: package-review
+    title: "Independent review of the arbitrary-horizon research package"
+    resource: research/notes/arbitrary-horizon-research-package-review
+    source_kind: internal
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-24T20:11:40Z
-generation_run: urn:uuid:6a0602e3-5197-442d-bfc1-256ac8a382ba
+  at: 2026-08-24T20:55:04Z
+generation_run: urn:uuid:c8785a76-9c52-4377-ab6e-4a44c3e403e6
 verified:
   - by: openai-codex/standards-review-0.1
     at: 2026-08-24T20:11:40Z
@@ -37,6 +41,15 @@ verified:
   - by: openai-codex/spec-review-0.1
     at: 2026-08-24T20:11:40Z
     review_run: urn:uuid:c830b658-ad37-43ba-b537-690dda4f5455
+  - by: openai-codex/independent-math-review-0.1
+    at: 2026-08-24T21:12:56Z
+    review_run: urn:uuid:1694bf39-9777-4b36-bd09-5c6abc74460e
+  - by: openai-codex/standards-review-0.1
+    at: 2026-08-24T21:31:55Z
+    review_run: urn:uuid:8185820b-9b80-4607-91f0-43335cfbdff5
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-24T21:31:55Z
+    review_run: urn:uuid:8da58364-ea0f-42bb-a729-d559abe6e7e7
 ---
 # Terminal cash and units give the exact arbitrary-horizon performance boundary
 
@@ -145,10 +158,16 @@ the exact boundary requires the causal purchase ledgers.
 
 The complete proof, exact affine trichotomy, strict regions, counterexamples,
 and boundary cases are recorded in the
-[evidence note](../notes/arbitrary-horizon-performance-boundary.md).[^performance-note]
+[evidence note](../notes/arbitrary-horizon-performance-boundary.md). The
+[independent review](../notes/arbitrary-horizon-research-package-review.md)
+records a ledger-first re-derivation and witness-by-witness replay, and the
+[boundary check](../../reproducibility/checks/check_arbitrary_horizon_performance_boundary.py)
+and [independent publication replay](../../reproducibility/checks/check_arbitrary_horizon_publication_review.py)
+are the executable publication gates.[^performance-note][^package-review]
 
 [^performance-note]: [Exact arbitrary-horizon evaluation-price boundary for guarded SmartDCA](../notes/arbitrary-horizon-performance-boundary.md)
 [^ticket-04]: [Prove the arbitrary-horizon performance boundary](../../.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/04-prove-arbitrary-horizon-performance-boundary.md)
 [^cash-timing]: [Arbitrary-horizon terminal wealth has an exact cash-timing identity](arbitrary-horizon-cash-timing-identity.md)
 [^cash-crossing]: [Reference-aligned guardrail feedback preserves cash single crossing](reference-aligned-guardrail-cash-single-crossing.md)
 [^guardrail]: [Epsilon-DCA safety is exactly a causal unit-coverage guardrail](epsilon-dca-safety-unit-guardrail.md)
+[^package-review]: [Independent review of the arbitrary-horizon research package](../notes/arbitrary-horizon-research-package-review.md)

@@ -7,12 +7,21 @@ knowledge_role: operational
 status: stable
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T21:32:47Z
-generation_run: urn:uuid:ff59c0f2-6dfc-4e4e-8604-62961e607c7f
+  at: 2026-08-24T20:55:04Z
+generation_run: urn:uuid:c8785a76-9c52-4377-ab6e-4a44c3e403e6
 verified:
   - by: openai-codex/writing-for-agents-0.1
     at: 2026-08-23T21:32:48Z
     review_run: urn:uuid:d87a04a7-92ae-43c4-a446-998b6f1a8d14
+  - by: openai-codex/independent-math-review-0.1
+    at: 2026-08-24T21:12:56Z
+    review_run: urn:uuid:1694bf39-9777-4b36-bd09-5c6abc74460e
+  - by: openai-codex/standards-review-0.1
+    at: 2026-08-24T21:31:55Z
+    review_run: urn:uuid:8185820b-9b80-4607-91f0-43335cfbdff5
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-24T21:31:55Z
+    review_run: urn:uuid:8da58364-ea0f-42bb-a729-d559abe6e7e7
 ---
 # Find the rigorous out quasi-Gini route to a complete SmartDCA paper
 
@@ -69,9 +78,16 @@ A thesis- and paper-grade, self-contained Financial Computing study suitable for
 
 - **Agent-facing writing audit:** All 62 Markdown paths were classified; the six active agent instruction surfaces were sharpened around explicit triggers, authoritative layers, and checkable completion bounds. A stale Stripe hosting claim and duplicated tracker lifecycle rules were removed, while the 18 earlier resolved tickets were preserved as provenance-bearing history. No scientific claim changed. See [Audit and sharpen agent-facing wiki instructions](issues/19-audit-agent-facing-writing.md).
 
+- **Reviewed arbitrary-horizon performance checkpoint:** The five-ticket effort establishes the exact ledger boundary \(W_n^c(P)-W_n^T(P)=H_T+P U_T\); single-valley geometry and cash crossing alone remain insufficient, while safety remains the guardrail's contribution. See the [resolved publication ticket](efforts/arbitrary-horizon-performance/issues/05-review-publish-research-package.md).
+
+## Completed efforts
+
+- [Arbitrary-horizon guarded SmartDCA performance](efforts/arbitrary-horizon-performance/spec.md) delivered the reviewed mathematical bridge from model-free safety to realized adaptive performance. Its [effort map](efforts/arbitrary-horizon-performance/map.md) preserves the complete five-ticket route and publication checkpoint.
+
 ## Active efforts
 
-- [Arbitrary-horizon guarded SmartDCA performance](efforts/arbitrary-horizon-performance/spec.md) is the approved mathematical frontier. Its [effort map](efforts/arbitrary-horizon-performance/map.md) owns tickets 01–05 and their blocking order. The effort must establish a sharp positive or negative arbitrary-horizon performance boundary before empirical evaluation.
+_None._ No subsequent effort or ticket is claimed pending the user significance
+gate. Empirical evaluation requires its own approved specification.
 
 ## Not yet specified
 

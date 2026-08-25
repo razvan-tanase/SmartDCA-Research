@@ -2,14 +2,14 @@
 profile: smartdca-okf/0.4
 type: research-map
 title: "Arbitrary-horizon performance effort map"
-description: "Operational map of the approved arbitrary-horizon guarded SmartDCA performance effort and its blocking frontier."
+description: "Completed route and reviewed publication checkpoint for the arbitrary-horizon guarded SmartDCA performance effort."
 knowledge_role: operational
 status: stable
 original_record: true
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-24T20:11:40Z
-generation_run: urn:uuid:6a0602e3-5197-442d-bfc1-256ac8a382ba
+  at: 2026-08-24T20:55:04Z
+generation_run: urn:uuid:c8785a76-9c52-4377-ab6e-4a44c3e403e6
 verified:
   - by: openai-codex/writing-for-agents-0.1
     at: 2026-08-23T21:32:48Z
@@ -41,6 +41,15 @@ verified:
   - by: openai-codex/spec-review-0.1
     at: 2026-08-24T20:11:40Z
     review_run: urn:uuid:c830b658-ad37-43ba-b537-690dda4f5455
+  - by: openai-codex/independent-math-review-0.1
+    at: 2026-08-24T21:12:56Z
+    review_run: urn:uuid:1694bf39-9777-4b36-bd09-5c6abc74460e
+  - by: openai-codex/standards-review-0.1
+    at: 2026-08-24T21:31:55Z
+    review_run: urn:uuid:8185820b-9b80-4607-91f0-43335cfbdff5
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-24T21:31:55Z
+    review_run: urn:uuid:8da58364-ea0f-42bb-a729-d559abe6e7e7
 ---
 # Arbitrary-horizon performance effort map
 
@@ -60,16 +69,13 @@ whenever claiming, executing, resolving, or advancing a ticket in this route.
 | [02](issues/02-falsify-weak-single-valley-advantage.md) | Search for and minimize counterexamples to the weak single-valley conjecture. | resolved | 01 |
 | [03](issues/03-characterize-cash-single-crossing-mechanism.md) | Prove or disprove the proposed cash-path mechanism. | resolved | 02 |
 | [04](issues/04-prove-arbitrary-horizon-performance-boundary.md) | State and prove the strongest surviving arbitrary-horizon boundary. | resolved | 03 |
-| [05](issues/05-review-publish-research-package.md) | Independently review and publish the accepted result. | open, unclaimed | 04 (resolved) |
+| [05](issues/05-review-publish-research-package.md) | Independently review and publish the accepted result. | resolved | 04 |
 
-## Active frontier
+## Completed checkpoint
 
-Ticket 04 is resolved. Its reviewed
-[theorem](../../../../research/theorems/arbitrary-horizon-performance-boundary.md)
-gives the exact affine evaluation-price boundary from terminal cash and units,
-while its [evidence](../../../../research/notes/arbitrary-horizon-performance-boundary.md)
-specializes the result to a reciprocal-exposure balance on single-valley paths
-and proves that reference-aligned cash crossing alone remains insufficient.
-Ticket 05 is open, unblocked, and unclaimed pending the user significance
-gate. Local ticket numbers are meaningful only inside this effort; blockers
-outside the effort use their full Concept ID.
+All five tickets are resolved. The independently reviewed
+[terminal-inventory boundary](../../../../research/theorems/arbitrary-horizon-performance-boundary.md)
+classifies every finite-horizon realized ledger, while single-valley geometry
+and cash crossing alone remain insufficient. No successor is claimed pending
+the user significance gate; the proof, exact replay, publication finding, and
+future-work exclusions remain in the linked theorem, review record, and ticket.
