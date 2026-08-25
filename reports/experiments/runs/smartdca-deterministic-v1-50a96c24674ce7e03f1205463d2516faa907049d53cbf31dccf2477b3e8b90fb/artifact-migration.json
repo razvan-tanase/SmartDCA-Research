@@ -1,0 +1,9 @@
+{
+  "current_path": "report-tables.md.raw",
+  "historical_study_run_id": "smartdca-deterministic-v1-50a96c24674ce7e03f1205463d2516faa907049d53cbf31dccf2477b3e8b90fb",
+  "migrated_at": "2026-08-25T11:14:45Z",
+  "original_manifest_path": "report-tables.md",
+  "reason": "Preserve the generated table bytes outside the OKF Markdown concept namespace.",
+  "schema_version": "smartdca-artifact-migration/1",
+  "sha256": "c62f2f4fbb9c8637dceef244a57889ad4776563029677d81451c5643da4357db"
+}

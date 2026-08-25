@@ -8,8 +8,8 @@ status: stable
 original_record: true
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T09:17:46Z
-generation_run: urn:uuid:84d83c43-e3fa-4d94-9a48-16450f73a7c2
+  at: 2026-08-25T11:18:28Z
+generation_run: urn:uuid:1e2029d0-e145-456a-ba97-2ddca88bc388
 verified:
   - by: human:github:razvan-tanase
     at: 2026-08-25T07:38:45Z
@@ -26,6 +26,15 @@ verified:
   - by: openai-codex/independent-empirical-review-0.1
     at: 2026-08-25T09:13:48Z
     review_run: urn:uuid:5b34f61f-ac0c-47cf-9db5-c1cb150d864c
+  - by: openai-codex/standards-review-0.1
+    at: 2026-08-25T11:16:26Z
+    review_run: urn:uuid:34df7016-c817-4ad7-b05a-36773412a89c
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-25T11:12:41Z
+    review_run: urn:uuid:3423b393-7949-4da7-999c-dcfc0747fc29
+  - by: openai-codex/independent-empirical-review-0.1
+    at: 2026-08-25T11:15:20Z
+    review_run: urn:uuid:8a76cee8-e9c9-4ade-9e4d-b08f61a6046c
 ---
 # Safety-adaptivity empirical evaluation effort map
 
@@ -41,7 +50,7 @@ project-wide scientific context lives in the
 | Ticket | Purpose | Status | Blocked by |
 |---|---|---|---|
 | [01](issues/01-preregister-protocol-establish-canonical-run.md) | Freeze the protocol and establish one complete non-confirmatory empirical run. | resolved | — |
-| [02](issues/02-evaluate-deterministic-adversarial-paths.md) | Evaluate deterministic synthetic and adversarial path families. | open | — |
+| [02](issues/02-evaluate-deterministic-adversarial-paths.md) | Evaluate deterministic synthetic and adversarial path families. | resolved | — |
 | [03](issues/03-evaluate-seeded-stochastic-families.md) | Evaluate seeded stochastic path families. | open | — |
 | [04](issues/04-establish-historical-data-episode-seam.md) | Establish fingerprinted historical inputs and rolling episodes without opening confirmatory outcomes. | open | — |
 | [05](issues/05-run-confirmatory-historical-evaluation.md) | Execute the frozen rolling S&P 500 and Bitcoin evaluation. | open | 04 |
@@ -52,6 +61,9 @@ project-wide scientific context lives in the
 
 [Preregister the empirical protocol and establish one canonical run](issues/01-preregister-protocol-establish-canonical-run.md)
 is resolved after Standards, specification, and independent empirical review.
-Tickets 02, 03, and 04 are open, unblocked, and unclaimed; ticket 05 still needs
-the historical-data seam, while synthesis and publication remain blocked until
+[Evaluate deterministic synthetic and adversarial paths](issues/02-evaluate-deterministic-adversarial-paths.md)
+is also resolved after byte-identical clean-room replay of its 18 generated
+paths, retained exclusions, and exhaustive finite adversarial search. Tickets
+03 and 04 are the open unblocked unclaimed frontiers; ticket 05 still needs the
+historical-data seam, while synthesis and publication remain blocked until
 their full evidence dependencies resolve.

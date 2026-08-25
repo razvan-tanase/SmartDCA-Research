@@ -7,8 +7,8 @@ knowledge_role: operational
 status: stable
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T09:17:46Z
-generation_run: urn:uuid:b56c3499-4470-4347-8007-f98cc2ebbf20
+  at: 2026-08-25T11:18:28Z
+generation_run: urn:uuid:1e2029d0-e145-456a-ba97-2ddca88bc388
 verified:
   - by: openai-codex/writing-for-agents-0.1
     at: 2026-08-23T21:32:48Z
@@ -40,6 +40,15 @@ verified:
   - by: openai-codex/independent-empirical-review-0.1
     at: 2026-08-25T09:13:48Z
     review_run: urn:uuid:5b34f61f-ac0c-47cf-9db5-c1cb150d864c
+  - by: openai-codex/standards-review-0.1
+    at: 2026-08-25T11:16:26Z
+    review_run: urn:uuid:34df7016-c817-4ad7-b05a-36773412a89c
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-25T11:12:41Z
+    review_run: urn:uuid:3423b393-7949-4da7-999c-dcfc0747fc29
+  - by: openai-codex/independent-empirical-review-0.1
+    at: 2026-08-25T11:15:20Z
+    review_run: urn:uuid:8a76cee8-e9c9-4ade-9e4d-b08f61a6046c
 ---
 # Find the rigorous out quasi-Gini route to a complete SmartDCA paper
 
@@ -100,6 +109,7 @@ A thesis- and paper-grade, self-contained Financial Computing study suitable for
 
 - **Versioned empirical artifact layers:** Outcome-blind registrations live under `experiments/protocols/`, versioned inputs under `experiments/inputs/`, deterministic no-overwrite bundles under `reports/experiments/runs/`, and their reviewable OKF entry points under `reports/experiments/`. Exact byte fingerprints join those layers without treating generated JSON as separate knowledge concepts. See [Place empirical protocols, inputs, and run bundles in versioned layers](../../docs/adr/0008-place-empirical-protocol-input-run-layers.md).
 - **Outcome-blind empirical runner checkpoint:** The frozen protocol, versioned synthetic input, and deterministic three-policy runner now produce the byte-reproducible canonical run `smartdca-run-v1-b029028a9a8e5104359c4999b26e42f1dc81207eb4eb29b1dfba9fcae83473e0`: 36 complete ledgers, 36 included comparisons, 36 strata-preserving aggregate cells, and ten passed validation receipts with no negative cash. Standards, specification, and independent empirical replay all pass. This demonstrates the registered mechanism on one synthetic path only; the [experiment report](../../reports/experiments/canonical-synthetic-run.md) remains draft until ticket 04 supplies the registered historical-slice reproduction. See [Preregister the empirical protocol and establish one canonical run](efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md).
+- **Deterministic adversarial checkpoint:** The content-addressed run `smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db` retains 21 saved attempts, 18 valid paths, three typed exclusions, 648 main comparisons, all 729 finite search candidates, and 1,512 eligible-search comparisons. It executes seven exact boundary contracts and separates complete-system, selector, and guardrail-architecture effects without treating deterministic evidence as historical or stochastic performance. Standards, specification, and independent byte-level empirical replay all pass. See [Evaluate deterministic synthetic and adversarial paths](efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md).
 
 ## Completed efforts
 
@@ -107,7 +117,7 @@ A thesis- and paper-grade, self-contained Financial Computing study suitable for
 
 ## Active efforts
 
-- [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) has an approved seven-ticket tracer route. [Preregister the empirical protocol and establish one canonical run](efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md) is resolved. Tickets 02, 03, and 04 are open, unblocked, and unclaimed pending the user significance gate; ticket 05 remains blocked by 04, and tickets 06–07 retain their declared dependencies.
+- [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) has an approved seven-ticket tracer route. Tickets [01](efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md) and [02](efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md) are resolved. Tickets 03 and 04 are open, unblocked, and unclaimed pending the user significance gate; ticket 05 remains blocked by 04, and tickets 06–07 retain their declared dependencies.
 
 ## Not yet specified
 

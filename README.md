@@ -53,9 +53,11 @@ canonical run](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/
 resolved after Standards, specification, and independent empirical review. The
 confirmatory design is frozen before historical outcome access, and the
 deterministic three-policy runner reproduces its canonical synthetic bundle
-byte for byte. Tickets 02, 03, and 04 are open, unblocked, and unclaimed pending
-the user significance gate; the experiment report remains draft until ticket
-04 supplies the registered historical-slice reproduction.
+byte for byte. [Ticket 02's deterministic and adversarial study](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md)
+is also resolved after Standards, specification, and independent empirical
+replay. Tickets 03 and 04 are open, unblocked, and unclaimed pending the user
+significance gate; both empirical reports remain draft until ticket 04 supplies
+the registered historical-slice reproduction.
 
 The authoritative project state is the [Wayfinder map](.scratch/smartdca/map.md). The complete inventory of every knowledge concept is the root [index](index.md).
 
@@ -99,9 +101,10 @@ python -m reproducibility.checks.check_cash_single_crossing_mechanism
 python -m reproducibility.checks.check_arbitrary_horizon_performance_boundary
 python reproducibility/checks/check_arbitrary_horizon_publication_review.py
 python -m unittest reproducibility.checks.check_empirical_protocol_canonical_run
+python -m unittest reproducibility.checks.check_deterministic_adversarial_study
 ```
 
-GitHub Actions runs all twelve checks on every push and pull request, together with the knowledge-system fixtures and strict [SmartDCA OKF](docs/knowledge/okf-profile.md) validation.
+GitHub Actions runs all thirteen checks on every push and pull request, together with the knowledge-system fixtures and strict [SmartDCA OKF](docs/knowledge/okf-profile.md) validation.
 
 ## Research workflow
 
