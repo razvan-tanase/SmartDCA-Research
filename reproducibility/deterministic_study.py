@@ -1556,7 +1556,7 @@ def run_deterministic_study(
             runner.episode_results,
             path_attempts,
         )
-        (temporary_directory / "report-tables.md").write_text(
+        (temporary_directory / "report-tables.txt").write_text(
             _render_report_tables(
                 config_document,
                 document,

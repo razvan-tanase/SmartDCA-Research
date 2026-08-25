@@ -29,8 +29,8 @@ sources:
     source_kind: internal
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T10:59:48Z
-generation_run: urn:uuid:971dea0b-65cb-45ee-a3ca-54eb0a94896d
+  at: 2026-08-25T11:10:08Z
+generation_run: urn:uuid:27919a38-c8e3-4937-a663-41c2fbcb6ca6
 ---
 # Deterministic synthetic and adversarial path evaluation
 
@@ -38,14 +38,14 @@ generation_run: urn:uuid:971dea0b-65cb-45ee-a3ca-54eb0a94896d
 
 How do DCA, the neutral epsilon-DCA-guarded selector, and the
 [guarded corrected-mean SmartDCA rule](../../research/definitions/guarded-corrected-mean-smartdca-rule.md)
-behave on interpretable deterministic and
+[^guarded-rule] behave on interpretable deterministic and
 deliberately hostile paths under the preregistered primary coverage,
 corrected-mean, and cost grid?
 
 ## Run identity and scope
 
 The immutable study manifest is
-[`smartdca-deterministic-v1-50a96c24674ce7e03f1205463d2516faa907049d53cbf31dccf2477b3e8b90fb`](runs/smartdca-deterministic-v1-50a96c24674ce7e03f1205463d2516faa907049d53cbf31dccf2477b3e8b90fb/manifest.json).
+[`smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db`](runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/manifest.json).
 It binds:
 
 - protocol SHA-256
@@ -55,7 +55,7 @@ It binds:
 - generated runner-input SHA-256
   `1ac012f5908f81598a4f2301a29442f44111960f17637e0025aefe183ff6bc85`;
 - generator-source SHA-256
-  `8127d9f4e977888e793ce9a27ccb31c9c478fe92a78ce336048612ef28bdd3c0`;
+  `e8e2cfcf49d7c35991c3fc5c403f023028e6f5c31b16d14d15daee291ce86a59`;
 - shared-runner-source SHA-256
   `7fd480fd07a80a914bc02aa133a59d975fc2f756c7bc75de052771c1ff256fee`;
   and
@@ -68,14 +68,16 @@ and 3 retained exclusions. Every generated episode was then
 executed through four primary coverage values
 \(\lambda\in\{1,0.9,0.75,0.5\}\), the primary
 `identity-a0-b0` corrected mean, three cost scenarios, and all three policies.
-The resulting [shared-runner bundle](runs/smartdca-deterministic-v1-50a96c24674ce7e03f1205463d2516faa907049d53cbf31dccf2477b3e8b90fb/runner/manifest.json)
+The resulting [shared-runner bundle](runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/runner/manifest.json)
 contains 648 complete ledgers and 648 comparison rows.
 
 This is non-confirmatory synthetic evidence. Seed: `none` (the saved paths and
 finite adversarial grid are deterministic). No historical provider response or
 stochastic path was used. The execution implements the outcome-blind
 [effort contract](../../.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec.md)
-through the versioned layers fixed by [ADR 0008](../../docs/adr/0008-place-empirical-protocol-input-run-layers.md).
+[^effort-spec] through the versioned layers fixed by
+[ADR 0008](../../docs/adr/0008-place-empirical-protocol-input-run-layers.md).
+[^empirical-layers]
 
 ## Path construction and validation
 
@@ -89,7 +91,7 @@ adversarial-design iteration because its realized selector effect had the
 opposite sign from the intended hostile fixture.
 
 Path validity is independent of policy performance. The
-[attempt ledger](runs/smartdca-deterministic-v1-50a96c24674ce7e03f1205463d2516faa907049d53cbf31dccf2477b3e8b90fb/path-attempts.jsonl)
+[attempt ledger](runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/path-attempts.jsonl)
 records the saved price parameters, predicate, predicate diagnostics, mechanism
 labels, boundary tags, status, and machine-readable exclusion reason before any
 policy is run. The three retained exclusions are:
@@ -100,7 +102,7 @@ policy is run. The three retained exclusions are:
 | `rejected-nonpositive-price` | `invalid_price` | A zero purchase price violated the positive-price model. |
 | `rejected-missing-evaluation` | `invalid_decimal` | The evaluation price was absent. |
 
-The [boundary receipt](runs/smartdca-deterministic-v1-50a96c24674ce7e03f1205463d2516faa907049d53cbf31dccf2477b3e8b90fb/boundary-fixtures.json)
+The [boundary receipt](runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/boundary-fixtures.json)
 contains seven executable regression contracts connecting the study to the
 existing constant, two-purchase, three-purchase, single-valley,
 repeated-floor-activation, and arbitrary-horizon checks. Each receipt records
@@ -109,12 +111,12 @@ evidence scope remains explicitly `finite-regression-not-proof`.
 
 The hostile adaptive-timing fixture was selected by a declared finite design
 search rather than by an unrecorded favorable example. The
-[search ledger](runs/smartdca-deterministic-v1-50a96c24674ce7e03f1205463d2516faa907049d53cbf31dccf2477b3e8b90fb/adversarial-search.jsonl)
+[search ledger](runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/adversarial-search.jsonl)
 retains all 729 six-purchase sequences over the fixed price grid
 `{60, 100, 150}`. The policy-independent predicate admitted 42 sequences and
 excluded 687; every admitted sequence was run through the same three-policy,
 coverage, corrected-mean, and cost grid in a separate
-[shared-runner bundle](runs/smartdca-deterministic-v1-50a96c24674ce7e03f1205463d2516faa907049d53cbf31dccf2477b3e8b90fb/adversarial-search-runner/manifest.json).
+[shared-runner bundle](runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/adversarial-search-runner/manifest.json).
 The saved objective minimizes corrected-versus-neutral terminal-wealth gap at
 frictionless \(\lambda=0.75\), with a lexicographic price-sequence tie break.
 It selected candidate `hostile-adaptive-timing-grid-v1-637` with prices
@@ -124,7 +126,7 @@ finite grid, not for all hostile paths.
 ## Primary deterministic observations
 
 The table is emitted from the immutable episode results in
-[`report-tables.md`](runs/smartdca-deterministic-v1-50a96c24674ce7e03f1205463d2516faa907049d53cbf31dccf2477b3e8b90fb/report-tables.md).
+[`report-tables.txt`](runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/report-tables.txt).
 It reports the frictionless \(\lambda=0.75\) episode result for each primary
 family. Each percentage uses its named comparator as denominator, so the three
 columns are not arithmetically additive. Cash drag, exposure, and activation
@@ -152,6 +154,7 @@ probability sample:
 
 - At \(\lambda=1\), both guarded policies collapse transaction by transaction
   to DCA in every scenario. This is the registered accounting boundary.
+  [^guardrail-theorem]
 - On the constant frictionless path, corrected-minus-DCA terminal cash is
   `500` and the unit gap is `-5`; evaluation at `100` cancels them exactly.
   Equal wealth therefore does not imply equal inventory paths.
@@ -175,13 +178,14 @@ probability sample:
   signal comparison, corrected carries `200.736` less cash and `4.556` more
   units than neutral; at evaluation price `30`, the extra-unit contribution
   `136.684` does not offset the cash contribution `-200.736`.
+  [^performance-boundary]
 - The retained preliminary whipsaw instead gives a +1.607% signal effect at
   the same coverage. A structural hostile-path predicate does not preordain a
   policy outcome.
 
 The complete row-level cash, unit, purchase, exposure, fee, floor, and
 activation attribution is in
-[`mechanism-attribution.csv`](runs/smartdca-deterministic-v1-50a96c24674ce7e03f1205463d2516faa907049d53cbf31dccf2477b3e8b90fb/mechanism-attribution.csv).
+[`mechanism-attribution.csv`](runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/mechanism-attribution.csv).
 
 ## Coverage and downside across the fixed catalog
 
@@ -208,7 +212,7 @@ not supply frequencies or justify monotonic expected-performance claims.
 
 ## Cost-adjusted results
 
-All rows in the generated cost table are explicitly outside the current safety theorem. At
+All cost-adjusted rows in the generated table are explicitly outside the current safety theorem. At
 \(\lambda=0.75\), the descriptive ranges remain close to the frictionless
 catalog under the declared 10-basis-point proportional and one-dollar fixed
 fees:
@@ -231,7 +235,7 @@ not to transfer the frictionless theorem label to cost-adjusted output.
 
 ## Accounting and reproduction
 
-The [study validation receipt](runs/smartdca-deterministic-v1-50a96c24674ce7e03f1205463d2516faa907049d53cbf31dccf2477b3e8b90fb/study-validation.json)
+The [study validation receipt](runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/study-validation.json)
 records 17 required and boundary predicates plus one retained design-iteration
 predicate and seven linked boundary regression contracts as passed. The nested
 shared-runner receipt verifies full funding,
@@ -243,7 +247,7 @@ The separate design-search runner adds 1,512 complete ledgers and 1,512
 comparison rows for the 42 eligible search candidates; the 687 predicate
 exclusions remain visible without being passed to a policy.
 The run manifest fingerprints 22 pre-manifest artifacts, including the exact
-Markdown tables reproduced above.
+plain-text table blocks reproduced above.
 
 From a fresh repository checkout, regenerate the complete bundle with:
 
@@ -273,3 +277,9 @@ path probabilities, expected returns, statistical
 significance, market causality, parameter optimality, or universal
 outperformance. The stochastic and historical evidence layers remain separate
 open tickets.
+
+[^effort-spec]: Source join: [approved empirical effort specification](../../.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec.md).
+[^guarded-rule]: Source join: [canonical guarded-rule definition](../../research/definitions/guarded-corrected-mean-smartdca-rule.md).
+[^guardrail-theorem]: Source join: [epsilon-DCA unit-coverage theorem](../../research/theorems/epsilon-dca-safety-unit-guardrail.md).
+[^performance-boundary]: Source join: [arbitrary-horizon cash-and-units boundary](../../research/theorems/arbitrary-horizon-performance-boundary.md).
+[^empirical-layers]: Source join: [empirical artifact-layer decision](../../docs/adr/0008-place-empirical-protocol-input-run-layers.md).

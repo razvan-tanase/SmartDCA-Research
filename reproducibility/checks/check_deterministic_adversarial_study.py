@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from decimal import Decimal
 from pathlib import Path
 
 from reproducibility.deterministic_study import (
@@ -27,7 +28,7 @@ REPORT = ROOT / "reports" / "experiments" / "deterministic-adversarial-paths.md"
 WORKFLOW = ROOT / ".github" / "workflows" / "verification.yml"
 COMMITTED_RUN_ID = (
     "smartdca-deterministic-v1-"
-    "50a96c24674ce7e03f1205463d2516faa907049d53cbf31dccf2477b3e8b90fb"
+    "80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db"
 )
 COMMITTED_RUN = ROOT / "reports" / "experiments" / "runs" / COMMITTED_RUN_ID
 
@@ -188,7 +189,7 @@ class DeterministicStudyContractTest(unittest.TestCase):
                 "manifest.json",
                 "mechanism-attribution.csv",
                 "path-attempts.jsonl",
-                "report-tables.md",
+                "report-tables.txt",
                 "runner",
                 "runner-input.json",
                 "study-validation.json",
@@ -626,14 +627,60 @@ class DeterministicStudyContractTest(unittest.TestCase):
         self.assertIn("Seed: `none`", report)
         self.assertIn("original_record: false", report)
         self.assertIn("sources:", report)
-        generated_tables = (COMMITTED_RUN / "report-tables.md").read_text(
+        generated_tables = (COMMITTED_RUN / "report-tables.txt").read_text(
             encoding="utf-8"
         )
         for section in generated_tables.strip().split("\n\n### "):
             table = section[section.index("|") :].strip()
             self.assertIn(table, report)
-        self.assertIn("`200.736` less cash", report)
-        self.assertIn("`136.684`", report)
+        episode_results = [
+            json.loads(line)
+            for line in (COMMITTED_RUN / "runner" / "episode-results.jsonl")
+            .read_text(encoding="utf-8")
+            .splitlines()
+        ]
+        hostile = next(
+            row
+            for row in episode_results
+            if row["episode_id"] == "hostile-adaptive-timing-primary"
+            and row["coverage"] == "0.75"
+            and row["cost_scenario"] == "frictionless"
+            and row["comparison"] == "corrected_guarded_vs_neutral_guarded"
+        )
+        report_flat = " ".join(report.split())
+        self.assertIn(
+            f"`{abs(Decimal(hostile['terminal_cash_gap'])):.3f}` less cash",
+            report_flat,
+        )
+        self.assertIn(
+            f"`{Decimal(hostile['terminal_unit_gap']):.3f}` more units",
+            report_flat,
+        )
+        self.assertIn(
+            f"`{Decimal(hostile['unit_contribution']):.3f}`",
+            report_flat,
+        )
+        design_iteration = next(
+            row
+            for row in episode_results
+            if row["episode_id"] == "hostile-adaptive-timing-design-iteration"
+            and row["coverage"] == "0.75"
+            and row["cost_scenario"] == "frictionless"
+            and row["comparison"] == "corrected_guarded_vs_neutral_guarded"
+        )
+        self.assertIn(
+            f"{Decimal(design_iteration['relative_terminal_wealth_gap']) * 100:+.3f}% "
+            "signal effect",
+            report_flat,
+        )
+        for source_id in (
+            "effort-spec",
+            "guarded-rule",
+            "guardrail-theorem",
+            "performance-boundary",
+            "empirical-layers",
+        ):
+            self.assertGreaterEqual(report.count(f"[^{source_id}]"), 2)
 
         study = load_deterministic_study(DETERMINISTIC_STUDY).as_mapping()
         self.assertIn("fully retained performance-based", study["purpose"])
