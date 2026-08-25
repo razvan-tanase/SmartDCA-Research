@@ -448,7 +448,112 @@
     "tie_break": "lexicographic_price_sequence",
     "selected_attempt_id": "hostile-adaptive-timing-primary"
   },
+  "boundary_contracts": [
+    {
+      "contract_id": "constant-cash-unit-cancellation",
+      "fixture": "constant",
+      "source_check": "reproducibility/checks/check_arbitrary_horizon_accounting_verification.py",
+      "target": "episode-result",
+      "episode_id": "constant-primary",
+      "coverage": "0.75",
+      "corrected_mean_config": "identity-a0-b0",
+      "cost_scenario": "frictionless",
+      "comparison": "corrected_guarded_vs_dca",
+      "expected": {
+        "terminal_wealth_gap": "0",
+        "terminal_cash_gap": "500",
+        "terminal_unit_gap": "-5",
+        "identity_residual": "0"
+      }
+    },
+    {
+      "contract_id": "two-purchase-corrected-exact-gap",
+      "fixture": "two-purchase",
+      "source_check": "reproducibility/checks/check_two_purchase_dca_win_loss_boundary.py",
+      "target": "episode-result",
+      "episode_id": "two-purchase-exact-boundary",
+      "coverage": "0.5",
+      "corrected_mean_config": "identity-a0-b0",
+      "cost_scenario": "frictionless",
+      "comparison": "corrected_guarded_vs_dca",
+      "expected": {
+        "terminal_wealth_gap": "20.83333333333333333333333333333333333333333333333333333333"
+      }
+    },
+    {
+      "contract_id": "two-purchase-neutral-exact-gap",
+      "fixture": "two-purchase",
+      "source_check": "reproducibility/checks/check_two_purchase_dca_win_loss_boundary.py",
+      "target": "episode-result",
+      "episode_id": "two-purchase-exact-boundary",
+      "coverage": "0.5",
+      "corrected_mean_config": "identity-a0-b0",
+      "cost_scenario": "frictionless",
+      "comparison": "neutral_guarded_vs_dca",
+      "expected": {
+        "terminal_wealth_gap": "-31.25"
+      }
+    },
+    {
+      "contract_id": "three-purchase-diagonal-exact-gap",
+      "fixture": "three-purchase",
+      "source_check": "reproducibility/checks/check_three_purchase_corrected_mean_effect.py",
+      "target": "episode-result",
+      "episode_id": "three-purchase-exact-boundary",
+      "coverage": "0.5",
+      "corrected_mean_config": "identity-a0-b0",
+      "cost_scenario": "frictionless",
+      "comparison": "corrected_guarded_vs_dca",
+      "expected": {
+        "terminal_wealth_gap": "-10.416666666666666666666666666666666666666666666653125"
+      }
+    },
+    {
+      "contract_id": "single-valley-accounting-regression",
+      "fixture": "single-valley",
+      "source_check": "reproducibility/checks/check_weak_single_valley_falsification.py",
+      "target": "episode-result",
+      "episode_id": "strict-single-valley-primary",
+      "coverage": "0.5",
+      "corrected_mean_config": "identity-a0-b0",
+      "cost_scenario": "frictionless",
+      "comparison": "corrected_guarded_vs_dca",
+      "expected": {
+        "terminal_wealth_gap": "-321.25620111744056074939881473346048397157386540856775763889",
+        "identity_residual": "0"
+      }
+    },
+    {
+      "contract_id": "repeated-floor-exact-sequence",
+      "fixture": "repeated-floor-activation",
+      "source_check": "reproducibility/checks/check_arbitrary_horizon_accounting_verification.py",
+      "target": "policy-ledger",
+      "episode_id": "constant-five-repeated-floor",
+      "coverage": "0.5",
+      "corrected_mean_config": "identity-a0-b0",
+      "cost_scenario": "frictionless",
+      "policy": "corrected_guarded",
+      "expected": {
+        "guardrail_floors": ["500", "250", "0", "0", "0"]
+      }
+    },
+    {
+      "contract_id": "arbitrary-horizon-cash-unit-identity",
+      "fixture": "arbitrary-horizon",
+      "source_check": "reproducibility/checks/check_arbitrary_horizon_performance_boundary.py",
+      "target": "episode-result",
+      "episode_id": "hostile-adaptive-timing-primary",
+      "coverage": "0.75",
+      "corrected_mean_config": "identity-a0-b0",
+      "cost_scenario": "frictionless",
+      "comparison": "corrected_guarded_vs_dca",
+      "expected": {
+        "identity_residual": "0.000000000000000000000000000000000000000000000000000000002"
+      }
+    }
+  ],
   "confirmatory": false,
+  "seed": null,
   "deposit": "1000",
   "generator_version": "smartdca-deterministic-paths/1",
   "input_id": "deterministic-adversarial-recurring-investment",
@@ -482,7 +587,7 @@
   "study_id": "safety-adaptivity-deterministic-adversarial-v1",
   "version": "1",
   "title": "Deterministic synthetic and adversarial SmartDCA path study",
-  "purpose": "Non-confirmatory mechanism and boundary stress study using every saved attempt without performance-based selection.",
+  "purpose": "Non-confirmatory mechanism and boundary stress study using every saved attempt plus a declared, fully retained performance-based adversarial search.",
   "registered_protocol_id": "safety-adaptivity-v1",
   "attempt_policy": "Generate or reject every listed configuration before policy execution, retain every receipt, and execute every generated episode through the complete preregistered primary grid.",
   "limitations": "Finite deterministic paths expose mechanisms and implementation boundaries; they do not establish historical, stochastic, universal, or causal performance."

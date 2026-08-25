@@ -29,6 +29,7 @@ from reproducibility.empirical import (
 
 STUDY_ENGINE_VERSION = "smartdca-deterministic-study/1"
 GENERATOR_VERSION = "smartdca-deterministic-paths/1"
+SHARED_RUNNER_SOURCE = Path(__file__).with_name("empirical.py")
 
 
 def _canonical_json(value: Any) -> str:
@@ -43,6 +44,10 @@ def _canonical_json(value: Any) -> str:
 
 def _fingerprint(payload: bytes) -> str:
     return hashlib.sha256(payload).hexdigest()
+
+
+def _runner_source_sha256() -> str:
+    return _fingerprint(SHARED_RUNNER_SOURCE.read_bytes())
 
 
 def _require(condition: bool, code: str, field: str, message: str) -> None:
@@ -146,6 +151,7 @@ def _validate_study(document: dict[str, Any]) -> None:
         "input_version",
         "generator_version",
         "confirmatory",
+        "seed",
         "deposit",
         "start_date",
         "required_families",
@@ -171,6 +177,12 @@ def _validate_study(document: dict[str, Any]) -> None:
         "invalid_study_scope",
         "study.confirmatory",
         "deterministic study must be non-confirmatory",
+    )
+    _require(
+        document["seed"] is None,
+        "invalid_seed",
+        "study.seed",
+        "deterministic enumeration must record a null seed",
     )
     _require(
         _decimal(document["deposit"], "study.deposit") >= 0,
@@ -313,6 +325,135 @@ def _validate_study(document: dict[str, Any]) -> None:
             "unknown_selected_attempt",
             "study.adversarial_design_search.selected_attempt_id",
             "must identify a saved attempt",
+        )
+    contracts = document.get("boundary_contracts", [])
+    _require(
+        isinstance(contracts, list),
+        "invalid_type",
+        "study.boundary_contracts",
+        "must be a list",
+    )
+    contract_ids: list[str] = []
+    contract_fixtures: set[str] = set()
+    for index, contract in enumerate(contracts):
+        prefix = f"study.boundary_contracts[{index}]"
+        _require(
+            isinstance(contract, dict),
+            "invalid_type",
+            prefix,
+            "must be a mapping",
+        )
+        for field in (
+            "contract_id",
+            "fixture",
+            "source_check",
+            "target",
+            "episode_id",
+            "coverage",
+            "corrected_mean_config",
+            "cost_scenario",
+            "expected",
+        ):
+            _require(
+                field in contract,
+                "missing_field",
+                f"{prefix}.{field}",
+                "is required",
+            )
+        for field in (
+            "contract_id",
+            "fixture",
+            "source_check",
+            "target",
+            "episode_id",
+            "coverage",
+            "corrected_mean_config",
+            "cost_scenario",
+        ):
+            _require(
+                isinstance(contract[field], str) and bool(contract[field]),
+                "invalid_identifier",
+                f"{prefix}.{field}",
+                "must be a nonempty string",
+            )
+        _require(
+            contract["source_check"].startswith("reproducibility/checks/"),
+            "invalid_boundary_source",
+            f"{prefix}.source_check",
+            "must identify an executable repository check",
+        )
+        _require(
+            contract["fixture"] in document["required_boundary_fixtures"],
+            "unknown_boundary_fixture",
+            f"{prefix}.fixture",
+            "must name a required boundary fixture",
+        )
+        _require(
+            contract["episode_id"] in attempt_ids,
+            "unknown_boundary_episode",
+            f"{prefix}.episode_id",
+            "must identify a saved attempt",
+        )
+        _require(
+            contract["target"] in {"episode-result", "policy-ledger"},
+            "unsupported_boundary_target",
+            f"{prefix}.target",
+            "must be episode-result or policy-ledger",
+        )
+        expected = contract["expected"]
+        _require(
+            isinstance(expected, dict) and bool(expected),
+            "invalid_boundary_expectation",
+            f"{prefix}.expected",
+            "must be a nonempty mapping",
+        )
+        if contract["target"] == "episode-result":
+            _require(
+                isinstance(contract.get("comparison"), str)
+                and bool(contract["comparison"]),
+                "missing_field",
+                f"{prefix}.comparison",
+                "is required for an episode-result contract",
+            )
+            _require(
+                all(isinstance(value, str) for value in expected.values()),
+                "invalid_boundary_expectation",
+                f"{prefix}.expected",
+                "episode-result expected values must be strings",
+            )
+        else:
+            _require(
+                isinstance(contract.get("policy"), str)
+                and bool(contract["policy"]),
+                "missing_field",
+                f"{prefix}.policy",
+                "is required for a policy-ledger contract",
+            )
+            _require(
+                set(expected) == {"guardrail_floors"}
+                and isinstance(expected["guardrail_floors"], list)
+                and all(
+                    isinstance(value, str)
+                    for value in expected["guardrail_floors"]
+                ),
+                "invalid_boundary_expectation",
+                f"{prefix}.expected",
+                "policy-ledger contracts must declare string guardrail floors",
+            )
+        contract_ids.append(contract["contract_id"])
+        contract_fixtures.add(contract["fixture"])
+    _require(
+        len(contract_ids) == len(set(contract_ids)),
+        "duplicate_boundary_contract",
+        "study.boundary_contracts",
+        "contract_id values must be unique",
+    )
+    if contracts:
+        _require(
+            set(document["required_boundary_fixtures"]) <= contract_fixtures,
+            "missing_boundary_contract",
+            "study.boundary_contracts",
+            "every required boundary fixture must have an executable contract",
         )
 
 
@@ -566,6 +707,20 @@ def _predicate_receipt(
     }
 
 
+def _attempt_metadata(attempt: Mapping[str, Any]) -> dict[str, Any]:
+    return {
+        field: attempt[field]
+        for field in (
+            "attempt_id",
+            "family",
+            "predicate",
+            "parameters",
+            "boundary_fixtures",
+            "mechanisms",
+        )
+    }
+
+
 def _generate_attempt(
     attempt: Mapping[str, Any],
     *,
@@ -639,12 +794,7 @@ def _generate_attempt(
         },
     }
     attempt_receipt = {
-        "attempt_id": attempt["attempt_id"],
-        "family": attempt["family"],
-        "predicate": attempt["predicate"],
-        "parameters": parameters,
-        "boundary_fixtures": attempt["boundary_fixtures"],
-        "mechanisms": attempt["mechanisms"],
+        **_attempt_metadata(attempt),
         "status": "generated",
         "exclusion_reason": None,
         "predicate_status": receipt["status"],
@@ -710,6 +860,270 @@ def _write_mechanism_attribution(
                     "boundary_fixtures": "|".join(receipt["boundary_fixtures"]),
                 }
             )
+
+
+def _evaluate_boundary_contracts(
+    document: Mapping[str, Any],
+    runner: RunBundle,
+) -> tuple[dict[str, Any], ...]:
+    receipts: list[dict[str, Any]] = []
+    for contract in document.get("boundary_contracts", []):
+        common = (
+            ("episode_id", contract["episode_id"]),
+            ("coverage", contract["coverage"]),
+            ("corrected_mean_config", contract["corrected_mean_config"]),
+            ("cost_scenario", contract["cost_scenario"]),
+        )
+        if contract["target"] == "episode-result":
+            matches = [
+                row
+                for row in runner.episode_results
+                if all(row[field] == value for field, value in common)
+                and row["comparison"] == contract["comparison"]
+                and row["result_status"] == "included"
+            ]
+            _require(
+                len(matches) == 1,
+                "boundary_regression_missing",
+                f"study.boundary_contracts.{contract['contract_id']}",
+                "must identify exactly one included episode result",
+            )
+            result = matches[0]
+            _require(
+                all(field in result for field in contract["expected"]),
+                "unknown_boundary_metric",
+                f"study.boundary_contracts.{contract['contract_id']}.expected",
+                "must name emitted episode-result fields",
+            )
+            observed = {
+                field: result[field] for field in contract["expected"]
+            }
+        else:
+            matches = [
+                row
+                for row in runner.ledgers
+                if all(row[field] == value for field, value in common)
+                and row["policy"] == contract["policy"]
+            ]
+            _require(
+                len(matches) == 1,
+                "boundary_regression_missing",
+                f"study.boundary_contracts.{contract['contract_id']}",
+                "must identify exactly one policy ledger",
+            )
+            observed = {
+                "guardrail_floors": [
+                    step["guardrail_floor"] for step in matches[0]["steps"]
+                ]
+            }
+        _require(
+            observed == contract["expected"],
+            "boundary_regression_failed",
+            f"study.boundary_contracts.{contract['contract_id']}",
+            f"observed {observed!r}; expected {contract['expected']!r}",
+        )
+        receipts.append(
+            {
+                **contract,
+                "observed": observed,
+                "status": "passed",
+            }
+        )
+    return tuple(receipts)
+
+
+def _signed_percent(value: Any) -> str:
+    percentage = _decimal(value, "report.relative_terminal_wealth_gap") * 100
+    if percentage == 0:
+        return "0.000%"
+    return f"{percentage:+.3f}%"
+
+
+def _unsigned_percent(value: Any, places: int = 1) -> str:
+    percentage = _decimal(value, "report.rate") * 100
+    return f"{percentage:.{places}f}%"
+
+
+def _render_report_tables(
+    config_document: Mapping[str, Any],
+    study_document: Mapping[str, Any],
+    rows: tuple[Mapping[str, Any], ...],
+    receipts: tuple[Mapping[str, Any], ...],
+) -> str:
+    primary_config = config_document["corrected_mean"]["primary"][0]["config_id"]
+    primary_coverage = config_document["coverage"]["primary"]
+    featured_coverage = (
+        study_document.get("adversarial_design_search", {}).get("coverage")
+        or next(value for value in primary_coverage if value != "1")
+    )
+    generated_by_family = {
+        receipt["family"]: receipt
+        for receipt in receipts
+        if receipt["status"] == "generated"
+        and receipt["family"] in study_document["required_families"]
+    }
+
+    def select(
+        *,
+        episode_id: str | None = None,
+        coverage: str,
+        cost_scenario: str,
+        comparison: str,
+    ) -> list[Mapping[str, Any]]:
+        return [
+            row
+            for row in rows
+            if (episode_id is None or row["episode_id"] == episode_id)
+            and row["coverage"] == coverage
+            and row["corrected_mean_config"] == primary_config
+            and row["cost_scenario"] == cost_scenario
+            and row["comparison"] == comparison
+            and row["result_status"] == "included"
+        ]
+
+    lines = [
+        "### Primary family table",
+        "",
+        "| Family | Complete system: corrected vs DCA | Signal only: corrected vs neutral | Safety architecture: neutral vs DCA | Corrected cash drag | Corrected asset exposure | Floor activation |",
+        "|---|---:|---:|---:|---:|---:|---:|",
+    ]
+    for family in study_document["required_families"]:
+        receipt = generated_by_family[family]
+        episode_id = receipt["episode_id"]
+        complete = select(
+            episode_id=episode_id,
+            coverage=featured_coverage,
+            cost_scenario="frictionless",
+            comparison="corrected_guarded_vs_dca",
+        )
+        signal = select(
+            episode_id=episode_id,
+            coverage=featured_coverage,
+            cost_scenario="frictionless",
+            comparison="corrected_guarded_vs_neutral_guarded",
+        )
+        architecture = select(
+            episode_id=episode_id,
+            coverage=featured_coverage,
+            cost_scenario="frictionless",
+            comparison="neutral_guarded_vs_dca",
+        )
+        _require(
+            len(complete) == len(signal) == len(architecture) == 1,
+            "incomplete_report_table",
+            f"report.primary.{family}",
+            "must have one included row for every comparison",
+        )
+        left = complete[0]
+        lines.append(
+            "| "
+            + " | ".join(
+                (
+                    family.replace("-", " ").capitalize(),
+                    _signed_percent(complete[0]["relative_terminal_wealth_gap"]),
+                    _signed_percent(signal[0]["relative_terminal_wealth_gap"]),
+                    _signed_percent(
+                        architecture[0]["relative_terminal_wealth_gap"]
+                    ),
+                    _unsigned_percent(left["left_cash_drag"]),
+                    _unsigned_percent(left["left_asset_exposure"]),
+                    _unsigned_percent(
+                        left["left_guardrail_activation_frequency"]
+                    ),
+                )
+            )
+            + " |"
+        )
+
+    comparison_labels = {
+        "corrected_guarded_vs_dca": "Corrected vs DCA",
+        "corrected_guarded_vs_neutral_guarded": "Corrected vs neutral",
+        "neutral_guarded_vs_dca": "Neutral vs DCA",
+    }
+    comparison_order = tuple(comparison_labels)
+
+    def range_line(
+        group_rows: list[Mapping[str, Any]],
+    ) -> tuple[str, str, str]:
+        values = [
+            _decimal(
+                row["relative_terminal_wealth_gap"],
+                "report.relative_terminal_wealth_gap",
+            )
+            for row in group_rows
+        ]
+        _require(
+            bool(values),
+            "incomplete_report_table",
+            "report.range",
+            "must contain at least one included result",
+        )
+        counts = (
+            sum(value < 0 for value in values),
+            sum(value == 0 for value in values),
+            sum(value > 0 for value in values),
+        )
+        return (
+            _signed_percent(str(min(values))),
+            _signed_percent(str(max(values))),
+            " / ".join(str(value) for value in counts),
+        )
+
+    lines.extend(
+        (
+            "",
+            "### Coverage ranges across the fixed catalog",
+            "",
+            "| Coverage | Comparison | Minimum | Maximum | Loss / tie / win |",
+            "|---:|---|---:|---:|---:|",
+        )
+    )
+    for coverage in primary_coverage:
+        if coverage == "1":
+            continue
+        for comparison in comparison_order:
+            minimum, maximum, counts = range_line(
+                select(
+                    coverage=coverage,
+                    cost_scenario="frictionless",
+                    comparison=comparison,
+                )
+            )
+            lines.append(
+                f"| {coverage} | {comparison_labels[comparison]} | "
+                f"{minimum} | {maximum} | {counts} |"
+            )
+
+    cost_labels = {
+        "frictionless": "Frictionless",
+        "proportional-10bps": "Proportional 10 bps",
+        "fixed-1-usd": "Fixed USD 1",
+    }
+    lines.extend(
+        (
+            "",
+            f"### Cost ranges at coverage {featured_coverage}",
+            "",
+            "| Cost | Comparison | Minimum | Maximum | Loss / tie / win |",
+            "|---|---|---:|---:|---:|",
+        )
+    )
+    for cost in config_document["cost_scenarios"]:
+        cost_id = cost["cost_id"]
+        for comparison in comparison_order:
+            minimum, maximum, counts = range_line(
+                select(
+                    coverage=featured_coverage,
+                    cost_scenario=cost_id,
+                    comparison=comparison,
+                )
+            )
+            lines.append(
+                f"| {cost_labels.get(cost_id, cost_id)} | "
+                f"{comparison_labels[comparison]} | {minimum} | {maximum} | "
+                f"{counts} |"
+            )
+    return "\n".join(lines) + "\n"
 
 
 def _build_adversarial_search_input(
@@ -801,6 +1215,7 @@ def _build_adversarial_search_input(
         "version": document["input_version"],
         "kind": "synthetic",
         "confirmatory": False,
+        "seed": document["seed"],
         "generator_version": document["generator_version"],
         "study_spec_sha256": study_sha256,
         "adversarial_design_search": search,
@@ -829,6 +1244,7 @@ def _study_run_id(
         {
             "engine_version": STUDY_ENGINE_VERSION,
             "generator_sha256": _source_sha256(),
+            "runner_sha256": _runner_source_sha256(),
             "protocol_sha256": config.sha256,
             "study_sha256": study.sha256,
             "runner_input_sha256": runner_input.sha256,
@@ -876,12 +1292,7 @@ def run_deterministic_study(
         except ExperimentValidationError as error:
             receipts.append(
                 {
-                    "attempt_id": attempt["attempt_id"],
-                    "family": attempt["family"],
-                    "predicate": attempt["predicate"],
-                    "parameters": attempt["parameters"],
-                    "boundary_fixtures": attempt["boundary_fixtures"],
-                    "mechanisms": attempt["mechanisms"],
+                    **_attempt_metadata(attempt),
                     "status": "excluded",
                     "exclusion_reason": error.code,
                     "validation_field": error.field,
@@ -926,6 +1337,7 @@ def run_deterministic_study(
         "version": document["input_version"],
         "kind": "synthetic",
         "confirmatory": False,
+        "seed": document["seed"],
         "generator_version": document["generator_version"],
         "study_spec_sha256": study.sha256,
         "path_attempts": list(path_attempts),
@@ -973,6 +1385,12 @@ def run_deterministic_study(
         (temporary_directory / "runner-input.json").write_bytes(runner_input_payload)
         runner_stage = temporary_directory / "runner-stage"
         runner = run_experiment(config, runner_input, runner_stage)
+        _require(
+            runner.manifest["runner_sha256"] == _runner_source_sha256(),
+            "runner_source_drift",
+            "runner.manifest.runner_sha256",
+            "shared runner source changed after the study identity was derived",
+        )
         runner_directory = temporary_directory / "runner"
         os.replace(runner.output_directory, runner_directory)
         runner_stage.rmdir()
@@ -1018,6 +1436,13 @@ def run_deterministic_study(
                 config,
                 adversarial_search_input,
                 search_stage,
+            )
+            _require(
+                search_runner.manifest["runner_sha256"]
+                == _runner_source_sha256(),
+                "runner_source_drift",
+                "adversarial_search.runner.manifest.runner_sha256",
+                "shared runner source changed during adversarial search",
             )
             search_directory = temporary_directory / "adversarial-search-runner"
             os.replace(search_runner.output_directory, search_directory)
@@ -1101,6 +1526,7 @@ def run_deterministic_study(
                 ],
             }
         _write_jsonl(temporary_directory / "path-attempts.jsonl", path_attempts)
+        boundary_contracts = _evaluate_boundary_contracts(document, runner)
         boundary = {
             "required": document["required_boundary_fixtures"],
             "represented": sorted(generated_fixtures),
@@ -1115,13 +1541,14 @@ def run_deterministic_study(
                 }
                 for fixture in document["required_boundary_fixtures"]
             ],
+            "regression_contracts": list(boundary_contracts),
             "evidence_scope": "finite-regression-not-proof",
             "limitation": (
                 "These finite paths reconnect the empirical implementation to "
                 "accepted boundary results; they do not prove performance on "
                 "unobserved deterministic, stochastic, or historical paths."
             ),
-            "status": "passed",
+            "status": "passed" if boundary_contracts else "represented",
         }
         _write_json(temporary_directory / "boundary-fixtures.json", boundary)
         _write_mechanism_attribution(
@@ -1129,8 +1556,19 @@ def run_deterministic_study(
             runner.episode_results,
             path_attempts,
         )
+        (temporary_directory / "report-tables.md").write_text(
+            _render_report_tables(
+                config_document,
+                document,
+                runner.episode_results,
+                path_attempts,
+            ),
+            encoding="utf-8",
+            newline="\n",
+        )
         validation = {
             "status": "passed",
+            "seed": document["seed"],
             "attempted_path_count": len(path_attempts),
             "generated_path_count": len(episodes),
             "excluded_path_count": len(path_attempts) - len(episodes),
@@ -1139,6 +1577,7 @@ def run_deterministic_study(
             "generated_families": sorted(generated_families),
             "required_boundary_fixtures": document["required_boundary_fixtures"],
             "represented_boundary_fixtures": sorted(generated_fixtures),
+            "boundary_regression_contract_count": len(boundary_contracts),
             "shared_runner_validation": runner.validation,
             "adversarial_design_search": adversarial_search_manifest,
         }
@@ -1161,6 +1600,8 @@ def run_deterministic_study(
             "engine_version": STUDY_ENGINE_VERSION,
             "generator_version": GENERATOR_VERSION,
             "generator_sha256": _source_sha256(),
+            "runner_sha256": _runner_source_sha256(),
+            "seed": document["seed"],
             "protocol_sha256": config.sha256,
             "study_spec_sha256": study.sha256,
             "runner_input_sha256": runner_input.sha256,

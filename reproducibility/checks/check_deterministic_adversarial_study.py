@@ -25,6 +25,11 @@ DETERMINISTIC_STUDY = (
 )
 REPORT = ROOT / "reports" / "experiments" / "deterministic-adversarial-paths.md"
 WORKFLOW = ROOT / ".github" / "workflows" / "verification.yml"
+COMMITTED_RUN_ID = (
+    "smartdca-deterministic-v1-"
+    "50a96c24674ce7e03f1205463d2516faa907049d53cbf31dccf2477b3e8b90fb"
+)
+COMMITTED_RUN = ROOT / "reports" / "experiments" / "runs" / COMMITTED_RUN_ID
 
 
 def _one_constant_path_study() -> DeterministicStudy:
@@ -37,6 +42,7 @@ def _one_constant_path_study() -> DeterministicStudy:
             "input_version": "1",
             "generator_version": "smartdca-deterministic-paths/1",
             "confirmatory": False,
+            "seed": None,
             "deposit": "1000",
             "start_date": "2020-01-01",
             "required_families": ["constant"],
@@ -147,6 +153,7 @@ def _all_required_family_study() -> DeterministicStudy:
             "input_version": "1",
             "generator_version": "smartdca-deterministic-paths/1",
             "confirmatory": False,
+            "seed": None,
             "deposit": "1000",
             "start_date": "2020-01-01",
             "required_families": [family for family, *_ in paths],
@@ -154,63 +161,6 @@ def _all_required_family_study() -> DeterministicStudy:
             "attempts": attempts,
         }
     )
-
-
-def _boundary_connected_study() -> DeterministicStudy:
-    document = _all_required_family_study().as_mapping()
-    by_id = {attempt["attempt_id"]: attempt for attempt in document["attempts"]}
-    by_id["strict-single-valley-primary"]["boundary_fixtures"] = ["single-valley"]
-    by_id["hostile-adaptive-timing-primary"]["boundary_fixtures"] = [
-        "arbitrary-horizon"
-    ]
-    document["attempts"].extend(
-        [
-            {
-                "attempt_id": "two-purchase-exact-boundary",
-                "family": "exact-rational-regression",
-                "predicate": "monotone-rise",
-                "parameters": {
-                    "prices": ["1", "2"],
-                    "evaluation_price": "1.5",
-                },
-                "boundary_fixtures": ["two-purchase"],
-                "mechanisms": ["two-purchase-terminal-price-boundary"],
-            },
-            {
-                "attempt_id": "three-purchase-exact-boundary",
-                "family": "exact-rational-regression",
-                "predicate": "strict-single-peak",
-                "parameters": {
-                    "prices": ["1", "4", "2"],
-                    "evaluation_price": (
-                        "2.3333333333333333333333333333333333333333333333333"
-                    ),
-                },
-                "boundary_fixtures": ["three-purchase"],
-                "mechanisms": ["three-purchase-corrected-mean-boundary"],
-            },
-            {
-                "attempt_id": "constant-five-repeated-floor",
-                "family": "exact-rational-regression",
-                "predicate": "constant",
-                "parameters": {
-                    "prices": ["1", "1", "1", "1", "1"],
-                    "evaluation_price": "1",
-                },
-                "boundary_fixtures": ["repeated-floor-activation"],
-                "mechanisms": ["repeated-clipped-floor-activation"],
-            },
-        ]
-    )
-    document["required_boundary_fixtures"] = [
-        "constant",
-        "two-purchase",
-        "three-purchase",
-        "single-valley",
-        "repeated-floor-activation",
-        "arbitrary-horizon",
-    ]
-    return DeterministicStudy.from_mapping(document)
 
 
 class DeterministicStudyContractTest(unittest.TestCase):
@@ -238,6 +188,7 @@ class DeterministicStudyContractTest(unittest.TestCase):
                 "manifest.json",
                 "mechanism-attribution.csv",
                 "path-attempts.jsonl",
+                "report-tables.md",
                 "runner",
                 "runner-input.json",
                 "study-validation.json",
@@ -381,7 +332,7 @@ class DeterministicStudyContractTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             run = run_deterministic_study(
                 load_study_config(PROTOCOL),
-                _boundary_connected_study(),
+                load_deterministic_study(DETERMINISTIC_STUDY),
                 Path(directory),
             )
             boundary = json.loads(
@@ -403,6 +354,32 @@ class DeterministicStudyContractTest(unittest.TestCase):
             },
         )
         self.assertEqual(boundary["evidence_scope"], "finite-regression-not-proof")
+        contracts = boundary["regression_contracts"]
+        self.assertTrue(contracts)
+        self.assertTrue(all(row["status"] == "passed" for row in contracts))
+        self.assertEqual(
+            {row["fixture"] for row in contracts},
+            {
+                "constant",
+                "two-purchase",
+                "three-purchase",
+                "single-valley",
+                "repeated-floor-activation",
+                "arbitrary-horizon",
+            },
+        )
+        self.assertTrue(
+            all((ROOT / row["source_check"]).is_file() for row in contracts)
+        )
+        two_purchase = next(
+            row
+            for row in contracts
+            if row["contract_id"] == "two-purchase-corrected-exact-gap"
+        )
+        self.assertEqual(
+            two_purchase["observed"]["terminal_wealth_gap"],
+            "20.83333333333333333333333333333333333333333333333333333333",
+        )
         repeated_floor = next(
             ledger
             for ledger in run.runner.ledgers
@@ -415,6 +392,20 @@ class DeterministicStudyContractTest(unittest.TestCase):
             [step["guardrail_floor"] for step in repeated_floor["steps"]],
             ["500", "250", "0", "0", "0"],
         )
+
+    def test_outer_manifest_binds_shared_runner_source_and_seed(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            run = run_deterministic_study(
+                load_study_config(PROTOCOL),
+                _one_constant_path_study(),
+                Path(directory),
+            )
+
+        self.assertEqual(
+            run.manifest["runner_sha256"],
+            run.runner.manifest["runner_sha256"],
+        )
+        self.assertIsNone(run.manifest["seed"])
 
     def test_exact_study_bytes_and_artifacts_have_immutable_replay_identity(self) -> None:
         document = _one_constant_path_study().as_mapping()
@@ -523,7 +514,7 @@ class DeterministicStudyContractTest(unittest.TestCase):
         self.assertEqual(len(run.runner.episode_results), 648)
         self.assertEqual(run.manifest["generated_path_count"], 18)
         self.assertEqual(run.manifest["excluded_path_count"], 3)
-        self.assertEqual(len(run.manifest["artifacts"]), 21)
+        self.assertEqual(len(run.manifest["artifacts"]), 22)
         self.assertEqual(
             set(study.as_mapping()["required_boundary_fixtures"]),
             {
@@ -582,9 +573,7 @@ class DeterministicStudyContractTest(unittest.TestCase):
                 if path.is_file()
             }
 
-        committed_directory = (
-            ROOT / "reports" / "experiments" / "runs" / replay.study_run_id
-        )
+        committed_directory = ROOT / "reports" / "experiments" / "runs" / replay.study_run_id
         self.assertTrue(committed_directory.is_dir())
         committed_files = {
             path.relative_to(committed_directory).as_posix(): path.read_bytes()
@@ -622,10 +611,7 @@ class DeterministicStudyContractTest(unittest.TestCase):
 
     def test_report_joins_the_complete_run_and_bounds_its_claims(self) -> None:
         report = REPORT.read_text(encoding="utf-8")
-        self.assertIn(
-            "smartdca-deterministic-v1-defa1888a5880534f589483a1d0da2b46fdc3d83a533e5df182e62ebc7721629",
-            report,
-        )
+        self.assertIn(COMMITTED_RUN_ID, report)
         self.assertIn("21 attempted path configurations", report)
         self.assertIn("18 generated paths", report)
         self.assertIn("3 retained exclusions", report)
@@ -637,6 +623,21 @@ class DeterministicStudyContractTest(unittest.TestCase):
         self.assertIn("Safety architecture", report)
         self.assertIn("outside the current safety theorem", report)
         self.assertIn("cannot establish historical or stochastic performance", report)
+        self.assertIn("Seed: `none`", report)
+        self.assertIn("original_record: false", report)
+        self.assertIn("sources:", report)
+        generated_tables = (COMMITTED_RUN / "report-tables.md").read_text(
+            encoding="utf-8"
+        )
+        for section in generated_tables.strip().split("\n\n### "):
+            table = section[section.index("|") :].strip()
+            self.assertIn(table, report)
+        self.assertIn("`200.736` less cash", report)
+        self.assertIn("`136.684`", report)
+
+        study = load_deterministic_study(DETERMINISTIC_STUDY).as_mapping()
+        self.assertIn("fully retained performance-based", study["purpose"])
+        self.assertNotIn("without performance-based selection", study["purpose"])
 
     def test_repository_verification_gate_runs_the_deterministic_checkpoint(self) -> None:
         workflow = WORKFLOW.read_text(encoding="utf-8")
