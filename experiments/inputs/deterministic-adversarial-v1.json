@@ -1,0 +1,489 @@
+{
+  "attempts": [
+    {
+      "attempt_id": "constant-primary",
+      "boundary_fixtures": [
+        "constant"
+      ],
+      "family": "constant",
+      "mechanisms": [
+        "neutral-score",
+        "constant-price-wealth-identity"
+      ],
+      "parameters": {
+        "evaluation_price": "100",
+        "prices": [
+          "100",
+          "100",
+          "100",
+          "100"
+        ]
+      },
+      "predicate": "constant"
+    },
+    {
+      "attempt_id": "monotone-rise-primary",
+      "boundary_fixtures": [],
+      "family": "monotone-rise",
+      "mechanisms": [
+        "carried-cash-drag",
+        "deferred-exposure-penalty"
+      ],
+      "parameters": {
+        "evaluation_price": "150",
+        "prices": [
+          "80",
+          "90",
+          "105",
+          "120",
+          "140"
+        ]
+      },
+      "predicate": "monotone-rise"
+    },
+    {
+      "attempt_id": "monotone-decline-primary",
+      "boundary_fixtures": [],
+      "family": "monotone-decline",
+      "mechanisms": [
+        "later-purchase-price-benefit",
+        "terminal-downside"
+      ],
+      "parameters": {
+        "evaluation_price": "65",
+        "prices": [
+          "140",
+          "125",
+          "110",
+          "90",
+          "70"
+        ]
+      },
+      "predicate": "monotone-decline"
+    },
+    {
+      "attempt_id": "weak-single-valley-primary",
+      "boundary_fixtures": [],
+      "family": "weak-single-valley",
+      "mechanisms": [
+        "weak-valley-score-direction",
+        "flat-valley-boundary"
+      ],
+      "parameters": {
+        "evaluation_price": "115",
+        "prices": [
+          "120",
+          "100",
+          "100",
+          "80",
+          "80",
+          "95",
+          "110"
+        ]
+      },
+      "predicate": "weak-single-valley"
+    },
+    {
+      "attempt_id": "strict-single-valley-primary",
+      "boundary_fixtures": [
+        "single-valley"
+      ],
+      "family": "strict-single-valley",
+      "mechanisms": [
+        "strict-valley-score-direction",
+        "completed-recovery"
+      ],
+      "parameters": {
+        "evaluation_price": "130",
+        "prices": [
+          "130",
+          "105",
+          "80",
+          "60",
+          "75",
+          "100",
+          "125"
+        ]
+      },
+      "predicate": "strict-single-valley"
+    },
+    {
+      "attempt_id": "incomplete-recovery-primary",
+      "boundary_fixtures": [],
+      "family": "incomplete-recovery",
+      "mechanisms": [
+        "incomplete-recovery",
+        "cash-unit-attribution"
+      ],
+      "parameters": {
+        "evaluation_price": "100",
+        "prices": [
+          "120",
+          "90",
+          "60",
+          "75",
+          "95"
+        ]
+      },
+      "predicate": "incomplete-recovery"
+    },
+    {
+      "attempt_id": "completed-recovery-primary",
+      "boundary_fixtures": [],
+      "family": "completed-recovery",
+      "mechanisms": [
+        "completed-recovery",
+        "cash-unit-attribution"
+      ],
+      "parameters": {
+        "evaluation_price": "125",
+        "prices": [
+          "120",
+          "90",
+          "60",
+          "95",
+          "120"
+        ]
+      },
+      "predicate": "completed-recovery"
+    },
+    {
+      "attempt_id": "multiple-valleys-primary",
+      "boundary_fixtures": [],
+      "family": "multiple-valleys",
+      "mechanisms": [
+        "repeated-score-reversal",
+        "multiple-local-minima"
+      ],
+      "parameters": {
+        "evaluation_price": "100",
+        "minimum_valley_count": 2,
+        "prices": [
+          "100",
+          "70",
+          "95",
+          "60",
+          "90",
+          "65",
+          "105"
+        ]
+      },
+      "predicate": "multiple-valleys"
+    },
+    {
+      "attempt_id": "crash-primary",
+      "boundary_fixtures": [],
+      "family": "crash",
+      "mechanisms": [
+        "crash-downside",
+        "guardrail-floor-activation"
+      ],
+      "parameters": {
+        "evaluation_price": "62",
+        "maximum_peak_fraction": "0.5",
+        "prices": [
+          "120",
+          "118",
+          "115",
+          "55",
+          "58",
+          "60"
+        ]
+      },
+      "predicate": "crash"
+    },
+    {
+      "attempt_id": "sudden-rebound-primary",
+      "boundary_fixtures": [],
+      "family": "sudden-rebound",
+      "mechanisms": [
+        "rebound-missed-exposure",
+        "cash-drag"
+      ],
+      "parameters": {
+        "evaluation_price": "115",
+        "minimum_rebound_ratio": "1.5",
+        "prices": [
+          "100",
+          "95",
+          "55",
+          "110",
+          "112"
+        ]
+      },
+      "predicate": "sudden-rebound"
+    },
+    {
+      "attempt_id": "prolonged-drawdown-primary",
+      "boundary_fixtures": [],
+      "family": "prolonged-drawdown",
+      "mechanisms": [
+        "sustained-low-price-exposure",
+        "carried-cash"
+      ],
+      "parameters": {
+        "evaluation_price": "90",
+        "minimum_periods_below_peak": 6,
+        "prices": [
+          "120",
+          "100",
+          "85",
+          "80",
+          "78",
+          "82",
+          "88"
+        ]
+      },
+      "predicate": "prolonged-drawdown"
+    },
+    {
+      "attempt_id": "flat-segments-primary",
+      "boundary_fixtures": [],
+      "family": "flat-segments",
+      "mechanisms": [
+        "neutral-score-segments",
+        "floor-feedback"
+      ],
+      "parameters": {
+        "evaluation_price": "100",
+        "minimum_flat_run": 2,
+        "prices": [
+          "100",
+          "100",
+          "100",
+          "80",
+          "80",
+          "95"
+        ]
+      },
+      "predicate": "flat-segments"
+    },
+    {
+      "attempt_id": "hostile-carried-cash-primary",
+      "boundary_fixtures": [],
+      "family": "hostile-carried-cash",
+      "mechanisms": [
+        "strict-rise-with-high-evaluation",
+        "carried-cash-hostility"
+      ],
+      "parameters": {
+        "evaluation_price": "150",
+        "prices": [
+          "80",
+          "90",
+          "100",
+          "115",
+          "130"
+        ]
+      },
+      "predicate": "hostile-carried-cash"
+    },
+    {
+      "attempt_id": "hostile-adaptive-timing-primary",
+      "boundary_fixtures": [
+        "arbitrary-horizon"
+      ],
+      "family": "hostile-adaptive-timing",
+      "mechanisms": [
+        "alternating-signal-whipsaw",
+        "evaluation-below-all-purchases"
+      ],
+      "parameters": {
+        "evaluation_price": "30",
+        "minimum_direction_changes": 4,
+        "prices": [
+          "150",
+          "100",
+          "150",
+          "100",
+          "150",
+          "60"
+        ]
+      },
+      "predicate": "hostile-adaptive-timing"
+    },
+    {
+      "attempt_id": "hostile-adaptive-timing-design-iteration",
+      "boundary_fixtures": [],
+      "family": "adversarial-design-iteration",
+      "mechanisms": [
+        "retained-preliminary-whipsaw",
+        "evaluation-below-all-purchases"
+      ],
+      "parameters": {
+        "evaluation_price": "30",
+        "minimum_direction_changes": 4,
+        "prices": [
+          "100",
+          "60",
+          "110",
+          "50",
+          "100",
+          "40"
+        ]
+      },
+      "predicate": "hostile-adaptive-timing"
+    },
+    {
+      "attempt_id": "two-purchase-exact-boundary",
+      "boundary_fixtures": [
+        "two-purchase"
+      ],
+      "family": "exact-rational-regression",
+      "mechanisms": [
+        "two-purchase-terminal-price-boundary"
+      ],
+      "parameters": {
+        "evaluation_price": "1.5",
+        "prices": [
+          "1",
+          "2"
+        ]
+      },
+      "predicate": "monotone-rise"
+    },
+    {
+      "attempt_id": "three-purchase-exact-boundary",
+      "boundary_fixtures": [
+        "three-purchase"
+      ],
+      "family": "exact-rational-regression",
+      "mechanisms": [
+        "three-purchase-corrected-mean-boundary"
+      ],
+      "parameters": {
+        "evaluation_price": "2.3333333333333333333333333333333333333333333333333",
+        "prices": [
+          "1",
+          "4",
+          "2"
+        ]
+      },
+      "predicate": "strict-single-peak"
+    },
+    {
+      "attempt_id": "constant-five-repeated-floor",
+      "boundary_fixtures": [
+        "repeated-floor-activation"
+      ],
+      "family": "exact-rational-regression",
+      "mechanisms": [
+        "repeated-clipped-floor-activation"
+      ],
+      "parameters": {
+        "evaluation_price": "1",
+        "prices": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      },
+      "predicate": "constant"
+    },
+    {
+      "attempt_id": "rejected-predicate-mismatch",
+      "family": "validation-fixture",
+      "predicate": "monotone-rise",
+      "parameters": {
+        "prices": [
+          "100",
+          "90"
+        ],
+        "evaluation_price": "100"
+      },
+      "boundary_fixtures": [],
+      "mechanisms": [
+        "predicate-validation"
+      ]
+    },
+    {
+      "attempt_id": "rejected-nonpositive-price",
+      "family": "validation-fixture",
+      "predicate": "constant",
+      "parameters": {
+        "prices": [
+          "100",
+          "0"
+        ],
+        "evaluation_price": "100"
+      },
+      "boundary_fixtures": [],
+      "mechanisms": [
+        "price-validation"
+      ]
+    },
+    {
+      "attempt_id": "rejected-missing-evaluation",
+      "family": "validation-fixture",
+      "predicate": "constant",
+      "parameters": {
+        "prices": [
+          "100",
+          "100"
+        ]
+      },
+      "boundary_fixtures": [],
+      "mechanisms": [
+        "parameter-validation"
+      ]
+    }
+  ],
+  "adversarial_design_search": {
+    "search_id": "hostile-adaptive-timing-grid-v1",
+    "price_grid": [
+      "60",
+      "100",
+      "150"
+    ],
+    "purchase_count": 6,
+    "evaluation_price": "30",
+    "minimum_direction_changes": 4,
+    "coverage": "0.75",
+    "corrected_mean_config": "identity-a0-b0",
+    "cost_scenario": "frictionless",
+    "comparison": "corrected_guarded_vs_neutral_guarded",
+    "objective": "minimize_relative_terminal_wealth_gap",
+    "tie_break": "lexicographic_price_sequence",
+    "selected_attempt_id": "hostile-adaptive-timing-primary"
+  },
+  "confirmatory": false,
+  "deposit": "1000",
+  "generator_version": "smartdca-deterministic-paths/1",
+  "input_id": "deterministic-adversarial-recurring-investment",
+  "input_version": "1",
+  "required_boundary_fixtures": [
+    "constant",
+    "two-purchase",
+    "three-purchase",
+    "single-valley",
+    "repeated-floor-activation",
+    "arbitrary-horizon"
+  ],
+  "required_families": [
+    "constant",
+    "monotone-rise",
+    "monotone-decline",
+    "weak-single-valley",
+    "strict-single-valley",
+    "incomplete-recovery",
+    "completed-recovery",
+    "multiple-valleys",
+    "crash",
+    "sudden-rebound",
+    "prolonged-drawdown",
+    "flat-segments",
+    "hostile-carried-cash",
+    "hostile-adaptive-timing"
+  ],
+  "schema_version": "smartdca-deterministic-study/1",
+  "start_date": "2020-01-01",
+  "study_id": "safety-adaptivity-deterministic-adversarial-v1",
+  "version": "1",
+  "title": "Deterministic synthetic and adversarial SmartDCA path study",
+  "purpose": "Non-confirmatory mechanism and boundary stress study using every saved attempt without performance-based selection.",
+  "registered_protocol_id": "safety-adaptivity-v1",
+  "attempt_policy": "Generate or reject every listed configuration before policy execution, retain every receipt, and execute every generated episode through the complete preregistered primary grid.",
+  "limitations": "Finite deterministic paths expose mechanisms and implementation boundaries; they do not establish historical, stochastic, universal, or causal performance."
+}

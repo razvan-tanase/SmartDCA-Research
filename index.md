@@ -94,6 +94,7 @@ authoritative metadata.
 ### experiment-report
 
 - [Canonical synthetic safety-adaptivity run](reports/experiments/canonical-synthetic-run.md) — Deterministic non-confirmatory end-to-end run of the frozen three-policy empirical protocol, including cost routes and machine-checkable validation receipts. — type: experiment-report; status: draft; trust: independently reviewed synthetic seam 2026-08-25; provenance: frozen protocol, versioned synthetic input, deterministic run bundle, and executable checks; stable promotion awaits the registered historical-slice review
+- [Deterministic synthetic and adversarial path evaluation](reports/experiments/deterministic-adversarial-paths.md) — Reproducible three-policy evidence across deterministic boundary, stress, and deliberately hostile price paths. — type: experiment-report; status: draft; trust: executable deterministic seam pending independent review; provenance: frozen protocol, immutable path study, deterministic run bundle, and executable checks
 
 ## Operational
 

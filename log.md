@@ -8,6 +8,8 @@ the newest applicable group. The complete concept inventory is [`index.md`](inde
 
 ## 2026-08-25
 
+- 2026-08-25T10:29:21Z | Creation | Execute the immutable deterministic and adversarial path study, retaining 21 saved attempts plus all 729 declared adversarial-search rows and complete three-policy artifacts for every eligible path | [study](experiments/inputs/deterministic-adversarial-v1.json), [manifest](reports/experiments/runs/smartdca-deterministic-v1-defa1888a5880534f589483a1d0da2b46fdc3d83a533e5df182e62ebc7721629/manifest.json), [report](reports/experiments/deterministic-adversarial-paths.md), [runner](reproducibility/deterministic_study.py), [check](reproducibility/checks/check_deterministic_adversarial_study.py), [index](index.md)
+
 - 2026-08-25T09:54:11Z | Claim | Claim the deterministic synthetic and adversarial path ticket after confirming its canonical-run dependency is resolved | [ticket](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md), [effort map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md)
 
 - 2026-08-25T09:20:23Z | Resolution | Resolve the empirical protocol and canonical-run ticket after final review, expose tickets 02, 03, and 04 as open unblocked unclaimed frontiers, and keep the experiment report draft pending ticket 04's registered historical-slice reproduction | [ticket](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md), [effort map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md), [master map](.scratch/smartdca/map.md), [report](reports/experiments/canonical-synthetic-run.md), [overview](README.md), [index](index.md)
