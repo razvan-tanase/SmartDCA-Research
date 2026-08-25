@@ -8,8 +8,8 @@ status: stable
 original_record: true
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T09:17:46Z
-generation_run: urn:uuid:84d83c43-e3fa-4d94-9a48-16450f73a7c2
+  at: 2026-08-25T09:54:11Z
+generation_run: urn:uuid:a0c58f08-1ce1-4abb-91fa-1d2e8eb43429
 verified:
   - by: human:github:razvan-tanase
     at: 2026-08-25T07:38:45Z
@@ -41,7 +41,7 @@ project-wide scientific context lives in the
 | Ticket | Purpose | Status | Blocked by |
 |---|---|---|---|
 | [01](issues/01-preregister-protocol-establish-canonical-run.md) | Freeze the protocol and establish one complete non-confirmatory empirical run. | resolved | — |
-| [02](issues/02-evaluate-deterministic-adversarial-paths.md) | Evaluate deterministic synthetic and adversarial path families. | open | — |
+| [02](issues/02-evaluate-deterministic-adversarial-paths.md) | Evaluate deterministic synthetic and adversarial path families. | claimed | — |
 | [03](issues/03-evaluate-seeded-stochastic-families.md) | Evaluate seeded stochastic path families. | open | — |
 | [04](issues/04-establish-historical-data-episode-seam.md) | Establish fingerprinted historical inputs and rolling episodes without opening confirmatory outcomes. | open | — |
 | [05](issues/05-run-confirmatory-historical-evaluation.md) | Execute the frozen rolling S&P 500 and Bitcoin evaluation. | open | 04 |
@@ -52,6 +52,8 @@ project-wide scientific context lives in the
 
 [Preregister the empirical protocol and establish one canonical run](issues/01-preregister-protocol-establish-canonical-run.md)
 is resolved after Standards, specification, and independent empirical review.
-Tickets 02, 03, and 04 are open, unblocked, and unclaimed; ticket 05 still needs
-the historical-data seam, while synthesis and publication remain blocked until
-their full evidence dependencies resolve.
+[Evaluate deterministic synthetic and adversarial paths](issues/02-evaluate-deterministic-adversarial-paths.md)
+is claimed on `agent/evaluate-deterministic-adversarial-paths`. Tickets 03 and
+04 remain open and unclaimed; ticket 05 still needs the historical-data seam,
+while synthesis and publication remain blocked until their full evidence
+dependencies resolve.
