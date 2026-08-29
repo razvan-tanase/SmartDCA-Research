@@ -10,8 +10,8 @@ ticket_type: task
 ticket_status: claimed
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-29T15:49:48Z
-generation_run: urn:uuid:aba7ab36-95f8-4208-a165-ddb9cd05ae6b
+  at: 2026-08-29T19:42:21Z
+generation_run: urn:uuid:65412e66-26ac-4ad7-b16d-edc921ec3e88
 ---
 # 03 — Evaluate seeded stochastic path families
 
@@ -55,6 +55,28 @@ failures, and a bounded report without treating simulation as a universal proof.
 - Claimed on `main` after confirming ticket 01 is resolved and no other ticket
   is claimed. The approved complete-run seam and frozen policy grid govern the
   implementation.
+- The review-corrected durable run is
+  `smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25`.
+  An independent clean replay regenerated every substantive artifact byte for
+  byte in 1,568 seconds, and the complete 14-command scientific matrix passed;
+  its final stochastic module ran 39 tests in 1,652.268 seconds.
+- Specification re-review passed without a finding. Standards re-review found
+  no documented-standard violation. Its two remaining nonblocking architecture
+  judgments concern low-level helpers shared conceptually with
+  `deterministic_study.py` and the 2,656-line size of `stochastic_study.py`.
+  Extracting the former would alter the already reviewed deterministic source
+  identity; splitting the latter would alter this run's bound source identity
+  and require another complete regeneration and replay. Both are deferred as
+  separate architecture work rather than expanding this ticket.
+- Resolution is blocked at the repository LLM-Wiki publish gate. All 32
+  validator fixtures pass under the repository-available CPython 3.11, but
+  strict validation reports 47 base findings and 273 profile findings. Every
+  direct finding belongs to the pre-existing `.agents/**/*.md` corpus added by
+  baseline commit `ea7cca3`; the sole `index.md` finding is the corresponding
+  missing-path inventory. No ticket-owned path adds a validator finding.
+  Clearing this requires a separate versioned profile/path decision or a
+  repository-corpus decision, so this ticket remains claimed and unresolved;
+  no significance gate is entered and ticket 04 remains unclaimed.
 
 ## Answer
 
