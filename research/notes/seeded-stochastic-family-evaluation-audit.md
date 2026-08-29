@@ -5,11 +5,20 @@ title: "Audit of the seeded stochastic family evaluation"
 description: "Generator, completeness, reconciliation, accounting, and scope audit for the controlled seeded stochastic SmartDCA study."
 knowledge_role: evidence
 status: draft
-original_record: true
+original_record: false
+sources:
+  - id: effort-spec
+    title: "Evaluate the safety-adaptivity trade-off of guarded SmartDCA"
+    resource: .scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec
+    source_kind: internal
+  - id: run-evidence
+    title: "Saved stochastic design, versioned runner sources, and immutable run bundle"
+    resource: "experiments/inputs/seeded-stochastic-families-v1.json; reproducibility/stochastic_study.py; reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/manifest.json"
+    source_kind: scope
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-29T17:05:40Z
-generation_run: urn:uuid:a06c30fa-7815-45d4-86da-84f01ac332cc
+  at: 2026-08-29T18:35:34Z
+generation_run: urn:uuid:ea4ac886-60a2-4dfd-a510-8c7176cff04d
 ---
 # Audit of the seeded stochastic family evaluation
 
@@ -21,8 +30,9 @@ It checks identity, generator scope, grid completeness, failure retention,
 policy accounting, aggregate reconciliation, and interpretive limits. The
 outcomes remain controlled synthetic sensitivity evidence, not historical
 evidence and not a stochastic performance theorem.
+[^effort-spec]
 
-The immutable inputs and code identities are:
+The immutable inputs and code identities are: [^run-evidence]
 
 - frozen protocol SHA-256
   `a508b4f064dcb3930f137e7754180ca0ec43749680278acb5b42fe2345c8d6e4`;
@@ -31,14 +41,14 @@ The immutable inputs and code identities are:
 - generated shared-runner input SHA-256
   `30873d39a2ded4de44143b1fcf59c879b90cfede97193b89add951bf69ea4bb6`;
 - stochastic generator/source SHA-256
-  `4c0ca98ee52de514b6d56a795e1ea0e35766162847d29556fcbd2fc4d5e15ffa`;
+  `af4484cd2774a7e31394a4f17aaf533f9e9d759037f788d59ce84d0c2412d41e`;
 - shared empirical-runner SHA-256
   `7fd480fd07a80a914bc02aa133a59d975fc2f756c7bc75de052771c1ff256fee`;
   and
 - CPython `3.12.14`, with no third-party dependency.
 
 Together they identify
-[`smartdca-stochastic-v1-73994b28bd930d35548d60497921065f5a6320068a2f371374238587a6faf065`](../../reports/experiments/runs/smartdca-stochastic-v1-73994b28bd930d35548d60497921065f5a6320068a2f371374238587a6faf065/manifest.json).
+[`smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25`](../../reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/manifest.json).
 
 ## Generator contract
 
@@ -75,10 +85,13 @@ The declared product is ten generator configurations, three seeds, and three
 horizons: 90 path attempts. All 90 generated successfully. No generator,
 configuration, input-validation, numerical, policy-runner, or comparison
 exclusion occurred in the durable run. The
-[attempt ledger](../../reports/experiments/runs/smartdca-stochastic-v1-73994b28bd930d35548d60497921065f5a6320068a2f371374238587a6faf065/path-attempts.jsonl)
-still records a typed status and exclusion fields for every attempt; the
-executable contract separately exercises and retains a numerical generator
-failure rather than assuming the zero count.
+[attempt ledger](../../reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/path-attempts.jsonl)
+records a typed status and exclusion fields for every attempt. Focused contract
+checks separately force and retain a numerical generator failure, an invalid
+saved configuration, and a runner-boundary failure rather than assuming the
+durable run's zero counts. Pre-execution and runner failures leave immutable
+failure receipts with declared, attempted, generated, included, and excluded
+sample counts; generated path attempts are retained when available.
 
 Each generated episode executes four primary coverage levels, the one primary
 corrected-mean configuration, three costs, and three policies. That produces
@@ -101,14 +114,17 @@ the 2,160 cost-adjusted ledgers are labeled
 `outside-current-safety-theorem`.
 
 Study aggregates are recomputed from the serialized episode rows after the
-shared runner has finished. The independent route reconciles 27 fields in each
-of 1,080 cells against the serialized shared-runner aggregates, with zero
-mismatches. It also adds the retained generator-attempt denominator,
-exclusion reasons, complete relative-gap distribution, worst observed relative
+shared runner has finished. A second route independently regroups those rows
+and the attempt ledger, then reconciles every one of the 46 study fields in
+all 1,080 cells and all 39 fields in the corresponding shared-runner cells.
+That covers 49,684 study values and 42,124 runner values after their four
+respective top-level counts, including attempted/generated/excluded counts,
+exclusion reasons, complete relative-gap distributions, downside and worst
 shortfall, cash and unit contributions, and identity residual. The
-[reconciliation receipt](../../reports/experiments/runs/smartdca-stochastic-v1-73994b28bd930d35548d60497921065f5a6320068a2f371374238587a6faf065/aggregate-reconciliation.json)
-is therefore an independently implemented consistency check, not a copy of
-the runner aggregate object.
+[reconciliation receipt](../../reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/aggregate-reconciliation.json)
+records zero mismatches. Focused corruption probes cover each previously
+omitted category, so the receipt is an independently implemented consistency
+check rather than a copy of either aggregate object.
 
 ## Interpretation audit
 
@@ -150,3 +166,6 @@ are byte-identical across the declared CPython 3.12 runtime. The outer manifest
 retains the installed patch version as an environment receipt. This note stays
 draft until the ticket review is recorded; the experiment report also remains
 draft under the effort-wide historical-slice promotion gate.
+
+[^effort-spec]: Source join: [approved empirical effort specification](../../.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec.md).
+[^run-evidence]: Source join: the saved study, current generator and orchestration source, and the immutable run manifest named in `sources`.

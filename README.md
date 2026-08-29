@@ -55,9 +55,10 @@ confirmatory design is frozen before historical outcome access, and the
 deterministic three-policy runner reproduces its canonical synthetic bundle
 byte for byte. [Ticket 02's deterministic and adversarial study](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md)
 is also resolved after Standards, specification, and independent empirical
-replay. Tickets 03 and 04 are open, unblocked, and unclaimed pending the user
-significance gate; both empirical reports remain draft until ticket 04 supplies
-the registered historical-slice reproduction.
+replay. [Ticket 03's seeded stochastic study](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md)
+is claimed with its review-corrected durable run under final verification;
+ticket 04 remains open and unclaimed. The synthetic empirical reports remain
+draft until the registered historical-slice reproduction is completed.
 
 The authoritative project state is the [Wayfinder map](.scratch/smartdca/map.md). The complete inventory of every knowledge concept is the root [index](index.md).
 

@@ -13,6 +13,7 @@ import platform
 import random
 import sys
 import tempfile
+from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import date
 from decimal import Decimal, localcontext
@@ -34,15 +35,6 @@ STUDY_ENGINE_VERSION = "smartdca-stochastic-study/1"
 GENERATOR_VERSION = "smartdca-stochastic-paths/1"
 RNG_CONTRACT = "CPython random.Random MT19937 with random() and Box-Muller normals"
 SHARED_RUNNER_SOURCE = Path(__file__).with_name("empirical.py")
-SUPPORTED_FAMILIES = frozenset(
-    {
-        "trend",
-        "mean_reversion",
-        "stochastic_volatility",
-        "regime_switching",
-        "jump_diffusion",
-    }
-)
 
 
 def _canonical_json(value: Any) -> str:
@@ -199,6 +191,286 @@ def _quantile(values: list[Decimal], probability: Decimal) -> Decimal:
     return ordered[lower] + fraction * (ordered[upper] - ordered[lower])
 
 
+def _require_parameter_set(
+    parameters: Mapping[str, Any], expected: set[str], field: str
+) -> None:
+    _require(
+        set(parameters) == expected,
+        "invalid_parameter_set",
+        f"{field}.parameters",
+        f"must contain exactly {sorted(expected)}",
+    )
+
+
+def _validate_trend_parameters(
+    parameters: Mapping[str, Any], field: str
+) -> None:
+    _require_parameter_set(
+        parameters,
+        {"start_price", "annual_drift", "annual_volatility"},
+        field,
+    )
+    start = _decimal(parameters["start_price"], f"{field}.parameters.start_price")
+    drift = _decimal(parameters["annual_drift"], f"{field}.parameters.annual_drift")
+    volatility = _decimal(
+        parameters["annual_volatility"], f"{field}.parameters.annual_volatility"
+    )
+    _require(
+        start > 0,
+        "invalid_parameter",
+        f"{field}.parameters.start_price",
+        "must be positive",
+    )
+    _require(
+        Decimal("-0.25") <= drift <= Decimal("0.25"),
+        "invalid_parameter",
+        f"{field}.parameters.annual_drift",
+        "must be between -0.25 and 0.25",
+    )
+    _require(
+        Decimal("0.01") <= volatility <= Decimal("0.8"),
+        "invalid_parameter",
+        f"{field}.parameters.annual_volatility",
+        "must be between 0.01 and 0.8",
+    )
+
+
+def _validate_mean_reversion_parameters(
+    parameters: Mapping[str, Any], field: str
+) -> None:
+    _require_parameter_set(
+        parameters,
+        {
+            "start_price",
+            "long_run_price",
+            "half_life_months",
+            "stationary_log_volatility",
+        },
+        field,
+    )
+    start = _decimal(parameters["start_price"], f"{field}.parameters.start_price")
+    long_run = _decimal(
+        parameters["long_run_price"], f"{field}.parameters.long_run_price"
+    )
+    half_life = _decimal(
+        parameters["half_life_months"], f"{field}.parameters.half_life_months"
+    )
+    volatility = _decimal(
+        parameters["stationary_log_volatility"],
+        f"{field}.parameters.stationary_log_volatility",
+    )
+    _require(
+        start > 0 and long_run > 0,
+        "invalid_parameter",
+        f"{field}.parameters",
+        "start and long-run prices must be positive",
+    )
+    _require(
+        Decimal("1") <= half_life <= Decimal("120"),
+        "invalid_parameter",
+        f"{field}.parameters.half_life_months",
+        "must be between 1 and 120 months",
+    )
+    _require(
+        Decimal("0.01") <= volatility <= Decimal("1"),
+        "invalid_parameter",
+        f"{field}.parameters.stationary_log_volatility",
+        "must be between 0.01 and 1",
+    )
+
+
+def _validate_stochastic_volatility_parameters(
+    parameters: Mapping[str, Any], field: str
+) -> None:
+    _require_parameter_set(
+        parameters,
+        {
+            "start_price",
+            "annual_drift",
+            "long_run_annual_volatility",
+            "volatility_persistence",
+            "log_volatility_of_volatility",
+        },
+        field,
+    )
+    start = _decimal(parameters["start_price"], f"{field}.parameters.start_price")
+    drift = _decimal(parameters["annual_drift"], f"{field}.parameters.annual_drift")
+    volatility = _decimal(
+        parameters["long_run_annual_volatility"],
+        f"{field}.parameters.long_run_annual_volatility",
+    )
+    persistence = _decimal(
+        parameters["volatility_persistence"],
+        f"{field}.parameters.volatility_persistence",
+    )
+    volatility_of_volatility = _decimal(
+        parameters["log_volatility_of_volatility"],
+        f"{field}.parameters.log_volatility_of_volatility",
+    )
+    _require(
+        start > 0,
+        "invalid_parameter",
+        f"{field}.parameters.start_price",
+        "must be positive",
+    )
+    _require(
+        Decimal("-0.25") <= drift <= Decimal("0.25"),
+        "invalid_parameter",
+        f"{field}.parameters.annual_drift",
+        "must be between -0.25 and 0.25",
+    )
+    _require(
+        Decimal("0.01") <= volatility <= Decimal("0.8"),
+        "invalid_parameter",
+        f"{field}.parameters.long_run_annual_volatility",
+        "must be between 0.01 and 0.8",
+    )
+    _require(
+        Decimal("0") <= persistence < Decimal("0.999"),
+        "invalid_parameter",
+        f"{field}.parameters.volatility_persistence",
+        "must be at least 0 and below 0.999",
+    )
+    _require(
+        Decimal("0") <= volatility_of_volatility <= Decimal("1"),
+        "invalid_parameter",
+        f"{field}.parameters.log_volatility_of_volatility",
+        "must be between 0 and 1",
+    )
+
+
+def _validate_regime_switching_parameters(
+    parameters: Mapping[str, Any], field: str
+) -> None:
+    _require_parameter_set(
+        parameters,
+        {
+            "start_price",
+            "initial_regime",
+            "bull_annual_drift",
+            "bull_annual_volatility",
+            "bull_stay_probability",
+            "bear_annual_drift",
+            "bear_annual_volatility",
+            "bear_stay_probability",
+        },
+        field,
+    )
+    _require(
+        parameters["initial_regime"] in {"bull", "bear"},
+        "invalid_parameter",
+        f"{field}.parameters.initial_regime",
+        "must be bull or bear",
+    )
+    _require(
+        _decimal(parameters["start_price"], f"{field}.parameters.start_price") > 0,
+        "invalid_parameter",
+        f"{field}.parameters.start_price",
+        "must be positive",
+    )
+    for regime in ("bull", "bear"):
+        drift = _decimal(
+            parameters[f"{regime}_annual_drift"],
+            f"{field}.parameters.{regime}_annual_drift",
+        )
+        volatility = _decimal(
+            parameters[f"{regime}_annual_volatility"],
+            f"{field}.parameters.{regime}_annual_volatility",
+        )
+        stay = _decimal(
+            parameters[f"{regime}_stay_probability"],
+            f"{field}.parameters.{regime}_stay_probability",
+        )
+        _require(
+            Decimal("-0.5") <= drift <= Decimal("0.5"),
+            "invalid_parameter",
+            f"{field}.parameters.{regime}_annual_drift",
+            "must be between -0.5 and 0.5",
+        )
+        _require(
+            Decimal("0.01") <= volatility <= Decimal("1"),
+            "invalid_parameter",
+            f"{field}.parameters.{regime}_annual_volatility",
+            "must be between 0.01 and 1",
+        )
+        _require(
+            Decimal("0") <= stay <= Decimal("1"),
+            "invalid_parameter",
+            f"{field}.parameters.{regime}_stay_probability",
+            "must be between 0 and 1",
+        )
+
+
+def _validate_jump_diffusion_parameters(
+    parameters: Mapping[str, Any], field: str
+) -> None:
+    _require_parameter_set(
+        parameters,
+        {
+            "start_price",
+            "annual_drift",
+            "annual_diffusion_volatility",
+            "monthly_jump_probability",
+            "mean_log_jump",
+            "log_jump_volatility",
+        },
+        field,
+    )
+    start = _decimal(parameters["start_price"], f"{field}.parameters.start_price")
+    drift = _decimal(parameters["annual_drift"], f"{field}.parameters.annual_drift")
+    diffusion = _decimal(
+        parameters["annual_diffusion_volatility"],
+        f"{field}.parameters.annual_diffusion_volatility",
+    )
+    probability = _decimal(
+        parameters["monthly_jump_probability"],
+        f"{field}.parameters.monthly_jump_probability",
+    )
+    jump_mean = _decimal(
+        parameters["mean_log_jump"], f"{field}.parameters.mean_log_jump"
+    )
+    jump_volatility = _decimal(
+        parameters["log_jump_volatility"],
+        f"{field}.parameters.log_jump_volatility",
+    )
+    _require(
+        start > 0,
+        "invalid_parameter",
+        f"{field}.parameters.start_price",
+        "must be positive",
+    )
+    _require(
+        Decimal("-0.25") <= drift <= Decimal("0.25"),
+        "invalid_parameter",
+        f"{field}.parameters.annual_drift",
+        "must be between -0.25 and 0.25",
+    )
+    _require(
+        Decimal("0") <= diffusion <= Decimal("0.8"),
+        "invalid_parameter",
+        f"{field}.parameters.annual_diffusion_volatility",
+        "must be between 0 and 0.8",
+    )
+    _require(
+        Decimal("0") <= probability <= Decimal("0.5"),
+        "invalid_parameter",
+        f"{field}.parameters.monthly_jump_probability",
+        "must be between 0 and 0.5",
+    )
+    _require(
+        Decimal("-1") <= jump_mean <= Decimal("1"),
+        "invalid_parameter",
+        f"{field}.parameters.mean_log_jump",
+        "must be between -1 and 1",
+    )
+    _require(
+        Decimal("0") <= jump_volatility <= Decimal("1"),
+        "invalid_parameter",
+        f"{field}.parameters.log_jump_volatility",
+        "must be between 0 and 1",
+    )
+
+
 def _validate_parameters(configuration: Mapping[str, Any], field: str) -> None:
     family = configuration["family"]
     parameters = configuration["parameters"]
@@ -208,260 +480,12 @@ def _validate_parameters(configuration: Mapping[str, Any], field: str) -> None:
         f"{field}.parameters",
         "must be a mapping",
     )
-    if family == "trend":
-        expected = {"start_price", "annual_drift", "annual_volatility"}
-        _require(
-            set(parameters) == expected,
-            "invalid_parameter_set",
-            f"{field}.parameters",
-            f"must contain exactly {sorted(expected)}",
+    definition = FAMILY_REGISTRY.get(family)
+    if definition is None:
+        raise ExperimentValidationError(
+            "unsupported_family", f"{field}.family", f"unsupported family {family!r}"
         )
-        start = _decimal(parameters["start_price"], f"{field}.parameters.start_price")
-        drift = _decimal(parameters["annual_drift"], f"{field}.parameters.annual_drift")
-        volatility = _decimal(
-            parameters["annual_volatility"],
-            f"{field}.parameters.annual_volatility",
-        )
-        _require(start > 0, "invalid_parameter", f"{field}.parameters.start_price", "must be positive")
-        _require(
-            Decimal("-0.25") <= drift <= Decimal("0.25"),
-            "invalid_parameter",
-            f"{field}.parameters.annual_drift",
-            "must be between -0.25 and 0.25",
-        )
-        _require(
-            Decimal("0.01") <= volatility <= Decimal("0.8"),
-            "invalid_parameter",
-            f"{field}.parameters.annual_volatility",
-            "must be between 0.01 and 0.8",
-        )
-        return
-    if family == "mean_reversion":
-        expected = {
-            "start_price",
-            "long_run_price",
-            "half_life_months",
-            "stationary_log_volatility",
-        }
-        _require(
-            set(parameters) == expected,
-            "invalid_parameter_set",
-            f"{field}.parameters",
-            f"must contain exactly {sorted(expected)}",
-        )
-        start = _decimal(parameters["start_price"], f"{field}.parameters.start_price")
-        long_run = _decimal(
-            parameters["long_run_price"], f"{field}.parameters.long_run_price"
-        )
-        half_life = _decimal(
-            parameters["half_life_months"],
-            f"{field}.parameters.half_life_months",
-        )
-        volatility = _decimal(
-            parameters["stationary_log_volatility"],
-            f"{field}.parameters.stationary_log_volatility",
-        )
-        _require(
-            start > 0 and long_run > 0,
-            "invalid_parameter",
-            f"{field}.parameters",
-            "start and long-run prices must be positive",
-        )
-        _require(
-            Decimal("1") <= half_life <= Decimal("120"),
-            "invalid_parameter",
-            f"{field}.parameters.half_life_months",
-            "must be between 1 and 120 months",
-        )
-        _require(
-            Decimal("0.01") <= volatility <= Decimal("1"),
-            "invalid_parameter",
-            f"{field}.parameters.stationary_log_volatility",
-            "must be between 0.01 and 1",
-        )
-        return
-    if family == "stochastic_volatility":
-        expected = {
-            "start_price",
-            "annual_drift",
-            "long_run_annual_volatility",
-            "volatility_persistence",
-            "log_volatility_of_volatility",
-        }
-        _require(
-            set(parameters) == expected,
-            "invalid_parameter_set",
-            f"{field}.parameters",
-            f"must contain exactly {sorted(expected)}",
-        )
-        start = _decimal(parameters["start_price"], f"{field}.parameters.start_price")
-        drift = _decimal(parameters["annual_drift"], f"{field}.parameters.annual_drift")
-        volatility = _decimal(
-            parameters["long_run_annual_volatility"],
-            f"{field}.parameters.long_run_annual_volatility",
-        )
-        persistence = _decimal(
-            parameters["volatility_persistence"],
-            f"{field}.parameters.volatility_persistence",
-        )
-        volatility_of_volatility = _decimal(
-            parameters["log_volatility_of_volatility"],
-            f"{field}.parameters.log_volatility_of_volatility",
-        )
-        _require(start > 0, "invalid_parameter", f"{field}.parameters.start_price", "must be positive")
-        _require(
-            Decimal("-0.25") <= drift <= Decimal("0.25"),
-            "invalid_parameter",
-            f"{field}.parameters.annual_drift",
-            "must be between -0.25 and 0.25",
-        )
-        _require(
-            Decimal("0.01") <= volatility <= Decimal("0.8"),
-            "invalid_parameter",
-            f"{field}.parameters.long_run_annual_volatility",
-            "must be between 0.01 and 0.8",
-        )
-        _require(
-            Decimal("0") <= persistence < Decimal("0.999"),
-            "invalid_parameter",
-            f"{field}.parameters.volatility_persistence",
-            "must be at least 0 and below 0.999",
-        )
-        _require(
-            Decimal("0") <= volatility_of_volatility <= Decimal("1"),
-            "invalid_parameter",
-            f"{field}.parameters.log_volatility_of_volatility",
-            "must be between 0 and 1",
-        )
-        return
-    if family == "regime_switching":
-        expected = {
-            "start_price",
-            "initial_regime",
-            "bull_annual_drift",
-            "bull_annual_volatility",
-            "bull_stay_probability",
-            "bear_annual_drift",
-            "bear_annual_volatility",
-            "bear_stay_probability",
-        }
-        _require(
-            set(parameters) == expected,
-            "invalid_parameter_set",
-            f"{field}.parameters",
-            f"must contain exactly {sorted(expected)}",
-        )
-        _require(
-            parameters["initial_regime"] in {"bull", "bear"},
-            "invalid_parameter",
-            f"{field}.parameters.initial_regime",
-            "must be bull or bear",
-        )
-        _require(
-            _decimal(parameters["start_price"], f"{field}.parameters.start_price") > 0,
-            "invalid_parameter",
-            f"{field}.parameters.start_price",
-            "must be positive",
-        )
-        for regime in ("bull", "bear"):
-            drift = _decimal(
-                parameters[f"{regime}_annual_drift"],
-                f"{field}.parameters.{regime}_annual_drift",
-            )
-            volatility = _decimal(
-                parameters[f"{regime}_annual_volatility"],
-                f"{field}.parameters.{regime}_annual_volatility",
-            )
-            stay = _decimal(
-                parameters[f"{regime}_stay_probability"],
-                f"{field}.parameters.{regime}_stay_probability",
-            )
-            _require(
-                Decimal("-0.5") <= drift <= Decimal("0.5"),
-                "invalid_parameter",
-                f"{field}.parameters.{regime}_annual_drift",
-                "must be between -0.5 and 0.5",
-            )
-            _require(
-                Decimal("0.01") <= volatility <= Decimal("1"),
-                "invalid_parameter",
-                f"{field}.parameters.{regime}_annual_volatility",
-                "must be between 0.01 and 1",
-            )
-            _require(
-                Decimal("0") <= stay <= Decimal("1"),
-                "invalid_parameter",
-                f"{field}.parameters.{regime}_stay_probability",
-                "must be between 0 and 1",
-            )
-        return
-    if family == "jump_diffusion":
-        expected = {
-            "start_price",
-            "annual_drift",
-            "annual_diffusion_volatility",
-            "monthly_jump_probability",
-            "mean_log_jump",
-            "log_jump_volatility",
-        }
-        _require(
-            set(parameters) == expected,
-            "invalid_parameter_set",
-            f"{field}.parameters",
-            f"must contain exactly {sorted(expected)}",
-        )
-        start = _decimal(parameters["start_price"], f"{field}.parameters.start_price")
-        drift = _decimal(parameters["annual_drift"], f"{field}.parameters.annual_drift")
-        diffusion = _decimal(
-            parameters["annual_diffusion_volatility"],
-            f"{field}.parameters.annual_diffusion_volatility",
-        )
-        probability = _decimal(
-            parameters["monthly_jump_probability"],
-            f"{field}.parameters.monthly_jump_probability",
-        )
-        jump_mean = _decimal(
-            parameters["mean_log_jump"], f"{field}.parameters.mean_log_jump"
-        )
-        jump_volatility = _decimal(
-            parameters["log_jump_volatility"],
-            f"{field}.parameters.log_jump_volatility",
-        )
-        _require(start > 0, "invalid_parameter", f"{field}.parameters.start_price", "must be positive")
-        _require(
-            Decimal("-0.25") <= drift <= Decimal("0.25"),
-            "invalid_parameter",
-            f"{field}.parameters.annual_drift",
-            "must be between -0.25 and 0.25",
-        )
-        _require(
-            Decimal("0") <= diffusion <= Decimal("0.8"),
-            "invalid_parameter",
-            f"{field}.parameters.annual_diffusion_volatility",
-            "must be between 0 and 0.8",
-        )
-        _require(
-            Decimal("0") <= probability <= Decimal("0.5"),
-            "invalid_parameter",
-            f"{field}.parameters.monthly_jump_probability",
-            "must be between 0 and 0.5",
-        )
-        _require(
-            Decimal("-1") <= jump_mean <= Decimal("1"),
-            "invalid_parameter",
-            f"{field}.parameters.mean_log_jump",
-            "must be between -1 and 1",
-        )
-        _require(
-            Decimal("0") <= jump_volatility <= Decimal("1"),
-            "invalid_parameter",
-            f"{field}.parameters.log_jump_volatility",
-            "must be between 0 and 1",
-        )
-        return
-    raise ExperimentValidationError(
-        "unsupported_family", f"{field}.family", f"unsupported family {family!r}"
-    )
+    definition.validate(parameters, field)
 
 
 def _validate_study(document: dict[str, Any]) -> None:
@@ -863,19 +887,12 @@ def _generate_jump_diffusion(
 def _generate_path(
     configuration: Mapping[str, Any], seed: int, steps: int
 ) -> _GeneratedPath:
-    if configuration["family"] == "trend":
-        return _generate_trend(configuration["parameters"], seed, steps)
-    if configuration["family"] == "mean_reversion":
-        return _generate_mean_reversion(configuration["parameters"], seed, steps)
-    if configuration["family"] == "stochastic_volatility":
-        return _generate_stochastic_volatility(configuration["parameters"], seed, steps)
-    if configuration["family"] == "regime_switching":
-        return _generate_regime_switching(configuration["parameters"], seed, steps)
-    if configuration["family"] == "jump_diffusion":
-        return _generate_jump_diffusion(configuration["parameters"], seed, steps)
-    raise ExperimentValidationError(
-        "unsupported_family", "configuration.family", "family is not implemented"
-    )
+    definition = FAMILY_REGISTRY.get(configuration["family"])
+    if definition is None:
+        raise ExperimentValidationError(
+            "unsupported_family", "configuration.family", "family is not implemented"
+        )
+    return definition.generate(configuration["parameters"], seed, steps)
 
 
 def _path_statistics(prices: tuple[str, ...]) -> dict[str, Any]:
@@ -905,40 +922,98 @@ def _path_statistics(prices: tuple[str, ...]) -> dict[str, Any]:
     }
 
 
+def _no_process_diagnostics(
+    trace: tuple[Mapping[str, Any], ...]
+) -> dict[str, Any]:
+    return {}
+
+
+def _stochastic_volatility_diagnostics(
+    trace: tuple[Mapping[str, Any], ...]
+) -> dict[str, Any]:
+    values = [float(row["annual_volatility"]) for row in trace]
+    return {
+        "minimum_annual_volatility": _number_text(min(values)),
+        "mean_annual_volatility": _number_text(sum(values) / len(values)),
+        "maximum_annual_volatility": _number_text(max(values)),
+    }
+
+
+def _regime_switching_diagnostics(
+    trace: tuple[Mapping[str, Any], ...]
+) -> dict[str, Any]:
+    return {
+        "bull_months": sum(row["regime"] == "bull" for row in trace),
+        "bear_months": sum(row["regime"] == "bear" for row in trace),
+        "regime_switches": sum(
+            row["switched_after_month"] is True for row in trace
+        ),
+    }
+
+
+def _jump_diffusion_diagnostics(
+    trace: tuple[Mapping[str, Any], ...]
+) -> dict[str, Any]:
+    jumps = [
+        float(row["realized_log_jump"])
+        for row in trace
+        if row["jump_occurred"] is True
+    ]
+    return {
+        "jump_count": len(jumps),
+        "jump_months": [
+            row["month"] for row in trace if row["jump_occurred"] is True
+        ],
+        "mean_realized_log_jump": (
+            _float_text(sum(jumps) / len(jumps)) if jumps else None
+        ),
+    }
+
+
+@dataclass(frozen=True)
+class _FamilyDefinition:
+    validate: Callable[[Mapping[str, Any], str], None]
+    generate: Callable[[Mapping[str, Any], int, int], _GeneratedPath]
+    diagnostics: Callable[[tuple[Mapping[str, Any], ...]], dict[str, Any]]
+
+
+FAMILY_REGISTRY = {
+    "trend": _FamilyDefinition(
+        _validate_trend_parameters, _generate_trend, _no_process_diagnostics
+    ),
+    "mean_reversion": _FamilyDefinition(
+        _validate_mean_reversion_parameters,
+        _generate_mean_reversion,
+        _no_process_diagnostics,
+    ),
+    "stochastic_volatility": _FamilyDefinition(
+        _validate_stochastic_volatility_parameters,
+        _generate_stochastic_volatility,
+        _stochastic_volatility_diagnostics,
+    ),
+    "regime_switching": _FamilyDefinition(
+        _validate_regime_switching_parameters,
+        _generate_regime_switching,
+        _regime_switching_diagnostics,
+    ),
+    "jump_diffusion": _FamilyDefinition(
+        _validate_jump_diffusion_parameters,
+        _generate_jump_diffusion,
+        _jump_diffusion_diagnostics,
+    ),
+}
+SUPPORTED_FAMILIES = frozenset(FAMILY_REGISTRY)
+
+
 def _process_diagnostics(
     family: str, trace: tuple[Mapping[str, Any], ...]
 ) -> dict[str, Any]:
-    if family == "stochastic_volatility":
-        values = [float(row["annual_volatility"]) for row in trace]
-        return {
-            "minimum_annual_volatility": _number_text(min(values)),
-            "mean_annual_volatility": _number_text(sum(values) / len(values)),
-            "maximum_annual_volatility": _number_text(max(values)),
-        }
-    if family == "regime_switching":
-        return {
-            "bull_months": sum(row["regime"] == "bull" for row in trace),
-            "bear_months": sum(row["regime"] == "bear" for row in trace),
-            "regime_switches": sum(
-                row["switched_after_month"] is True for row in trace
-            ),
-        }
-    if family == "jump_diffusion":
-        jumps = [
-            float(row["realized_log_jump"])
-            for row in trace
-            if row["jump_occurred"] is True
-        ]
-        return {
-            "jump_count": len(jumps),
-            "jump_months": [
-                row["month"] for row in trace if row["jump_occurred"] is True
-            ],
-            "mean_realized_log_jump": (
-                _float_text(sum(jumps) / len(jumps)) if jumps else None
-            ),
-        }
-    return {}
+    definition = FAMILY_REGISTRY.get(family)
+    if definition is None:
+        raise ExperimentValidationError(
+            "unsupported_family", "configuration.family", "family is not implemented"
+        )
+    return definition.diagnostics(trace)
 
 
 def _source_sha256() -> str:
@@ -1210,89 +1285,469 @@ def _aggregate_stochastic_results(
     }
 
 
-def _reconcile_runner_aggregates(
+def _independent_result_statistics(
+    members: list[Mapping[str, Any]],
+) -> dict[str, Any]:
+    """Recompute aggregate values without using either production aggregator."""
+    relative = [
+        _decimal(row["relative_terminal_wealth_gap"], "reconcile.relative_gap")
+        for row in members
+        if row["relative_terminal_wealth_gap"] is not None
+    ]
+    wealth_gaps = [
+        _decimal(row["terminal_wealth_gap"], "reconcile.wealth_gap")
+        for row in members
+    ]
+    ratios = [
+        _decimal(row["wealth_ratio"], "reconcile.wealth_ratio")
+        for row in members
+        if row["wealth_ratio"] is not None
+    ]
+    result: dict[str, Any] = {
+        "mean_terminal_wealth_gap": (
+            _decimal_text(_mean(wealth_gaps)) if wealth_gaps else None
+        ),
+        "mean_wealth_ratio": _decimal_text(_mean(ratios)) if ratios else None,
+        "win_count": sum(value > 0 for value in wealth_gaps),
+        "tie_count": sum(value == 0 for value in wealth_gaps),
+        "loss_count": sum(value < 0 for value in wealth_gaps),
+    }
+    if relative:
+        minimum = min(relative)
+        result.update(
+            {
+                "mean_relative_terminal_wealth_gap": _decimal_text(_mean(relative)),
+                "median_relative_terminal_wealth_gap": _decimal_text(
+                    _median(relative)
+                ),
+                "minimum_relative_terminal_wealth_gap": _decimal_text(minimum),
+                "maximum_relative_terminal_wealth_gap": _decimal_text(max(relative)),
+                "downside_quantile_0.05": _decimal_text(
+                    _quantile(relative, Decimal("0.05"))
+                ),
+                "downside_quantile_0.10": _decimal_text(
+                    _quantile(relative, Decimal("0.10"))
+                ),
+                "downside_quantile_0.25": _decimal_text(
+                    _quantile(relative, Decimal("0.25"))
+                ),
+                "worst_observed_relative_shortfall": _decimal_text(
+                    max(Decimal("0"), -minimum)
+                ),
+            }
+        )
+    else:
+        result.update(
+            {
+                "mean_relative_terminal_wealth_gap": None,
+                "median_relative_terminal_wealth_gap": None,
+                "minimum_relative_terminal_wealth_gap": None,
+                "maximum_relative_terminal_wealth_gap": None,
+                "downside_quantile_0.05": None,
+                "downside_quantile_0.10": None,
+                "downside_quantile_0.25": None,
+                "worst_observed_relative_shortfall": None,
+            }
+        )
+    for source_field in (
+        "terminal_cash_gap",
+        "terminal_unit_gap",
+        "cash_contribution",
+        "unit_contribution",
+        "identity_residual",
+        "left_cash_drag",
+        "right_cash_drag",
+        "left_asset_exposure",
+        "right_asset_exposure",
+        "left_guardrail_activation_frequency",
+        "right_guardrail_activation_frequency",
+        "left_mean_guardrail_floor",
+        "right_mean_guardrail_floor",
+        "left_total_fees",
+        "right_total_fees",
+    ):
+        output_field = {
+            "left_mean_guardrail_floor": "mean_left_guardrail_floor",
+            "right_mean_guardrail_floor": "mean_right_guardrail_floor",
+        }.get(source_field, f"mean_{source_field}")
+        values = [
+            _decimal(row[source_field], f"reconcile.{source_field}")
+            for row in members
+            if row[source_field] is not None
+        ]
+        result[output_field] = _decimal_text(_mean(values)) if values else None
+    for side in ("left", "right"):
+        counts = [Decimal(row[f"{side}_purchase_count"]) for row in members]
+        result[f"mean_{side}_purchase_count"] = (
+            _decimal_text(_mean(counts)) if counts else None
+        )
+    return result
+
+
+def _study_group_key(row: Mapping[str, Any]) -> tuple[Any, ...]:
+    return (
+        row["generator_config_id"],
+        row["horizon_months"],
+        row["coverage"],
+        row["corrected_mean_config"],
+        row["cost_scenario"],
+        row["comparison"],
+        row["theorem_scope"],
+    )
+
+
+def _runner_group_key(row: Mapping[str, Any]) -> tuple[Any, ...]:
+    return (
+        row["input_kind"],
+        row["family"],
+        row["dataset_id"],
+        row["horizon_months"],
+        row["coverage"],
+        row["corrected_mean_config"],
+        row["cost_scenario"],
+        row["comparison"],
+        row["theorem_scope"],
+    )
+
+
+def _append_mapping_mismatches(
+    mismatches: list[dict[str, Any]],
+    scope: str,
+    key: tuple[Any, ...] | str,
+    actual: Mapping[str, Any],
+    expected: Mapping[str, Any],
+) -> None:
+    for field in sorted(set(actual) | set(expected)):
+        actual_value = actual.get(field, "<missing>")
+        expected_value = expected.get(field, "<missing>")
+        if actual_value != expected_value:
+            mismatches.append(
+                {
+                    "scope": scope,
+                    "group": list(key) if isinstance(key, tuple) else key,
+                    "field": field,
+                    "actual": actual_value,
+                    "independent": expected_value,
+                }
+            )
+
+
+def _reconcile_stochastic_aggregates(
     stochastic_aggregates: Mapping[str, Any],
     runner_aggregates: Mapping[str, Any],
+    results: tuple[Mapping[str, Any], ...],
+    attempts: tuple[Mapping[str, Any], ...],
 ) -> dict[str, Any]:
-    shared_fields = (
-        "sample_count",
-        "mean_terminal_wealth_gap",
-        "mean_wealth_ratio",
-        "win_count",
-        "tie_count",
-        "loss_count",
-        "mean_relative_terminal_wealth_gap",
-        "median_relative_terminal_wealth_gap",
-        "minimum_relative_terminal_wealth_gap",
-        "maximum_relative_terminal_wealth_gap",
-        "downside_quantile_0.05",
-        "downside_quantile_0.10",
-        "downside_quantile_0.25",
-        "mean_terminal_cash_gap",
-        "mean_terminal_unit_gap",
-        "mean_left_cash_drag",
-        "mean_right_cash_drag",
-        "mean_left_asset_exposure",
-        "mean_right_asset_exposure",
-        "mean_left_guardrail_activation_frequency",
-        "mean_right_guardrail_activation_frequency",
-        "mean_left_guardrail_floor",
-        "mean_right_guardrail_floor",
-        "mean_left_total_fees",
-        "mean_right_total_fees",
-        "mean_left_purchase_count",
-        "mean_right_purchase_count",
-    )
-    study_lookup = {
-        (
-            group["family"],
-            f"stochastic-v1:{group['analysis_tier']}:{group['generator_config_id']}",
-            group["horizon_months"],
-            group["coverage"],
-            group["corrected_mean_config"],
-            group["cost_scenario"],
-            group["comparison"],
-            group["theorem_scope"],
-        ): group
-        for group in stochastic_aggregates["groups"]
+    """Independently reconcile every serialized study and runner aggregate."""
+    attempt_by_episode = {
+        row["episode_id"]: row for row in attempts if row["episode_id"] is not None
     }
-    mismatches: list[dict[str, Any]] = []
-    compared = 0
-    for runner_group in runner_aggregates["groups"]:
-        key = (
-            runner_group["family"],
-            runner_group["dataset_id"],
-            runner_group["horizon_months"],
-            runner_group["coverage"],
-            runner_group["corrected_mean_config"],
-            runner_group["cost_scenario"],
-            runner_group["comparison"],
-            runner_group["theorem_scope"],
+    attempt_groups: dict[tuple[str, int], list[Mapping[str, Any]]] = {}
+    for attempt in attempts:
+        attempt_groups.setdefault(
+            (attempt["config_id"], attempt["horizon_months"]), []
+        ).append(attempt)
+
+    study_result_groups: dict[tuple[Any, ...], list[Mapping[str, Any]]] = {}
+    runner_result_groups: dict[tuple[Any, ...], list[Mapping[str, Any]]] = {}
+    axes: set[tuple[Any, ...]] = set()
+    for result in results:
+        attempt = attempt_by_episode[result["episode_id"]]
+        study_key = (
+            attempt["config_id"],
+            result["horizon_months"],
+            result["coverage"],
+            result["corrected_mean_config"],
+            result["cost_scenario"],
+            result["comparison"],
+            result["theorem_scope"],
         )
-        study_group = study_lookup[key]
-        compared += 1
-        for field in shared_fields:
-            if study_group[field] != runner_group[field]:
-                mismatches.append(
+        study_result_groups.setdefault(study_key, []).append(result)
+        runner_result_groups.setdefault(_runner_group_key(result), []).append(result)
+        axes.add(
+            (
+                result["coverage"],
+                result["corrected_mean_config"],
+                result["cost_scenario"],
+                result["comparison"],
+                result["theorem_scope"],
+            )
+        )
+
+    expected_study_groups: dict[tuple[Any, ...], dict[str, Any]] = {}
+    for (config_id, horizon), path_attempts in sorted(attempt_groups.items()):
+        metadata = path_attempts[0]
+        for coverage, mean_id, cost_id, comparison, theorem_scope in sorted(axes):
+            key = (
+                config_id,
+                horizon,
+                coverage,
+                mean_id,
+                cost_id,
+                comparison,
+                theorem_scope,
+            )
+            attempted_results = sorted(
+                study_result_groups.get(key, []),
+                key=lambda row: row["episode_id"],
+            )
+            members = [
+                row for row in attempted_results if row["result_status"] == "included"
+            ]
+            exclusions: dict[str, int] = {}
+            for attempt in path_attempts:
+                if attempt["status"] == "excluded":
+                    reason = attempt["exclusion_reason"]
+                    exclusions[reason] = exclusions.get(reason, 0) + 1
+            for result in attempted_results:
+                if result["result_status"] == "excluded":
+                    reason = result["exclusion_reason"]
+                    exclusions[reason] = exclusions.get(reason, 0) + 1
+            expected_study_groups[key] = {
+                "analysis_tier": metadata["tier"],
+                "family": metadata["family"],
+                "generator_config_id": config_id,
+                "generator_parameters": metadata["parameters"],
+                "horizon_months": horizon,
+                "coverage": coverage,
+                "corrected_mean_config": mean_id,
+                "cost_scenario": cost_id,
+                "comparison": comparison,
+                "theorem_scope": theorem_scope,
+                "attempted_count": len(path_attempts),
+                "generated_count": sum(
+                    attempt["status"] == "generated" for attempt in path_attempts
+                ),
+                "sample_count": len(members),
+                "excluded_count": len(path_attempts) - len(members),
+                "exclusions_by_reason": dict(sorted(exclusions.items())),
+                "relative_terminal_wealth_gap_distribution": [
                     {
-                        "group": list(key),
-                        "field": field,
-                        "independent": study_group[field],
-                        "runner": runner_group[field],
+                        "episode_id": row["episode_id"],
+                        "value": row["relative_terminal_wealth_gap"],
                     }
-                )
+                    for row in members
+                ],
+                **_independent_result_statistics(members),
+            }
+
+    expected_runner_groups: dict[tuple[Any, ...], dict[str, Any]] = {}
+    runner_omitted_statistics = {
+        "worst_observed_relative_shortfall",
+        "mean_cash_contribution",
+        "mean_unit_contribution",
+        "mean_identity_residual",
+    }
+    for key, attempted_results in runner_result_groups.items():
+        ordered_results = sorted(
+            attempted_results, key=lambda row: row["episode_id"]
+        )
+        members = [
+            row for row in ordered_results if row["result_status"] == "included"
+        ]
+        statistics = {
+            field: value
+            for field, value in _independent_result_statistics(members).items()
+            if field not in runner_omitted_statistics
+        }
+        (
+            input_kind,
+            family,
+            dataset_id,
+            horizon,
+            coverage,
+            mean_id,
+            cost_id,
+            comparison,
+            theorem_scope,
+        ) = key
+        expected_runner_groups[key] = {
+            "input_kind": input_kind,
+            "family": family,
+            "dataset_id": dataset_id,
+            "horizon_months": horizon,
+            "coverage": coverage,
+            "corrected_mean_config": mean_id,
+            "cost_scenario": cost_id,
+            "comparison": comparison,
+            "theorem_scope": theorem_scope,
+            "attempted_count": len(ordered_results),
+            "sample_count": sum(
+                row["relative_terminal_wealth_gap"] is not None for row in members
+            ),
+            "excluded_count": len(ordered_results) - len(members),
+            "uncertainty_status": "not-estimated-by-canonical-run",
+            **statistics,
+        }
+
+    mismatches: list[dict[str, Any]] = []
+    actual_study_groups = {
+        _study_group_key(group): group for group in stochastic_aggregates["groups"]
+    }
+    if len(actual_study_groups) != len(stochastic_aggregates["groups"]):
+        mismatches.append(
+            {
+                "scope": "study",
+                "group": "all",
+                "field": "duplicate_group_key",
+                "actual": len(stochastic_aggregates["groups"]),
+                "independent": len(actual_study_groups),
+            }
+        )
+    for key in sorted(set(actual_study_groups) | set(expected_study_groups)):
+        _append_mapping_mismatches(
+            mismatches,
+            "study",
+            key,
+            actual_study_groups.get(key, {}),
+            expected_study_groups.get(key, {}),
+        )
+    study_top_level = {
+        field: stochastic_aggregates.get(field, "<missing>")
+        for field in (
+            "group_count",
+            "attempted_path_count",
+            "generated_path_count",
+            "excluded_path_count",
+        )
+    }
+    expected_study_top_level = {
+        "group_count": len(expected_study_groups),
+        "attempted_path_count": len(attempts),
+        "generated_path_count": sum(row["status"] == "generated" for row in attempts),
+        "excluded_path_count": sum(row["status"] == "excluded" for row in attempts),
+    }
+    _append_mapping_mismatches(
+        mismatches,
+        "study",
+        "top-level",
+        study_top_level,
+        expected_study_top_level,
+    )
+    if set(stochastic_aggregates) != {
+        "group_count",
+        "attempted_path_count",
+        "generated_path_count",
+        "excluded_path_count",
+        "groups",
+    }:
+        mismatches.append(
+            {
+                "scope": "study",
+                "group": "top-level",
+                "field": "keys",
+                "actual": sorted(stochastic_aggregates),
+                "independent": [
+                    "attempted_path_count",
+                    "excluded_path_count",
+                    "generated_path_count",
+                    "group_count",
+                    "groups",
+                ],
+            }
+        )
+
+    actual_runner_groups = {
+        _runner_group_key(group): group for group in runner_aggregates["groups"]
+    }
+    if len(actual_runner_groups) != len(runner_aggregates["groups"]):
+        mismatches.append(
+            {
+                "scope": "runner",
+                "group": "all",
+                "field": "duplicate_group_key",
+                "actual": len(runner_aggregates["groups"]),
+                "independent": len(actual_runner_groups),
+            }
+        )
+    for key in sorted(set(actual_runner_groups) | set(expected_runner_groups)):
+        _append_mapping_mismatches(
+            mismatches,
+            "runner",
+            key,
+            actual_runner_groups.get(key, {}),
+            expected_runner_groups.get(key, {}),
+        )
+    runner_top_level = {
+        field: runner_aggregates.get(field, "<missing>")
+        for field in ("episode_count", "ledger_count", "comparison_count", "group_count")
+    }
+    expected_runner_top_level = {
+        "episode_count": len({row["episode_id"] for row in results}),
+        "ledger_count": len(results),
+        "comparison_count": len(results),
+        "group_count": len(expected_runner_groups),
+    }
+    _append_mapping_mismatches(
+        mismatches,
+        "runner",
+        "top-level",
+        runner_top_level,
+        expected_runner_top_level,
+    )
+    if set(runner_aggregates) != {
+        "run_id",
+        "episode_count",
+        "ledger_count",
+        "comparison_count",
+        "group_count",
+        "groups",
+    }:
+        mismatches.append(
+            {
+                "scope": "runner",
+                "group": "top-level",
+                "field": "keys",
+                "actual": sorted(runner_aggregates),
+                "independent": [
+                    "comparison_count",
+                    "episode_count",
+                    "group_count",
+                    "groups",
+                    "ledger_count",
+                    "run_id",
+                ],
+            }
+        )
+
     if mismatches:
         raise AssertionError(
             "independent aggregate reconciliation found "
             f"{len(mismatches)} mismatch(es); first={mismatches[0]!r}"
         )
+    study_field_count = len(next(iter(expected_study_groups.values())))
+    runner_field_count = len(next(iter(expected_runner_groups.values())))
     return {
         "status": "passed",
-        "method": "recomputed from serialized episode-results.jsonl and compared field-by-field with serialized runner aggregates",
-        "reconciled_group_count": compared,
-        "shared_statistic_count_per_group": len(shared_fields),
+        "method": "independently regrouped serialized episode results and attempts; compared every study and runner aggregate field",
+        "reconciled_group_count": len(expected_study_groups),
+        "study_group_field_count": study_field_count,
+        "runner_group_field_count": runner_field_count,
+        "reconciled_study_value_count": (
+            len(expected_study_groups) * study_field_count + 4
+        ),
+        "reconciled_runner_value_count": (
+            len(expected_runner_groups) * runner_field_count + 4
+        ),
         "mismatch_count": 0,
     }
+
+
+def reconcile_stochastic_aggregates(
+    stochastic_aggregates: Mapping[str, Any],
+    runner_aggregates: Mapping[str, Any],
+    results: tuple[Mapping[str, Any], ...],
+    attempts: tuple[Mapping[str, Any], ...],
+) -> dict[str, Any]:
+    """Independently reconcile every aggregate at the runner's precision."""
+    with localcontext() as decimal_context:
+        decimal_context.prec = 60
+        return _reconcile_stochastic_aggregates(
+            stochastic_aggregates,
+            runner_aggregates,
+            results,
+            attempts,
+        )
 
 
 def _enrich_results(
@@ -1541,6 +1996,189 @@ def _study_run_id(
     return f"smartdca-stochastic-v1-{_fingerprint(identity.encode('utf-8'))}"
 
 
+def _declared_path_count(document: Mapping[str, Any] | None) -> int | None:
+    if document is None:
+        return None
+    configurations = document.get("family_configurations")
+    seeds = document.get("seeds")
+    horizons = document.get("horizons_months")
+    if not all(isinstance(value, list) for value in (configurations, seeds, horizons)):
+        return None
+    return len(configurations) * len(seeds) * len(horizons)
+
+
+def _loosely_loaded_document(path: Path) -> dict[str, Any] | None:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError):
+        return None
+    return value if isinstance(value, dict) else None
+
+
+def _safe_file_sha256(path: Path) -> str | None:
+    try:
+        return _fingerprint(path.read_bytes())
+    except OSError:
+        return None
+
+
+def _failure_error(error: BaseException, stage: str) -> dict[str, Any]:
+    code = (
+        error.code
+        if isinstance(error, ExperimentValidationError)
+        else f"{stage}_failure"
+    )
+    field = error.field if isinstance(error, ExperimentValidationError) else stage
+    return {
+        "type": type(error).__name__,
+        "code": code,
+        "field": field,
+        "message": str(error),
+    }
+
+
+def _failure_counts(stage: str, error: BaseException) -> dict[str, int]:
+    counts = {
+        "configuration": 0,
+        "generator": 0,
+        "input_validation": 0,
+        "numerical": 0,
+        "runner": 0,
+        "comparison": 0,
+    }
+    category = stage if stage in counts else "runner"
+    counts[category] = 1
+    if (
+        isinstance(error, ExperimentValidationError)
+        and error.code == "numerical_failure"
+    ):
+        counts["numerical"] = 1
+    return counts
+
+
+def _failure_sample_counts(
+    declared_path_count: int | None,
+    attempts: tuple[Mapping[str, Any], ...],
+    runner: RunBundle | None,
+) -> dict[str, int | None]:
+    included_episode_ids = (
+        {
+            row["episode_id"]
+            for row in runner.episode_results
+            if row["result_status"] == "included"
+        }
+        if runner is not None
+        else set()
+    )
+    attempted_count = len(attempts)
+    return {
+        "declared_path_count": declared_path_count,
+        "attempted_path_count": attempted_count,
+        "generated_path_count": sum(
+            row["status"] == "generated" for row in attempts
+        ),
+        "included_path_count": len(included_episode_ids),
+        "excluded_path_count": attempted_count - len(included_episode_ids),
+        "ledger_count": len(runner.ledgers) if runner is not None else 0,
+        "episode_result_count": (
+            len(runner.episode_results) if runner is not None else 0
+        ),
+    }
+
+
+def _persist_failure_directory(
+    output_root: Path,
+    stage: str,
+    error: BaseException,
+    identities: Mapping[str, Any],
+    sample_counts: Mapping[str, Any],
+    temporary_directory: Path | None = None,
+) -> Path:
+    output_root.mkdir(parents=True, exist_ok=True)
+    failure_root = output_root / "failures"
+    failure_root.mkdir(exist_ok=True)
+    staging = temporary_directory or Path(
+        tempfile.mkdtemp(prefix=".stochastic-failure-", dir=failure_root)
+    )
+    artifacts = [
+        {
+            "path": path.relative_to(staging).as_posix(),
+            "sha256": _fingerprint(path.read_bytes()),
+        }
+        for path in sorted(path for path in staging.rglob("*") if path.is_file())
+        if path.name != "failure.json"
+    ]
+    receipt_core = {
+        "schema_version": "smartdca-stochastic-study-failure/1",
+        "status": "failed",
+        "stage": stage,
+        "error": _failure_error(error, stage),
+        "identities": dict(identities),
+        "sample_counts": dict(sample_counts),
+        "failure_counts": _failure_counts(stage, error),
+        "artifacts": artifacts,
+    }
+    failure_id = (
+        "smartdca-stochastic-failure-v1-"
+        + _fingerprint(_canonical_json(receipt_core).encode("utf-8"))
+    )
+    receipt = {"failure_id": failure_id, **receipt_core}
+    _write_json(staging / "failure.json", receipt)
+    final_directory = failure_root / failure_id
+    if final_directory.exists():
+        existing_receipt = (final_directory / "failure.json").read_bytes()
+        staged_receipt = (staging / "failure.json").read_bytes()
+        if existing_receipt != staged_receipt:
+            raise RunIdentityCollisionError(
+                "failure_identity_collision",
+                "output_root",
+                f"{failure_id} exists with different receipt bytes",
+            )
+        _remove_tree(staging)
+    else:
+        os.replace(staging, final_directory)
+    receipt_path = final_directory / "failure.json"
+    try:
+        setattr(error, "failure_receipt", str(receipt_path))
+    except (AttributeError, TypeError):
+        pass
+    return receipt_path
+
+
+def run_stochastic_study_from_paths(
+    config_path: Path, study_path: Path, output_root: Path
+) -> StochasticStudyBundle:
+    """Load and run saved inputs while durably retaining validation failures."""
+    _require(
+        isinstance(output_root, Path),
+        "invalid_type",
+        "output_root",
+        "must be pathlib.Path",
+    )
+    loose_study = _loosely_loaded_document(study_path)
+    identities = {
+        "protocol_sha256": _safe_file_sha256(config_path),
+        "study_spec_sha256": _safe_file_sha256(study_path),
+        "generator_sha256": _source_sha256(),
+        "runner_sha256": _runner_source_sha256(),
+    }
+    try:
+        config = load_study_config(config_path)
+        study = load_stochastic_study(study_path)
+    except ExperimentValidationError as error:
+        _persist_failure_directory(
+            output_root,
+            "configuration",
+            error,
+            identities,
+            _failure_sample_counts(
+                _declared_path_count(loose_study), tuple(), None
+            ),
+        )
+        raise
+    return run_stochastic_study(config, study, output_root)
+
+
 def run_stochastic_study(
     config: StudyConfig, study: StochasticStudy, output_root: Path
 ) -> StochasticStudyBundle:
@@ -1548,14 +2186,36 @@ def run_stochastic_study(
     _require(isinstance(config, StudyConfig), "invalid_type", "config", "must be StudyConfig")
     _require(isinstance(study, StochasticStudy), "invalid_type", "study", "must be StochasticStudy")
     _require(isinstance(output_root, Path), "invalid_type", "output_root", "must be pathlib.Path")
+    output_root.mkdir(parents=True, exist_ok=True)
     document = study.as_mapping()
     config_document = config.as_mapping()
-    _require(
-        document["horizons_months"] == config_document["episode_design"]["horizons_months"],
-        "protocol_grid_mismatch",
-        "study.horizons_months",
-        "must equal the preregistered primary horizon grid",
-    )
+    declared_path_count = _declared_path_count(document)
+    identities = {
+        "protocol_sha256": config.sha256,
+        "study_spec_sha256": study.sha256,
+        "generator_sha256": _source_sha256(),
+        "runner_sha256": _runner_source_sha256(),
+        "runner_input_sha256": None,
+        "study_run_id": None,
+        "runner_run_id": None,
+    }
+    try:
+        _require(
+            document["horizons_months"]
+            == config_document["episode_design"]["horizons_months"],
+            "protocol_grid_mismatch",
+            "study.horizons_months",
+            "must equal the preregistered primary horizon grid",
+        )
+    except ExperimentValidationError as error:
+        _persist_failure_directory(
+            output_root,
+            "configuration",
+            error,
+            identities,
+            _failure_sample_counts(declared_path_count, tuple(), None),
+        )
+        raise
     start = _iso_date(document["start_date"], "study.start_date")
     deposit = str(_decimal(document["deposit"], "study.deposit"))
     maximum_horizon = max(document["horizons_months"])
@@ -1675,14 +2335,29 @@ def run_stochastic_study(
                         "process_diagnostics": process_diagnostics,
                     }
                 )
-    generated_families = {episode["family"] for episode in episodes}
-    _require(
-        set(document["required_families"]) <= generated_families,
-        "missing_required_family",
-        "study.required_families",
-        "every required family must generate at least one path",
-    )
     path_attempts = tuple(attempts)
+    generated_families = {episode["family"] for episode in episodes}
+    try:
+        _require(
+            set(document["required_families"]) <= generated_families,
+            "missing_required_family",
+            "study.required_families",
+            "every required family must generate at least one path",
+        )
+    except ExperimentValidationError as error:
+        failure_staging = Path(
+            tempfile.mkdtemp(prefix=".stochastic-generator-failure-", dir=output_root)
+        )
+        _write_jsonl(failure_staging / "path-attempts.jsonl", path_attempts)
+        _persist_failure_directory(
+            output_root,
+            "generator",
+            error,
+            identities,
+            _failure_sample_counts(declared_path_count, path_attempts, None),
+            failure_staging,
+        )
+        raise
     runner_input_document = {
         "schema_version": "smartdca-versioned-input/1",
         "input_id": document["input_id"],
@@ -1697,21 +2372,51 @@ def run_stochastic_study(
         "episodes": episodes,
     }
     runner_input_payload = (_canonical_json(runner_input_document) + "\n").encode("utf-8")
-    runner_input = VersionedInput.from_json_bytes(runner_input_payload)
+    try:
+        runner_input = VersionedInput.from_json_bytes(runner_input_payload)
+    except ExperimentValidationError as error:
+        identities["runner_input_sha256"] = _fingerprint(runner_input_payload)
+        failure_staging = Path(
+            tempfile.mkdtemp(prefix=".stochastic-input-failure-", dir=output_root)
+        )
+        (failure_staging / "runner-input.json").write_bytes(runner_input_payload)
+        _write_jsonl(failure_staging / "path-attempts.jsonl", path_attempts)
+        _persist_failure_directory(
+            output_root,
+            "input_validation",
+            error,
+            identities,
+            _failure_sample_counts(declared_path_count, path_attempts, None),
+            failure_staging,
+        )
+        raise
     study_run_id = _study_run_id(config, study, runner_input)
-    output_root.mkdir(parents=True, exist_ok=True)
+    identities["runner_input_sha256"] = runner_input.sha256
+    identities["study_run_id"] = study_run_id
     final_directory = output_root / study_run_id
     if final_directory.exists():
-        raise RunIdentityCollisionError(
+        error = RunIdentityCollisionError(
             "run_identity_collision", "output_root", f"{study_run_id} already exists"
         )
+        _persist_failure_directory(
+            output_root,
+            "configuration",
+            error,
+            identities,
+            _failure_sample_counts(declared_path_count, path_attempts, None),
+        )
+        raise error
     temporary_directory = Path(
         tempfile.mkdtemp(prefix=f".{study_run_id}-", dir=output_root)
     )
+    runner: RunBundle | None = None
+    failure_stage = "runner"
     try:
         (temporary_directory / "runner-input.json").write_bytes(runner_input_payload)
+        _write_jsonl(temporary_directory / "path-attempts.jsonl", path_attempts)
         runner_stage = temporary_directory / "runner-stage"
         runner = run_experiment(config, runner_input, runner_stage)
+        identities["runner_run_id"] = runner.run_id
         _require(
             runner.manifest["runner_sha256"] == _runner_source_sha256(),
             "runner_source_drift",
@@ -1722,11 +2427,11 @@ def run_stochastic_study(
         os.replace(runner.output_directory, runner_directory)
         runner_stage.rmdir()
         packaged_runner_manifest = _package_runner_ledgers(runner_directory)
-        _write_jsonl(temporary_directory / "path-attempts.jsonl", path_attempts)
         serialized_results = _read_jsonl(runner_directory / "episode-results.jsonl")
         serialized_runner_aggregates = json.loads(
             (runner_directory / "aggregates.json").read_text(encoding="utf-8")
         )
+        failure_stage = "comparison"
         with localcontext() as decimal_context:
             decimal_context.prec = 60
             stochastic_aggregates = _aggregate_stochastic_results(
@@ -1735,9 +2440,11 @@ def run_stochastic_study(
                 serialized_results,
                 path_attempts,
             )
-        reconciliation = _reconcile_runner_aggregates(
+        reconciliation = reconcile_stochastic_aggregates(
             stochastic_aggregates,
             serialized_runner_aggregates,
+            serialized_results,
+            path_attempts,
         )
         enriched_results = _enrich_results(serialized_results, path_attempts)
         figure_rows = _figure_rows(stochastic_aggregates)
@@ -1786,6 +2493,7 @@ def run_stochastic_study(
                     for row in path_attempts
                 ),
                 "runner": 0,
+                "comparison": 0,
             },
             "aggregate_reconciliation": reconciliation,
             "shared_runner_validation": runner.validation,
@@ -1861,8 +2569,15 @@ def run_stochastic_study(
         }
         _write_json(temporary_directory / "manifest.json", manifest)
         os.replace(temporary_directory, final_directory)
-    except BaseException:
-        _remove_tree(temporary_directory)
+    except Exception as error:
+        _persist_failure_directory(
+            output_root,
+            failure_stage,
+            error,
+            identities,
+            _failure_sample_counts(declared_path_count, path_attempts, runner),
+            temporary_directory,
+        )
         raise
     relocated_runner = RunBundle(
         run_id=runner.run_id,
@@ -1892,9 +2607,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output-root", required=True, type=Path)
     arguments = parser.parse_args(argv)
     try:
-        bundle = run_stochastic_study(
-            load_study_config(arguments.config),
-            load_stochastic_study(arguments.study),
+        bundle = run_stochastic_study_from_paths(
+            arguments.config,
+            arguments.study,
             arguments.output_root,
         )
     except ExperimentValidationError as error:
@@ -1905,11 +2620,25 @@ def main(argv: list[str] | None = None) -> int:
                     "code": error.code,
                     "field": error.field,
                     "message": str(error),
+                    "failure_receipt": getattr(error, "failure_receipt", None),
                 }
             ),
             file=sys.stderr,
         )
         return 2
+    except Exception as error:
+        print(
+            _canonical_json(
+                {
+                    "status": "failed",
+                    "code": f"{type(error).__name__}",
+                    "message": str(error),
+                    "failure_receipt": getattr(error, "failure_receipt", None),
+                }
+            ),
+            file=sys.stderr,
+        )
+        return 1
     print(
         _canonical_json(
             {

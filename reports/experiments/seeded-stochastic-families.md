@@ -33,8 +33,8 @@ sources:
     source_kind: internal
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-29T17:05:40Z
-generation_run: urn:uuid:15319e45-956d-416a-9325-3da71cab0060
+  at: 2026-08-29T18:35:34Z
+generation_run: urn:uuid:ac795fdc-b96d-4dae-9f8f-5974ed34f822
 ---
 # Seeded stochastic path-family evaluation
 
@@ -48,10 +48,10 @@ volatility, regime-switching, and jump constructions?
 ## Run identity and scope
 
 The immutable study manifest is
-[`smartdca-stochastic-v1-73994b28bd930d35548d60497921065f5a6320068a2f371374238587a6faf065`](runs/smartdca-stochastic-v1-73994b28bd930d35548d60497921065f5a6320068a2f371374238587a6faf065/manifest.json).
+[`smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25`](runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/manifest.json).
 It binds the frozen protocol (`a508b4f0…d6e4`), saved stochastic study
 (`29929392…297d`), generated runner input (`30873d39…bb6`), generator source
-(`4c0ca98e…5ffa`), shared runner (`7fd480fd…fee`), and CPython `3.12.14`.
+(`af4484cd…d41e`), shared runner (`7fd480fd…fee`), and CPython `3.12.14`.
 The detailed identity and fingerprint audit is recorded in the linked
 [research note](../../research/notes/seeded-stochastic-family-evaluation-audit.md).
 [^stochastic-audit]
@@ -68,8 +68,8 @@ runner failures. Each path executes the frozen
 
 The resulting bundle contains 3,240 complete policy ledgers, 3,240 comparison
 rows, 1,080 aggregate cells, exhaustive
-[figure-ready data](runs/smartdca-stochastic-v1-73994b28bd930d35548d60497921065f5a6320068a2f371374238587a6faf065/stochastic-figure-ready.csv),
-and generated [report tables](runs/smartdca-stochastic-v1-73994b28bd930d35548d60497921065f5a6320068a2f371374238587a6faf065/report-tables.txt).
+[figure-ready data](runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/stochastic-figure-ready.csv),
+and generated [report tables](runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/report-tables.txt).
 The empirical layers and immutable identity rules follow
 [ADR 0008](../../docs/adr/0008-place-empirical-protocol-input-run-layers.md).
 [^empirical-layers]
@@ -86,7 +86,7 @@ The empirical layers and immutable identity rules follow
 
 These values are economically interpretable stress controls, not estimates
 fitted to a historical asset. The
-[attempt ledger](runs/smartdca-stochastic-v1-73994b28bd930d35548d60497921065f5a6320068a2f371374238587a6faf065/path-attempts.jsonl)
+[attempt ledger](runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/path-attempts.jsonl)
 retains every parameter, seed, horizon, path fingerprint, realized return,
 volatility, drawdown, and regime/volatility/jump diagnostic before policy
 performance is summarized.
@@ -136,7 +136,7 @@ regime baselines, while other families have different realized shapes.
 At \(\lambda=0.75\), primary corrected-policy terminal cash drag averages
 about 1.5–1.9% of deposits across families and terminal asset exposure is
 about 98.3–98.4% of wealth. The complete
-[aggregate data](runs/smartdca-stochastic-v1-73994b28bd930d35548d60497921065f5a6320068a2f371374238587a6faf065/stochastic-aggregates.json)
+[aggregate data](runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/stochastic-aggregates.json)
 retains mean and median relative gaps, downside quantiles, worst shortfall,
 cash drag, exposure, activation, mean floor, purchase counts, fees, terminal
 cash and units, cash/unit contributions, win/tie/loss counts, and every
@@ -162,18 +162,22 @@ replaces the primary baseline after outcome access.
 ## Accounting, costs, and failures
 
 All 1,080 aggregate cells independently reconcile with the serialized episode
-rows across 27 shared statistics. The nested validation replays every causal
-prefix and passes full funding, buy-only accounting, frictionless unit
-coverage, direct wealth, terminal cash/unit identity, shared floors, and
-independent DCA accounting. The complete compressed ledger keeps the original
-104,897,868-byte SHA-256 in its manifest.
+rows across every one of the 46 study fields and all 39 shared-runner fields:
+49,684 study values and 42,124 runner values, including top-level counts, with
+zero mismatches. The nested validation replays every causal prefix and passes
+full funding, buy-only accounting, frictionless unit coverage, direct wealth,
+terminal cash/unit identity, shared floors, and independent DCA accounting.
+The complete compressed ledger keeps the original 104,897,868-byte SHA-256 in
+its manifest.
 
 Frictionless guarded results are the only rows labeled with the current
 epsilon-DCA theorem. The 2,160 proportional- or fixed-cost ledgers are separate
 net empirical results labeled `outside-current-safety-theorem`; they do not
-inherit the guarantee. The completed run has zero failures and exclusions,
-while the machine schema and executable checkpoint preserve typed generator,
-configuration, input, numerical, runner, and comparison failure routes.
+inherit the guarantee. The completed run has zero failures and exclusions.
+Focused executable checks also force invalid-configuration and runner-boundary
+failures and verify that each leaves an immutable machine-readable receipt,
+retained path attempts where available, and explicit declared, attempted,
+included, and excluded counts.
 
 ## Reproduction
 

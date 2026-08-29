@@ -1,0 +1,51 @@
+## Complete retained grid
+
+| Tier | Family | Generator configuration | Attempted | Generated | Excluded |
+|---|---|---|---:|---:|---:|
+| primary | trend | trend-positive-baseline | 9 | 9 | 0 |
+| exploratory | trend | trend-negative-drift-sensitivity | 9 | 9 | 0 |
+| primary | mean_reversion | mean-reversion-twelve-month-baseline | 9 | 9 | 0 |
+| exploratory | mean_reversion | mean-reversion-three-month-sensitivity | 9 | 9 | 0 |
+| primary | stochastic_volatility | stochastic-volatility-fifteen-percent-baseline | 9 | 9 | 0 |
+| exploratory | stochastic_volatility | stochastic-volatility-thirty-five-percent-sensitivity | 9 | 9 | 0 |
+| primary | regime_switching | regime-switching-baseline | 9 | 9 | 0 |
+| exploratory | regime_switching | regime-switching-persistent-bear-sensitivity | 9 | 9 | 0 |
+| primary | jump_diffusion | jump-diffusion-four-percent-baseline | 9 | 9 | 0 |
+| exploratory | jump_diffusion | jump-diffusion-twelve-percent-sensitivity | 9 | 9 | 0 |
+
+## Primary frictionless distribution slice
+
+Longest horizon (60 months), lambda=0.75; every row is descriptive.
+
+| Family | Generator configuration | Comparison | N | Median gap | 5% downside | Worst shortfall | Mean cash contribution | Mean unit contribution |
+|---|---|---|---:|---:|---:|---:|---:|---:|
+| trend | trend-positive-baseline | corrected_guarded_vs_dca | 3 | -0.269% | -0.273% | 0.273% | 1015.59515455153611111052002215145776029514642594486657643066 | -1143.87197124253060923150448672333337239497612721968799382543 |
+| trend | trend-positive-baseline | corrected_guarded_vs_neutral_guarded | 3 | 0.043% | 0.037% | 0.000% | 15.59515455153612504023642396791827711711704915278676612069 | 10.4317359455895872064764903893961132175763650257516927488782 |
+| mean_reversion | mean-reversion-twelve-month-baseline | corrected_guarded_vs_dca | 3 | 0.111% | 0.097% | 0.000% | 894.403869151412087727682546698425177899111673915178545368463 | -782.924638747556940898557296436176568306577755507748934384907 |
+| mean_reversion | mean-reversion-twelve-month-baseline | corrected_guarded_vs_neutral_guarded | 3 | 0.071% | 0.037% | 0.000% | -105.596130848587898209324139076965346040990042653340898849431 | 140.438636272467726157495520327478250614353710015218869543092 |
+| stochastic_volatility | stochastic-volatility-fifteen-percent-baseline | corrected_guarded_vs_dca | 3 | -0.491% | -0.580% | 0.590% | 1075.47842505504140979574407014156135766472080744469354063324 | -1260.91230071594299489501015609828383194180422354876246122842 |
+| stochastic_volatility | stochastic-volatility-fifteen-percent-baseline | corrected_guarded_vs_neutral_guarded | 3 | 0.022% | 0.009% | 0.000% | 75.478425055041424439352216681306631351757156548252011749249 | -56.6049166778095717595630631447849196109774387486658424297627 |
+| regime_switching | regime-switching-baseline | corrected_guarded_vs_dca | 3 | -0.773% | -0.883% | 0.895% | 1155.57020486230183970644906755836654967057424972511162898342 | -1544.4430508720939625676354924349231789008211328103337607202 |
+| regime_switching | regime-switching-baseline | corrected_guarded_vs_neutral_guarded | 3 | -0.029% | -0.060% | 0.064% | 155.570204862301852642940385507890683296235659048350763430589 | -165.76888849878698616069327506997555195652482339844967596244 |
+| jump_diffusion | jump-diffusion-four-percent-baseline | corrected_guarded_vs_dca | 3 | 0.115% | -0.103% | 0.128% | 962.065815642646333305473397550605232357360579994647728804633 | -864.087983867923431248011893707898938376449304823276959733373 |
+| jump_diffusion | jump-diffusion-four-percent-baseline | corrected_guarded_vs_neutral_guarded | 3 | 0.020% | 0.017% | 0.000% | -37.93418435735365347333262888142644155091178463169185490322 | 58.6785244717729396577089251843265298472373693648223522359057 |
+
+## Exploratory sensitivity distribution slice
+
+Longest horizon (60 months), lambda=0.75; every row is descriptive.
+
+| Family | Generator configuration | Comparison | N | Median gap | 5% downside | Worst shortfall | Mean cash contribution | Mean unit contribution |
+|---|---|---|---:|---:|---:|---:|---:|---:|
+| trend | trend-negative-drift-sensitivity | corrected_guarded_vs_dca | 3 | 0.659% | 0.633% | 0.000% | 753.12590736266017888376244945443778344242434426504617232898 | -430.691612341654765291866295158704108223538664342812421124447 |
+| trend | trend-negative-drift-sensitivity | corrected_guarded_vs_neutral_guarded | 3 | -0.037% | -0.085% | 0.090% | -246.874092637339806123067370070482871079383570202555403618091 | 226.053083832901814826992570535970479713454315406784458958456 |
+| mean_reversion | mean-reversion-three-month-sensitivity | corrected_guarded_vs_dca | 3 | 0.365% | 0.242% | 0.000% | 875.224226113647645102287208704714394736909185643995165624447 | -661.778465672430400629904979735962671878807457199320613467313 |
+| mean_reversion | mean-reversion-three-month-sensitivity | corrected_guarded_vs_neutral_guarded | 3 | 0.275% | 0.227% | 0.000% | -124.775773886352341790553548825783720507950790623447002758287 | 277.164639980165851565006380224896635833755473935121953045407 |
+| stochastic_volatility | stochastic-volatility-thirty-five-percent-sensitivity | corrected_guarded_vs_dca | 3 | -0.021% | -0.159% | 0.174% | 919.60227720371692152002177892771362594649743192259794051703 | -766.670990146114981300745012336072232557255919007443827366967 |
+| stochastic_volatility | stochastic-volatility-thirty-five-percent-sensitivity | corrected_guarded_vs_neutral_guarded | 3 | 0.252% | -0.065% | 0.100% | -80.3977227962830619443368928016668530000652116377337269897653 | 194.171569002641615670234953961501103674147964991307029775732 |
+| regime_switching | regime-switching-persistent-bear-sensitivity | corrected_guarded_vs_dca | 3 | 0.711% | -0.348% | 0.466% | 913.567792977529321957626440885404706587434812254457761539643 | -779.099281680483758252724974885162573594827635693982099273423 |
+| regime_switching | regime-switching-persistent-bear-sensitivity | corrected_guarded_vs_neutral_guarded | 3 | 0.063% | -0.030% | 0.040% | -86.4322070224706652207029518329959779151003222440068138742617 | 121.558244819936572401058449064330189697438339534417194455964 |
+| jump_diffusion | jump-diffusion-twelve-percent-sensitivity | corrected_guarded_vs_dca | 3 | 0.080% | -0.021% | 0.033% | 1000.22667288741773957986939231034089442968651207900793441194 | -879.7419832117071400620893763211453743529263483238237121541 |
+| jump_diffusion | jump-diffusion-twelve-percent-sensitivity | corrected_guarded_vs_neutral_guarded | 3 | -0.009% | -0.131% | 0.145% | 0.226672887417753776378217744464842884087022114504314557241667 | -12.717439446779298721166973585827324360982976830886745502486 |
+
+Controlled stochastic sensitivity is not historical evidence or a proof of stochastic optimality.
+Cost-adjusted rows are empirical net-performance results outside the current epsilon-DCA theorem; only frictionless guarded rows carry that theorem scope.

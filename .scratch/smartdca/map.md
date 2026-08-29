@@ -7,8 +7,8 @@ knowledge_role: operational
 status: stable
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T11:18:28Z
-generation_run: urn:uuid:1e2029d0-e145-456a-ba97-2ddca88bc388
+  at: 2026-08-29T18:35:34Z
+generation_run: urn:uuid:92f2c96e-a0fc-46da-a38c-4a641f621bf9
 verified:
   - by: openai-codex/writing-for-agents-0.1
     at: 2026-08-23T21:32:48Z
@@ -117,7 +117,7 @@ A thesis- and paper-grade, self-contained Financial Computing study suitable for
 
 ## Active efforts
 
-- [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) has an approved seven-ticket tracer route. Tickets [01](efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md) and [02](efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md) are resolved. Tickets 03 and 04 are open, unblocked, and unclaimed pending the user significance gate; ticket 05 remains blocked by 04, and tickets 06–07 retain their declared dependencies.
+- [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) has an approved seven-ticket tracer route. Tickets [01](efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md) and [02](efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md) are resolved. Ticket [03](efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md) is claimed with its review-corrected durable run under final verification; ticket 04 remains open and unclaimed, ticket 05 remains blocked by 04, and tickets 06–07 retain their declared dependencies.
 
 ## Not yet specified
 

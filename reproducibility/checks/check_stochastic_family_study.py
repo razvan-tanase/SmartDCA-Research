@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import copy
 import gzip
 import hashlib
 import json
@@ -11,8 +12,14 @@ import tempfile
 import unittest
 from decimal import Decimal
 from pathlib import Path
+from unittest import mock
 
-from reproducibility.empirical import StudyConfig, load_study_config
+from reproducibility.empirical import (
+    ExperimentValidationError,
+    StudyConfig,
+    load_study_config,
+)
+from reproducibility import stochastic_study as study_runner
 from reproducibility.stochastic_study import (
     StochasticStudy,
     load_stochastic_study,
@@ -27,7 +34,7 @@ STOCHASTIC_STUDY = (
 )
 COMMITTED_RUN_ID = (
     "smartdca-stochastic-v1-"
-    "73994b28bd930d35548d60497921065f5a6320068a2f371374238587a6faf065"
+    "78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25"
 )
 COMMITTED_RUN = ROOT / "reports" / "experiments" / "runs" / COMMITTED_RUN_ID
 REPORT = ROOT / "reports" / "experiments" / "seeded-stochastic-families.md"
@@ -171,7 +178,69 @@ def _config_with_horizons(horizons: list[int]) -> StudyConfig:
     return StudyConfig.from_mapping(document)
 
 
+def _study_with_exploratory_family() -> StochasticStudy:
+    document = _all_required_family_study().as_mapping()
+    document["seeds"] = [104729, 130363]
+    document["family_configurations"].append(
+        {
+            "config_id": "trend-negative-drift-sensitivity",
+            "family": "trend",
+            "tier": "exploratory",
+            "description": "Negative six percent drift sensitivity.",
+            "parameters": {
+                "start_price": "100",
+                "annual_drift": "-0.06",
+                "annual_volatility": "0.15",
+            },
+        }
+    )
+    return StochasticStudy.from_mapping(document)
+
+
+def _study_with_generator_failure() -> StochasticStudy:
+    document = _all_required_family_study().as_mapping()
+    document["horizons_months"] = [1]
+    document["family_configurations"].append(
+        {
+            "config_id": "trend-underflow-probe",
+            "family": "trend",
+            "tier": "exploratory",
+            "description": "Test-only numerical underflow probe.",
+            "parameters": {
+                "start_price": "1e-999",
+                "annual_drift": "0.06",
+                "annual_volatility": "0.15",
+            },
+        }
+    )
+    return StochasticStudy.from_mapping(document)
+
+
 class StochasticStudyContractTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.fixture_directory = tempfile.TemporaryDirectory()
+        fixture_root = Path(cls.fixture_directory.name)
+        cls.all_family_bundle = run_stochastic_study(
+            _config_with_horizons([3]),
+            _all_required_family_study(),
+            fixture_root / "all-families",
+        )
+        cls.exploratory_bundle = run_stochastic_study(
+            _config_with_horizons([3]),
+            _study_with_exploratory_family(),
+            fixture_root / "exploratory",
+        )
+        cls.generator_failure_bundle = run_stochastic_study(
+            _config_with_horizons([1]),
+            _study_with_generator_failure(),
+            fixture_root / "generator-failure",
+        )
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.fixture_directory.cleanup()
+
     def test_saved_design_freezes_primary_and_exploratory_family_grid(self) -> None:
         study = load_stochastic_study(STOCHASTIC_STUDY).as_mapping()
 
@@ -210,19 +279,31 @@ class StochasticStudyContractTest(unittest.TestCase):
             90,
         )
 
-    def test_committed_bundle_fingerprints_counts_and_report_claims(self) -> None:
+    def test_committed_manifest_identifies_the_complete_path_population(self) -> None:
         manifest = json.loads((COMMITTED_RUN / "manifest.json").read_text())
-        self.assertEqual(manifest["study_run_id"], COMMITTED_RUN_ID)
-        self.assertEqual(manifest["attempted_path_count"], 90)
-        self.assertEqual(manifest["generated_path_count"], 90)
-        self.assertEqual(manifest["excluded_path_count"], 0)
-        for artifact in manifest["artifacts"]:
-            self.assertEqual(
-                _sha256((COMMITTED_RUN / artifact["path"]).read_bytes()),
-                artifact["sha256"],
-                msg=artifact["path"],
-            )
 
+        self.assertEqual(
+            (
+                manifest["study_run_id"],
+                manifest["attempted_path_count"],
+                manifest["generated_path_count"],
+                manifest["excluded_path_count"],
+            ),
+            (COMMITTED_RUN_ID, 90, 90, 0),
+        )
+
+    def test_committed_artifacts_match_the_outer_manifest(self) -> None:
+        manifest = json.loads((COMMITTED_RUN / "manifest.json").read_text())
+        mismatches = [
+            artifact["path"]
+            for artifact in manifest["artifacts"]
+            if _sha256((COMMITTED_RUN / artifact["path"]).read_bytes())
+            != artifact["sha256"]
+        ]
+
+        self.assertEqual(mismatches, [])
+
+    def test_committed_ledger_package_reconstructs_the_manifested_rows(self) -> None:
         runner_manifest = json.loads(
             (COMMITTED_RUN / "runner" / "manifest.json").read_text()
         )
@@ -233,33 +314,70 @@ class StochasticStudyContractTest(unittest.TestCase):
         )
         compressed = (COMMITTED_RUN / "runner" / "ledgers.jsonl.gz").read_bytes()
         uncompressed = gzip.decompress(compressed)
-        self.assertEqual(compressed[9], 255)
-        self.assertEqual(_sha256(compressed), ledger_artifact["sha256"])
-        self.assertEqual(len(uncompressed), ledger_artifact["uncompressed_bytes"])
-        self.assertEqual(
-            _sha256(uncompressed), ledger_artifact["uncompressed_sha256"]
-        )
-        self.assertEqual(len(uncompressed.splitlines()), 3240)
 
+        self.assertEqual(
+            (
+                compressed[9],
+                _sha256(compressed),
+                len(uncompressed),
+                _sha256(uncompressed),
+                len(uncompressed.splitlines()),
+            ),
+            (
+                255,
+                ledger_artifact["sha256"],
+                ledger_artifact["uncompressed_bytes"],
+                ledger_artifact["uncompressed_sha256"],
+                3240,
+            ),
+        )
+
+    def test_committed_validation_reports_no_failed_or_excluded_paths(self) -> None:
         validation = json.loads(
             (COMMITTED_RUN / "study-validation.json").read_text()
         )
-        self.assertEqual(validation["status"], "passed")
-        self.assertEqual(validation["failure_counts"], {
-            "configuration": 0,
-            "generator": 0,
-            "input_validation": 0,
-            "numerical": 0,
-            "runner": 0,
-        })
+
         self.assertEqual(
-            validation["aggregate_reconciliation"]["reconciled_group_count"],
-            1080,
-        )
-        self.assertEqual(
-            validation["aggregate_reconciliation"]["mismatch_count"], 0
+            (
+                validation["status"],
+                validation["attempted_path_count"],
+                validation["generated_path_count"],
+                validation["excluded_path_count"],
+                validation["failure_counts"],
+            ),
+            (
+                "passed",
+                90,
+                90,
+                0,
+                {
+                    "configuration": 0,
+                    "generator": 0,
+                    "input_validation": 0,
+                    "numerical": 0,
+                    "runner": 0,
+                    "comparison": 0,
+                },
+            ),
         )
 
+    def test_committed_reconciliation_covers_every_aggregate_field(self) -> None:
+        reconciliation = json.loads(
+            (COMMITTED_RUN / "aggregate-reconciliation.json").read_text()
+        )
+
+        self.assertEqual(
+            (
+                reconciliation["status"],
+                reconciliation["reconciled_group_count"],
+                reconciliation["study_group_field_count"],
+                reconciliation["runner_group_field_count"],
+                reconciliation["mismatch_count"],
+            ),
+            ("passed", 1080, 46, 39, 0),
+        )
+
+    def test_report_distribution_rows_are_derived_from_committed_aggregates(self) -> None:
         aggregate_document = json.loads(
             (COMMITTED_RUN / "stochastic-aggregates.json").read_text()
         )
@@ -303,6 +421,7 @@ class StochasticStudyContractTest(unittest.TestCase):
             ),
             ("More frequent jumps", "jump-diffusion-twelve-percent-sensitivity"),
         )
+        missing_rows = []
         for label, config_id in displayed_configurations:
             complete = selected_group(config_id, "corrected_guarded_vs_dca")
             signal = selected_group(
@@ -319,18 +438,40 @@ class StochasticStudyContractTest(unittest.TestCase):
                 f"{shortfall_percent(signal['worst_observed_relative_shortfall'])} | "
                 f"{signed_percent(architecture['median_relative_terminal_wealth_gap'])} |"
             )
-            self.assertIn(expected_row, report)
+            if expected_row not in report:
+                missing_rows.append(expected_row)
+
+        self.assertEqual(missing_rows, [])
+
+    def test_report_cash_unit_attribution_is_derived_from_committed_aggregates(self) -> None:
+        aggregate_document = json.loads(
+            (COMMITTED_RUN / "stochastic-aggregates.json").read_text()
+        )
+
+        def selected_group(config_id: str) -> dict[str, object]:
+            return next(
+                group
+                for group in aggregate_document["groups"]
+                if group["generator_config_id"] == config_id
+                and group["horizon_months"] == 60
+                and group["coverage"] == "0.75"
+                and group["cost_scenario"] == "frictionless"
+                and group["comparison"] == "corrected_guarded_vs_dca"
+            )
+
+        report = REPORT.read_text()
+        missing_values = []
         for config_id in (
             "trend-positive-baseline",
             "mean-reversion-twelve-month-baseline",
         ):
-            group = selected_group(config_id, "corrected_guarded_vs_dca")
-            self.assertIn(
-                f"`{Decimal(group['mean_cash_contribution']):+.3f}`", report
-            )
-            self.assertIn(
-                f"`{Decimal(group['mean_unit_contribution']):+.3f}`", report
-            )
+            group = selected_group(config_id)
+            for field in ("mean_cash_contribution", "mean_unit_contribution"):
+                rendered = f"`{Decimal(group[field]):+.3f}`"
+                if rendered not in report:
+                    missing_values.append(rendered)
+
+        self.assertEqual(missing_values, [])
 
     @unittest.skipUnless(
         sys.version_info[:2] == (3, 12),
@@ -401,47 +542,43 @@ class StochasticStudyContractTest(unittest.TestCase):
             self.assertEqual(short_path, long_prefix)
 
     def test_all_declared_families_run_the_complete_shared_policy_grid(self) -> None:
-        config = _config_with_horizons([3])
-        study = _all_required_family_study()
-        with tempfile.TemporaryDirectory() as output:
-            bundle = run_stochastic_study(config, study, Path(output))
+        bundle = self.all_family_bundle
 
-        self.assertEqual(len(bundle.path_attempts), 5)
-        self.assertEqual({row["status"] for row in bundle.path_attempts}, {"generated"})
         self.assertEqual(
-            {row["family"] for row in bundle.path_attempts},
-            {
-                "trend",
-                "mean_reversion",
-                "stochastic_volatility",
-                "regime_switching",
-                "jump_diffusion",
-            },
-        )
-        self.assertEqual(len(bundle.runner.ledgers), 180)
-        self.assertEqual(len(bundle.runner.episode_results), 180)
-        self.assertEqual(
-            {row["policy"] for row in bundle.runner.ledgers},
-            {"dca", "neutral_guarded", "corrected_guarded"},
-        )
-        self.assertEqual(
-            {row["comparison"] for row in bundle.runner.episode_results},
-            {
-                "corrected_guarded_vs_dca",
-                "corrected_guarded_vs_neutral_guarded",
-                "neutral_guarded_vs_dca",
-            },
+            (
+                len(bundle.path_attempts),
+                {row["status"] for row in bundle.path_attempts},
+                {row["family"] for row in bundle.path_attempts},
+                len(bundle.runner.ledgers),
+                len(bundle.runner.episode_results),
+                {row["policy"] for row in bundle.runner.ledgers},
+                {row["comparison"] for row in bundle.runner.episode_results},
+            ),
+            (
+                5,
+                {"generated"},
+                {
+                    "trend",
+                    "mean_reversion",
+                    "stochastic_volatility",
+                    "regime_switching",
+                    "jump_diffusion",
+                },
+                180,
+                180,
+                {"dca", "neutral_guarded", "corrected_guarded"},
+                {
+                    "corrected_guarded_vs_dca",
+                    "corrected_guarded_vs_neutral_guarded",
+                    "neutral_guarded_vs_dca",
+                },
+            ),
         )
 
     def test_attempt_receipts_expose_realized_path_and_process_diagnostics(self) -> None:
-        with tempfile.TemporaryDirectory() as output:
-            bundle = run_stochastic_study(
-                _config_with_horizons([3]),
-                _all_required_family_study(),
-                Path(output),
-            )
-
-        by_family = {row["family"]: row for row in bundle.path_attempts}
+        by_family = {
+            row["family"]: row for row in self.all_family_bundle.path_attempts
+        }
         for receipt in by_family.values():
             self.assertEqual(receipt["status"], "generated")
             self.assertEqual(len(receipt["path_sha256"]), 64)
@@ -473,14 +610,8 @@ class StochasticStudyContractTest(unittest.TestCase):
             },
         )
 
-    def test_frictionless_invariants_and_cost_scope_hold_path_by_path(self) -> None:
-        with tempfile.TemporaryDirectory() as output:
-            bundle = run_stochastic_study(
-                _config_with_horizons([3]),
-                _all_required_family_study(),
-                Path(output),
-            )
-
+    def test_shared_runner_reports_every_accounting_invariant_passed(self) -> None:
+        bundle = self.all_family_bundle
         check_status = {
             check["code"]: check["status"]
             for check in bundle.runner.validation["checks"]
@@ -500,57 +631,79 @@ class StochasticStudyContractTest(unittest.TestCase):
                 "cost_scope_separation": "passed",
             },
         )
-        self.assertTrue(
-            all(
-                abs(Decimal(row["identity_residual"])) <= Decimal("1e-24")
-                for row in bundle.runner.episode_results
-            )
-        )
-        for ledger in bundle.runner.ledgers:
+
+    def test_terminal_cash_unit_identity_holds_for_every_comparison(self) -> None:
+        violations = [
+            row["episode_id"]
+            for row in self.all_family_bundle.runner.episode_results
+            if abs(Decimal(row["identity_residual"])) > Decimal("1e-24")
+        ]
+
+        self.assertEqual(violations, [])
+
+    def test_each_ledger_uses_only_its_cost_scenario_theorem_scope(self) -> None:
+        violations = []
+        for ledger in self.all_family_bundle.runner.ledgers:
             expected_scope = (
                 "epsilon-dca"
                 if ledger["cost_scenario"] == "frictionless"
                 else "outside-current-safety-theorem"
             )
-            self.assertEqual(ledger["theorem_scope"], expected_scope)
-            if ledger["policy"] != "dca" and expected_scope == "epsilon-dca":
-                minimum_coverage = min(
-                    Decimal(step["coverage_after"]) for step in ledger["steps"]
-                )
-                self.assertGreaterEqual(
-                    minimum_coverage,
-                    Decimal("-1e-24"),
-                    msg=f"unit coverage failed for {ledger['episode_id']} {ledger['coverage']} {ledger['policy']}",
+            if ledger["theorem_scope"] != expected_scope:
+                violations.append(
+                    (
+                        ledger["episode_id"],
+                        ledger["cost_scenario"],
+                        ledger["policy"],
+                    )
                 )
 
-    def test_manifest_binds_runtime_inputs_grid_and_replay_contract(self) -> None:
+        self.assertEqual(violations, [])
+
+    def test_frictionless_guarded_ledgers_satisfy_unit_coverage_path_by_path(self) -> None:
+        violations = []
+        for ledger in self.all_family_bundle.runner.ledgers:
+            if (
+                ledger["policy"] == "dca"
+                or ledger["cost_scenario"] != "frictionless"
+            ):
+                continue
+            minimum_coverage = min(
+                Decimal(step["coverage_after"]) for step in ledger["steps"]
+            )
+            if minimum_coverage < Decimal("-1e-24"):
+                violations.append(
+                    (ledger["episode_id"], ledger["coverage"], ledger["policy"])
+                )
+
+        self.assertEqual(violations, [])
+
+    def test_manifest_binds_input_and_runtime_identities(self) -> None:
         config = _config_with_horizons([3])
         study = _all_required_family_study()
-        with tempfile.TemporaryDirectory() as output:
-            bundle = run_stochastic_study(config, study, Path(output))
-            actual_artifact_paths = {
-                path.relative_to(bundle.output_directory).as_posix()
-                for path in bundle.output_directory.rglob("*")
-                if path.is_file()
-                and path != bundle.output_directory / "manifest.json"
-            }
-            compressed_ledgers = (
-                bundle.output_directory / "runner" / "ledgers.jsonl.gz"
-            )
-            compressed_ledger_bytes = compressed_ledgers.read_bytes()
-            raw_ledgers_exists = (
-                bundle.output_directory / "runner" / "ledgers.jsonl"
-            ).exists()
-            compressed_rows = gzip.decompress(compressed_ledger_bytes)
-            packaged_runner_manifest = json.loads(
-                (bundle.output_directory / "runner" / "manifest.json").read_text()
-            )
-
+        bundle = self.all_family_bundle
         manifest = bundle.manifest
-        self.assertEqual(manifest["protocol_sha256"], config.sha256)
-        self.assertEqual(manifest["study_spec_sha256"], study.sha256)
-        self.assertEqual(manifest["runtime"]["implementation"], "CPython")
-        self.assertIn("python", manifest["runtime"])
+
+        self.assertEqual(
+            (
+                manifest["protocol_sha256"],
+                manifest["study_spec_sha256"],
+                manifest["runtime"]["implementation"],
+                bool(manifest["runtime"]["python"]),
+                manifest["reproduction"]["module"],
+            ),
+            (
+                config.sha256,
+                study.sha256,
+                "CPython",
+                True,
+                "reproducibility.stochastic_study",
+            ),
+        )
+
+    def test_manifest_binds_the_complete_execution_grid(self) -> None:
+        manifest = self.all_family_bundle.manifest
+
         self.assertEqual(
             manifest["execution_grid"],
             {
@@ -590,106 +743,143 @@ class StochasticStudyContractTest(unittest.TestCase):
                 ],
             },
         )
-        self.assertEqual(
-            manifest["reproduction"]["module"],
-            "reproducibility.stochastic_study",
+    def test_runner_ledgers_use_the_deterministic_gzip_contract(self) -> None:
+        bundle = self.all_family_bundle
+        compressed_path = bundle.output_directory / "runner" / "ledgers.jsonl.gz"
+        compressed_bytes = compressed_path.read_bytes()
+        uncompressed_bytes = gzip.decompress(compressed_bytes)
+        raw_ledgers_exists = (
+            bundle.output_directory / "runner" / "ledgers.jsonl"
+        ).exists()
+        packaged_runner_manifest = json.loads(
+            (bundle.output_directory / "runner" / "manifest.json").read_text()
         )
-        self.assertFalse(raw_ledgers_exists)
-        self.assertEqual(compressed_ledger_bytes[9], 255)
-        self.assertEqual(len(compressed_rows.splitlines()), 180)
         ledger_artifact = next(
             artifact
             for artifact in packaged_runner_manifest["artifacts"]
             if artifact["path"] == "ledgers.jsonl.gz"
         )
-        self.assertEqual(ledger_artifact["content_encoding"], "gzip")
-        self.assertEqual(ledger_artifact["uncompressed_bytes"], len(compressed_rows))
-        self.assertEqual(len(ledger_artifact["uncompressed_sha256"]), 64)
+
         self.assertEqual(
-            {artifact["path"] for artifact in manifest["artifacts"]},
+            (
+                raw_ledgers_exists,
+                compressed_bytes[9],
+                len(uncompressed_bytes.splitlines()),
+                ledger_artifact["content_encoding"],
+                ledger_artifact["uncompressed_bytes"],
+                len(ledger_artifact["uncompressed_sha256"]),
+            ),
+            (
+                False,
+                255,
+                180,
+                "gzip",
+                len(uncompressed_bytes),
+                64,
+            ),
+        )
+
+    def test_outer_manifest_inventories_every_generated_artifact(self) -> None:
+        bundle = self.all_family_bundle
+        actual_artifact_paths = {
+            path.relative_to(bundle.output_directory).as_posix()
+            for path in bundle.output_directory.rglob("*")
+            if path.is_file()
+            and path != bundle.output_directory / "manifest.json"
+        }
+
+        self.assertEqual(
+            {artifact["path"] for artifact in bundle.manifest["artifacts"]},
             actual_artifact_paths,
         )
 
-    def test_generator_failure_is_retained_with_tier_and_sample_counts(self) -> None:
-        document = _all_required_family_study().as_mapping()
-        document["horizons_months"] = [1]
-        document["family_configurations"].append(
-            {
-                "config_id": "trend-underflow-probe",
-                "family": "trend",
-                "tier": "exploratory",
-                "description": "Test-only numerical underflow probe.",
-                "parameters": {
-                    "start_price": "1e-999",
-                    "annual_drift": "0.06",
-                    "annual_volatility": "0.15",
-                },
-            }
-        )
-        study = StochasticStudy.from_mapping(document)
-        with tempfile.TemporaryDirectory() as output:
-            bundle = run_stochastic_study(
-                _config_with_horizons([1]), study, Path(output)
-            )
-            validation = json.loads(
-                (bundle.output_directory / "study-validation.json").read_text()
-            )
-
+    def test_generator_failure_retains_its_tier_stage_and_reason(self) -> None:
+        bundle = self.generator_failure_bundle
         excluded = [
             row for row in bundle.path_attempts if row["status"] == "excluded"
         ]
-        self.assertEqual(len(excluded), 1)
-        self.assertEqual(excluded[0]["tier"], "exploratory")
-        self.assertEqual(excluded[0]["failure_stage"], "generator")
-        self.assertEqual(excluded[0]["exclusion_reason"], "numerical_failure")
-        self.assertEqual(validation["attempted_path_count"], 6)
-        self.assertEqual(validation["generated_path_count"], 5)
-        self.assertEqual(validation["excluded_path_count"], 1)
+
         self.assertEqual(
-            validation["failure_counts"],
-            {
-                "configuration": 0,
-                "generator": 1,
-                "input_validation": 0,
-                "numerical": 1,
-                "runner": 0,
-            },
+            [
+                (
+                    row["tier"],
+                    row["failure_stage"],
+                    row["exclusion_reason"],
+                )
+                for row in excluded
+            ],
+            [("exploratory", "generator", "numerical_failure")],
         )
 
-    def test_aggregates_reconcile_and_keep_primary_exploratory_tiers_separate(self) -> None:
-        document = _all_required_family_study().as_mapping()
-        document["seeds"] = [104729, 130363]
-        document["family_configurations"].append(
-            {
-                "config_id": "trend-negative-drift-sensitivity",
-                "family": "trend",
-                "tier": "exploratory",
-                "description": "Negative six percent drift sensitivity.",
-                "parameters": {
-                    "start_price": "100",
-                    "annual_drift": "-0.06",
-                    "annual_volatility": "0.15",
+    def test_generator_failure_is_included_in_validation_sample_counts(self) -> None:
+        bundle = self.generator_failure_bundle
+        validation = json.loads(
+            (bundle.output_directory / "study-validation.json").read_text()
+        )
+
+        self.assertEqual(
+            (
+                validation["attempted_path_count"],
+                validation["generated_path_count"],
+                validation["excluded_path_count"],
+                validation["failure_counts"],
+            ),
+            (
+                6,
+                5,
+                1,
+                {
+                    "configuration": 0,
+                    "generator": 1,
+                    "input_validation": 0,
+                    "numerical": 1,
+                    "runner": 0,
+                    "comparison": 0,
                 },
-            }
+            ),
         )
-        study = StochasticStudy.from_mapping(document)
-        with tempfile.TemporaryDirectory() as output:
-            bundle = run_stochastic_study(
-                _config_with_horizons([3]), study, Path(output)
-            )
-            aggregates = json.loads(
-                (bundle.output_directory / "stochastic-aggregates.json").read_text()
-            )
-            reconciliation = json.loads(
-                (bundle.output_directory / "aggregate-reconciliation.json").read_text()
-            )
 
-        self.assertEqual(reconciliation["status"], "passed")
-        self.assertEqual(reconciliation["reconciled_group_count"], 216)
-        self.assertEqual(aggregates["group_count"], 216)
+    def test_small_grid_reconciliation_covers_all_aggregate_fields(self) -> None:
+        reconciliation = json.loads(
+            (
+                self.exploratory_bundle.output_directory
+                / "aggregate-reconciliation.json"
+            ).read_text()
+        )
+
         self.assertEqual(
-            {group["analysis_tier"] for group in aggregates["groups"]},
-            {"primary", "exploratory"},
+            (
+                reconciliation["status"],
+                reconciliation["reconciled_group_count"],
+                reconciliation["study_group_field_count"],
+                reconciliation["runner_group_field_count"],
+                reconciliation["mismatch_count"],
+            ),
+            ("passed", 216, 46, 39, 0),
+        )
+
+    def test_aggregate_grid_keeps_primary_and_exploratory_tiers_separate(self) -> None:
+        aggregates = json.loads(
+            (
+                self.exploratory_bundle.output_directory
+                / "stochastic-aggregates.json"
+            ).read_text()
+        )
+
+        self.assertEqual(
+            (
+                aggregates["group_count"],
+                {group["analysis_tier"] for group in aggregates["groups"]},
+            ),
+            (216, {"primary", "exploratory"}),
+        )
+
+    def test_lambda_one_aggregate_retains_counts_and_zero_effects(self) -> None:
+        aggregates = json.loads(
+            (
+                self.exploratory_bundle.output_directory
+                / "stochastic-aggregates.json"
+            ).read_text()
         )
         collapsed = next(
             group
@@ -699,57 +889,50 @@ class StochasticStudyContractTest(unittest.TestCase):
             and group["cost_scenario"] == "frictionless"
             and group["comparison"] == "corrected_guarded_vs_dca"
         )
-        self.assertEqual(collapsed["attempted_count"], 2)
-        self.assertEqual(collapsed["sample_count"], 2)
-        self.assertEqual(collapsed["excluded_count"], 0)
-        self.assertEqual(collapsed["mean_relative_terminal_wealth_gap"], "0")
-        self.assertEqual(collapsed["downside_quantile_0.05"], "0")
-        self.assertEqual(collapsed["worst_observed_relative_shortfall"], "0")
-        self.assertEqual(collapsed["mean_identity_residual"], "0")
 
-    def test_report_assets_retain_every_configuration_and_required_estimand(self) -> None:
-        document = _all_required_family_study().as_mapping()
-        document["family_configurations"].append(
-            {
-                "config_id": "trend-negative-drift-sensitivity",
-                "family": "trend",
-                "tier": "exploratory",
-                "description": "Negative six percent drift sensitivity.",
-                "parameters": {
-                    "start_price": "100",
-                    "annual_drift": "-0.06",
-                    "annual_volatility": "0.15",
-                },
-            }
-        )
-        study = StochasticStudy.from_mapping(document)
-        with tempfile.TemporaryDirectory() as output:
-            bundle = run_stochastic_study(
-                _config_with_horizons([3]), study, Path(output)
-            )
-            with (bundle.output_directory / "stochastic-figure-ready.csv").open(
-                encoding="utf-8", newline=""
-            ) as handle:
-                figure_rows = list(csv.DictReader(handle))
-            enriched_results = [
-                json.loads(line)
-                for line in (
-                    bundle.output_directory / "stochastic-results.jsonl"
-                ).read_text().splitlines()
-            ]
-            report_tables = (
-                bundle.output_directory / "report-tables.txt"
-            ).read_text()
-
-        self.assertEqual(len(figure_rows), 216)
         self.assertEqual(
-            {row["generator_config_id"] for row in figure_rows},
-            {
-                configuration["config_id"]
-                for configuration in document["family_configurations"]
-            },
+            (
+                collapsed["attempted_count"],
+                collapsed["sample_count"],
+                collapsed["excluded_count"],
+                collapsed["mean_relative_terminal_wealth_gap"],
+                collapsed["downside_quantile_0.05"],
+                collapsed["worst_observed_relative_shortfall"],
+                collapsed["mean_identity_residual"],
+            ),
+            (2, 2, 0, "0", "0", "0", "0"),
         )
-        self.assertTrue(
+
+    def test_figure_ready_data_retains_every_generator_configuration(self) -> None:
+        document = _study_with_exploratory_family().as_mapping()
+        with (
+            self.exploratory_bundle.output_directory
+            / "stochastic-figure-ready.csv"
+        ).open(encoding="utf-8", newline="") as handle:
+            figure_rows = list(csv.DictReader(handle))
+
+        self.assertEqual(
+            (
+                len(figure_rows),
+                {row["generator_config_id"] for row in figure_rows},
+            ),
+            (
+                216,
+                {
+                    configuration["config_id"]
+                    for configuration in document["family_configurations"]
+                },
+            ),
+        )
+
+    def test_figure_ready_data_exposes_every_required_estimand(self) -> None:
+        with (
+            self.exploratory_bundle.output_directory
+            / "stochastic-figure-ready.csv"
+        ).open(encoding="utf-8", newline="") as handle:
+            first_row = next(csv.DictReader(handle))
+
+        self.assertEqual(
             {
                 "mean_relative_terminal_wealth_gap",
                 "downside_quantile_0.05",
@@ -763,20 +946,234 @@ class StochasticStudyContractTest(unittest.TestCase):
                 "mean_cash_contribution",
                 "mean_unit_contribution",
             }
-            <= set(figure_rows[0])
+            - set(first_row),
+            set(),
         )
-        self.assertEqual(len(enriched_results), 216)
+
+    def test_enriched_results_retain_every_episode_and_analysis_tier(self) -> None:
+        enriched_results = [
+            json.loads(line)
+            for line in (
+                self.exploratory_bundle.output_directory
+                / "stochastic-results.jsonl"
+            )
+            .read_text()
+            .splitlines()
+        ]
+
         self.assertEqual(
-            {row["analysis_tier"] for row in enriched_results},
-            {"primary", "exploratory"},
+            (
+                len(enriched_results),
+                {row["analysis_tier"] for row in enriched_results},
+            ),
+            (432, {"primary", "exploratory"}),
         )
-        self.assertIn("## Complete retained grid", report_tables)
-        self.assertIn("## Primary frictionless distribution slice", report_tables)
-        self.assertIn("## Exploratory sensitivity distribution slice", report_tables)
-        self.assertIn(
+
+    def test_generated_tables_separate_tiers_and_bound_their_interpretation(self) -> None:
+        report_tables = (
+            self.exploratory_bundle.output_directory / "report-tables.txt"
+        ).read_text()
+        required_text = {
+            "## Complete retained grid",
+            "## Primary frictionless distribution slice",
+            "## Exploratory sensitivity distribution slice",
             "Controlled stochastic sensitivity is not historical evidence or a proof of stochastic optimality.",
-            report_tables,
+        }
+
+        self.assertEqual(
+            {text for text in required_text if text not in report_tables}, set()
         )
+
+
+class StochasticFailureReceiptTest(unittest.TestCase):
+    def test_invalid_saved_study_is_retained_with_zero_executed_samples(self) -> None:
+        invalid_document = json.loads(STOCHASTIC_STUDY.read_text())
+        invalid_document["family_configurations"][0]["parameters"][
+            "annual_drift"
+        ] = "0.5"
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            invalid_study = root / "invalid-study.json"
+            invalid_study.write_text(json.dumps(invalid_document))
+
+            with self.assertRaises(ExperimentValidationError) as caught:
+                study_runner.run_stochastic_study_from_paths(
+                    PROTOCOL,
+                    invalid_study,
+                    root / "outputs",
+                )
+
+            receipt = json.loads(
+                Path(caught.exception.failure_receipt).read_text()
+            )
+
+        self.assertEqual(
+            {
+                "status": receipt["status"],
+                "stage": receipt["stage"],
+                "code": receipt["error"]["code"],
+                "declared": receipt["sample_counts"]["declared_path_count"],
+                "attempted": receipt["sample_counts"]["attempted_path_count"],
+                "included": receipt["sample_counts"]["included_path_count"],
+                "configuration_failures": receipt["failure_counts"][
+                    "configuration"
+                ],
+            },
+            {
+                "status": "failed",
+                "stage": "configuration",
+                "code": "invalid_parameter",
+                "declared": 90,
+                "attempted": 0,
+                "included": 0,
+                "configuration_failures": 1,
+            },
+        )
+
+    def test_runner_boundary_failure_preserves_attempts_and_exclusion_counts(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            output_root = Path(temporary)
+            with mock.patch.object(
+                study_runner,
+                "run_experiment",
+                side_effect=RuntimeError("forced runner-boundary failure"),
+            ):
+                with self.assertRaises(RuntimeError) as caught:
+                    run_stochastic_study(
+                        load_study_config(PROTOCOL),
+                        _one_trend_family_study(),
+                        output_root,
+                    )
+
+            receipt_path = Path(caught.exception.failure_receipt)
+            receipt = json.loads(receipt_path.read_text())
+            retained_paths = {
+                path.relative_to(receipt_path.parent).as_posix()
+                for path in receipt_path.parent.rglob("*")
+                if path.is_file()
+            }
+
+        self.assertEqual(
+            {
+                "stage": receipt["stage"],
+                "runner_failures": receipt["failure_counts"]["runner"],
+                "attempted": receipt["sample_counts"]["attempted_path_count"],
+                "generated": receipt["sample_counts"]["generated_path_count"],
+                "included": receipt["sample_counts"]["included_path_count"],
+                "excluded": receipt["sample_counts"]["excluded_path_count"],
+                "paths": retained_paths,
+            },
+            {
+                "stage": "runner",
+                "runner_failures": 1,
+                "attempted": 3,
+                "generated": 3,
+                "included": 0,
+                "excluded": 3,
+                "paths": {"failure.json", "path-attempts.jsonl", "runner-input.json"},
+            },
+        )
+
+
+class StochasticAggregateReconciliationSensitivityTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.stochastic = json.loads(
+            (COMMITTED_RUN / "stochastic-aggregates.json").read_text()
+        )
+        cls.runner = json.loads(
+            (COMMITTED_RUN / "runner" / "aggregates.json").read_text()
+        )
+        cls.results = tuple(
+            json.loads(line)
+            for line in (COMMITTED_RUN / "runner" / "episode-results.jsonl")
+            .read_text()
+            .splitlines()
+        )
+        cls.attempts = tuple(
+            json.loads(line)
+            for line in (COMMITTED_RUN / "path-attempts.jsonl")
+            .read_text()
+            .splitlines()
+        )
+
+    def assert_reconciliation_rejects(self, document: dict[str, object]) -> None:
+        with self.assertRaises(AssertionError):
+            study_runner.reconcile_stochastic_aggregates(
+                document,
+                self.runner,
+                self.results,
+                self.attempts,
+            )
+
+    def test_reconciliation_accepts_every_uncorrupted_aggregate_field(self) -> None:
+        receipt = study_runner.reconcile_stochastic_aggregates(
+            self.stochastic,
+            self.runner,
+            self.results,
+            self.attempts,
+        )
+
+        self.assertEqual(
+            {
+                "status": receipt["status"],
+                "groups": receipt["reconciled_group_count"],
+                "study_fields": receipt["study_group_field_count"],
+                "runner_fields": receipt["runner_group_field_count"],
+                "mismatches": receipt["mismatch_count"],
+            },
+            {
+                "status": "passed",
+                "groups": 1080,
+                "study_fields": 46,
+                "runner_fields": 39,
+                "mismatches": 0,
+            },
+        )
+
+    def test_reconciliation_rejects_corrupt_top_level_attempt_count(self) -> None:
+        corrupted = copy.deepcopy(self.stochastic)
+        corrupted["attempted_path_count"] += 1
+
+        self.assert_reconciliation_rejects(corrupted)
+
+    def test_reconciliation_rejects_corrupt_group_generated_count(self) -> None:
+        corrupted = copy.deepcopy(self.stochastic)
+        corrupted["groups"][0]["generated_count"] -= 1
+
+        self.assert_reconciliation_rejects(corrupted)
+
+    def test_reconciliation_rejects_corrupt_exclusion_reasons(self) -> None:
+        corrupted = copy.deepcopy(self.stochastic)
+        corrupted["groups"][0]["exclusions_by_reason"] = {"runner_failure": 1}
+
+        self.assert_reconciliation_rejects(corrupted)
+
+    def test_reconciliation_rejects_corrupt_effect_size_distribution(self) -> None:
+        corrupted = copy.deepcopy(self.stochastic)
+        corrupted["groups"][0]["relative_terminal_wealth_gap_distribution"][0][
+            "value"
+        ] = "1"
+
+        self.assert_reconciliation_rejects(corrupted)
+
+    def test_reconciliation_rejects_corrupt_worst_shortfall(self) -> None:
+        corrupted = copy.deepcopy(self.stochastic)
+        corrupted["groups"][0]["worst_observed_relative_shortfall"] = "1"
+
+        self.assert_reconciliation_rejects(corrupted)
+
+    def test_reconciliation_rejects_corrupt_cash_contribution(self) -> None:
+        corrupted = copy.deepcopy(self.stochastic)
+        corrupted["groups"][0]["mean_cash_contribution"] = "1"
+
+        self.assert_reconciliation_rejects(corrupted)
+
+    def test_reconciliation_rejects_corrupt_identity_residual(self) -> None:
+        corrupted = copy.deepcopy(self.stochastic)
+        corrupted["groups"][0]["mean_identity_residual"] = "1"
+
+        self.assert_reconciliation_rejects(corrupted)
 
 
 if __name__ == "__main__":
