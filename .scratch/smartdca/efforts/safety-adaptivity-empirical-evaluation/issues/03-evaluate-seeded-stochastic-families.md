@@ -7,16 +7,16 @@ knowledge_role: operational
 status: draft
 original_record: true
 ticket_type: task
-ticket_status: open
+ticket_status: claimed
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T07:52:38Z
-generation_run: urn:uuid:a5d8aafb-5c01-48a5-8177-23ed524a00a7
+  at: 2026-08-29T15:49:48Z
+generation_run: urn:uuid:aba7ab36-95f8-4208-a165-ddb9cd05ae6b
 ---
 # 03 — Evaluate seeded stochastic path families
 
 Type: task
-Status: open
+Status: claimed
 Label: ready-for-agent
 Blocked by: 01
 Parent: [Safety-adaptivity empirical evaluation](../spec.md)
@@ -52,6 +52,9 @@ failures, and a bounded report without treating simulation as a universal proof.
 - Created from the user-approved seven-ticket decomposition on 2026-08-25.
 - This ticket may proceed in parallel with tickets 02 and 04 after ticket 01
   resolves.
+- Claimed on `main` after confirming ticket 01 is resolved and no other ticket
+  is claimed. The approved complete-run seam and frozen policy grid govern the
+  implementation.
 
 ## Answer
 

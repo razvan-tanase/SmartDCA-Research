@@ -6,6 +6,10 @@ groups are newest first, entries are flat bullets with a full UTC timestamp, and
 existing events are never edited, reordered, or deleted. New events are inserted into
 the newest applicable group. The complete concept inventory is [`index.md`](index.md).
 
+## 2026-08-29
+
+- 2026-08-29T15:49:48Z | Claim | Claim the seeded stochastic path-family ticket after confirming its canonical-run dependency is resolved and the approved complete-run seam is available | [ticket](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md), [effort map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md)
+
 ## 2026-08-25
 
 - 2026-08-25T11:23:02Z | Resolution | Resolve the deterministic synthetic and adversarial path ticket after independent review, leave its bounded experiment report draft pending the registered historical-slice review, expose tickets 03 and 04 as open unclaimed frontiers, and stop before claiming a successor | [ticket](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md), [effort map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md), [master map](.scratch/smartdca/map.md), [report](reports/experiments/deterministic-adversarial-paths.md), [overview](README.md), [index](index.md)
