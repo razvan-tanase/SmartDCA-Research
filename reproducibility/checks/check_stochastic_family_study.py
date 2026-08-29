@@ -12,7 +12,6 @@ import tempfile
 import unittest
 from decimal import Decimal
 from pathlib import Path
-from unittest import mock
 
 from reproducibility.empirical import (
     ExperimentValidationError,
@@ -1031,19 +1030,16 @@ class StochasticFailureReceiptTest(unittest.TestCase):
         )
 
     def test_runner_boundary_failure_preserves_attempts_and_exclusion_counts(self) -> None:
+        config_document = _config_with_horizons([3]).as_mapping()
+        config_document["corrected_mean"]["primary"][0]["alpha"] = "-1e999999"
+        config = StudyConfig.from_mapping(config_document)
+        study_document = _one_trend_family_study().as_mapping()
+        study_document["horizons_months"] = [3]
+        study = StochasticStudy.from_mapping(study_document)
         with tempfile.TemporaryDirectory() as temporary:
             output_root = Path(temporary)
-            with mock.patch.object(
-                study_runner,
-                "run_experiment",
-                side_effect=RuntimeError("forced runner-boundary failure"),
-            ):
-                with self.assertRaises(RuntimeError) as caught:
-                    run_stochastic_study(
-                        load_study_config(PROTOCOL),
-                        _one_trend_family_study(),
-                        output_root,
-                    )
+            with self.assertRaises(ArithmeticError) as caught:
+                run_stochastic_study(config, study, output_root)
 
             receipt_path = Path(caught.exception.failure_receipt)
             receipt = json.loads(receipt_path.read_text())
@@ -1066,10 +1062,10 @@ class StochasticFailureReceiptTest(unittest.TestCase):
             {
                 "stage": "runner",
                 "runner_failures": 1,
-                "attempted": 3,
-                "generated": 3,
+                "attempted": 1,
+                "generated": 1,
                 "included": 0,
-                "excluded": 3,
+                "excluded": 1,
                 "paths": {"failure.json", "path-attempts.jsonl", "runner-input.json"},
             },
         )
