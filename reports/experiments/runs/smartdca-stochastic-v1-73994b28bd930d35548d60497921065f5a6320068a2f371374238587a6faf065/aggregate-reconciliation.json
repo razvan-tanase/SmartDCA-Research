@@ -1,0 +1,1 @@
+{"method":"recomputed from serialized episode-results.jsonl and compared field-by-field with serialized runner aggregates","mismatch_count":0,"reconciled_group_count":1080,"shared_statistic_count_per_group":27,"status":"passed"}

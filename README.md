@@ -102,9 +102,10 @@ python -m reproducibility.checks.check_arbitrary_horizon_performance_boundary
 python reproducibility/checks/check_arbitrary_horizon_publication_review.py
 python -m unittest reproducibility.checks.check_empirical_protocol_canonical_run
 python -m unittest reproducibility.checks.check_deterministic_adversarial_study
+python -m unittest reproducibility.checks.check_stochastic_family_study
 ```
 
-GitHub Actions runs all thirteen checks on every push and pull request, together with the knowledge-system fixtures and strict [SmartDCA OKF](docs/knowledge/okf-profile.md) validation.
+GitHub Actions runs all fourteen checks on every push and pull request, together with the knowledge-system fixtures and strict [SmartDCA OKF](docs/knowledge/okf-profile.md) validation.
 
 ## Research workflow
 

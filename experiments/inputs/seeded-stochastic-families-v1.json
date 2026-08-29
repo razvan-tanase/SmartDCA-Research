@@ -1,0 +1,171 @@
+{
+  "schema_version": "smartdca-stochastic-study/1",
+  "study_id": "seeded-stochastic-families-v1",
+  "version": "1",
+  "input_id": "seeded-stochastic-family-grid",
+  "input_version": "1",
+  "generator_version": "smartdca-stochastic-paths/1",
+  "confirmatory": false,
+  "rng": "CPython random.Random MT19937 with random() and Box-Muller normals",
+  "deposit": "1000",
+  "start_date": "2000-01-01",
+  "horizons_months": [12, 36, 60],
+  "seeds": [104729, 130363, 155921],
+  "required_families": [
+    "trend",
+    "mean_reversion",
+    "stochastic_volatility",
+    "regime_switching",
+    "jump_diffusion"
+  ],
+  "design": {
+    "purpose": "controlled seeded sensitivity, not historical evidence or a stochastic optimality claim",
+    "path_rule": "For one family configuration and seed, generate one 60-month path plus its month-60 evaluation price; 12- and 36-month episodes are exact prefixes ending at their corresponding evaluation prices.",
+    "common_random_numbers": "Each primary/exploratory pair uses the same three saved integer seeds. Family algorithms consume their own documented stream, so pairing is exact within a family algorithm and descriptive across different algorithms.",
+    "primary_rule": "One baseline configuration per required family was chosen before executing this saved design.",
+    "exploratory_rule": "One named sensitivity changes the declared family characteristic and remains separate from primary summaries; every outcome is retained.",
+    "evaluation_rule": "H monthly deposits occur at the H generated purchase prices and terminal wealth is evaluated one month after the final deposit at generated price H.",
+    "cost_and_policy_rule": "Execute every preregistered primary coverage, primary corrected-mean, and cost configuration for DCA, neutral guarded, and corrected guarded policies.",
+    "parameter_interpretation": {
+      "trend": "Annual log-diffusion drift spans -6% to +6% with 15% annual volatility.",
+      "mean_reversion": "Log-price half-life spans 3 to 12 months around a USD 100 long-run level with 15% stationary log-price volatility.",
+      "stochastic_volatility": "Long-run annual volatility spans 15% to 35%, with 0.9 monthly log-volatility persistence and 0.2 stationary log-volatility dispersion.",
+      "regime_switching": "Bull and bear states use +10%/-12% annual drift and 12%/25% annual volatility; sensitivities change monthly state persistence from 96%/85% to 85%/95%.",
+      "jump_diffusion": "Negative log jumps average -12% with 8% dispersion; monthly jump arrival probability spans 4% to 12% over a 6%-drift, 12%-volatility diffusion."
+    }
+  },
+  "family_configurations": [
+    {
+      "config_id": "trend-positive-baseline",
+      "family": "trend",
+      "tier": "primary",
+      "description": "Positive six percent annual drift with moderate fifteen percent annual volatility.",
+      "parameters": {
+        "start_price": "100",
+        "annual_drift": "0.06",
+        "annual_volatility": "0.15"
+      }
+    },
+    {
+      "config_id": "trend-negative-drift-sensitivity",
+      "family": "trend",
+      "tier": "exploratory",
+      "description": "Negative six percent annual drift at the baseline volatility.",
+      "parameters": {
+        "start_price": "100",
+        "annual_drift": "-0.06",
+        "annual_volatility": "0.15"
+      }
+    },
+    {
+      "config_id": "mean-reversion-twelve-month-baseline",
+      "family": "mean_reversion",
+      "tier": "primary",
+      "description": "Log price reverts toward 100 with a twelve-month half-life and fifteen percent stationary dispersion.",
+      "parameters": {
+        "start_price": "100",
+        "long_run_price": "100",
+        "half_life_months": "12",
+        "stationary_log_volatility": "0.15"
+      }
+    },
+    {
+      "config_id": "mean-reversion-three-month-sensitivity",
+      "family": "mean_reversion",
+      "tier": "exploratory",
+      "description": "Faster three-month log-price half-life at the baseline long-run level and dispersion.",
+      "parameters": {
+        "start_price": "100",
+        "long_run_price": "100",
+        "half_life_months": "3",
+        "stationary_log_volatility": "0.15"
+      }
+    },
+    {
+      "config_id": "stochastic-volatility-fifteen-percent-baseline",
+      "family": "stochastic_volatility",
+      "tier": "primary",
+      "description": "Six percent annual drift with persistent annual volatility centered at fifteen percent.",
+      "parameters": {
+        "start_price": "100",
+        "annual_drift": "0.06",
+        "long_run_annual_volatility": "0.15",
+        "volatility_persistence": "0.9",
+        "log_volatility_of_volatility": "0.2"
+      }
+    },
+    {
+      "config_id": "stochastic-volatility-thirty-five-percent-sensitivity",
+      "family": "stochastic_volatility",
+      "tier": "exploratory",
+      "description": "Annual volatility centered at thirty-five percent with baseline drift, persistence, and volatility dispersion.",
+      "parameters": {
+        "start_price": "100",
+        "annual_drift": "0.06",
+        "long_run_annual_volatility": "0.35",
+        "volatility_persistence": "0.9",
+        "log_volatility_of_volatility": "0.2"
+      }
+    },
+    {
+      "config_id": "regime-switching-baseline",
+      "family": "regime_switching",
+      "tier": "primary",
+      "description": "Persistent bull and bear regimes with a shorter expected bear duration.",
+      "parameters": {
+        "start_price": "100",
+        "initial_regime": "bull",
+        "bull_annual_drift": "0.1",
+        "bull_annual_volatility": "0.12",
+        "bull_stay_probability": "0.96",
+        "bear_annual_drift": "-0.12",
+        "bear_annual_volatility": "0.25",
+        "bear_stay_probability": "0.85"
+      }
+    },
+    {
+      "config_id": "regime-switching-persistent-bear-sensitivity",
+      "family": "regime_switching",
+      "tier": "exploratory",
+      "description": "More frequent transitions out of bull and more persistent bear regimes at baseline state returns.",
+      "parameters": {
+        "start_price": "100",
+        "initial_regime": "bull",
+        "bull_annual_drift": "0.1",
+        "bull_annual_volatility": "0.12",
+        "bull_stay_probability": "0.85",
+        "bear_annual_drift": "-0.12",
+        "bear_annual_volatility": "0.25",
+        "bear_stay_probability": "0.95"
+      }
+    },
+    {
+      "config_id": "jump-diffusion-four-percent-baseline",
+      "family": "jump_diffusion",
+      "tier": "primary",
+      "description": "Moderate diffusion with a four percent monthly probability of a negative jump.",
+      "parameters": {
+        "start_price": "100",
+        "annual_drift": "0.06",
+        "annual_diffusion_volatility": "0.12",
+        "monthly_jump_probability": "0.04",
+        "mean_log_jump": "-0.12",
+        "log_jump_volatility": "0.08"
+      }
+    },
+    {
+      "config_id": "jump-diffusion-twelve-percent-sensitivity",
+      "family": "jump_diffusion",
+      "tier": "exploratory",
+      "description": "A twelve percent monthly jump-arrival probability with baseline diffusion and jump-size distribution.",
+      "parameters": {
+        "start_price": "100",
+        "annual_drift": "0.06",
+        "annual_diffusion_volatility": "0.12",
+        "monthly_jump_probability": "0.12",
+        "mean_log_jump": "-0.12",
+        "log_jump_volatility": "0.08"
+      }
+    }
+  ]
+}

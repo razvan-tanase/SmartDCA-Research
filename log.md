@@ -8,6 +8,8 @@ the newest applicable group. The complete concept inventory is [`index.md`](inde
 
 ## 2026-08-29
 
+- 2026-08-29T17:38:37Z | Creation | Execute the complete seeded stochastic sensitivity grid through the shared three-policy runner, retain 90 path attempts and 3,240 ledgers/results, reconcile all 1,080 aggregate cells, and publish a bounded draft report with executable replay | [study](experiments/inputs/seeded-stochastic-families-v1.json), [manifest](reports/experiments/runs/smartdca-stochastic-v1-73994b28bd930d35548d60497921065f5a6320068a2f371374238587a6faf065/manifest.json), [report](reports/experiments/seeded-stochastic-families.md), [audit](research/notes/seeded-stochastic-family-evaluation-audit.md), [runner](reproducibility/stochastic_study.py), [check](reproducibility/checks/check_stochastic_family_study.py), [index](index.md)
+
 - 2026-08-29T15:49:48Z | Claim | Claim the seeded stochastic path-family ticket after confirming its canonical-run dependency is resolved and the approved complete-run seam is available | [ticket](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md), [effort map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md)
 
 ## 2026-08-25
