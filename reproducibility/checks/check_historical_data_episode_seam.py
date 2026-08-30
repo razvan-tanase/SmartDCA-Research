@@ -40,7 +40,7 @@ COMMITTED_SOURCE_SET = (
 )
 COMMITTED_RUN_ID = (
     "smartdca-historical-validation-v1-"
-    "bee2ccc740eeaa7b0c6be4aa300934c993f525dfce4a0125e2d0044895a2cddd"
+    "80dbd990f0afd98ce553d229cb470fe874bac1ec736763855c7efec755797e62"
 )
 COMMITTED_RUN = ROOT / "reports" / "experiments" / "runs" / COMMITTED_RUN_ID
 
@@ -371,6 +371,7 @@ class HistoricalDataEpisodeSeamTest(unittest.TestCase):
                 "included_episode_count": 4,
                 "excluded_episode_count": 2,
                 "exclusion_reasons": {"unavailable_mapped_evaluation_date": 2},
+                "runner_input_episode_count": 2,
                 "validation_episode_count": 2,
                 "input_status": "accepted",
             },
@@ -657,6 +658,8 @@ class HistoricalDataEpisodeSeamTest(unittest.TestCase):
         self.assertTrue(prepared.versioned_input.as_mapping()["confirmatory"])
         self.assertEqual(prepared.reconciliation["attempted_episode_count"], 4)
         self.assertEqual(prepared.reconciliation["included_episode_count"], 4)
+        self.assertEqual(prepared.reconciliation["runner_input_episode_count"], 4)
+        self.assertEqual(prepared.reconciliation["validation_episode_count"], 0)
         self.assertEqual(len(prepared.versioned_input.as_mapping()["episodes"]), 4)
 
     def test_confirmatory_preparation_retains_incomplete_dataset_attempts(self) -> None:
@@ -733,6 +736,47 @@ class HistoricalDataEpisodeSeamTest(unittest.TestCase):
         self.assertEqual(len(attempt_lines), 4)
         self.assertFalse(runner_input_exists)
         self.assertEqual(bundle.manifest["runner_input_sha256"], None)
+
+    def test_rejected_bundle_identity_binds_the_actual_rejected_bytes(self) -> None:
+        config_mapping = load_study_config(PROTOCOL).as_mapping()
+        config_mapping["episode_design"]["horizons_months"] = [12]
+        for dataset in config_mapping["historical_datasets"]:
+            dataset["eligible_start"] = "2020-01-01"
+            dataset["data_cutoff"] = "2021-02-01"
+        config = StudyConfig.from_mapping(config_mapping)
+        run_ids = []
+        actual_hashes = []
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for label, corrupt_body in (("a", b"corrupt-a"), ("b", b"corrupt-b")):
+                source_root = root / label
+                sources = _acquire_confirmatory_sources(config, source_root)
+                source_mapping = sources.as_mapping()
+                spy_source = next(
+                    row
+                    for row in source_mapping["sources"]
+                    if row["dataset_id"] == "spy-adjusted-daily"
+                )
+                (source_root / spy_source["path"]).write_bytes(corrupt_body)
+                bundle = write_historical_preparation(
+                    config, sources, source_root, source_root / "outputs"
+                )
+                run_ids.append(bundle.run_id)
+                spy_receipt = next(
+                    row
+                    for row in bundle.prepared.source_receipts
+                    if row["dataset_id"] == "spy-adjusted-daily"
+                )
+                actual_hashes.append(spy_receipt["sha256"])
+
+        self.assertNotEqual(run_ids[0], run_ids[1])
+        self.assertEqual(
+            actual_hashes,
+            [
+                hashlib.sha256(b"corrupt-a").hexdigest(),
+                hashlib.sha256(b"corrupt-b").hexdigest(),
+            ],
+        )
 
     def test_failed_prepare_command_returns_machine_readable_bundle_receipt(self) -> None:
         config_mapping = load_study_config(PROTOCOL).as_mapping()

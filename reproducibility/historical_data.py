@@ -710,6 +710,46 @@ def _observation_neighbors(
     return previous, following
 
 
+def _unmapped_deposit(
+    nominal_date: date, deposit_amount: str
+) -> dict[str, Any]:
+    return {
+        "nominal_date": nominal_date.isoformat(),
+        "purchase_date": None,
+        "mapping_lag_days": None,
+        "source_row": None,
+        "price": None,
+        "deposit": deposit_amount,
+    }
+
+
+def _episode_attempt_skeleton(
+    dataset_id: str,
+    nominal_start: date,
+    horizon_months: int,
+    deposit_amount: str,
+) -> dict[str, Any]:
+    return {
+        "episode_id": f"{dataset_id}-{nominal_start.isoformat()}-{horizon_months}m",
+        "dataset_id": dataset_id,
+        "nominal_start": nominal_start.isoformat(),
+        "horizon_months": horizon_months,
+        "horizon_date": _add_months(nominal_start, horizon_months).isoformat(),
+        "deposit_schedule": [
+            _unmapped_deposit(
+                _add_months(nominal_start, offset), deposit_amount
+            )
+            for offset in range(horizon_months)
+        ],
+        "evaluation_date": None,
+        "evaluation_price": None,
+        "evaluation_source_row": None,
+        "status": "excluded",
+        "exclusion_reason": None,
+        "exclusion_details": None,
+    }
+
+
 def _attempt_episode(
     dataset_id: str,
     rows: tuple[Mapping[str, Any], ...],
@@ -719,23 +759,9 @@ def _attempt_episode(
 ) -> dict[str, Any]:
     tolerance_days = MAPPING_TOLERANCE_DAYS[dataset_id]
     horizon_date = _add_months(nominal_start, horizon_months)
-    episode_id = (
-        f"{dataset_id}-{nominal_start.isoformat()}-{horizon_months}m"
+    attempt = _episode_attempt_skeleton(
+        dataset_id, nominal_start, horizon_months, deposit_amount
     )
-    attempt: dict[str, Any] = {
-        "episode_id": episode_id,
-        "dataset_id": dataset_id,
-        "nominal_start": nominal_start.isoformat(),
-        "horizon_months": horizon_months,
-        "horizon_date": horizon_date.isoformat(),
-        "deposit_schedule": [],
-        "evaluation_date": None,
-        "evaluation_price": None,
-        "evaluation_source_row": None,
-        "status": "excluded",
-        "exclusion_reason": None,
-        "exclusion_details": None,
-    }
     mapped_dates: set[str] = set()
     purchase_exclusion_reason: str | None = None
     purchase_exclusion_details: Mapping[str, Any] | None = None
@@ -744,16 +770,6 @@ def _attempt_episode(
         mapped = _mapped_purchase(rows, nominal_date, tolerance_days)
         if mapped is None:
             previous, following = _observation_neighbors(rows, nominal_date)
-            attempt["deposit_schedule"].append(
-                {
-                    "nominal_date": nominal_date.isoformat(),
-                    "purchase_date": None,
-                    "mapping_lag_days": None,
-                    "source_row": None,
-                    "price": None,
-                    "deposit": deposit_amount,
-                }
-            )
             if purchase_exclusion_reason is None:
                 purchase_exclusion_reason = "unavailable_mapped_purchase_date"
                 purchase_exclusion_details = {
@@ -773,16 +789,14 @@ def _attempt_episode(
                     "duplicate_purchase_date": purchase_date,
                 }
         mapped_dates.add(purchase_date)
-        attempt["deposit_schedule"].append(
+        attempt["deposit_schedule"][offset].update(
             {
-                "nominal_date": nominal_date.isoformat(),
                 "purchase_date": purchase_date,
                 "mapping_lag_days": (
                     date.fromisoformat(purchase_date) - nominal_date
                 ).days,
                 "source_row": mapped["source_row"],
                 "price": mapped["price"],
-                "deposit": deposit_amount,
             }
         )
 
@@ -821,33 +835,12 @@ def _failed_dataset_episode(
     deposit_amount: str,
     failure: Mapping[str, Any],
 ) -> dict[str, Any]:
-    horizon_date = _add_months(nominal_start, horizon_months)
-    return {
-        "episode_id": (
-            f"{dataset_id}-{nominal_start.isoformat()}-{horizon_months}m"
-        ),
-        "dataset_id": dataset_id,
-        "nominal_start": nominal_start.isoformat(),
-        "horizon_months": horizon_months,
-        "horizon_date": horizon_date.isoformat(),
-        "deposit_schedule": [
-            {
-                "nominal_date": _add_months(nominal_start, offset).isoformat(),
-                "purchase_date": None,
-                "mapping_lag_days": None,
-                "source_row": None,
-                "price": None,
-                "deposit": deposit_amount,
-            }
-            for offset in range(horizon_months)
-        ],
-        "evaluation_date": None,
-        "evaluation_price": None,
-        "evaluation_source_row": None,
-        "status": "excluded",
-        "exclusion_reason": failure["code"],
-        "exclusion_details": {"dataset_failure": dict(failure)},
-    }
+    attempt = _episode_attempt_skeleton(
+        dataset_id, nominal_start, horizon_months, deposit_amount
+    )
+    attempt["exclusion_reason"] = failure["code"]
+    attempt["exclusion_details"] = {"dataset_failure": dict(failure)}
+    return attempt
 
 
 def _episode_for_runner(
@@ -1071,7 +1064,14 @@ def _build_episodes(
         "included_episode_count": sum(row["status"] == "included" for row in attempts),
         "excluded_episode_count": sum(row["status"] == "excluded" for row in attempts),
         "exclusion_reasons": dict(sorted(reasons.items())),
-        "validation_episode_count": len(selected),
+        "runner_input_episode_count": (
+            len(selected) if versioned_input is not None else 0
+        ),
+        "validation_episode_count": (
+            len(selected)
+            if mode == "validation" and versioned_input is not None
+            else 0
+        ),
         "input_status": "accepted" if versioned_input is not None else "rejected",
     }
     return tuple(attempts), versioned_input, reconciliation
@@ -1339,6 +1339,22 @@ def _stage_preparation_artifacts(
     _write_json(directory / "reconciliation.json", prepared.reconciliation)
 
 
+def _prepared_evidence_sha256(prepared: PreparedHistoricalInput) -> str:
+    evidence = {
+        "status": prepared.status,
+        "source_receipts": prepared.source_receipts,
+        "normalized_datasets": prepared.normalized_datasets,
+        "episode_attempts": prepared.episode_attempts,
+        "runner_input_sha256": (
+            prepared.versioned_input.sha256
+            if prepared.versioned_input is not None
+            else None
+        ),
+        "reconciliation": prepared.reconciliation,
+    }
+    return _fingerprint(_canonical_json(evidence).encode("utf-8"))
+
+
 def _historical_run_id(
     config: StudyConfig,
     source_set: HistoricalSourceSet,
@@ -1388,6 +1404,7 @@ def write_historical_preparation(
         if prepared.versioned_input is not None
         else None
     )
+    prepared_evidence_sha256 = _prepared_evidence_sha256(prepared)
     identity = _canonical_json(
         {
             "engine_version": HISTORICAL_ENGINE_VERSION,
@@ -1395,7 +1412,7 @@ def write_historical_preparation(
             "config_sha256": config.sha256,
             "source_set_sha256": source_set.sha256,
             "runner_input_sha256": runner_input_sha256,
-            "reconciliation": prepared.reconciliation,
+            "prepared_evidence_sha256": prepared_evidence_sha256,
         }
     )
     run_id = f"smartdca-historical-input-v1-{_fingerprint(identity.encode('utf-8'))}"
@@ -1419,6 +1436,7 @@ def write_historical_preparation(
             "confirmatory_aggregate_outcomes": "not-computed",
             "source_set_sha256": source_set.sha256,
             "runner_input_sha256": runner_input_sha256,
+            "prepared_evidence_sha256": prepared_evidence_sha256,
             "reconciliation": prepared.reconciliation,
         }
         _write_json(temporary_directory / "validation.json", validation)
@@ -1433,6 +1451,7 @@ def write_historical_preparation(
             "config_sha256": config.sha256,
             "source_set_sha256": source_set.sha256,
             "runner_input_sha256": runner_input_sha256,
+            "prepared_evidence_sha256": prepared_evidence_sha256,
             "policy_execution": "not-run",
             "artifacts": [
                 {

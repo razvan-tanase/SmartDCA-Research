@@ -113,13 +113,13 @@ purchase prefix.
 ## Immutable validation bundle
 
 The accepted non-confirmatory bundle is
-[`smartdca-historical-validation-v1-bee2ccc740eeaa7b0c6be4aa300934c993f525dfce4a0125e2d0044895a2cddd`](runs/smartdca-historical-validation-v1-bee2ccc740eeaa7b0c6be4aa300934c993f525dfce4a0125e2d0044895a2cddd/manifest.json).
+[`smartdca-historical-validation-v1-80dbd990f0afd98ce553d229cb470fe874bac1ec736763855c7efec755797e62`](runs/smartdca-historical-validation-v1-80dbd990f0afd98ce553d229cb470fe874bac1ec736763855c7efec755797e62/manifest.json).
 Its outer manifest binds:
 
 - protocol SHA-256 `a508b4f064dcb3930f137e7754180ca0ec43749680278acb5b42fe2345c8d6e4`;
 - exact source-set SHA-256 `2138cd2e16856dbc6695ae8183f38153b8c91660cf57e4773ebc21fbed5eed36`;
 - generated runner-input SHA-256 `d44c18dae06138671bd530eec956a667f80df1bec664e0c9bf9e61c51355b24e`;
-- historical module SHA-256 `603a8904371b923bfa152489de9a74f25aeae4b0e42f28c7add7a221a6c703ca`;
+- historical module SHA-256 `cb34bd3f178098b6c557392f42c055389265267f26d4358820202cfb0984b123`;
 - shared runner SHA-256 `7fd480fd07a80a914bc02aa133a59d975fc2f756c7bc75de052771c1ff256fee`;
   and
 - CPython 3.12 with no third-party dependency.
@@ -151,7 +151,7 @@ Then run:
 python -m unittest reproducibility.checks.check_historical_data_episode_seam
 ```
 
-The 22 public-contract checks regenerate every accepted validation artifact
+The 23 public-contract checks regenerate every accepted validation artifact
 byte for byte, exercise typed acquisition and parsing failures, verify adjusted
 field and calendar semantics, retain missing endpoints, check overlap and
 future-extension prefixes, and prove the confirmatory preparation command stops
@@ -159,9 +159,12 @@ before policy execution.
 
 The initial
 [`smartdca-historical-validation-v1-dccb2033929ec8ccb4e90245582fe3b73126c57d16c5bbb0355a47329cca132a`](runs/smartdca-historical-validation-v1-dccb2033929ec8ccb4e90245582fe3b73126c57d16c5bbb0355a47329cca132a/manifest.json)
-is retained as review history. The accepted identity adds protocol-bound live
+and intermediate
+[`smartdca-historical-validation-v1-bee2ccc740eeaa7b0c6be4aa300934c993f525dfce4a0125e2d0044895a2cddd`](runs/smartdca-historical-validation-v1-bee2ccc740eeaa7b0c6be4aa300934c993f525dfce4a0125e2d0044895a2cddd/manifest.json)
+are retained as review history. The accepted identity adds protocol-bound live
 provenance, full schedules for excluded episodes, durable dataset-failure
-attempts, and patch-independent CPython 3.12 runtime metadata.
+attempts, actual-evidence-bound rejected identities, mode-correct input counts,
+and patch-independent CPython 3.12 runtime metadata.
 
 This checkpoint establishes the historical-data and episode interface; it does
 not supply a licensed Alpha Vantage input, estimate historical behavior, test a

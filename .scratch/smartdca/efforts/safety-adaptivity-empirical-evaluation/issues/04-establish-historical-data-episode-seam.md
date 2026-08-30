@@ -45,8 +45,8 @@ complete study input without opening the confirmatory result set.
   the provider's demo credential returned a typed `Information` envelope; no
   market price row or derived confirmatory outcome was opened.
 - The complete fictional-fixture checkpoint is
-  `smartdca-historical-validation-v1-bee2ccc740eeaa7b0c6be4aa300934c993f525dfce4a0125e2d0044895a2cddd`.
-  Twenty-two public-contract tests replay it byte for byte and cover acquisition,
+  `smartdca-historical-validation-v1-80dbd990f0afd98ce553d229cb470fe874bac1ec736763855c7efec755797e62`.
+  Twenty-three public-contract tests replay it byte for byte and cover acquisition,
   receipts, schema rejection, calendar mapping, exclusions, prefix stability,
   the full-grid handoff, and the three-policy validation slice.
 - Initial Standards review found missing domain-review evidence and duplicated
@@ -58,6 +58,11 @@ complete study input without opening the confirmatory result set.
   Independent domain re-review passed both glossary entries after clarifying
   that a source receipt covers declared provider or fixture sources without
   conflating source identity with experiment-input identity.
+- Follow-up specification review found rejected-input identity aliasing and a
+  confirmatory/validation count label collision; follow-up Standards review
+  found duplicated attempt-envelope construction. Rejected identities now bind
+  actual retained evidence, counts are mode-correct, and one constructor owns
+  the complete attempt schema.
 - The remaining acceptance gate is an authorized provider retrieval whose
   exact headers, semantics, date coverage, and sanitized receipt pass the new
   seam. Raw and normalized provider observations must remain outside Git under
