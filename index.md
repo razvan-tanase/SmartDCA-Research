@@ -56,7 +56,7 @@ authoritative metadata.
 
 ### domain-glossary
 
-- [Quasi-Gini SmartDCA Research](CONTEXT.md) — Canonical mathematical, financial, and knowledge-system vocabulary with its forbidden alternatives. — type: domain-glossary; status: stable; trust: independently reviewed 2026-08-24; provenance: cites internal concepts
+- [Quasi-Gini SmartDCA Research](CONTEXT.md) — Canonical mathematical, financial, and knowledge-system vocabulary with its forbidden alternatives. — type: domain-glossary; status: draft; trust: bundle-view terminology pending independent review; provenance: cites internal concepts and ADR 0009
 
 ## Evidence
 

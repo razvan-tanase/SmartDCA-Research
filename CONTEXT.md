@@ -4,7 +4,7 @@ type: domain-glossary
 title: "Quasi-Gini SmartDCA Research"
 description: "Canonical mathematical, financial, and knowledge-system vocabulary with its forbidden alternatives."
 knowledge_role: canonical
-status: stable
+status: draft
 sources:
   - id: audit
     title: "Audit of the source out quasi-Gini functional"
@@ -33,6 +33,10 @@ sources:
   - id: okf-profile
     title: "SmartDCA Open Knowledge Format profile"
     resource: docs/knowledge/okf-profile
+    source_kind: internal
+  - id: adr-0009
+    title: "Exclude .agents tooling from the SmartDCA knowledge bundle"
+    resource: docs/adr/0009-exclude-agents-tooling-from-knowledge-bundle
     source_kind: internal
   - id: homogeneity
     title: "Primary-source note: homogeneity of the canonical corrected out quasi-Gini mean"
@@ -112,8 +116,8 @@ sources:
     source_kind: internal
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-24T20:11:40Z
-generation_run: urn:uuid:6a0602e3-5197-442d-bfc1-256ac8a382ba
+  at: 2026-08-30T09:57:10Z
+generation_run: urn:uuid:eb95df4b-cddd-4d8f-987c-dca42e3ecc68
 verified:
   - by: claude-code/smartdca-wiki-0.1
     at: 2026-08-16T07:46:00Z
@@ -372,9 +376,9 @@ _Avoid_: changing the effort contract, carrying unrelated project history
 A claimable tracer slice inside an effort. Its number is local to that effort; external blockers use full Concept IDs.
 _Avoid_: using a ticket as the effort specification, assuming a number is globally unique
 
-**Wiki repository**[^ticket-12]:
-The complete SmartDCA research repository treated as a maintained knowledge system for people and agents.
-_Avoid_: separate public website by default, disposable retrieval cache
+**Wiki repository**[^ticket-12][^adr-0009]:
+The maintained SmartDCA research content exposed through the repository-root bundle view for people and agents. Root `.git/` and `.agents/` are repository infrastructure outside that view.
+_Avoid_: raw repository tree, separate public website by default, disposable retrieval cache
 
 **Knowledge concept**[^ticket-12]:
 A self-contained maintained unit of knowledge with a stable identity and an explicit role in the project.
@@ -458,3 +462,4 @@ Each term above is joined to the concept that governs its claim: the canonical h
 [^homogeneity]: [Primary-source note on homogeneity of the canonical corrected mean](research/notes/ticket-07-homogeneity-primary-sources.md)
 [^guardrail]: [Sharp causal epsilon-DCA safety and its unit-coverage guardrail](research/notes/sharp-epsilon-dca-safety-guardrail.md)
 [^adr-0007]: [Adopt effort-scoped work tracking](docs/adr/0007-adopt-effort-scoped-work-tracking.md)
+[^adr-0009]: [Exclude .agents tooling from the SmartDCA knowledge bundle](docs/adr/0009-exclude-agents-tooling-from-knowledge-bundle.md)

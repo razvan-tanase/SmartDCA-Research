@@ -52,8 +52,8 @@ sources:
     source_kind: internal
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-30T09:52:55Z
-generation_run: urn:uuid:3ec0b72e-e422-4bf2-be87-cf5d49797fa4
+  at: 2026-08-30T09:57:10Z
+generation_run: urn:uuid:eb95df4b-cddd-4d8f-987c-dca42e3ecc68
 verified:
   - by: claude-code/smartdca-wiki-0.1
     at: 2026-08-16T07:46:00Z

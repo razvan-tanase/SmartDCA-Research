@@ -8,8 +8,8 @@ status: draft
 original_record: true
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-30T09:52:55Z
-generation_run: urn:uuid:3ec0b72e-e422-4bf2-be87-cf5d49797fa4
+  at: 2026-08-30T09:57:10Z
+generation_run: urn:uuid:eb95df4b-cddd-4d8f-987c-dca42e3ecc68
 verified:
   - by: claude-code/smartdca-wiki-0.1
     at: 2026-08-16T07:46:00Z
@@ -26,12 +26,11 @@ verified:
 ---
 # SmartDCA LLM-Wiki workflow
 
-Use this workflow when bundle membership or a bundle concept's assigned path, metadata field, provenance join, lifecycle state, index row, or log event changes. The normative [SmartDCA OKF profile](../knowledge/okf-profile.md) defines representation; the [Wayfinder ticket workflow](wayfinder-ticket-workflow.md) governs work state.
+Use this workflow when bundle membership changes, or when creating or revising a bundle concept, its assigned path, metadata, provenance joins, lifecycle, index row, or log event. The normative [SmartDCA OKF profile](../knowledge/okf-profile.md) defines representation; the [Wayfinder ticket workflow](wayfinder-ticket-workflow.md) governs work state.
 
 ## Invariants
 
-- The repository root anchors the SmartDCA bundle view; root `.git/` and `.agents/` are non-bundle infrastructure, so raw-repository OKF conformance is not claimed.
-- Root `.agents/` and `.git/` are non-bundle repository infrastructure. Every non-reserved Markdown bundle member is a concept and needs a registered path assignment, including members below other hidden directories.
+- The repository root anchors the SmartDCA bundle view. Root `.git/` and `.agents/` are non-bundle infrastructure, so raw-repository OKF conformance is not claimed; every non-reserved Markdown bundle member is a concept and needs a registered path assignment, including members below other hidden directories.
 - `index.md` is the complete discovery inventory; `.scratch/smartdca/map.md` is the active research frontier; `README.md` is the human introduction.
 - Type, authority role, lifecycle, trust, and workflow state are distinct fields.
 - One normalized claim has one canonical home. Evidence and operational records preserve history and link to it.
