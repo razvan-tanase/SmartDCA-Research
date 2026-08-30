@@ -1,7 +1,7 @@
 # 04 — Establish the historical-data and rolling-episode seam
 
 Type: task
-Status: claimed
+Status: open
 Blocked by: 01
 Parent: [Safety-adaptivity empirical evaluation](../spec.md)
 
@@ -63,10 +63,21 @@ complete study input without opening the confirmatory result set.
   found duplicated attempt-envelope construction. Rejected identities now bind
   actual retained evidence, counts are mode-correct, and one constructor owns
   the complete attempt schema.
+- Final parallel Standards and specification re-review of the implementation
+  through `4e6d44d` against base `ef74ad3` found no remaining violations,
+  smells, missing requirements, incorrect behavior, or scope creep.
+- The complete README verification matrix passed under CPython 3.12 on
+  2026-08-30, including 6 link-checker tests, 16 canonical-run tests, 14
+  deterministic-study tests, 39 stochastic-study tests, 23 historical-seam
+  tests, all standalone scientific programs, and the repository-wide Markdown
+  link audit. The stochastic replay completed in 1,693.494 seconds.
 - The remaining acceptance gate is an authorized provider retrieval whose
   exact headers, semantics, date coverage, and sanitized receipt pass the new
   seam. Raw and normalized provider observations must remain outside Git under
   the recorded conservative redistribution decision.
+- No licensed `ALPHAVANTAGE_API_KEY` was available after final verification.
+  Per the interrupted-work policy, the ticket returned to `open`; authorized
+  provider retrieval is the sole blocker.
 
 ## Answer
 
