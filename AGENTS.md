@@ -34,3 +34,22 @@ Run the checks that cover the changed behavior and
 change, run the complete verification suite documented in `README.md`. When
 work tracking applies, synchronize the ticket and maps. The final diff is
 self-contained when its claims, evidence, state, and instructions agree.
+
+## Agent skills
+
+### Issue tracker
+
+When creating, selecting, claiming, resolving, or fetching work, use local
+Markdown under `.scratch/`; read `docs/agents/issue-tracker.md` for tracker
+conventions.
+
+### Triage labels
+
+When triaging or labeling an issue, read `docs/agents/triage-labels.md` and use
+its canonical mappings.
+
+### Domain docs
+
+When exploring or changing domain terms, model assumptions, or durable
+decisions, read `docs/agents/domain.md`, then the relevant `CONTEXT.md` and
+`docs/adr/` records.
