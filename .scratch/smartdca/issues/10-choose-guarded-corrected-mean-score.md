@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Choose the guarded corrected-mean SmartDCA score"
 description: "Resolved task ticket choosing the guarded corrected-mean SmartDCA score."

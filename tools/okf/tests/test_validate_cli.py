@@ -84,7 +84,7 @@ class ValidatorCliTests(unittest.TestCase):
             ---
             # SmartDCA knowledge index
 
-            Active profile: `smartdca-okf/0.4`.
+            Active profile: `smartdca-okf/0.5`.
 
         """).lstrip()
         return header + "\n\n".join(sections) + "\n"
@@ -103,7 +103,7 @@ class ValidatorCliTests(unittest.TestCase):
     def concept(self, *, type_name, title, description, role, status, extra="", body=""):
         lines = [
             "---",
-            "profile: smartdca-okf/0.4",
+            "profile: smartdca-okf/0.5",
             f"type: {type_name}",
             f"title: {title}",
             f"description: {description}",
@@ -205,6 +205,61 @@ class ValidatorCliTests(unittest.TestCase):
         self.assertTrue(report["smartdca_profile"]["ok"], report["smartdca_profile"]["findings"])
         self.assertNotIn("OKF001", self.codes(report, "base_okf"))
 
+    def test_agents_tree_is_outside_both_validation_layers(self):
+        path = ".agents/skills/implement/SKILL.md"
+        skill = """
+            ---
+            name: implement
+            description: "Implement a piece of work based on a spec or set of tickets."
+            disable-model-invocation: true
+            ---
+
+            Implement the work described by the user in the spec or tickets.
+        """
+        files = self.valid_minimal_bundle()
+        files[path] = skill
+
+        report = self.run_validator(files)
+
+        self.assertEqual(report["inventory"], {"markdown_files": 2, "concepts": 0, "reserved_files": 2})
+        self.assertTrue(report["base_okf"]["ok"], report["base_okf"]["findings"])
+        self.assertTrue(report["smartdca_profile"]["ok"], report["smartdca_profile"]["findings"])
+
+    def test_non_agent_hidden_directories_remain_in_the_bundle(self):
+        files = self.valid_minimal_bundle()
+        files[".hidden/untyped.md"] = "# Untyped hidden concept\n"
+
+        report = self.run_validator(files)
+
+        self.assertEqual(report["inventory"], {"markdown_files": 3, "concepts": 1, "reserved_files": 2})
+        self.assertIn("OKF001", self.codes(report, "base_okf"))
+        self.assertIn("SDCA001", self.codes(report))
+
+    def test_agents_tree_cannot_be_listed_in_the_root_index(self):
+        path = ".agents/skills/example/guide.md"
+        row = {
+            "path": path,
+            "title": "Example skill guide",
+            "description": "Supporting instructions for a repository-local skill.",
+            "type": "agent-instructions",
+            "role": "operational",
+            "status": "stable",
+        }
+        files = self.valid_minimal_bundle()
+        files[path] = self.concept(
+            type_name="agent-instructions",
+            title="Example skill guide",
+            description="Supporting instructions for a repository-local skill.",
+            role="operational",
+            status="stable",
+        )
+        files["index.md"] = self.valid_index([row])
+
+        report = self.run_validator(files)
+
+        self.assertTrue(report["base_okf"]["ok"], report["base_okf"]["findings"])
+        self.assertEqual(self.codes(report), {"SDCA044"})
+
     def test_complete_minimal_smartdca_bundle_passes(self):
         report = self.run_validator(self.valid_minimal_bundle())
 
@@ -215,7 +270,7 @@ class ValidatorCliTests(unittest.TestCase):
         files = self.valid_minimal_bundle()
         files["AGENTS.md"] = """
             ---
-            profile: smartdca-okf/0.4
+            profile: smartdca-okf/0.5
             type: theorem
             title: Wrong path type
             description: This path is deliberately misclassified.
@@ -264,8 +319,8 @@ class ValidatorCliTests(unittest.TestCase):
         report = self.run_validator(files)
         self.assertTrue(report["smartdca_profile"]["ok"], report["smartdca_profile"]["findings"])
 
-    def test_profile_04_semantic_paths_pin_their_type_and_role(self):
-        """Each 0.4 path must report the exact rule it breaks, per path.
+    def test_profile_05_semantic_paths_pin_their_type_and_role(self):
+        """Each 0.5 path must report the exact rule it breaks, per path.
 
         Asserting the codes only in aggregate would still pass if one path
         were mapped to the wrong type and role entirely, so every case is
@@ -467,7 +522,7 @@ class ValidatorCliTests(unittest.TestCase):
         files = {
             "research/notes/source.md": f"""
                 ---
-                profile: smartdca-okf/0.4
+                profile: smartdca-okf/0.5
                 type: research-note
                 title: Source-backed note
                 description: Evidence derived from a frozen external source.
@@ -513,7 +568,7 @@ class ValidatorCliTests(unittest.TestCase):
     def test_agent_generated_theorem_requires_distinct_fresh_semantic_review(self):
         theorem = """
             ---
-            profile: smartdca-okf/0.4
+            profile: smartdca-okf/0.5
             type: theorem
             title: Generated theorem
             description: A high-risk canonical theorem with claim provenance.
@@ -539,7 +594,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         proof = """
             ---
-            profile: smartdca-okf/0.4
+            profile: smartdca-okf/0.5
             type: research-note
             title: Internal proof record
             description: Detailed evidence for the generated theorem.
@@ -589,7 +644,7 @@ class ValidatorCliTests(unittest.TestCase):
     def test_ticket_and_adr_extensions_mirror_body_state(self):
         ticket = """
             ---
-            profile: smartdca-okf/0.4
+            profile: smartdca-okf/0.5
             type: research-ticket
             title: Resolved ticket
             description: A resolved research task and its answer.
@@ -606,7 +661,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         adr = """
             ---
-            profile: smartdca-okf/0.4
+            profile: smartdca-okf/0.5
             type: decision-record
             title: Accepted decision
             description: A reviewed architectural decision.
@@ -638,7 +693,7 @@ class ValidatorCliTests(unittest.TestCase):
     def test_dependency_changes_make_a_stable_dependent_stale(self):
         dependency = """
             ---
-            profile: smartdca-okf/0.4
+            profile: smartdca-okf/0.5
             type: research-note
             title: Dependency
             description: Evidence changed after its dependent was reviewed.
@@ -656,7 +711,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         dependent = """
             ---
-            profile: smartdca-okf/0.4
+            profile: smartdca-okf/0.5
             type: theorem
             title: Dependent theorem
             description: A theorem whose dependency changed after review.
@@ -724,7 +779,7 @@ class ValidatorCliTests(unittest.TestCase):
     def test_conflict_synthesis_remains_draft_and_path_moves_keep_forwarders(self):
         evidence = """
             ---
-            profile: smartdca-okf/0.4
+            profile: smartdca-okf/0.5
             type: research-note
             title: Evidence {number}
             description: One side of a preserved source conflict.
@@ -742,7 +797,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         synthesis = """
             ---
-            profile: smartdca-okf/0.4
+            profile: smartdca-okf/0.5
             type: synthesis
             title: Unresolved synthesis
             description: The conflict is preserved pending independent review.
@@ -760,7 +815,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         successor = """
             ---
-            profile: smartdca-okf/0.4
+            profile: smartdca-okf/0.5
             type: research-note
             title: New concept path
             description: The current home of a moved stable concept.
@@ -778,7 +833,7 @@ class ValidatorCliTests(unittest.TestCase):
         """
         forwarder = """
             ---
-            profile: smartdca-okf/0.4
+            profile: smartdca-okf/0.5
             type: research-note
             title: Old concept path
             description: Deprecated forwarding concept preserving stable identity.
@@ -825,7 +880,7 @@ class ValidatorCliTests(unittest.TestCase):
         raw_v2 = b"version two\n"
         concept = f"""
             ---
-            profile: smartdca-okf/0.4
+            profile: smartdca-okf/0.5
             type: research-note
             title: Versioned source summary
             description: Two immutable editions of one external source.
@@ -880,7 +935,7 @@ class ValidatorCliTests(unittest.TestCase):
         files = self.valid_minimal_bundle()
         files["research/notes/invalid.md"] = """
             ---
-            profile: smartdca-okf/0.4
+            profile: smartdca-okf/0.5
             type: research-note
             title: Invalid research note
             description: A deliberately invalid conditional-metadata fixture.
@@ -1012,7 +1067,7 @@ class ValidatorCliTests(unittest.TestCase):
             description="Root agent invariants.",
             role="operational",
             status="stable",
-        ).replace("profile: smartdca-okf/0.4", "profile: smartdca-okf/0.9")
+        ).replace("profile: smartdca-okf/0.5", "profile: smartdca-okf/0.9")
         files["index.md"] = self.valid_index([
             {"path": "AGENTS.md", "title": "Agents", "description": "Root agent invariants.", "type": "agent-instructions", "role": "operational", "status": "stable"},
         ])

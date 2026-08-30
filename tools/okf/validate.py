@@ -19,9 +19,10 @@ from urllib.parse import unquote, urlsplit
 import yaml
 
 
-PROFILE_VERSION = "smartdca-okf/0.4"
+PROFILE_VERSION = "smartdca-okf/0.5"
 RESERVED_NAMES = {"index.md", "log.md"}
 NON_CONCEPT_MARKDOWN = {"README.md"}
+NON_BUNDLE_TREES = {".git", ".agents"}
 REGISTERED_TYPES = {
     "project-overview", "specification", "domain-glossary", "definition", "theorem",
     "research-note", "source-summary", "synthesis", "experiment-report", "decision-record",
@@ -148,7 +149,7 @@ def markdown_files(root: Path) -> list[Path]:
         path
         for path in root.rglob("*.md")
         if path.is_file()
-        and ".git" not in path.relative_to(root).parts
+        and path.relative_to(root).parts[0] not in NON_BUNDLE_TREES
         and path.relative_to(root).as_posix() not in NON_CONCEPT_MARKDOWN
     )
 

@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: source-summary
 title: "Source summary: Open Knowledge Format v0.2 specification"
 description: "Summary of the normative OKF v0.2 specification, its conformance criteria, and its optional metadata families."

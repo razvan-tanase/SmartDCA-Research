@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Establish the arbitrary-horizon accounting and verification seam"
 description: "Resolved task ticket proving the arbitrary-horizon cash-timing identity and delivering the exact-rational three-policy verification seam."

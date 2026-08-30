@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-note
 title: "Primary-source positioning for pathwise DCA dominance"
 description: "Primary-source review placing the causal DCA obstruction inside pointwise no-arbitrage theory."

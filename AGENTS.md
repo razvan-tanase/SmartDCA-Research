@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: agent-instructions
 title: "Agent contract"
 description: "Root invariant contract every agent reads before changing SmartDCA work or knowledge."
@@ -8,8 +8,8 @@ status: stable
 original_record: true
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T20:17:00Z
-generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
+  at: 2026-08-30T09:39:25Z
+generation_run: urn:uuid:c151b2eb-777f-4ae7-9f49-877a6401860e
 verified:
   - by: openai-codex/smartdca-wiki-0.1
     at: 2026-08-23T16:21:37Z
@@ -39,5 +39,7 @@ Keep each kind of information in its authoritative layer:
 | Agent procedure and knowledge policy | `docs/agents/`, `docs/knowledge/okf-profile.md` |
 
 Preserve published Concept IDs, immutable external-source bytes, claim-level provenance, and a semantic review run distinct from generation where the profile requires one. Treat structural CI as conformance evidence, not semantic approval.
+
+Root `.agents/` is repository tooling outside the SmartDCA knowledge bundle. SmartDCA concept metadata, index and log entries, and knowledge validation do not apply inside that tree.
 
 **Publishable when:** the current ticket, effort specification, effort map, and master map agree, every changed concept passes the LLM-Wiki publish gate, every changed scientific claim passes its linked checks, and no result depends on hidden conversation context.

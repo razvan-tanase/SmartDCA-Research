@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-note
 title: "Audit of the seeded stochastic family evaluation"
 description: "Generator, completeness, reconciliation, accounting, and scope audit for the controlled seeded stochastic SmartDCA study."

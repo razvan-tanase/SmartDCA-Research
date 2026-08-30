@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Review and publish the arbitrary-horizon research package"
 description: "Resolved task ticket independently reviewing and publishing the arbitrary-horizon research package for the thesis narrative."

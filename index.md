@@ -4,7 +4,7 @@ okf_version: "0.2"
 # SmartDCA knowledge index
 
 This is the complete inventory of the repository-root knowledge bundle. Its active
-profile is `smartdca-okf/0.4`, defined normatively in
+profile is `smartdca-okf/0.5`, defined normatively in
 [the SmartDCA OKF profile](docs/knowledge/okf-profile.md). Entries are grouped first by
 knowledge role and then by concept type; within the canonical role, stable concepts
 precede every other lifecycle state. [`README.md`](README.md) is the human
@@ -19,7 +19,7 @@ authoritative metadata.
 
 ### specification
 
-- [SmartDCA Open Knowledge Format profile](docs/knowledge/okf-profile.md) — Normative smartdca-okf/0.4 profile specializing Open Knowledge Format v0.2 for this bundle. — type: specification; status: stable; trust: reviewed 2026-08-23; provenance: cites the fingerprinted OKF v0.2 snapshot and internal concepts
+- [SmartDCA Open Knowledge Format profile](docs/knowledge/okf-profile.md) — Normative smartdca-okf/0.5 profile specializing Open Knowledge Format v0.2 for this bundle. — type: specification; status: draft; trust: profile 0.5 migration pending independent review; provenance: cites the fingerprinted OKF v0.2 snapshot, repository decisions, and ticket 08
 
 ### decision-record
 
@@ -31,6 +31,7 @@ authoritative metadata.
 - [Assign definition, theorem, and experiment-report paths in profile 0.3](docs/adr/0006-assign-definition-theorem-and-experiment-report-paths.md) — Decision assigning the three remaining semantic type paths and relabelling the bundle as smartdca-okf/0.3. — type: decision-record; status: stable; trust: reviewed 2026-08-16; provenance: original record, Git history
 - [Adopt effort-scoped work tracking](docs/adr/0007-adopt-effort-scoped-work-tracking.md) — Decision to give each active research effort its own approved specification, map, and locally numbered ticket directory. — type: decision-record; status: stable; trust: reviewed 2026-08-23; provenance: original record, user approval
 - [Place empirical protocols, inputs, and run bundles in versioned layers](docs/adr/0008-place-empirical-protocol-input-run-layers.md) — Decision separating immutable empirical registrations, versioned inputs, machine-generated run bundles, and reviewable experiment reports. — type: decision-record; status: stable; trust: independently reviewed 2026-08-25; provenance: ticket 01 implementation and repository-layout review
+- [Exclude .agents tooling from the SmartDCA knowledge bundle](docs/adr/0009-exclude-agents-tooling-from-knowledge-bundle.md) — Decision reserving the .agents tree as repository tooling outside SmartDCA bundle membership and validation. — type: decision-record; status: draft; trust: user-selected decision pending independent review; provenance: OKF v0.2, ADR 0002, ticket 08, and explicit user clarification
 
 ### definition
 
@@ -105,7 +106,7 @@ authoritative metadata.
 ### workflow
 
 - [Issue tracker: Local Markdown](docs/agents/issue-tracker.md) — Where research maps, tickets, and their state fields live and how they are named. — type: workflow; status: stable; trust: reviewed 2026-08-23; provenance: original record, Git history
-- [SmartDCA LLM-Wiki workflow](docs/agents/llm-wiki-workflow.md) — How agents author, ingest, promote, review, and supersede knowledge in the wiki. — type: workflow; status: stable; trust: reviewed 2026-08-23; provenance: original record, Git history
+- [SmartDCA LLM-Wiki workflow](docs/agents/llm-wiki-workflow.md) — How agents author, ingest, promote, review, and supersede knowledge in the wiki. — type: workflow; status: draft; trust: profile 0.5 boundary wording pending Writing-for-Agents review; provenance: original record, Git history, and ADR 0009
 - [Wayfinder ticket workflow](docs/agents/wayfinder-ticket-workflow.md) — Authoritative ticket lifecycle from orientation through the user significance gate. — type: workflow; status: stable; trust: reviewed 2026-08-23; provenance: original record, Git history
 
 ### domain-glossary
@@ -116,7 +117,7 @@ authoritative metadata.
 
 - [Find the rigorous out quasi-Gini route to a complete SmartDCA paper](.scratch/smartdca/map.md) — Authoritative Wayfinder map holding the destination, settled decisions, and active research frontier. — type: research-map; status: stable; trust: independently reviewed through deterministic empirical ticket 02 on 2026-08-25; provenance: Git history and current effort review
 - [Arbitrary-horizon performance effort map](.scratch/smartdca/efforts/arbitrary-horizon-performance/map.md) — Completed route and reviewed publication checkpoint for the arbitrary-horizon guarded SmartDCA performance effort. — type: research-map; status: stable; trust: independently reviewed through ticket 05 on 2026-08-24; provenance: approved effort structure and current ticket reviews
-- [Safety-adaptivity empirical evaluation effort map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md) — Approved seven-ticket route from preregistration through independent empirical publication. — type: research-map; status: stable; trust: independently reviewed through ticket 02 on 2026-08-25; provenance: approved effort contract, tracer decomposition, and current ticket reviews
+- [Safety-adaptivity empirical evaluation effort map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md) — Approved seven-ticket empirical route plus the repository-conformance blocker required to finish stochastic evaluation. — type: research-map; status: stable; trust: independently reviewed through ticket 02 on 2026-08-25; provenance: approved effort contract, tracer decomposition, and current ticket reviews
 
 ### work-specification
 
@@ -151,8 +152,9 @@ authoritative metadata.
 - [Review and publish the arbitrary-horizon research package](.scratch/smartdca/efforts/arbitrary-horizon-performance/issues/05-review-publish-research-package.md) — Resolved task ticket independently reviewing and publishing the arbitrary-horizon research package for the thesis narrative. — type: research-ticket; status: stable; trust: independently reviewed 2026-08-24; provenance: approved effort contract, exact evidence, and clean-room replay
 - [Preregister the empirical protocol and establish one canonical run](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md) — Resolved task ticket freezing the empirical protocol and establishing a reviewed deterministic three-policy canonical run before historical outcome access. — type: research-ticket; status: stable; trust: independently reviewed 2026-08-25; provenance: frozen protocol, canonical run, executable checks, and Standards, specification, and empirical replay
 - [Evaluate deterministic synthetic and adversarial paths](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md) — Resolved task ticket executing the preregistered three-policy study on deterministic synthetic and adversarial price-path families. — type: research-ticket; status: stable; trust: independently reviewed 2026-08-25; provenance: frozen protocol, immutable deterministic study, executable checks, and Standards, specification, and clean-room empirical replay
-- [Evaluate seeded stochastic path families](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md) — Open task ticket executing reproducible stochastic sensitivity experiments across declared market-process families. — type: research-ticket; status: draft; trust: claimed execution pending review; provenance: approved effort contract, saved stochastic design, and current implementation checkpoint
+- [Evaluate seeded stochastic path families](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md) — Open task ticket executing reproducible stochastic sensitivity experiments across declared market-process families. — type: research-ticket; status: draft; trust: independently reviewed evidence, blocked on repository conformance; provenance: approved effort contract, durable stochastic run, and ticket 08
 - [Establish the historical-data and rolling-episode seam](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/04-establish-historical-data-episode-seam.md) — Open task ticket delivering fingerprinted S&P 500 and Bitcoin inputs, point-in-time episode construction, and a non-confirmatory validation run. — type: research-ticket; status: draft; trust: user-approved route, pending execution; provenance: synthesized from the approved empirical effort specification
 - [Run the confirmatory historical evaluation](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/05-run-confirmatory-historical-evaluation.md) — Open task ticket executing the frozen rolling S&P 500 and Bitcoin comparison with dependence-aware uncertainty and complete provenance. — type: research-ticket; status: draft; trust: user-approved route, pending execution; provenance: synthesized from the approved empirical effort specification
 - [Synthesize the empirical safety-adaptivity trade-off](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/06-synthesize-safety-adaptivity-tradeoff.md) — Open research ticket integrating deterministic, stochastic, and historical evidence into the thesis-facing empirical conclusion. — type: research-ticket; status: draft; trust: user-approved route, pending execution; provenance: synthesized from the approved empirical effort specification
 - [Independently review and publish the empirical package](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/07-review-publish-empirical-package.md) — Open task ticket reproducing, auditing, correcting, and publishing the complete safety-adaptivity empirical package. — type: research-ticket; status: draft; trust: user-approved route, pending execution; provenance: synthesized from the approved empirical effort specification
+- [Exclude repository-local agent tooling from the OKF bundle](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/08-exclude-agents-from-okf-bundle.md) — Blocking task ticket reserving the .agents tooling tree outside the repository knowledge bundle without changing its files. — type: research-ticket; status: draft; trust: claimed migration pending review; provenance: user clarification, OKF v0.2, ADR 0002, and import commit ea7cca3

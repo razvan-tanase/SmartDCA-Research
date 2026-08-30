@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-note
 title: "Exact two-purchase DCA win/loss boundary"
 description: "Derivation of the necessary-and-sufficient two-purchase wealth boundary and exact neutral-score comparison."

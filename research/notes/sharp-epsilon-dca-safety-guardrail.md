@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-note
 title: "Sharp causal epsilon-DCA safety and its unit-coverage guardrail"
 description: "Proof that universal epsilon-DCA safety is exactly a causal cumulative-unit coverage guardrail."

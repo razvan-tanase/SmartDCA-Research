@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-note
 title: "Weak single-valley prices do not determine guarded SmartDCA advantage"
 description: "Exact counterexamples showing that weak and strict single-valley paths do not guarantee corrected-rule wealth advantage over DCA or the neutral guarded selector."

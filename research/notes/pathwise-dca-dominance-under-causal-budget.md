@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-note
 title: "Pathwise DCA dominance under causal budget feasibility"
 description: "Proof that DCA is the unique causal fully funded strategy able to weakly dominate DCA on every path."

@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: synthesis
 title: "Conflicts across the OKF foundation sources"
 description: "Cross-source integration of the five foundation sources and the four divergences the local profile has to resolve."

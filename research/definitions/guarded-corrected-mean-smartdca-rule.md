@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: definition
 title: "The guarded corrected-mean SmartDCA rule"
 description: "Canonical definition of the guarded SmartDCA rule: the epsilon-DCA safety floor plus the bounded corrected-mean score inside it."

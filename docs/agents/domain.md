@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: agent-instructions
 title: "Domain documentation"
 description: "Single-context rule for reading the glossary and ADRs before domain work."

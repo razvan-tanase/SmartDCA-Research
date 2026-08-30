@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Preregister the empirical protocol and establish one canonical run"
 description: "Resolved task ticket freezing the empirical protocol and establishing a reviewed deterministic three-policy canonical run before historical outcome access."

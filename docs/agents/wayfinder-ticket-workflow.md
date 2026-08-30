@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: workflow
 title: "Wayfinder ticket workflow"
 description: "Authoritative ticket lifecycle from orientation through the user significance gate."

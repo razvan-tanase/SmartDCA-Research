@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: experiment-report
 title: "Deterministic synthetic and adversarial path evaluation"
 description: "Reproducible three-policy evidence across deterministic boundary, stress, and deliberately hostile price paths."

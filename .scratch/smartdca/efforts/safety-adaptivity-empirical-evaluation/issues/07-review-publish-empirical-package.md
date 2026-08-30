@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Independently review and publish the empirical package"
 description: "Open task ticket reproducing, auditing, correcting, and publishing the complete safety-adaptivity empirical package."

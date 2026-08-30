@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Prove the sharp epsilon-DCA safety guardrail"
 description: "Resolved task ticket proving the sharp epsilon-DCA safety guardrail and its unit-coverage form."

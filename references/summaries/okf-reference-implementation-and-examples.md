@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: source-summary
 title: "Source summary: the OKF knowledge-catalog examples and reference implementation"
 description: "Summary of the official OKF reference producer, visualizer, and sample bundles, and what their conventions do not settle."

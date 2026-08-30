@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Choose the corrected out quasi-Gini definition"
 description: "Resolved prototype ticket choosing the canonical corrected out quasi-Gini definition."

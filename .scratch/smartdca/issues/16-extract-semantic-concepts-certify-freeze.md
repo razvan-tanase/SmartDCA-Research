@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Extract initial semantic concepts and certify structural freeze"
 description: "Resolved task ticket extracting initial semantic concepts and certifying structural freeze."

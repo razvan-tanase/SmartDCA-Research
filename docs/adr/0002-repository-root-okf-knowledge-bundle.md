@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: decision-record
 title: "Make the repository root an OKF knowledge bundle"
 description: "Decision making the repository root itself the conformant OKF v0.2 knowledge bundle."

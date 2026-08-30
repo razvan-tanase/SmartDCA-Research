@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-note
 title: "Differential guardrail feedback defeats cash single crossing"
 description: "Exact decomposition, comparative static, and a horizon-minimal strict single-valley counterexample separating corrected-score behavior from policy-specific guardrail floors."

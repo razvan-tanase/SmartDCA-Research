@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: experiment-report
 title: "Canonical synthetic safety-adaptivity run"
 description: "Deterministic non-confirmatory end-to-end run of the frozen three-policy empirical protocol, including cost routes and machine-checkable validation receipts."

@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: theorem
 title: "Three-purchase guarded SmartDCA has an exact beta-sensitive DCA boundary"
 description: "At three purchases the DCA wealth boundary depends on beta only through the first two-input corrected reference and can flip exactly."

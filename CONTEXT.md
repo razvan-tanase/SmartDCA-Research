@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: domain-glossary
 title: "Quasi-Gini SmartDCA Research"
 description: "Canonical mathematical, financial, and knowledge-system vocabulary with its forbidden alternatives."

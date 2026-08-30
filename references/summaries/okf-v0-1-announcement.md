@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: source-summary
 title: "Source summary: the original OKF announcement (historical v0.1 context)"
 description: "Summary of the June 2026 OKF v0.1 announcement, retained as historical context superseded by v0.2."

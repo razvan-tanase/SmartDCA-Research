@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Evaluate deterministic synthetic and adversarial paths"
 description: "Resolved task ticket executing the preregistered three-policy study on deterministic synthetic and adversarial price-path families."

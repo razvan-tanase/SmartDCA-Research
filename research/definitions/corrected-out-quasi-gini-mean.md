@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: definition
 title: "The corrected out quasi-Gini mean"
 description: "Canonical definition of the numerator-preserving corrected out quasi-Gini mean and its diagonal extension."

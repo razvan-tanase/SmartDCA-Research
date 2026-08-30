@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Evaluate seeded stochastic path families"
 description: "Open task ticket executing reproducible stochastic sensitivity experiments across declared market-process families."
@@ -7,18 +7,18 @@ knowledge_role: operational
 status: draft
 original_record: true
 ticket_type: task
-ticket_status: claimed
+ticket_status: open
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-29T19:42:21Z
-generation_run: urn:uuid:65412e66-26ac-4ad7-b16d-edc921ec3e88
+  at: 2026-08-30T09:34:27Z
+generation_run: urn:uuid:e54b04fe-969e-4f95-81f4-1121a2423495
 ---
 # 03 — Evaluate seeded stochastic path families
 
 Type: task
-Status: claimed
+Status: open
 Label: ready-for-agent
-Blocked by: 01
+Blocked by: 01, 08
 Parent: [Safety-adaptivity empirical evaluation](../spec.md)
 
 ## Question
@@ -77,6 +77,10 @@ failures, and a bounded report without treating simulation as a universal proof.
   Clearing this requires a separate versioned profile/path decision or a
   repository-corpus decision, so this ticket remains claimed and unresolved;
   no significance gate is entered and ticket 04 remains unclaimed.
+- Interrupted on 2026-08-30 under the Wayfinder rule: the repository/profile
+  decision is now isolated in [ticket 08](08-exclude-agents-from-okf-bundle.md),
+  which is the sole claimed ticket. The reviewed stochastic evidence and its
+  durable run remain unchanged while this ticket is open and blocked.
 
 ## Answer
 

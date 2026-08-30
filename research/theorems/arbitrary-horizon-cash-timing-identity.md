@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: theorem
 title: "Arbitrary-horizon terminal wealth has an exact cash-timing identity"
 description: "Every fully funded finite-horizon strategy's terminal wealth is DCA wealth plus an exact functional of its carried-cash path."

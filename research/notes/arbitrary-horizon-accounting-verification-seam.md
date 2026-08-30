@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-note
 title: "Arbitrary-horizon cash-timing identity and exact-rational verification seam"
 description: "Proof of the finite-horizon cash-timing identities and specification of the exact-rational DCA, corrected, and neutral ledger interface."

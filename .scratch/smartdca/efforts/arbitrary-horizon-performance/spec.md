@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: work-specification
 title: "Test arbitrary-horizon guarded SmartDCA performance on single-valley paths"
 description: "Approved effort contract for a falsification-oriented arbitrary-horizon performance boundary for the guarded corrected-mean SmartDCA rule."

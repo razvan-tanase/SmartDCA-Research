@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Implement the SmartDCA OKF profile and report-only validator"
 description: "Resolved task ticket implementing the SmartDCA OKF profile and its report-only validator."

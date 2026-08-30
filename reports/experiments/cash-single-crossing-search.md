@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: experiment-report
 title: "Exact-rational cash single-crossing mechanism search"
 description: "Deterministic finite search locating strict cash double reversals and checking reference-aligned guardrail feedback through the public exact ledger."

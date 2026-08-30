@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Run the confirmatory historical evaluation"
 description: "Open task ticket executing the frozen rolling S&P 500 and Bitcoin comparison with dependence-aware uncertainty and complete provenance."

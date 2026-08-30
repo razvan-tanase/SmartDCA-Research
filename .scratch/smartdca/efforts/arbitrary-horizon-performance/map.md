@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-map
 title: "Arbitrary-horizon performance effort map"
 description: "Completed route and reviewed publication checkpoint for the arbitrary-horizon guarded SmartDCA performance effort."

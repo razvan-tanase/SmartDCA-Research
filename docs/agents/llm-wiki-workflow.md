@@ -1,15 +1,15 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: workflow
 title: "SmartDCA LLM-Wiki workflow"
 description: "How agents author, ingest, promote, review, and supersede knowledge in the wiki."
 knowledge_role: operational
-status: stable
+status: draft
 original_record: true
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T16:18:42Z
-generation_run: urn:uuid:fc39df1d-3e43-487c-8bc6-9a1e72abaff8
+  at: 2026-08-30T09:39:25Z
+generation_run: urn:uuid:c151b2eb-777f-4ae7-9f49-877a6401860e
 verified:
   - by: claude-code/smartdca-wiki-0.1
     at: 2026-08-16T07:46:00Z
@@ -31,7 +31,7 @@ Use this workflow when a concept, path, metadata field, provenance join, lifecyc
 ## Invariants
 
 - The repository root is the OKF bundle root.
-- Every non-reserved Markdown file is a concept and needs a registered path assignment.
+- Root `.agents/` and `.git/` are non-bundle repository infrastructure. Every non-reserved Markdown bundle member is a concept and needs a registered path assignment, including members below other hidden directories.
 - `index.md` is the complete discovery inventory; `.scratch/smartdca/map.md` is the active research frontier; `README.md` is the human introduction.
 - Type, authority role, lifecycle, trust, and workflow state are distinct fields.
 - One normalized claim has one canonical home. Evidence and operational records preserve history and link to it.

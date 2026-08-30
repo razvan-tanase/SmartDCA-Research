@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-note
 title: "Prior theory for the proposed corrected out quasi-Gini normalization"
 description: "Primary-source positioning identifying the corrected normalization as a known weighted Bajraktarevic mean."

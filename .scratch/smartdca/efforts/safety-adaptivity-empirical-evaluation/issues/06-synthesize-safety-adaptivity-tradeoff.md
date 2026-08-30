@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Synthesize the empirical safety-adaptivity trade-off"
 description: "Open research ticket integrating deterministic, stochastic, and historical evidence into the thesis-facing empirical conclusion."

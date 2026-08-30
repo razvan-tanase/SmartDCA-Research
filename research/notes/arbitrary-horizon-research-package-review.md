@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-note
 title: "Independent review of the arbitrary-horizon research package"
 description: "Ledger-first re-derivation, exact-witness reproduction, and publication audit of the complete arbitrary-horizon performance result."

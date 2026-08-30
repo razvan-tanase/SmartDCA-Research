@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: domain-glossary
 title: "Triage labels"
 description: "Operational mapping from canonical triage roles to this project's labels."

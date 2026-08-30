@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: decision-record
 title: "Adopt effort-scoped work tracking"
 description: "Decision to give each active research effort its own approved specification, map, and locally numbered ticket directory."

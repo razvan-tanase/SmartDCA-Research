@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-note
 title: "Primary-source note: homogeneity of the canonical corrected out quasi-Gini mean"
 description: "Characterization of when the corrected mean is degree-one homogeneous, with its source hypotheses."

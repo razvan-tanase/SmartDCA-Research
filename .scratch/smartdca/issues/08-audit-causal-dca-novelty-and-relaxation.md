@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Audit the novelty of the causal DCA boundary and choose a constructive relaxation"
 description: "Resolved research ticket auditing causal DCA novelty and choosing a constructive relaxation."

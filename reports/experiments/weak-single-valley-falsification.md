@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: experiment-report
 title: "Exact-rational weak single-valley falsification search"
 description: "Deterministic finite search falsifying corrected-rule advantage over DCA and the neutral guarded selector on weak single-valley paths."

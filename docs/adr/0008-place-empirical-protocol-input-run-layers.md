@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: decision-record
 title: "Place empirical protocols, inputs, and run bundles in versioned layers"
 description: "Decision separating immutable empirical registrations, versioned inputs, machine-generated run bundles, and reviewable experiment reports."

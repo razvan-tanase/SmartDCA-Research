@@ -6,6 +6,12 @@ groups are newest first, entries are flat bullets with a full UTC timestamp, and
 existing events are never edited, reordered, or deleted. New events are inserted into
 the newest applicable group. The complete concept inventory is [`index.md`](index.md).
 
+## 2026-08-30
+
+- 2026-08-30T09:39:25Z | Migration | Implement profile 0.5 by excluding root `.agents/` from both validation layers, retaining discovery in other hidden directories, relabelling bundle concepts, and adding public CLI regression fixtures | [profile](docs/knowledge/okf-profile.md), [decision](docs/adr/0009-exclude-agents-tooling-from-knowledge-bundle.md), [validator](tools/okf/validate.py), [fixtures](tools/okf/tests/test_validate_cli.py), [index](index.md)
+- 2026-08-30T09:34:27Z | Decision | Reserve `.agents/` as repository tooling outside SmartDCA bundle membership, keep all other hidden Markdown discoverable, and leave every tooling file unchanged | [decision](docs/adr/0009-exclude-agents-tooling-from-knowledge-bundle.md), [blocker ticket](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/08-exclude-agents-from-okf-bundle.md), [profile](docs/knowledge/okf-profile.md)
+- 2026-08-30T09:28:22Z | Claim | Isolate the repository-wide `.agents` OKF decision in ticket 08, return the completed stochastic work to open with an explicit blocker, and preserve ticket 04 as unclaimed | [blocker ticket](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/08-exclude-agents-from-okf-bundle.md), [stochastic ticket](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md), [effort map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md), [master map](.scratch/smartdca/map.md), [index](index.md)
+
 ## 2026-08-29
 
 - 2026-08-29T19:42:21Z | Verification | Final stochastic specification and Standards re-review pass, independent and full-suite replays pass, and ticket resolution remains blocked by strict OKF findings from the pre-existing unassigned `.agents` Markdown corpus | [ticket](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md), [manifest](reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/manifest.json), [check](reproducibility/checks/check_stochastic_family_study.py), [profile](docs/knowledge/okf-profile.md)

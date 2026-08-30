@@ -1,10 +1,10 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: specification
 title: "SmartDCA Open Knowledge Format profile"
-description: "Normative smartdca-okf/0.4 profile specializing Open Knowledge Format v0.2 for this bundle."
+description: "Normative smartdca-okf/0.5 profile specializing Open Knowledge Format v0.2 for this bundle."
 knowledge_role: canonical
-status: stable
+status: draft
 sources:
   - id: okf-spec
     title: "Open Knowledge Format v0.2 specification"
@@ -46,10 +46,14 @@ sources:
     title: "Adopt effort-scoped work tracking"
     resource: docs/adr/0007-adopt-effort-scoped-work-tracking
     source_kind: internal
+  - id: adr-0009
+    title: "Exclude .agents tooling from the SmartDCA knowledge bundle"
+    resource: docs/adr/0009-exclude-agents-tooling-from-knowledge-bundle
+    source_kind: internal
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T20:17:00Z
-generation_run: urn:uuid:ed95ae0b-06ee-4d96-a841-5724e383cc65
+  at: 2026-08-30T09:39:25Z
+generation_run: urn:uuid:c151b2eb-777f-4ae7-9f49-877a6401860e
 verified:
   - by: claude-code/smartdca-wiki-0.1
     at: 2026-08-16T07:46:00Z
@@ -84,13 +88,15 @@ verified:
 ---
 # SmartDCA Open Knowledge Format profile
 
-This document is the normative local profile for the repository-root SmartDCA knowledge bundle. It specializes [Open Knowledge Format (OKF) v0.2](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)[^okf-spec] as `smartdca-okf/0.4` and transcribes the accepted design in [Design a repository-root LLM-Wiki using OKF v0.2](../../.scratch/smartdca/issues/12-design-repository-root-llm-wiki-okf.md)[^ticket-12].
+This document is the normative local profile for the repository-root SmartDCA knowledge bundle. It specializes [Open Knowledge Format (OKF) v0.2](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)[^okf-spec] as `smartdca-okf/0.5` and transcribes the accepted design in [Design a repository-root LLM-Wiki using OKF v0.2](../../.scratch/smartdca/issues/12-design-repository-root-llm-wiki-okf.md)[^ticket-12].
 
 The words MUST, MUST NOT, REQUIRED, SHOULD, SHOULD NOT, and MAY are normative. Base OKF and this profile are separate validation layers: a document can conform to OKF while failing this profile.
 
 ## Bundle and identity
 
-The repository root is the bundle root, by the decision in [Make the repository root an OKF knowledge bundle](../adr/0002-repository-root-okf-knowledge-bundle.md)[^adr-0002]. The root `README.md` is repository-interface documentation for humans and GitHub and is deliberately outside the OKF concept corpus; it MUST NOT carry concept frontmatter. Every other UTF-8 file whose final suffix is `.md` is either a concept or a reserved file, including Markdown below hidden directories. `index.md` and `log.md` are reserved at every depth; all remaining Markdown files are concepts.
+The repository root is the bundle root, by the decision in [Make the repository root an OKF knowledge bundle](../adr/0002-repository-root-okf-knowledge-bundle.md)[^adr-0002]. Root `.git/` and `.agents/` are repository infrastructure outside bundle membership; discovery MUST exclude both trees before applying either validation layer. This tooling boundary is the decision in [Exclude .agents tooling from the SmartDCA knowledge bundle](../adr/0009-exclude-agents-tooling-from-knowledge-bundle.md)[^adr-0009].
+
+The root `README.md` is repository-interface documentation for humans and GitHub and is deliberately outside the OKF concept corpus; it MUST NOT carry concept frontmatter. Every other UTF-8 bundle member whose final suffix is `.md` is either a concept or a reserved file, including Markdown below hidden directories other than the two non-bundle infrastructure trees. `index.md` and `log.md` are reserved at every depth; all remaining Markdown bundle members are concepts.
 
 A Concept ID is the bundle-relative path without the `.md` suffix. A published Concept ID is stable. Moving a stable concept creates the new concept and retains the old path as a deprecated forwarding concept with `superseded_by`; it does not delete or silently redirect the old identity. That is the durable-identity decision in [Preserve path-based concept identity through supersession](../adr/0004-preserve-path-based-concept-identity.md)[^adr-0004].
 
@@ -98,7 +104,7 @@ External Markdown snapshots are not concepts. Their exact upstream bytes MUST us
 
 ## Base OKF v0.2 conformance
 
-The base layer implements OKF v0.2 conformance without importing stricter SmartDCA rules. It requires parseable top-of-file YAML frontmatter and a non-empty `type` for every Markdown concept file, plus the reserved-file structures defined by OKF. The root `README.md` is not passed to base concept validation.
+The base layer implements OKF v0.2 conformance without importing stricter SmartDCA rules. It requires parseable top-of-file YAML frontmatter and a non-empty `type` for every Markdown concept file, plus the reserved-file structures defined by OKF. Non-bundle repository infrastructure and the root `README.md` are not passed to base concept validation.
 
 The base layer MUST accept:
 
@@ -226,14 +232,17 @@ A profile version is the value every concept declares in `profile`; the schema r
 
 `smartdca-okf/0.4` adopts [effort-scoped work tracking](../adr/0007-adopt-effort-scoped-work-tracking.md)[^adr-0007]. It registers `work-specification`, assigns active effort specifications, maps, and tickets, and restricts the legacy project issue directory to resolved history. Every active effort requires both `spec.md` and `map.md`; tickets may be published only after the specification is stable. This schema change lapses the prior structural-freeze certification and resets the supervised-ingest streak.
 
+`smartdca-okf/0.5` makes the repository/bundle boundary explicit, as recorded in [Exclude .agents tooling from the SmartDCA knowledge bundle](../adr/0009-exclude-agents-tooling-from-knowledge-bundle.md)[^adr-0009]. Root `.agents/` joins `.git/` as non-bundle repository infrastructure excluded before base and profile validation; every other hidden-directory Markdown path remains discoverable. No type, metadata field, role, lifecycle rule, or active concept-path assignment changes. This structural change lapses the 0.4 freeze state and resets the supervised-ingest streak to zero without invalidating published concepts.
+
 Relabelling across profile versions is a metadata migration: it does not update `generated.at`, demote a high-risk concept to draft, or invalidate a recorded verification. Only a concept whose body actually changed in the same transaction carries a new generation time.
 
 ## Path mapping
 
-These assignments are exhaustive for active concept paths in profile 0.4. The registered `project-overview` type currently has no active concept instance because the root `README.md` is repository-interface documentation rather than knowledge corpus content. A non-reserved Markdown concept path not matched here fails the profile even if all of its metadata is otherwise valid.
+These assignments are exhaustive for active concept paths in profile 0.5. The registered `project-overview` type currently has no active concept instance because the root `README.md` is repository-interface documentation rather than knowledge corpus content. A non-reserved Markdown bundle path not matched here fails the profile even if all of its metadata is otherwise valid.
 
 | Path | Type | Role | Lifecycle rule |
 |---|---|---|---|
+| Root `.git/**`, `.agents/**` | repository infrastructure | not bundle content | Excluded before both validation layers; no concept metadata or index row. |
 | `README.md` | repository interface | not a concept | No YAML concept frontmatter; human/GitHub landing page only. |
 | `CONTEXT.md` | `domain-glossary` | canonical | Draft until sources and bootstrap semantic review are recorded. |
 | `docs/adr/*.md` | `decision-record` | canonical | Accepted records become stable only after independent review; otherwise draft or deprecated as mapped above. |
@@ -283,7 +292,7 @@ okf_version: "0.2"
 ---
 ```
 
-Its body declares the active profile as `` `smartdca-okf/0.4` `` and contains exactly one section for each role in this order:
+Its body declares the active profile as `` `smartdca-okf/0.5` `` and contains exactly one section for each role in this order:
 
 ```markdown
 ## Canonical
@@ -291,7 +300,7 @@ Its body declares the active profile as `` `smartdca-okf/0.4` `` and contains ex
 ## Operational
 ```
 
-Within each role, rows are grouped under a registered type heading such as `### theorem`; this makes the ordering role first and type second. Canonical type subgroups and their rows are ordered so every stable canonical concept precedes every draft or deprecated canonical concept. Empty role sections contain `_None._`. Every concept appears exactly once. Each inventory row uses this exact, parseable form:
+Within each role, rows are grouped under a registered type heading such as `### theorem`; this makes the ordering role first and type second. Canonical type subgroups and their rows are ordered so every stable canonical concept precedes every draft or deprecated canonical concept. Empty role sections contain `_None._`. Every concept appears exactly once; non-bundle repository infrastructure never appears. Each inventory row uses this exact, parseable form:
 
 ```markdown
 - [<title>](<bundle-relative .md path>) — <description> — type: <type>; status: <status>; trust: <indicator>; provenance: <indicator>
@@ -326,7 +335,7 @@ The validator has two modes. Report mode is the default: content findings always
 
 [Implement the SmartDCA OKF profile and report-only validator](../../.scratch/smartdca/issues/13-implement-smartdca-okf-profile-validator.md)[^ticket-13] exposed report mode only. [Atomically migrate the repository to SmartDCA OKF 0.1](../../.scratch/smartdca/issues/14-atomically-migrate-repository-to-okf.md) added strict mode and, in the same merge transaction as the corpus migration, made `python tools/okf/validate.py . --strict` a blocking CI step alongside the validator fixtures. Every later change to a Markdown concept therefore has to conform before it can merge.
 
-The validator scans the complete repository tree except `.git`, validates every final-suffix `.md` file except the root repository-interface `README.md`, and intentionally does not treat `.md.raw` artifacts as concepts. Automated fixtures exercise the base permissiveness contract, the complete path mapping, registered types, conditional fields, actor and run identities, source kinds and fingerprints, footnote joins, re-verification, supersession, ticket and ADR states, dependency freshness, stable links, reserved files, index coverage/order, raw snapshots, and all five accepted edge cases.
+The validator scans every bundle path while excluding root `.git/`, root `.agents/`, and the repository-interface `README.md`. It validates every remaining final-suffix `.md` file and intentionally does not treat `.md.raw` artifacts as concepts. Automated fixtures exercise the non-bundle tooling boundary, other hidden-directory discovery, base permissiveness, the complete path mapping, registered types, conditional fields, actor and run identities, source kinds and fingerprints, footnote joins, re-verification, supersession, ticket and ADR states, dependency freshness, stable links, reserved files, index coverage/order, raw snapshots, and all five accepted edge cases.
 
 ## Structural freeze
 
@@ -336,7 +345,7 @@ Freeze MUST NOT be read as a commitment to never change this profile. A later re
 
 A schema change made after a freeze has exactly two consequences, and no others. The freeze claim lapses on the date of that change and MUST be re-certified before anything that depends on it proceeds. The supervised-ingest streak restarts from zero. Concepts already published stay valid; a lapsed freeze never invalidates content, retracts a verification, or demotes a concept.
 
-Profile 0.4 is such a schema change. As of 2026-08-23 the earlier certification is lapsed, the supervised-ingest streak is zero, and batch ingestion remains closed pending re-certification and a new qualifying streak.
+Profile 0.5 is such a structural change. As of 2026-08-30 the earlier certification is lapsed, the supervised-ingest streak is zero, and batch ingestion remains closed pending re-certification and a new qualifying streak.
 
 ## Deferred capabilities
 
@@ -353,3 +362,4 @@ Hybrid search is deferred until measured retrieval failures, about 100 sources, 
 [^adr-0005]: [Assign source-summary and synthesis paths in profile 0.2](../adr/0005-assign-source-summary-and-synthesis-paths.md)
 [^adr-0006]: [Assign definition, theorem, and experiment-report paths in profile 0.3](../adr/0006-assign-definition-theorem-and-experiment-report-paths.md)
 [^adr-0007]: [Adopt effort-scoped work tracking](../adr/0007-adopt-effort-scoped-work-tracking.md)
+[^adr-0009]: [Exclude .agents tooling from the SmartDCA knowledge bundle](../adr/0009-exclude-agents-tooling-from-knowledge-bundle.md)

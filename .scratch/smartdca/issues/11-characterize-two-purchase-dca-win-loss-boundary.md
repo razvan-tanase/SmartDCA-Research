@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Characterize the two-purchase DCA win/loss boundary"
 description: "Resolved task ticket characterizing the two-purchase DCA win/loss boundary."

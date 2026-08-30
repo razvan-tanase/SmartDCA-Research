@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: work-specification
 title: "Evaluate the safety-adaptivity trade-off of guarded SmartDCA"
 description: "Approved effort contract for a preregistered empirical comparison of DCA, the neutral guarded selector, and the guarded corrected-mean SmartDCA rule."

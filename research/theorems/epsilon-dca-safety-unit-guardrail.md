@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: theorem
 title: "Epsilon-DCA safety is exactly a causal unit-coverage guardrail"
 description: "Universal relative-wealth safety, prefix unit coverage, and a sharp per-purchase floor are equivalent, and the floor is always feasible."

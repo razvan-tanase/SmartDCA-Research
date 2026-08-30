@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: decision-record
 title: "Preserve path-based concept identity through supersession"
 description: "Decision preserving path-based Concept IDs and replacing concepts through supersession, never moves."

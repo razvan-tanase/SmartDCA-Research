@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Prove the arbitrary-horizon performance boundary"
 description: "Resolved research ticket proving the exact terminal-cash-and-units boundary for every finite-horizon guarded SmartDCA comparison."

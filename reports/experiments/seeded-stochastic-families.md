@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: experiment-report
 title: "Seeded stochastic path-family evaluation"
 description: "Reproducible three-policy sensitivity evidence across controlled trend, mean-reversion, volatility, regime-switching, and jump constructions."

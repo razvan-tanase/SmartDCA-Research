@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-note
 title: "Exact arbitrary-horizon evaluation-price boundary for guarded SmartDCA"
 description: "Proof that every pairwise guarded SmartDCA wealth gap is affine in the evaluation price, together with the exact limit of reference-aligned cash single crossing."

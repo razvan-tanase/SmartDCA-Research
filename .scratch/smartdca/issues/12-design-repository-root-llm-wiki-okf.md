@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Design a repository-root LLM-Wiki using OKF v0.2"
 description: "Resolved grilling ticket designing the repository-root LLM-Wiki as an OKF v0.2 knowledge bundle."

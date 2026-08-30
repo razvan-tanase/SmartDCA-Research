@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Falsify the weak single-valley advantage conjecture"
 description: "Resolved task ticket falsifying the weak single-valley advantage conjecture with deterministic exact-rational search."

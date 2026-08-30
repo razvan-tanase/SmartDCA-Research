@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: decision-record
 title: "Assign source-summary and synthesis paths in profile 0.2"
 description: "Decision assigning ingest summary and synthesis paths and relabelling the bundle as smartdca-okf/0.2."

@@ -56,8 +56,10 @@ deterministic three-policy runner reproduces its canonical synthetic bundle
 byte for byte. [Ticket 02's deterministic and adversarial study](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md)
 is also resolved after Standards, specification, and independent empirical
 replay. [Ticket 03's seeded stochastic study](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md)
-is claimed with its review-corrected durable run under final verification;
-ticket 04 remains open and unclaimed. The synthetic empirical reports remain
+is complete and independently reviewed, but remains open while the claimed
+[repository-conformance blocker](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/08-exclude-agents-from-okf-bundle.md)
+records profile 0.5 and excludes `.agents/` tooling from bundle membership.
+Ticket 04 remains open and unclaimed. The synthetic empirical reports remain
 draft until the registered historical-slice reproduction is completed.
 
 The authoritative project state is the [Wayfinder map](.scratch/smartdca/map.md). The complete inventory of every knowledge concept is the root [index](index.md).
@@ -67,6 +69,7 @@ The authoritative project state is the [Wayfinder map](.scratch/smartdca/map.md)
 | Path | Purpose |
 |---|---|
 | `.scratch/smartdca/` | Authoritative Wayfinder map and numbered research tickets. |
+| `.agents/` | Repository-local agent tooling outside SmartDCA knowledge-bundle membership and validation. |
 | `research/definitions/` | Canonical definitions of the constructions the project adopts. |
 | `research/theorems/` | Canonical statements of the results the project has proved. |
 | `research/notes/` | Detailed proofs, theorem notes, and primary-source positioning behind those canonical pages. |

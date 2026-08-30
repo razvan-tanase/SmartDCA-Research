@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Isolate the first nontrivial corrected-mean effect at three purchases"
 description: "Resolved task ticket isolating the first beta-dependent guarded SmartDCA boundary at three purchases."

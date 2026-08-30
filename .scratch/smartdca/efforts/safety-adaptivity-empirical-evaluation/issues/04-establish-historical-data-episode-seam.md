@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Establish the historical-data and rolling-episode seam"
 description: "Open task ticket delivering fingerprinted S&P 500 and Bitcoin inputs, point-in-time episode construction, and a non-confirmatory validation run."

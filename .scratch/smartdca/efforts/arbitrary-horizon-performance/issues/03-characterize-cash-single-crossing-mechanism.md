@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Characterize the cash single-crossing mechanism"
 description: "Resolved research ticket disproving unconditional guarded cash single crossing and deriving a sufficient but non-necessary reference-aligned guardrail condition."

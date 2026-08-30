@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-ticket
 title: "Characterize homogeneity of the corrected out quasi-Gini mean"
 description: "Resolved research ticket characterizing homogeneity of the corrected out quasi-Gini mean."

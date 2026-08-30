@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-map
 title: "Find the rigorous out quasi-Gini route to a complete SmartDCA paper"
 description: "Authoritative Wayfinder map holding the destination, settled decisions, and active research frontier."
@@ -7,8 +7,8 @@ knowledge_role: operational
 status: stable
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-29T18:35:34Z
-generation_run: urn:uuid:92f2c96e-a0fc-46da-a38c-4a641f621bf9
+  at: 2026-08-30T09:39:25Z
+generation_run: urn:uuid:c151b2eb-777f-4ae7-9f49-877a6401860e
 verified:
   - by: openai-codex/writing-for-agents-0.1
     at: 2026-08-23T21:32:48Z
@@ -105,6 +105,8 @@ A thesis- and paper-grade, self-contained Financial Computing study suitable for
 
 - **Agent-facing writing audit:** All 62 Markdown paths were classified; the six active agent instruction surfaces were sharpened around explicit triggers, authoritative layers, and checkable completion bounds. A stale Stripe hosting claim and duplicated tracker lifecycle rules were removed, while the 18 earlier resolved tickets were preserved as provenance-bearing history. No scientific claim changed. See [Audit and sharpen agent-facing wiki instructions](issues/19-audit-agent-facing-writing.md).
 
+- **Repository tooling boundary (pending review):** Profile `smartdca-okf/0.5` reserves root `.agents/` alongside `.git/` as repository infrastructure outside knowledge-bundle membership. Other hidden Markdown remains discoverable, and the tooling tree stays byte-for-byte unchanged. See [Exclude .agents tooling from the SmartDCA knowledge bundle](../../docs/adr/0009-exclude-agents-tooling-from-knowledge-bundle.md).
+
 - **Reviewed arbitrary-horizon performance checkpoint:** The five-ticket effort establishes the exact ledger boundary \(W_n^c(P)-W_n^T(P)=H_T+P U_T\); single-valley geometry and cash crossing alone remain insufficient, while safety remains the guardrail's contribution. See the [resolved publication ticket](efforts/arbitrary-horizon-performance/issues/05-review-publish-research-package.md).
 
 - **Versioned empirical artifact layers:** Outcome-blind registrations live under `experiments/protocols/`, versioned inputs under `experiments/inputs/`, deterministic no-overwrite bundles under `reports/experiments/runs/`, and their reviewable OKF entry points under `reports/experiments/`. Exact byte fingerprints join those layers without treating generated JSON as separate knowledge concepts. See [Place empirical protocols, inputs, and run bundles in versioned layers](../../docs/adr/0008-place-empirical-protocol-input-run-layers.md).
@@ -117,7 +119,7 @@ A thesis- and paper-grade, self-contained Financial Computing study suitable for
 
 ## Active efforts
 
-- [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) has an approved seven-ticket tracer route. Tickets [01](efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md) and [02](efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md) are resolved. Ticket [03](efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md) is claimed with its review-corrected durable run under final verification; ticket 04 remains open and unclaimed, ticket 05 remains blocked by 04, and tickets 06–07 retain their declared dependencies.
+- [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) has an approved seven-ticket tracer route. Tickets [01](efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md) and [02](efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md) are resolved. The separate repository-conformance [ticket 08](efforts/safety-adaptivity-empirical-evaluation/issues/08-exclude-agents-from-okf-bundle.md) is claimed and blocks ticket [03](efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md), whose review-corrected durable run remains unchanged. Ticket 04 remains open and unclaimed, ticket 05 remains blocked by 04, and tickets 06–07 retain their declared dependencies.
 
 ## Not yet specified
 

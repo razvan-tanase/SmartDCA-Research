@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: research-note
 title: "Exact three-purchase corrected-mean effect"
 description: "Derivation of the exact three-purchase DCA boundary and an all-rational beta-driven classification flip."

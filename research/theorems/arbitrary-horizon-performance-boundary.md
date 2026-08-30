@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: theorem
 title: "Terminal cash and units give the exact arbitrary-horizon performance boundary"
 description: "Every finite-horizon corrected-rule wealth gap has an exact affine evaluation-price boundary, while single-valley cash crossing alone remains insufficient."

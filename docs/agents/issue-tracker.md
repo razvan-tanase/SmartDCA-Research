@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: workflow
 title: "Issue tracker: Local Markdown"
 description: "Where research maps, tickets, and their state fields live and how they are named."

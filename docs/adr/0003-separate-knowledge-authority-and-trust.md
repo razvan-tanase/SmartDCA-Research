@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: decision-record
 title: "Separate document kind, authority, lifecycle, and trust"
 description: "Decision keeping type, knowledge role, OKF lifecycle, and review trust as independent axes."

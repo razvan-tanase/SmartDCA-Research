@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: theorem
 title: "Exact mean classification of the source out quasi-Gini functional"
 description: "The source Eq. (70) out functional is a mean exactly when the transform is the identity or the parameter gap is one."

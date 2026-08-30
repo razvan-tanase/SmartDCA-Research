@@ -1,5 +1,5 @@
 ---
-profile: smartdca-okf/0.4
+profile: smartdca-okf/0.5
 type: theorem
 title: "Reference-aligned guardrail feedback preserves cash single crossing"
 description: "On weak single-valley paths the corrected score crosses neutral once, aligned floor differences preserve that crossing, and unaligned repeated floors can create two cash reversals."
