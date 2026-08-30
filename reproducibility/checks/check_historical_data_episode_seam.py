@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import contextlib
 import hashlib
+import io
 import json
 import os
 import subprocess
@@ -24,8 +26,10 @@ from reproducibility.historical_data import (
     ProviderResponse,
     acquire_historical_sources,
     load_historical_source_set,
+    main as historical_main,
     prepare_historical_input,
     run_historical_validation,
+    write_historical_preparation,
 )
 
 
@@ -36,7 +40,7 @@ COMMITTED_SOURCE_SET = (
 )
 COMMITTED_RUN_ID = (
     "smartdca-historical-validation-v1-"
-    "dccb2033929ec8ccb4e90245582fe3b73126c57d16c5bbb0355a47329cca132a"
+    "bee2ccc740eeaa7b0c6be4aa300934c993f525dfce4a0125e2d0044895a2cddd"
 )
 COMMITTED_RUN = ROOT / "reports" / "experiments" / "runs" / COMMITTED_RUN_ID
 
@@ -120,6 +124,32 @@ def _source_set(
                 },
             },
         }
+    )
+
+
+class _FixtureProvider:
+    def __init__(self, spy: bytes = SPY_CSV, btc: bytes = BTC_CSV) -> None:
+        self._responses = {
+            "spy-adjusted-daily": spy,
+            "btc-usd-daily": btc,
+        }
+
+    def retrieve(self, dataset):
+        return ProviderResponse(self._responses[dataset["dataset_id"]], 200, "text/csv")
+
+
+def _acquire_confirmatory_sources(
+    config: StudyConfig,
+    source_root: Path,
+    *,
+    spy: bytes = SPY_CSV,
+    btc: bytes = BTC_CSV,
+) -> HistoricalSourceSet:
+    return acquire_historical_sources(
+        config,
+        source_root,
+        _FixtureProvider(spy, btc),
+        "2026-08-30T00:00:00Z",
     )
 
 
@@ -333,33 +363,49 @@ class HistoricalDataEpisodeSeamTest(unittest.TestCase):
             prepared.reconciliation,
             {
                 "dataset_count": 2,
+                "accepted_dataset_count": 2,
+                "failed_dataset_count": 0,
+                "dataset_failures": {},
                 "observation_count": 29,
                 "attempted_episode_count": 6,
                 "included_episode_count": 4,
                 "excluded_episode_count": 2,
                 "exclusion_reasons": {"unavailable_mapped_evaluation_date": 2},
                 "validation_episode_count": 2,
+                "input_status": "accepted",
             },
         )
         runner_input = prepared.versioned_input.as_mapping()
         self.assertFalse(runner_input["confirmatory"])
         self.assertEqual(len(runner_input["episodes"]), 2)
 
-    def test_changed_source_bytes_are_rejected_before_episode_construction(self) -> None:
+    def test_changed_source_bytes_reject_and_retain_every_episode_attempt(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             source_root = Path(directory)
             (source_root / "spy.csv").write_bytes(SPY_CSV + b"\n")
             (source_root / "btc.csv").write_bytes(BTC_CSV)
 
-            with self.assertRaises(ExperimentValidationError) as caught:
-                prepare_historical_input(
-                    load_study_config(PROTOCOL), _source_set(), source_root
-                )
+            prepared = prepare_historical_input(
+                load_study_config(PROTOCOL), _source_set(), source_root
+            )
 
-        self.assertEqual(caught.exception.code, "content_fingerprint_mismatch")
+        spy_receipt = next(
+            row
+            for row in prepared.source_receipts
+            if row["dataset_id"] == "spy-adjusted-daily"
+        )
+        self.assertEqual(spy_receipt["rejection"]["code"], "content_fingerprint_mismatch")
         self.assertEqual(
-            caught.exception.field,
+            spy_receipt["rejection"]["field"],
             "source_set.sources.spy-adjusted-daily.expected_sha256",
+        )
+        self.assertEqual(
+            [
+                row["exclusion_reason"]
+                for row in prepared.episode_attempts
+                if row["dataset_id"] == "spy-adjusted-daily"
+            ],
+            ["content_fingerprint_mismatch"] * 3,
         )
 
     def test_source_set_mode_and_confirmatory_label_must_agree(self) -> None:
@@ -371,6 +417,17 @@ class HistoricalDataEpisodeSeamTest(unittest.TestCase):
 
         self.assertEqual(caught.exception.code, "inconsistent_analysis_tier")
 
+    def test_fixture_provenance_cannot_be_relabelled_confirmatory(self) -> None:
+        source_mapping = _source_set().as_mapping()
+        source_mapping["mode"] = "confirmatory"
+        source_mapping["confirmatory"] = True
+        source_mapping["episode_scope"] = {"rule": "full-preregistered-grid"}
+
+        with self.assertRaises(ExperimentValidationError) as caught:
+            HistoricalSourceSet.from_mapping(source_mapping)
+
+        self.assertEqual(caught.exception.code, "unverified_confirmatory_provenance")
+
     def test_http_200_provider_error_envelope_is_not_parsed_as_market_data(self) -> None:
         error_payload = b'{"Note":"request frequency limit reached"}\n'
         with tempfile.TemporaryDirectory() as directory:
@@ -378,17 +435,21 @@ class HistoricalDataEpisodeSeamTest(unittest.TestCase):
             (source_root / "spy.csv").write_bytes(error_payload)
             (source_root / "btc.csv").write_bytes(BTC_CSV)
 
-            with self.assertRaises(ExperimentValidationError) as caught:
-                prepare_historical_input(
-                    load_study_config(PROTOCOL),
-                    _source_set(
-                        hashlib.sha256(error_payload).hexdigest(),
-                        hashlib.sha256(BTC_CSV).hexdigest(),
-                    ),
-                    source_root,
-                )
+            prepared = prepare_historical_input(
+                load_study_config(PROTOCOL),
+                _source_set(
+                    hashlib.sha256(error_payload).hexdigest(),
+                    hashlib.sha256(BTC_CSV).hexdigest(),
+                ),
+                source_root,
+            )
 
-        self.assertEqual(caught.exception.code, "provider_error_payload")
+        spy_receipt = next(
+            row
+            for row in prepared.source_receipts
+            if row["dataset_id"] == "spy-adjusted-daily"
+        )
+        self.assertEqual(spy_receipt["rejection"]["code"], "provider_error_payload")
 
     def test_adjusted_series_without_event_schema_is_rejected(self) -> None:
         incomplete_spy = SPY_CSV.replace(b",split_coefficient\n", b"\n", 1)
@@ -396,18 +457,22 @@ class HistoricalDataEpisodeSeamTest(unittest.TestCase):
             source_root = Path(directory)
             (source_root / "spy.csv").write_bytes(incomplete_spy)
             (source_root / "btc.csv").write_bytes(BTC_CSV)
-            with self.assertRaises(ExperimentValidationError) as caught:
-                prepare_historical_input(
-                    load_study_config(PROTOCOL),
-                    _source_set(
-                        hashlib.sha256(incomplete_spy).hexdigest(),
-                        hashlib.sha256(BTC_CSV).hexdigest(),
-                    ),
-                    source_root,
-                )
+            prepared = prepare_historical_input(
+                load_study_config(PROTOCOL),
+                _source_set(
+                    hashlib.sha256(incomplete_spy).hexdigest(),
+                    hashlib.sha256(BTC_CSV).hexdigest(),
+                ),
+                source_root,
+            )
 
-        self.assertEqual(caught.exception.code, "series_semantics_mismatch")
-        self.assertIn("split_coefficient", str(caught.exception))
+        spy_receipt = next(
+            row
+            for row in prepared.source_receipts
+            if row["dataset_id"] == "spy-adjusted-daily"
+        )
+        self.assertEqual(spy_receipt["rejection"]["code"], "series_semantics_mismatch")
+        self.assertIn("split_coefficient", spy_receipt["rejection"]["message"])
 
     def test_missing_purchase_is_retained_with_observed_endpoint_details(self) -> None:
         missing_btc_endpoint = BTC_CSV.replace(
@@ -448,6 +513,38 @@ class HistoricalDataEpisodeSeamTest(unittest.TestCase):
                 "unavailable_mapped_evaluation_date": 2,
                 "unavailable_mapped_purchase_date": 1,
             },
+        )
+
+    def test_excluded_episode_retains_its_complete_nominal_deposit_schedule(self) -> None:
+        missing_first_btc = BTC_CSV.replace(
+            b"2020-01-01,11,12,9,10,10\n", b""
+        )
+        source_mapping = _source_set(
+            hashlib.sha256(SPY_CSV).hexdigest(),
+            hashlib.sha256(missing_first_btc).hexdigest(),
+        ).as_mapping()
+        source_mapping["episode_scope"]["validation_episode_starts"][
+            "btc-usd-daily"
+        ] = "2020-02-01"
+        sources = HistoricalSourceSet.from_mapping(source_mapping)
+        with tempfile.TemporaryDirectory() as directory:
+            source_root = Path(directory)
+            (source_root / "spy.csv").write_bytes(SPY_CSV)
+            (source_root / "btc.csv").write_bytes(missing_first_btc)
+            prepared = prepare_historical_input(
+                load_study_config(PROTOCOL), sources, source_root
+            )
+
+        attempt = next(
+            row
+            for row in prepared.episode_attempts
+            if row["episode_id"] == "btc-usd-daily-2020-01-01-12m"
+        )
+        self.assertEqual(attempt["exclusion_reason"], "unavailable_mapped_purchase_date")
+        self.assertEqual(len(attempt["deposit_schedule"]), 12)
+        self.assertIsNone(attempt["deposit_schedule"][0]["purchase_date"])
+        self.assertEqual(
+            attempt["deposit_schedule"][1]["purchase_date"], "2020-02-01"
         )
 
     def test_future_rows_reidentify_input_without_changing_earlier_decisions(self) -> None:
@@ -537,6 +634,7 @@ class HistoricalDataEpisodeSeamTest(unittest.TestCase):
             "unopened-and-unreported",
         )
         self.assertEqual(bundle.manifest["source_set_sha256"], _source_set().sha256)
+        self.assertEqual(bundle.manifest["runtime"]["python"], "3.12")
         self.assertEqual(len(bundle.runner.ledgers), 72)
         self.assertIn(
             "runner/manifest.json",
@@ -550,16 +648,10 @@ class HistoricalDataEpisodeSeamTest(unittest.TestCase):
             dataset["eligible_start"] = "2020-01-01"
             dataset["data_cutoff"] = "2021-02-01"
         config = StudyConfig.from_mapping(config_mapping)
-        source_mapping = _source_set().as_mapping()
-        source_mapping["mode"] = "confirmatory"
-        source_mapping["confirmatory"] = True
-        source_mapping["episode_scope"] = {"rule": "full-preregistered-grid"}
-        sources = HistoricalSourceSet.from_mapping(source_mapping)
 
         with tempfile.TemporaryDirectory() as directory:
             source_root = Path(directory)
-            (source_root / "spy.csv").write_bytes(SPY_CSV)
-            (source_root / "btc.csv").write_bytes(BTC_CSV)
+            sources = _acquire_confirmatory_sources(config, source_root)
             prepared = prepare_historical_input(config, sources, source_root)
 
         self.assertTrue(prepared.versioned_input.as_mapping()["confirmatory"])
@@ -567,34 +659,121 @@ class HistoricalDataEpisodeSeamTest(unittest.TestCase):
         self.assertEqual(prepared.reconciliation["included_episode_count"], 4)
         self.assertEqual(len(prepared.versioned_input.as_mapping()["episodes"]), 4)
 
-    def test_confirmatory_preparation_rejects_incomplete_dataset_coverage(self) -> None:
+    def test_confirmatory_preparation_retains_incomplete_dataset_attempts(self) -> None:
         config_mapping = load_study_config(PROTOCOL).as_mapping()
         config_mapping["episode_design"]["horizons_months"] = [12]
         for dataset in config_mapping["historical_datasets"]:
             dataset["eligible_start"] = "2020-01-01"
             dataset["data_cutoff"] = "2021-02-01"
         config = StudyConfig.from_mapping(config_mapping)
-        source_mapping = _source_set().as_mapping()
-        source_mapping["mode"] = "confirmatory"
-        source_mapping["confirmatory"] = True
-        source_mapping["episode_scope"] = {"rule": "full-preregistered-grid"}
         incomplete_btc = BTC_CSV.replace(
             b"2021-02-01,141,142,139,140,10\n", b""
         )
-        source_mapping["sources"][1]["expected_sha256"] = hashlib.sha256(
-            incomplete_btc
-        ).hexdigest()
-        sources = HistoricalSourceSet.from_mapping(source_mapping)
 
         with tempfile.TemporaryDirectory() as directory:
             source_root = Path(directory)
-            (source_root / "spy.csv").write_bytes(SPY_CSV)
-            (source_root / "btc.csv").write_bytes(incomplete_btc)
-            with self.assertRaises(ExperimentValidationError) as caught:
-                prepare_historical_input(config, sources, source_root)
+            sources = _acquire_confirmatory_sources(
+                config, source_root, btc=incomplete_btc
+            )
+            prepared = prepare_historical_input(config, sources, source_root)
 
-        self.assertEqual(caught.exception.code, "incomplete_dataset_coverage")
-        self.assertEqual(caught.exception.field, "source_set.sources.btc-usd-daily")
+        self.assertEqual(prepared.status, "rejected")
+        self.assertIsNone(prepared.versioned_input)
+        btc_attempts = [
+            row
+            for row in prepared.episode_attempts
+            if row["dataset_id"] == "btc-usd-daily"
+        ]
+        self.assertEqual(len(btc_attempts), 2)
+        self.assertTrue(
+            all(
+                row["exclusion_reason"] == "incomplete_dataset_coverage"
+                and len(row["deposit_schedule"]) == 12
+                for row in btc_attempts
+            )
+        )
+        btc_receipt = next(
+            row
+            for row in prepared.source_receipts
+            if row["dataset_id"] == "btc-usd-daily"
+        )
+        self.assertEqual(btc_receipt["status"], "rejected")
+        self.assertEqual(
+            btc_receipt["rejection"]["code"], "incomplete_dataset_coverage"
+        )
+        self.assertEqual(prepared.reconciliation["failed_dataset_count"], 1)
+
+    def test_failed_preparation_writes_immutable_attempt_and_rejection_artifacts(self) -> None:
+        config_mapping = load_study_config(PROTOCOL).as_mapping()
+        config_mapping["episode_design"]["horizons_months"] = [12]
+        for dataset in config_mapping["historical_datasets"]:
+            dataset["eligible_start"] = "2020-01-01"
+            dataset["data_cutoff"] = "2021-02-01"
+        config = StudyConfig.from_mapping(config_mapping)
+        incomplete_btc = BTC_CSV.replace(
+            b"2021-02-01,141,142,139,140,10\n", b""
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            sources = _acquire_confirmatory_sources(
+                config, root, btc=incomplete_btc
+            )
+            bundle = write_historical_preparation(
+                config, sources, root, root / "outputs"
+            )
+            attempt_lines = (
+                bundle.output_directory / "episode-attempts.jsonl"
+            ).read_text(encoding="utf-8").splitlines()
+            runner_input_exists = (
+                bundle.output_directory / "runner-input.json"
+            ).exists()
+
+        self.assertEqual(bundle.validation["status"], "rejected")
+        self.assertEqual(bundle.validation["policy_execution"], "not-run")
+        self.assertEqual(len(attempt_lines), 4)
+        self.assertFalse(runner_input_exists)
+        self.assertEqual(bundle.manifest["runner_input_sha256"], None)
+
+    def test_failed_prepare_command_returns_machine_readable_bundle_receipt(self) -> None:
+        config_mapping = load_study_config(PROTOCOL).as_mapping()
+        config_mapping["episode_design"]["horizons_months"] = [12]
+        for dataset in config_mapping["historical_datasets"]:
+            dataset["eligible_start"] = "2020-01-01"
+            dataset["data_cutoff"] = "2021-02-01"
+        config = StudyConfig.from_mapping(config_mapping)
+        incomplete_btc = BTC_CSV.replace(
+            b"2021-02-01,141,142,139,140,10\n", b""
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            config_path = root / "config.json"
+            config_path.write_text(config.canonical_document, encoding="utf-8")
+            loaded_config = load_study_config(config_path)
+            sources = _acquire_confirmatory_sources(
+                loaded_config, root, btc=incomplete_btc
+            )
+            source_set_path = root / "historical-source-set.json"
+            error_output = io.StringIO()
+            with contextlib.redirect_stderr(error_output):
+                return_code = historical_main(
+                    [
+                        "prepare",
+                        "--config",
+                        str(config_path),
+                        "--source-set",
+                        str(source_set_path),
+                        "--source-root",
+                        str(root),
+                        "--output-root",
+                        str(root / "outputs"),
+                    ]
+                )
+
+        self.assertEqual(return_code, 2)
+        rejection = json.loads(error_output.getvalue())
+        self.assertEqual(rejection["status"], "rejected")
+        self.assertEqual(rejection["policy_execution"], "not-run")
+        self.assertEqual(rejection["failed_dataset_count"], 1)
 
     def test_command_line_replays_the_validation_bundle(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -694,19 +873,14 @@ class HistoricalDataEpisodeSeamTest(unittest.TestCase):
         for dataset in config_mapping["historical_datasets"]:
             dataset["eligible_start"] = "2020-01-01"
             dataset["data_cutoff"] = "2021-02-01"
-        source_mapping = _source_set().as_mapping()
-        source_mapping["mode"] = "confirmatory"
-        source_mapping["confirmatory"] = True
-        source_mapping["episode_scope"] = {"rule": "full-preregistered-grid"}
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            (root / "spy.csv").write_bytes(SPY_CSV)
-            (root / "btc.csv").write_bytes(BTC_CSV)
             config_path = root / "config.json"
-            config_path.write_text(json.dumps(config_mapping), encoding="utf-8")
-            source_set_path = root / "source-set.json"
-            source_set_path.write_text(json.dumps(source_mapping), encoding="utf-8")
+            config_document = StudyConfig.from_mapping(config_mapping).canonical_document
+            config_path.write_text(config_document, encoding="utf-8")
+            _acquire_confirmatory_sources(load_study_config(config_path), root)
+            source_set_path = root / "historical-source-set.json"
             completed = subprocess.run(
                 [
                     sys.executable,

@@ -76,11 +76,12 @@ The strategy that invests the entire new deposit at each purchase time at the cu
 candidate. Label a retrospectively budget-matched comparator separately.
 
 **Historical source receipt**[^empirical-protocol][^provider-review]:
-A sanitized record that binds one declared provider request and its series
-semantics to the retrieval metadata, exact response-body fingerprint, received
-schema, date coverage, parser identity, and redistribution decision.
-**Usage:** Treat the receipt, not a mutable provider URL, as the historical
-input identity. Do not call a synthetic fixture a provider response.
+A sanitized record that binds one declared historical-data source and its
+series semantics to its provenance metadata, exact source-byte fingerprint,
+observed schema, date coverage, parser identity, and redistribution decision.
+**Usage:** Use the receipt to audit the content-derived source identity; do not
+treat a mutable provider URL as an identity or a hand-authored fixture as a
+provider response.
 
 **Point-in-time rolling episode**[^empirical-protocol]:
 A recurring-investment episode whose nominal deposits and horizon are mapped

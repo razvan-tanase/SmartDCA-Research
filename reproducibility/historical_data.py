@@ -172,6 +172,33 @@ class HistoricalSourceSet:
             "source_set.confirmatory",
             "must be true exactly when mode is confirmatory",
         )
+        if document["confirmatory"]:
+            protocol_sha256 = document.get("protocol_sha256")
+            acquisition = document.get("acquisition")
+            _require(
+                isinstance(protocol_sha256, str)
+                and len(protocol_sha256) == 64
+                and all(
+                    character in "0123456789abcdef"
+                    for character in protocol_sha256
+                ),
+                "unverified_confirmatory_provenance",
+                "source_set.protocol_sha256",
+                "confirmatory sources must bind the exact protocol bytes",
+            )
+            _require(
+                isinstance(acquisition, dict)
+                and acquisition
+                == {
+                    "adapter": "alpha-vantage-http",
+                    "provider": "Alpha Vantage",
+                    "one_response_per_dataset": True,
+                    "credential_recorded": False,
+                },
+                "unverified_confirmatory_provenance",
+                "source_set.acquisition",
+                "confirmatory sources must carry the live acquisition receipt",
+            )
         _require(
             isinstance(document["sources"], list) and bool(document["sources"]),
             "empty_sources",
@@ -220,6 +247,40 @@ class HistoricalSourceSet:
                 "invalid_source",
                 f"{prefix}.http_status",
                 "must be an integer",
+            )
+            if document["confirmatory"]:
+                _require(
+                    source["adapter"] == "alpha-vantage-http"
+                    and isinstance(source.get("request_receipt"), dict),
+                    "unverified_confirmatory_provenance",
+                    prefix,
+                    "confirmatory sources must come from the live provider adapter",
+                )
+                _require(
+                    source["path"]
+                    == (
+                        f"{source['dataset_id']}-"
+                        f"{source['expected_sha256']}.csv"
+                    ),
+                    "unverified_confirmatory_provenance",
+                    f"{prefix}.path",
+                    "confirmatory response path must be content-addressed",
+                )
+        if document["confirmatory"]:
+            source_hashes = {
+                source["dataset_id"]: source["expected_sha256"]
+                for source in document["sources"]
+            }
+            expected_source_set_id = (
+                "alpha-vantage-historical-"
+                f"{_fingerprint(_canonical_json(source_hashes).encode('utf-8'))}"
+            )
+            _require(
+                len(source_hashes) == len(document["sources"])
+                and document["source_set_id"] == expected_source_set_id,
+                "unverified_confirmatory_provenance",
+                "source_set.source_set_id",
+                "confirmatory source-set identity must derive from response hashes",
             )
         canonical = _canonical_json(document)
         return cls(canonical, _fingerprint(canonical.encode("utf-8")))
@@ -333,10 +394,11 @@ class AlphaVantageProvider:
 class PreparedHistoricalInput:
     """Auditable source receipts and normalized rows at the public seam."""
 
+    status: str
     source_receipts: tuple[Mapping[str, Any], ...]
     normalized_datasets: Mapping[str, tuple[Mapping[str, Any], ...]]
     episode_attempts: tuple[Mapping[str, Any], ...]
-    versioned_input: VersionedInput
+    versioned_input: VersionedInput | None
     reconciliation: Mapping[str, Any]
 
 
@@ -448,6 +510,13 @@ def acquire_historical_sources(
                     "provider-bytes-and-normalized-observations-access-controlled-"
                     "outside-git; sanitized-receipts-only-without-written-permission"
                 ),
+                "request_receipt": {
+                    "provider": dataset["provider"],
+                    "endpoint": dataset["endpoint"],
+                    "request_parameters_without_credentials": dataset[
+                        "request_parameters"
+                    ],
+                },
             }
         )
     identity_payload = _canonical_json(
@@ -460,6 +529,13 @@ def acquire_historical_sources(
             "version": "1",
             "mode": "confirmatory",
             "confirmatory": True,
+            "protocol_sha256": config.sha256,
+            "acquisition": {
+                "adapter": "alpha-vantage-http",
+                "provider": "Alpha Vantage",
+                "one_response_per_dataset": True,
+                "credential_recorded": False,
+            },
             "purpose": (
                 "Exact preregistered provider responses retained for point-in-time "
                 "historical episode construction; no policy outcome was computed."
@@ -661,6 +737,8 @@ def _attempt_episode(
         "exclusion_details": None,
     }
     mapped_dates: set[str] = set()
+    purchase_exclusion_reason: str | None = None
+    purchase_exclusion_details: Mapping[str, Any] | None = None
     for offset in range(horizon_months):
         nominal_date = _add_months(nominal_start, offset)
         mapped = _mapped_purchase(rows, nominal_date, tolerance_days)
@@ -676,23 +754,24 @@ def _attempt_episode(
                     "deposit": deposit_amount,
                 }
             )
-            attempt["exclusion_reason"] = "unavailable_mapped_purchase_date"
-            attempt["exclusion_details"] = {
-                "mapping": "first-observation-on-or-after",
-                "nominal_date": nominal_date.isoformat(),
-                "tolerance_days": tolerance_days,
-                "previous_observation_date": previous,
-                "next_observation_date": following,
-            }
-            return attempt
+            if purchase_exclusion_reason is None:
+                purchase_exclusion_reason = "unavailable_mapped_purchase_date"
+                purchase_exclusion_details = {
+                    "mapping": "first-observation-on-or-after",
+                    "nominal_date": nominal_date.isoformat(),
+                    "tolerance_days": tolerance_days,
+                    "previous_observation_date": previous,
+                    "next_observation_date": following,
+                }
+            continue
         purchase_date = str(mapped["observation_date"])
         if purchase_date in mapped_dates:
-            attempt["exclusion_reason"] = "duplicate_mapped_purchase_date"
-            attempt["exclusion_details"] = {
-                "nominal_date": nominal_date.isoformat(),
-                "duplicate_purchase_date": purchase_date,
-            }
-            return attempt
+            if purchase_exclusion_reason is None:
+                purchase_exclusion_reason = "duplicate_mapped_purchase_date"
+                purchase_exclusion_details = {
+                    "nominal_date": nominal_date.isoformat(),
+                    "duplicate_purchase_date": purchase_date,
+                }
         mapped_dates.add(purchase_date)
         attempt["deposit_schedule"].append(
             {
@@ -708,6 +787,18 @@ def _attempt_episode(
         )
 
     evaluation = _mapped_evaluation(rows, horizon_date, tolerance_days)
+    if evaluation is not None:
+        attempt.update(
+            {
+                "evaluation_date": evaluation["observation_date"],
+                "evaluation_price": evaluation["price"],
+                "evaluation_source_row": evaluation["source_row"],
+            }
+        )
+    if purchase_exclusion_reason is not None:
+        attempt["exclusion_reason"] = purchase_exclusion_reason
+        attempt["exclusion_details"] = purchase_exclusion_details
+        return attempt
     if evaluation is None:
         previous, following = _observation_neighbors(rows, horizon_date)
         attempt["exclusion_reason"] = "unavailable_mapped_evaluation_date"
@@ -719,17 +810,44 @@ def _attempt_episode(
             "next_observation_date": following,
         }
         return attempt
-    attempt.update(
-        {
-            "evaluation_date": evaluation["observation_date"],
-            "evaluation_price": evaluation["price"],
-            "evaluation_source_row": evaluation["source_row"],
-            "status": "included",
-            "exclusion_reason": None,
-            "exclusion_details": None,
-        }
-    )
+    attempt["status"] = "included"
     return attempt
+
+
+def _failed_dataset_episode(
+    dataset_id: str,
+    nominal_start: date,
+    horizon_months: int,
+    deposit_amount: str,
+    failure: Mapping[str, Any],
+) -> dict[str, Any]:
+    horizon_date = _add_months(nominal_start, horizon_months)
+    return {
+        "episode_id": (
+            f"{dataset_id}-{nominal_start.isoformat()}-{horizon_months}m"
+        ),
+        "dataset_id": dataset_id,
+        "nominal_start": nominal_start.isoformat(),
+        "horizon_months": horizon_months,
+        "horizon_date": horizon_date.isoformat(),
+        "deposit_schedule": [
+            {
+                "nominal_date": _add_months(nominal_start, offset).isoformat(),
+                "purchase_date": None,
+                "mapping_lag_days": None,
+                "source_row": None,
+                "price": None,
+                "deposit": deposit_amount,
+            }
+            for offset in range(horizon_months)
+        ],
+        "evaluation_date": None,
+        "evaluation_price": None,
+        "evaluation_source_row": None,
+        "status": "excluded",
+        "exclusion_reason": failure["code"],
+        "exclusion_details": {"dataset_failure": dict(failure)},
+    }
 
 
 def _episode_for_runner(
@@ -769,7 +887,12 @@ def _build_episodes(
     source_data: Mapping[str, Any],
     normalized_datasets: Mapping[str, tuple[Mapping[str, Any], ...]],
     source_receipts: tuple[Mapping[str, Any], ...],
-) -> tuple[tuple[Mapping[str, Any], ...], VersionedInput, Mapping[str, Any]]:
+    dataset_failures: Mapping[str, Mapping[str, Any]],
+) -> tuple[
+    tuple[Mapping[str, Any], ...],
+    VersionedInput | None,
+    Mapping[str, Any],
+]:
     scope = source_data["episode_scope"]
     mode = source_data["mode"]
     horizons = config_data["episode_design"]["horizons_months"]
@@ -820,7 +943,7 @@ def _build_episodes(
         row["dataset_id"]: row for row in config_data["historical_datasets"]
     }
     attempts: list[Mapping[str, Any]] = []
-    for dataset_id in sorted(normalized_datasets):
+    for dataset_id in sorted(dataset_config):
         for horizon in horizons:
             if mode == "validation":
                 nominal_start = start_min
@@ -841,18 +964,30 @@ def _build_episodes(
                 mode == "validation"
                 or _add_months(nominal_start, horizon) <= final_start
             ):
-                attempts.append(
-                    _attempt_episode(
-                        dataset_id,
-                        normalized_datasets[dataset_id],
-                        nominal_start,
-                        horizon,
-                        deposit_amount,
+                if dataset_id in dataset_failures:
+                    attempts.append(
+                        _failed_dataset_episode(
+                            dataset_id,
+                            nominal_start,
+                            horizon,
+                            deposit_amount,
+                            dataset_failures[dataset_id],
+                        )
                     )
-                )
+                else:
+                    attempts.append(
+                        _attempt_episode(
+                            dataset_id,
+                            normalized_datasets[dataset_id],
+                            nominal_start,
+                            horizon,
+                            deposit_amount,
+                        )
+                    )
                 nominal_start = _add_months(nominal_start, stride)
 
     selected: list[Mapping[str, Any]] = []
+    input_ready = not dataset_failures
     if mode == "validation":
         attempts_by_key = {
             (row["dataset_id"], row["nominal_start"]): row for row in attempts
@@ -860,7 +995,7 @@ def _build_episodes(
         validation_starts = scope["validation_episode_starts"]
         _require(
             isinstance(validation_starts, dict)
-            and set(validation_starts) == set(normalized_datasets),
+            and set(validation_starts) == set(dataset_config),
             "incomplete_validation_selection",
             "source_set.episode_scope.validation_episode_starts",
             "must select one start for each dataset",
@@ -874,21 +1009,13 @@ def _build_episodes(
                 "must name an attempted episode start",
             )
             attempt = attempts_by_key[key]
-            _require(
-                attempt["status"] == "included",
-                "excluded_validation_episode",
-                f"source_set.episode_scope.validation_episode_starts.{dataset_id}",
-                f"selected episode was excluded: {attempt['exclusion_reason']}",
-            )
-            selected.append(attempt)
+            if attempt["status"] == "included":
+                selected.append(attempt)
+            else:
+                input_ready = False
     else:
         selected.extend(row for row in attempts if row["status"] == "included")
-        _require(
-            bool(selected),
-            "empty_input",
-            "source_set.episode_scope",
-            "full preregistered grid produced no included episodes",
-        )
+        input_ready = input_ready and bool(selected)
 
     receipt_by_dataset = {row["dataset_id"]: row for row in source_receipts}
     runner_source_receipts = [
@@ -900,25 +1027,34 @@ def _build_episodes(
             "date_max": row["date_max"],
         }
         for row in source_receipts
+        if row["status"] == "accepted"
     ]
-    versioned_input = VersionedInput.from_mapping(
-        {
-            "schema_version": "smartdca-versioned-input/1",
-            "input_id": f"{source_data['source_set_id']}-runner-input",
-            "version": source_data["version"],
-            "kind": "historical",
-            "confirmatory": source_data["confirmatory"],
-            "purpose": source_data["purpose"],
-            "source_receipts": runner_source_receipts,
-            "episodes": [
-                _episode_for_runner(
-                    attempt,
-                    source_data["mode"],
-                    str(receipt_by_dataset[attempt["dataset_id"]]["source_identity"]),
-                )
-                for attempt in selected
-            ],
-        }
+    versioned_input = (
+        VersionedInput.from_mapping(
+            {
+                "schema_version": "smartdca-versioned-input/1",
+                "input_id": f"{source_data['source_set_id']}-runner-input",
+                "version": source_data["version"],
+                "kind": "historical",
+                "confirmatory": source_data["confirmatory"],
+                "purpose": source_data["purpose"],
+                "source_receipts": runner_source_receipts,
+                "episodes": [
+                    _episode_for_runner(
+                        attempt,
+                        source_data["mode"],
+                        str(
+                            receipt_by_dataset[attempt["dataset_id"]][
+                                "source_identity"
+                            ]
+                        ),
+                    )
+                    for attempt in selected
+                ],
+            }
+        )
+        if input_ready
+        else None
     )
     reasons = Counter(
         str(row["exclusion_reason"])
@@ -926,15 +1062,60 @@ def _build_episodes(
         if row["status"] == "excluded"
     )
     reconciliation = {
-        "dataset_count": len(normalized_datasets),
+        "dataset_count": len(dataset_config),
+        "accepted_dataset_count": len(normalized_datasets),
+        "failed_dataset_count": len(dataset_failures),
+        "dataset_failures": dict(sorted(dataset_failures.items())),
         "observation_count": sum(len(rows) for rows in normalized_datasets.values()),
         "attempted_episode_count": len(attempts),
         "included_episode_count": sum(row["status"] == "included" for row in attempts),
         "excluded_episode_count": sum(row["status"] == "excluded" for row in attempts),
         "exclusion_reasons": dict(sorted(reasons.items())),
         "validation_episode_count": len(selected),
+        "input_status": "accepted" if versioned_input is not None else "rejected",
     }
     return tuple(attempts), versioned_input, reconciliation
+
+
+def _source_receipt_preamble(
+    dataset: Mapping[str, Any], source: Mapping[str, Any]
+) -> dict[str, Any]:
+    return {
+        "dataset_id": dataset["dataset_id"],
+        "provider": dataset["provider"],
+        "endpoint": dataset["endpoint"],
+        "request_parameters_without_credentials": dataset["request_parameters"],
+        "retrieved_at_utc": source["retrieved_at_utc"],
+        "http_status": source["http_status"],
+        "content_type": source["content_type"],
+        "expected_sha256": source["expected_sha256"],
+        "parser_version": PARSER_VERSION,
+        "series": dataset["series"],
+        "documentation_url": dataset["documentation_url"],
+        "currency": dataset["currency"],
+        "timezone": dataset["timezone"],
+        "timezone_semantics": {
+            "provider_timezone_metadata": "not-present-in-daily-csv",
+            "normalization_timezone": dataset["timezone"],
+            "normalized_observation": "calendar-date-label-only",
+            "intraday_timestamp_invented": False,
+        },
+        "adjustment_semantics": dataset["adjustment_semantics"],
+        "declared_semantics": {
+            "asset": dataset["asset_semantics"],
+            "currency": dataset["currency"],
+            "price_field": dataset["price_field"],
+            "timezone": dataset["timezone"],
+            "adjustment": dataset["adjustment_semantics"],
+            "eligible_start": dataset["eligible_start"],
+            "data_cutoff": dataset["data_cutoff"],
+        },
+        "retrieval_rule": dataset["retrieval_rule"],
+        "fingerprint_rule": dataset["fingerprint_rule"],
+        "protocol_redistribution_rule": dataset["redistribution"],
+        "redistribution_decision": source["redistribution_decision"],
+        "adapter": source["adapter"],
+    }
 
 
 def prepare_historical_input(
@@ -954,6 +1135,13 @@ def prepare_historical_input(
     _require(isinstance(source_root, Path), "invalid_type", "source_root", "must be pathlib.Path")
     config_data = config.as_mapping()
     source_data = source_set.as_mapping()
+    if source_data["confirmatory"]:
+        _require(
+            source_data["protocol_sha256"] == config.sha256,
+            "protocol_fingerprint_mismatch",
+            "source_set.protocol_sha256",
+            "confirmatory source set was acquired for different protocol bytes",
+        )
     datasets = {row["dataset_id"]: row for row in config_data["historical_datasets"]}
     sources = {row["dataset_id"]: row for row in source_data["sources"]}
     _require(
@@ -965,130 +1153,143 @@ def prepare_historical_input(
 
     receipts: list[dict[str, Any]] = []
     normalized_datasets: dict[str, tuple[Mapping[str, Any], ...]] = {}
+    dataset_failures: dict[str, Mapping[str, Any]] = {}
     for dataset_id in sorted(datasets):
         dataset = datasets[dataset_id]
         source = sources[dataset_id]
-        _require(
-            source["http_status"] == 200,
-            "provider_error_payload",
-            f"source_set.sources.{dataset_id}.http_status",
-            "must equal 200",
-        )
-        source_path = Path(source["path"])
-        _require(
-            not source_path.is_absolute() and ".." not in source_path.parts,
-            "invalid_source_path",
-            f"source_set.sources.{dataset_id}.path",
-            "must be a relative path below source_root",
-        )
-        try:
-            payload = (source_root / source_path).read_bytes()
-        except OSError as error:
-            raise ExperimentValidationError(
-                "unreadable_source", f"source_set.sources.{dataset_id}.path", str(error)
-            ) from error
-        actual_sha256 = _fingerprint(payload)
-        _require(
-            actual_sha256 == source["expected_sha256"],
-            "content_fingerprint_mismatch",
-            f"source_set.sources.{dataset_id}.expected_sha256",
-            "exact source bytes do not match the immutable source-set receipt",
-        )
-        normalized, headers, selected_column = _normalized_rows(
-            dataset, payload, f"source_set.sources.{dataset_id}"
-        )
-        coverage_status = "validation-fixture-not-assessed"
-        if source_data["mode"] == "confirmatory":
-            eligible_start = _iso_date(
-                dataset["eligible_start"],
-                f"config.historical_datasets.{dataset_id}.eligible_start",
-            )
-            data_cutoff = _iso_date(
-                dataset["data_cutoff"],
-                f"config.historical_datasets.{dataset_id}.data_cutoff",
-            )
-            observed_min = date.fromisoformat(str(normalized[0]["observation_date"]))
-            observed_max = date.fromisoformat(str(normalized[-1]["observation_date"]))
-            tolerance = MAPPING_TOLERANCE_DAYS[dataset_id]
+        if source_data["confirmatory"]:
             _require(
-                observed_min <= eligible_start
-                or (observed_min - eligible_start).days <= tolerance,
-                "incomplete_dataset_coverage",
-                f"source_set.sources.{dataset_id}",
-                "observations do not reach the preregistered eligible start",
-            )
-            _require(
-                observed_max >= data_cutoff
-                or (data_cutoff - observed_max).days <= tolerance,
-                "incomplete_dataset_coverage",
-                f"source_set.sources.{dataset_id}",
-                "observations do not reach the preregistered data cutoff",
-            )
-            coverage_status = "satisfies-preregistered-range"
-        normalized_datasets[dataset_id] = normalized
-        receipts.append(
-            {
-                "dataset_id": dataset_id,
-                "provider": dataset["provider"],
-                "endpoint": dataset["endpoint"],
-                "request_parameters_without_credentials": dataset[
-                    "request_parameters"
-                ],
-                "retrieved_at_utc": source["retrieved_at_utc"],
-                "http_status": source["http_status"],
-                "content_type": source["content_type"],
-                "byte_length": len(payload),
-                "sha256": actual_sha256,
-                "parser_version": PARSER_VERSION,
-                "date_min": normalized[0]["observation_date"],
-                "date_max": normalized[-1]["observation_date"],
-                "row_count": len(normalized),
-                "coverage_status": coverage_status,
-                "schema": {
-                    "columns": headers,
-                    "selected_price_column": selected_column,
-                    "normalized_fields": [
-                        "observation_date",
-                        "price",
-                        "normalization_timezone",
-                        "source_row",
+                source["request_receipt"]
+                == {
+                    "provider": dataset["provider"],
+                    "endpoint": dataset["endpoint"],
+                    "request_parameters_without_credentials": dataset[
+                        "request_parameters"
                     ],
                 },
-                "series": dataset["series"],
-                "documentation_url": dataset["documentation_url"],
-                "currency": dataset["currency"],
-                "timezone": dataset["timezone"],
-                "timezone_semantics": {
-                    "provider_timezone_metadata": "not-present-in-daily-csv",
-                    "normalization_timezone": dataset["timezone"],
-                    "normalized_observation": "calendar-date-label-only",
-                    "intraday_timestamp_invented": False,
-                },
-                "adjustment_semantics": dataset["adjustment_semantics"],
-                "declared_semantics": {
-                    "asset": dataset["asset_semantics"],
-                    "currency": dataset["currency"],
-                    "price_field": dataset["price_field"],
-                    "timezone": dataset["timezone"],
-                    "adjustment": dataset["adjustment_semantics"],
-                    "eligible_start": dataset["eligible_start"],
-                    "data_cutoff": dataset["data_cutoff"],
-                },
-                "retrieval_rule": dataset["retrieval_rule"],
-                "fingerprint_rule": dataset["fingerprint_rule"],
-                "protocol_redistribution_rule": dataset["redistribution"],
-                "redistribution_decision": source["redistribution_decision"],
-                "adapter": source["adapter"],
-                "source_identity": (
-                    f"{dataset_id}-{actual_sha256}"
-                ),
+                "series_semantics_mismatch",
+                f"source_set.sources.{dataset_id}.request_receipt",
+                "must match the exact preregistered provider request",
+            )
+        receipt = _source_receipt_preamble(dataset, source)
+        try:
+            source_path = Path(source["path"])
+            _require(
+                not source_path.is_absolute() and ".." not in source_path.parts,
+                "invalid_source_path",
+                f"source_set.sources.{dataset_id}.path",
+                "must be a relative path below source_root",
+            )
+            try:
+                payload = (source_root / source_path).read_bytes()
+            except OSError as error:
+                raise ExperimentValidationError(
+                    "unreadable_source",
+                    f"source_set.sources.{dataset_id}.path",
+                    "could not read the declared source path",
+                ) from error
+            actual_sha256 = _fingerprint(payload)
+            receipt.update(
+                {
+                    "byte_length": len(payload),
+                    "sha256": actual_sha256,
+                    "source_identity": f"{dataset_id}-{actual_sha256}",
+                }
+            )
+            _require(
+                actual_sha256 == source["expected_sha256"],
+                "content_fingerprint_mismatch",
+                f"source_set.sources.{dataset_id}.expected_sha256",
+                "exact source bytes do not match the immutable source-set receipt",
+            )
+            _require(
+                source["http_status"] == 200,
+                "provider_error_payload",
+                f"source_set.sources.{dataset_id}.http_status",
+                "must equal 200",
+            )
+            normalized, headers, selected_column = _normalized_rows(
+                dataset, payload, f"source_set.sources.{dataset_id}"
+            )
+            coverage_status = "validation-fixture-not-assessed"
+            receipt.update(
+                {
+                    "date_min": normalized[0]["observation_date"],
+                    "date_max": normalized[-1]["observation_date"],
+                    "row_count": len(normalized),
+                    "schema": {
+                        "columns": headers,
+                        "selected_price_column": selected_column,
+                        "normalized_fields": [
+                            "observation_date",
+                            "price",
+                            "normalization_timezone",
+                            "source_row",
+                        ],
+                    },
+                }
+            )
+            if source_data["mode"] == "confirmatory":
+                eligible_start = _iso_date(
+                    dataset["eligible_start"],
+                    f"config.historical_datasets.{dataset_id}.eligible_start",
+                )
+                data_cutoff = _iso_date(
+                    dataset["data_cutoff"],
+                    f"config.historical_datasets.{dataset_id}.data_cutoff",
+                )
+                observed_min = date.fromisoformat(
+                    str(normalized[0]["observation_date"])
+                )
+                observed_max = date.fromisoformat(
+                    str(normalized[-1]["observation_date"])
+                )
+                tolerance = MAPPING_TOLERANCE_DAYS[dataset_id]
+                _require(
+                    observed_min <= eligible_start
+                    or (observed_min - eligible_start).days <= tolerance,
+                    "incomplete_dataset_coverage",
+                    f"source_set.sources.{dataset_id}",
+                    "observations do not reach the preregistered eligible start",
+                )
+                _require(
+                    observed_max >= data_cutoff
+                    or (data_cutoff - observed_max).days <= tolerance,
+                    "incomplete_dataset_coverage",
+                    f"source_set.sources.{dataset_id}",
+                    "observations do not reach the preregistered data cutoff",
+                )
+                coverage_status = "satisfies-preregistered-range"
+            receipt.update(
+                {"status": "accepted", "coverage_status": coverage_status}
+            )
+            normalized_datasets[dataset_id] = normalized
+        except ExperimentValidationError as error:
+            failure = {
+                "code": error.code,
+                "field": error.field,
+                "message": str(error),
             }
-        )
+            receipt.update(
+                {
+                    "status": "rejected",
+                    "coverage_status": "rejected",
+                    "rejection": failure,
+                }
+            )
+            dataset_failures[dataset_id] = failure
+        receipts.append(receipt)
+
     receipt_rows = tuple(receipts)
     attempts, versioned_input, reconciliation = _build_episodes(
-        config_data, source_data, normalized_datasets, receipt_rows
+        config_data,
+        source_data,
+        normalized_datasets,
+        receipt_rows,
+        dataset_failures,
     )
     return PreparedHistoricalInput(
+        "accepted" if versioned_input is not None else "rejected",
         receipt_rows,
         normalized_datasets,
         attempts,
@@ -1109,11 +1310,46 @@ def _write_jsonl(path: Path, rows: tuple[Mapping[str, Any], ...]) -> None:
     )
 
 
+def _stage_preparation_artifacts(
+    directory: Path,
+    source_data: Mapping[str, Any],
+    prepared: PreparedHistoricalInput,
+) -> None:
+    _write_json(
+        directory / "source-receipts.json",
+        {
+            "source_set_id": source_data["source_set_id"],
+            "receipts": prepared.source_receipts,
+        },
+    )
+    _write_json(
+        directory / "normalized-datasets.json",
+        {
+            "source_set_id": source_data["source_set_id"],
+            "datasets": prepared.normalized_datasets,
+        },
+    )
+    _write_jsonl(directory / "episode-attempts.jsonl", prepared.episode_attempts)
+    if prepared.versioned_input is not None:
+        (directory / "runner-input.json").write_text(
+            prepared.versioned_input.canonical_document + "\n",
+            encoding="utf-8",
+            newline="\n",
+        )
+    _write_json(directory / "reconciliation.json", prepared.reconciliation)
+
+
 def _historical_run_id(
     config: StudyConfig,
     source_set: HistoricalSourceSet,
     prepared: PreparedHistoricalInput,
 ) -> str:
+    _require(
+        prepared.versioned_input is not None,
+        "rejected_historical_input",
+        "prepared.versioned_input",
+        "validation cannot run when historical preparation was rejected",
+    )
     identity = _canonical_json(
         {
             "engine_version": HISTORICAL_ENGINE_VERSION,
@@ -1147,13 +1383,19 @@ def write_historical_preparation(
         "input preparation requires a confirmatory full-grid source set",
     )
     prepared = prepare_historical_input(config, source_set, source_root)
+    runner_input_sha256 = (
+        prepared.versioned_input.sha256
+        if prepared.versioned_input is not None
+        else None
+    )
     identity = _canonical_json(
         {
             "engine_version": HISTORICAL_ENGINE_VERSION,
             "historical_source_sha256": _fingerprint(Path(__file__).read_bytes()),
             "config_sha256": config.sha256,
             "source_set_sha256": source_set.sha256,
-            "runner_input_sha256": prepared.versioned_input.sha256,
+            "runner_input_sha256": runner_input_sha256,
+            "reconciliation": prepared.reconciliation,
         }
     )
     run_id = f"smartdca-historical-input-v1-{_fingerprint(identity.encode('utf-8'))}"
@@ -1169,36 +1411,14 @@ def write_historical_preparation(
         tempfile.mkdtemp(prefix=f".{run_id}-", dir=output_root)
     )
     try:
-        _write_json(
-            temporary_directory / "source-receipts.json",
-            {"source_set_id": source_data["source_set_id"], "receipts": prepared.source_receipts},
-        )
-        _write_json(
-            temporary_directory / "normalized-datasets.json",
-            {
-                "source_set_id": source_data["source_set_id"],
-                "datasets": prepared.normalized_datasets,
-            },
-        )
-        _write_jsonl(
-            temporary_directory / "episode-attempts.jsonl",
-            prepared.episode_attempts,
-        )
-        (temporary_directory / "runner-input.json").write_text(
-            prepared.versioned_input.canonical_document + "\n",
-            encoding="utf-8",
-            newline="\n",
-        )
-        _write_json(
-            temporary_directory / "reconciliation.json", prepared.reconciliation
-        )
+        _stage_preparation_artifacts(temporary_directory, source_data, prepared)
         validation: dict[str, Any] = {
-            "status": "passed",
+            "status": "passed" if prepared.status == "accepted" else "rejected",
             "evidence_tier": "confirmatory-input-preparation",
             "policy_execution": "not-run",
             "confirmatory_aggregate_outcomes": "not-computed",
             "source_set_sha256": source_set.sha256,
-            "runner_input_sha256": prepared.versioned_input.sha256,
+            "runner_input_sha256": runner_input_sha256,
             "reconciliation": prepared.reconciliation,
         }
         _write_json(temporary_directory / "validation.json", validation)
@@ -1212,7 +1432,7 @@ def write_historical_preparation(
             "historical_source_sha256": _fingerprint(Path(__file__).read_bytes()),
             "config_sha256": config.sha256,
             "source_set_sha256": source_set.sha256,
-            "runner_input_sha256": prepared.versioned_input.sha256,
+            "runner_input_sha256": runner_input_sha256,
             "policy_execution": "not-run",
             "artifacts": [
                 {
@@ -1253,6 +1473,12 @@ def run_historical_validation(
         "historical validation must be explicitly non-confirmatory",
     )
     prepared = prepare_historical_input(config, source_set, source_root)
+    _require(
+        prepared.versioned_input is not None,
+        "rejected_historical_input",
+        "prepared.versioned_input",
+        "validation source set did not produce both selected episodes",
+    )
     run_id = _historical_run_id(config, source_set, prepared)
     output_root.mkdir(parents=True, exist_ok=True)
     final_directory = output_root / run_id
@@ -1266,29 +1492,7 @@ def run_historical_validation(
         tempfile.mkdtemp(prefix=f".{run_id}-", dir=output_root)
     )
     try:
-        _write_json(
-            temporary_directory / "source-receipts.json",
-            {"source_set_id": source_data["source_set_id"], "receipts": prepared.source_receipts},
-        )
-        _write_json(
-            temporary_directory / "normalized-datasets.json",
-            {
-                "source_set_id": source_data["source_set_id"],
-                "datasets": prepared.normalized_datasets,
-            },
-        )
-        _write_jsonl(
-            temporary_directory / "episode-attempts.jsonl",
-            prepared.episode_attempts,
-        )
-        (temporary_directory / "runner-input.json").write_text(
-            prepared.versioned_input.canonical_document + "\n",
-            encoding="utf-8",
-            newline="\n",
-        )
-        _write_json(
-            temporary_directory / "reconciliation.json", prepared.reconciliation
-        )
+        _stage_preparation_artifacts(temporary_directory, source_data, prepared)
         nested_root = temporary_directory / ".runner-output"
         runner = run_experiment(config, prepared.versioned_input, nested_root)
         os.replace(runner.output_directory, temporary_directory / "runner")
@@ -1369,7 +1573,7 @@ def run_historical_validation(
             ],
             "runtime": {
                 "implementation": sys.implementation.name,
-                "python": f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}",
+                "python": f"{sys.version_info.major}.{sys.version_info.minor}",
                 "third_party": [],
             },
             "evidence_tier": "non-confirmatory-infrastructure-validation",
@@ -1435,6 +1639,8 @@ def main(argv: list[str] | None = None) -> int:
     prepare.add_argument("--source-root", required=True, type=Path)
     prepare.add_argument("--output-root", required=True, type=Path)
     arguments = parser.parse_args(argv)
+    completion_code = 0
+    completion_stream = sys.stdout
     try:
         from reproducibility.empirical import load_study_config
 
@@ -1477,15 +1683,22 @@ def main(argv: list[str] | None = None) -> int:
                 arguments.source_root,
                 arguments.output_root,
             )
+            preparation_rejected = preparation.validation["status"] == "rejected"
             completion = {
-                "status": "completed",
+                "status": "rejected" if preparation_rejected else "completed",
                 "run_id": preparation.run_id,
                 "output_directory": str(preparation.output_directory.resolve()),
                 "manifest": str(
                     (preparation.output_directory / "manifest.json").resolve()
                 ),
                 "policy_execution": "not-run",
+                "failed_dataset_count": preparation.prepared.reconciliation[
+                    "failed_dataset_count"
+                ],
             }
+            if preparation_rejected:
+                completion_code = 2
+                completion_stream = sys.stderr
         else:  # argparse makes this unreachable.
             raise AssertionError(f"unsupported command: {arguments.command}")
     except ExperimentValidationError as error:
@@ -1501,8 +1714,8 @@ def main(argv: list[str] | None = None) -> int:
             file=sys.stderr,
         )
         return 2
-    print(_canonical_json(completion))
-    return 0
+    print(_canonical_json(completion), file=completion_stream)
+    return completion_code
 
 
 if __name__ == "__main__":
