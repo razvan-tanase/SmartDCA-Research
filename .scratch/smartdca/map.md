@@ -7,8 +7,8 @@ knowledge_role: operational
 status: stable
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-30T09:57:10Z
-generation_run: urn:uuid:eb95df4b-cddd-4d8f-987c-dca42e3ecc68
+  at: 2026-08-30T10:07:02Z
+generation_run: urn:uuid:b3da5f0b-dc5e-45f3-840f-51f3445d0f32
 verified:
   - by: openai-codex/writing-for-agents-0.1
     at: 2026-08-23T21:32:48Z
@@ -105,13 +105,14 @@ A thesis- and paper-grade, self-contained Financial Computing study suitable for
 
 - **Agent-facing writing audit:** All 62 Markdown paths were classified; the six active agent instruction surfaces were sharpened around explicit triggers, authoritative layers, and checkable completion bounds. A stale Stripe hosting claim and duplicated tracker lifecycle rules were removed, while the 18 earlier resolved tickets were preserved as provenance-bearing history. No scientific claim changed. See [Audit and sharpen agent-facing wiki instructions](issues/19-audit-agent-facing-writing.md).
 
-- **Repository tooling boundary (pending review):** Profile `smartdca-okf/0.5` reserves root `.agents/` alongside `.git/` as repository infrastructure outside the declared bundle view. Other hidden Markdown remains discoverable, the tooling tree stays byte-for-byte unchanged, and raw-repository OKF conformance is no longer claimed. See [Exclude .agents tooling from the SmartDCA knowledge bundle](../../docs/adr/0009-exclude-agents-tooling-from-knowledge-bundle.md).
+- **Repository tooling boundary:** Profile `smartdca-okf/0.5` reserves root `.agents/` alongside `.git/` as repository infrastructure outside the declared bundle view. Other hidden Markdown remains discoverable, the tooling tree stays byte-for-byte unchanged, and raw-repository OKF conformance is not claimed. Independent Standards, specification, and Writing-for-Agents reviews found no remaining issue. See [Exclude .agents tooling from the SmartDCA knowledge bundle](../../docs/adr/0009-exclude-agents-tooling-from-knowledge-bundle.md).
 
 - **Reviewed arbitrary-horizon performance checkpoint:** The five-ticket effort establishes the exact ledger boundary \(W_n^c(P)-W_n^T(P)=H_T+P U_T\); single-valley geometry and cash crossing alone remain insufficient, while safety remains the guardrail's contribution. See the [resolved publication ticket](efforts/arbitrary-horizon-performance/issues/05-review-publish-research-package.md).
 
 - **Versioned empirical artifact layers:** Outcome-blind registrations live under `experiments/protocols/`, versioned inputs under `experiments/inputs/`, deterministic no-overwrite bundles under `reports/experiments/runs/`, and their reviewable OKF entry points under `reports/experiments/`. Exact byte fingerprints join those layers without treating generated JSON as separate knowledge concepts. See [Place empirical protocols, inputs, and run bundles in versioned layers](../../docs/adr/0008-place-empirical-protocol-input-run-layers.md).
 - **Outcome-blind empirical runner checkpoint:** The frozen protocol, versioned synthetic input, and deterministic three-policy runner now produce the byte-reproducible canonical run `smartdca-run-v1-b029028a9a8e5104359c4999b26e42f1dc81207eb4eb29b1dfba9fcae83473e0`: 36 complete ledgers, 36 included comparisons, 36 strata-preserving aggregate cells, and ten passed validation receipts with no negative cash. Standards, specification, and independent empirical replay all pass. This demonstrates the registered mechanism on one synthetic path only; the [experiment report](../../reports/experiments/canonical-synthetic-run.md) remains draft until ticket 04 supplies the registered historical-slice reproduction. See [Preregister the empirical protocol and establish one canonical run](efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md).
 - **Deterministic adversarial checkpoint:** The content-addressed run `smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db` retains 21 saved attempts, 18 valid paths, three typed exclusions, 648 main comparisons, all 729 finite search candidates, and 1,512 eligible-search comparisons. It executes seven exact boundary contracts and separates complete-system, selector, and guardrail-architecture effects without treating deterministic evidence as historical or stochastic performance. Standards, specification, and independent byte-level empirical replay all pass. See [Evaluate deterministic synthetic and adversarial paths](efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md).
+- **Seeded stochastic checkpoint:** The content-addressed run `smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25` retains all 90 declared trend, mean-reversion, stochastic-volatility, regime-switching, and jump paths, with 3,240 complete ledgers and comparisons and 1,080 independently reconciled aggregate cells. Primary and exploratory results both have mixed signs; they establish controlled sensitivity, not stochastic or market superiority. The run replays byte for byte, and its report and audit remain draft pending the registered historical-slice gate. See [Evaluate seeded stochastic path families](efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md).
 
 ## Completed efforts
 
@@ -119,7 +120,7 @@ A thesis- and paper-grade, self-contained Financial Computing study suitable for
 
 ## Active efforts
 
-- [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) has an approved seven-ticket tracer route. Tickets [01](efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md) and [02](efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md) are resolved. The separate repository-conformance [ticket 08](efforts/safety-adaptivity-empirical-evaluation/issues/08-exclude-agents-from-okf-bundle.md) is claimed and blocks ticket [03](efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md), whose review-corrected durable run remains unchanged. Ticket 04 remains open and unclaimed, ticket 05 remains blocked by 04, and tickets 06–07 retain their declared dependencies.
+- [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) has an approved seven-ticket tracer route. Tickets [01](efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md), [02](efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md), and [03](efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md) are resolved. The separate repository-conformance [ticket 08](efforts/safety-adaptivity-empirical-evaluation/issues/08-exclude-agents-from-okf-bundle.md) is also resolved. Ticket 04 is open and unclaimed, ticket 05 remains blocked by 04, and tickets 06–07 retain their declared dependencies.
 
 ## Not yet specified
 

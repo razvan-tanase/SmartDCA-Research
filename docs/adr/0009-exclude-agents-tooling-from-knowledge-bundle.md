@@ -4,7 +4,7 @@ type: decision-record
 title: "Exclude .agents tooling from the SmartDCA knowledge bundle"
 description: "Decision reserving the .agents tree as repository tooling outside SmartDCA bundle membership and validation."
 knowledge_role: canonical
-status: draft
+status: stable
 decision_status: accepted
 sources:
   - id: okf-spec
@@ -23,6 +23,13 @@ generated:
   by: openai-codex/smartdca-wiki-0.1
   at: 2026-08-30T09:57:10Z
 generation_run: urn:uuid:eb95df4b-cddd-4d8f-987c-dca42e3ecc68
+verified:
+  - by: openai-codex/standards-review-0.1
+    at: 2026-08-30T10:09:30Z
+    review_run: urn:uuid:0cf9e427-2b3e-40eb-a2f3-d5f93b17e175
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-30T10:09:30Z
+    review_run: urn:uuid:0423e158-4c18-4bb7-bfe3-ba3e7b07b882
 ---
 # Exclude .agents tooling from the SmartDCA knowledge bundle
 
@@ -81,8 +88,9 @@ content.[^blocker-ticket]
 
 ## Status
 
-Accepted by the user's explicit 2026-08-30 clarification; promotion awaits
-independent Writing-for-Agents, Standards, and specification review.
+Accepted by the user's explicit 2026-08-30 clarification. Independent
+Writing-for-Agents, Standards, and specification reviews found no remaining
+actionable issue.
 
 [^okf-spec]: [Source summary: Open Knowledge Format v0.2 specification](../../references/summaries/okf-v0-2-specification.md)
 [^repository-root]: [Make the repository root an OKF knowledge bundle](0002-repository-root-okf-knowledge-bundle.md)

@@ -56,11 +56,14 @@ deterministic three-policy runner reproduces its canonical synthetic bundle
 byte for byte. [Ticket 02's deterministic and adversarial study](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md)
 is also resolved after Standards, specification, and independent empirical
 replay. [Ticket 03's seeded stochastic study](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md)
-is complete and independently reviewed, but remains open while the claimed
-[repository-conformance blocker](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/08-exclude-agents-from-okf-bundle.md)
-records profile 0.5 and excludes `.agents/` tooling from bundle membership.
-Ticket 04 remains open and unclaimed. The synthetic empirical reports remain
-draft until the registered historical-slice reproduction is completed.
+is resolved after independent review and byte-identical replay of all 90 paths,
+3,240 ledgers, and 1,080 aggregate cells. Its mixed controlled results support
+sensitivity analysis, not a superiority claim. The separate
+[repository-conformance ticket](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/08-exclude-agents-from-okf-bundle.md)
+is also resolved: profile 0.5 excludes unchanged `.agents/` tooling from the
+declared knowledge-bundle view without claiming raw-repository OKF conformance.
+Ticket 04 is the next open unclaimed tracer. The synthetic empirical reports
+remain draft until the registered historical-slice reproduction is completed.
 
 The authoritative project state is the [Wayfinder map](.scratch/smartdca/map.md). The complete inventory of every knowledge concept is the root [index](index.md).
 

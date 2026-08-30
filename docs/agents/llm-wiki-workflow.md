@@ -4,7 +4,7 @@ type: workflow
 title: "SmartDCA LLM-Wiki workflow"
 description: "How agents author, ingest, promote, review, and supersede knowledge in the wiki."
 knowledge_role: operational
-status: draft
+status: stable
 original_record: true
 generated:
   by: openai-codex/smartdca-wiki-0.1
@@ -23,6 +23,9 @@ verified:
   - by: openai-codex/smartdca-wiki-0.1
     at: 2026-08-23T16:21:37Z
     review_run: urn:uuid:66222a92-a082-4617-b191-77c124239e73
+  - by: openai-codex/writing-for-agents-0.1
+    at: 2026-08-30T10:09:30Z
+    review_run: urn:uuid:d86b1a84-4750-43ec-9c0e-62ff07a8587e
 ---
 # SmartDCA LLM-Wiki workflow
 

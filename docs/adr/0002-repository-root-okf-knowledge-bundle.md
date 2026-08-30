@@ -4,7 +4,7 @@ type: decision-record
 title: "Make the repository root an OKF knowledge bundle"
 description: "Decision anchoring the SmartDCA bundle namespace at repository root, narrowed in profile 0.5 to a declared bundle view."
 knowledge_role: canonical
-status: draft
+status: stable
 original_record: true
 decision_status: accepted
 generated:
@@ -15,6 +15,9 @@ verified:
   - by: claude-code/smartdca-wiki-0.1
     at: 2026-08-16T07:38:00Z
     review_run: urn:uuid:16bd7b25-9e03-4aef-9c9a-5301cb317903
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-30T10:09:30Z
+    review_run: urn:uuid:0423e158-4c18-4bb7-bfe3-ba3e7b07b882
 ---
 # Make the repository root an OKF knowledge bundle
 

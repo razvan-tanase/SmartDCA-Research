@@ -4,7 +4,7 @@ type: domain-glossary
 title: "Quasi-Gini SmartDCA Research"
 description: "Canonical mathematical, financial, and knowledge-system vocabulary with its forbidden alternatives."
 knowledge_role: canonical
-status: draft
+status: stable
 sources:
   - id: audit
     title: "Audit of the source out quasi-Gini functional"
@@ -176,6 +176,9 @@ verified:
   - by: openai-codex/spec-review-0.1
     at: 2026-08-24T21:31:55Z
     review_run: urn:uuid:8da58364-ea0f-42bb-a729-d559abe6e7e7
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-30T10:09:30Z
+    review_run: urn:uuid:0423e158-4c18-4bb7-bfe3-ba3e7b07b882
 ---
 # Quasi-Gini SmartDCA Research
 

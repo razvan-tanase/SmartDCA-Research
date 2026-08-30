@@ -4,7 +4,7 @@ type: specification
 title: "SmartDCA Open Knowledge Format profile"
 description: "Normative smartdca-okf/0.5 profile applying Open Knowledge Format v0.2 checks to the declared SmartDCA bundle view."
 knowledge_role: canonical
-status: draft
+status: stable
 sources:
   - id: okf-spec
     title: "Open Knowledge Format v0.2 specification"
@@ -85,6 +85,12 @@ verified:
   - by: openai-codex/spec-review-0.1
     at: 2026-08-23T20:31:00Z
     review_run: urn:uuid:15c9b810-1adb-4eed-b833-45e31bcad2f1
+  - by: openai-codex/standards-review-0.1
+    at: 2026-08-30T10:09:30Z
+    review_run: urn:uuid:0cf9e427-2b3e-40eb-a2f3-d5f93b17e175
+  - by: openai-codex/spec-review-0.1
+    at: 2026-08-30T10:09:30Z
+    review_run: urn:uuid:0423e158-4c18-4bb7-bfe3-ba3e7b07b882
 ---
 # SmartDCA Open Knowledge Format profile
 

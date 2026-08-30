@@ -2,14 +2,14 @@
 profile: smartdca-okf/0.5
 type: research-map
 title: "Safety-adaptivity empirical evaluation effort map"
-description: "Approved seven-ticket empirical route plus the repository-conformance blocker required to finish stochastic evaluation."
+description: "Approved empirical route through resolved deterministic and seeded stochastic evidence, with the historical-data seam next."
 knowledge_role: operational
 status: stable
 original_record: true
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-30T09:34:27Z
-generation_run: urn:uuid:e54b04fe-969e-4f95-81f4-1121a2423495
+  at: 2026-08-30T10:07:02Z
+generation_run: urn:uuid:b3da5f0b-dc5e-45f3-840f-51f3445d0f32
 verified:
   - by: human:github:razvan-tanase
     at: 2026-08-25T07:38:45Z
@@ -51,7 +51,7 @@ project-wide scientific context lives in the
 |---|---|---|---|
 | [01](issues/01-preregister-protocol-establish-canonical-run.md) | Freeze the protocol and establish one complete non-confirmatory empirical run. | resolved | — |
 | [02](issues/02-evaluate-deterministic-adversarial-paths.md) | Evaluate deterministic synthetic and adversarial path families. | resolved | — |
-| [03](issues/03-evaluate-seeded-stochastic-families.md) | Evaluate seeded stochastic path families. | open | 08 |
+| [03](issues/03-evaluate-seeded-stochastic-families.md) | Evaluate seeded stochastic path families. | resolved | — |
 | [04](issues/04-establish-historical-data-episode-seam.md) | Establish fingerprinted historical inputs and rolling episodes without opening confirmatory outcomes. | open | — |
 | [05](issues/05-run-confirmatory-historical-evaluation.md) | Execute the frozen rolling S&P 500 and Bitcoin evaluation. | open | 04 |
 | [06](issues/06-synthesize-safety-adaptivity-tradeoff.md) | Synthesize deterministic, stochastic, and historical evidence. | open | 02, 03, 05 |
@@ -61,7 +61,7 @@ Repository-conformance blocker:
 
 | Ticket | Purpose | Status | Blocked by |
 |---|---|---|---|
-| [08](issues/08-exclude-agents-from-okf-bundle.md) | Reserve `.agents/` as a non-bundle tooling tree without changing its files. | claimed | — |
+| [08](issues/08-exclude-agents-from-okf-bundle.md) | Reserve `.agents/` as a non-bundle tooling tree without changing its files. | resolved | — |
 
 ## Current frontier
 
@@ -71,8 +71,12 @@ is resolved after Standards, specification, and independent empirical review.
 is also resolved after byte-identical clean-room replay of its 18 generated
 paths, retained exclusions, and exhaustive finite adversarial search.
 [Exclude repository-local agent tooling from the OKF bundle](issues/08-exclude-agents-from-okf-bundle.md)
-is the sole claimed ticket. It blocks the already reviewed
-[seeded stochastic evaluation](issues/03-evaluate-seeded-stochastic-families.md),
-which is open with its durable evidence unchanged. Ticket 04 remains open and
-unclaimed. Ticket 05 still needs the historical-data seam, while synthesis and
-publication remain blocked until their full evidence dependencies resolve.
+is resolved after profile 0.5 made the declared bundle view explicit while
+leaving `.agents/` unchanged. The unblocked
+[seeded stochastic evaluation](issues/03-evaluate-seeded-stochastic-families.md)
+is also resolved: its 90 paths, 3,240 ledgers, 1,080 reconciled aggregate cells,
+and byte-identical replay provide reviewed controlled sensitivity evidence with
+mixed signs across families. Its report and audit remain draft pending the
+registered historical-slice gate. Ticket 04 is the next open unclaimed tracer;
+ticket 05 still needs that historical-data seam, while synthesis and publication
+remain blocked until their full evidence dependencies resolve.
