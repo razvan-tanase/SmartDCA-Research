@@ -75,6 +75,21 @@ The strategy that invests the entire new deposit at each purchase time at the cu
 **Usage:** Give DCA the same exogenous deposits and evaluation horizon as the
 candidate. Label a retrospectively budget-matched comparator separately.
 
+**Historical source receipt**[^empirical-protocol][^provider-review]:
+A sanitized record that binds one declared provider request and its series
+semantics to the retrieval metadata, exact response-body fingerprint, received
+schema, date coverage, parser identity, and redistribution decision.
+**Usage:** Treat the receipt, not a mutable provider URL, as the historical
+input identity. Do not call a synthetic fixture a provider response.
+
+**Point-in-time rolling episode**[^empirical-protocol]:
+A recurring-investment episode whose nominal deposits and horizon are mapped
+to observed dates by the frozen asset rule and whose policy history at each
+purchase contains no later observation. Each attempted rolling start is
+retained as included or with one machine-readable exclusion reason.
+**Usage:** Distinguish the nominal schedule, mapped purchase dates, exact
+horizon date, mapped evaluation date, and any excluded episode attempt.
+
 **Economic dominance**[^impossibility]:
 Terminal wealth is at least that of the DCA comparator for every admissible positive price path and deposit sequence, and strictly greater for at least one admissible case.
 **Claim boundary:** Establish economic dominance from cash-inclusive terminal
@@ -225,3 +240,5 @@ terminal wealth—share one theorem because they describe one comparison model.
 [^performance-boundary-note]: [Exact arbitrary-horizon evaluation-price boundary for guarded SmartDCA](research/notes/arbitrary-horizon-performance-boundary.md)
 [^homogeneity]: [Primary-source note on homogeneity of the canonical corrected mean](research/notes/ticket-07-homogeneity-primary-sources.md)
 [^guardrail]: [Sharp causal epsilon-DCA safety and its unit-coverage guardrail](research/notes/sharp-epsilon-dca-safety-guardrail.md)
+[^empirical-protocol]: [Frozen safety-adaptivity empirical protocol](experiments/protocols/safety-adaptivity-v1.json)
+[^provider-review]: [Alpha Vantage historical-data provider review](research/notes/alpha-vantage-historical-data-provider-review.md)

@@ -1,0 +1,39 @@
+{
+  "schema_version": "smartdca-historical-source-set/1",
+  "source_set_id": "historical-validation-fixtures",
+  "version": "1",
+  "mode": "validation",
+  "confirmatory": false,
+  "purpose": "Provider-shaped, hand-authored, non-confirmatory fixtures proving the historical data and episode infrastructure without using or exposing market outcomes.",
+  "sources": [
+    {
+      "dataset_id": "spy-adjusted-daily",
+      "adapter": "hand-authored-fixture",
+      "path": "reproducibility/fixtures/historical/alpha-vantage-spy-adjusted-validation.csv",
+      "retrieved_at_utc": "2026-08-30T00:00:00Z",
+      "http_status": 200,
+      "content_type": "text/csv",
+      "expected_sha256": "ef89a54abb12a7c074bf8d6fdc4ee0ce9dce0f1bedcabf6bccc3d4d0944a0df4",
+      "redistribution_decision": "synthetic-fixture-approved-for-repository"
+    },
+    {
+      "dataset_id": "btc-usd-daily",
+      "adapter": "hand-authored-fixture",
+      "path": "reproducibility/fixtures/historical/alpha-vantage-btc-usd-validation.csv",
+      "retrieved_at_utc": "2026-08-30T00:00:00Z",
+      "http_status": 200,
+      "content_type": "text/csv",
+      "expected_sha256": "9b0342e9c39a0be17ac2ae7ff61485541a4eb3422b8f48377cd0a815bfefcd74",
+      "redistribution_decision": "synthetic-fixture-approved-for-repository"
+    }
+  ],
+  "episode_scope": {
+    "horizons_months": [12],
+    "nominal_start_min": "2020-01-01",
+    "nominal_start_max": "2020-03-01",
+    "validation_episode_starts": {
+      "spy-adjusted-daily": "2020-01-01",
+      "btc-usd-daily": "2020-01-01"
+    }
+  }
+}
