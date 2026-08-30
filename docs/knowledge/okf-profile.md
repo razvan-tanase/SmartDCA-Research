@@ -2,7 +2,7 @@
 profile: smartdca-okf/0.5
 type: specification
 title: "SmartDCA Open Knowledge Format profile"
-description: "Normative smartdca-okf/0.5 profile specializing Open Knowledge Format v0.2 for this bundle."
+description: "Normative smartdca-okf/0.5 profile applying Open Knowledge Format v0.2 checks to the declared SmartDCA bundle view."
 knowledge_role: canonical
 status: draft
 sources:
@@ -52,8 +52,8 @@ sources:
     source_kind: internal
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-30T09:39:25Z
-generation_run: urn:uuid:c151b2eb-777f-4ae7-9f49-877a6401860e
+  at: 2026-08-30T09:52:55Z
+generation_run: urn:uuid:3ec0b72e-e422-4bf2-be87-cf5d49797fa4
 verified:
   - by: claude-code/smartdca-wiki-0.1
     at: 2026-08-16T07:46:00Z
@@ -88,13 +88,13 @@ verified:
 ---
 # SmartDCA Open Knowledge Format profile
 
-This document is the normative local profile for the repository-root SmartDCA knowledge bundle. It specializes [Open Knowledge Format (OKF) v0.2](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)[^okf-spec] as `smartdca-okf/0.5` and transcribes the accepted design in [Design a repository-root LLM-Wiki using OKF v0.2](../../.scratch/smartdca/issues/12-design-repository-root-llm-wiki-okf.md)[^ticket-12].
+This document is the normative local profile for the repository-anchored SmartDCA bundle view. It applies [Open Knowledge Format (OKF) v0.2](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)[^okf-spec] member checks as `smartdca-okf/0.5` and transcribes the accepted design in [Design a repository-root LLM-Wiki using OKF v0.2](../../.scratch/smartdca/issues/12-design-repository-root-llm-wiki-okf.md)[^ticket-12].
 
 The words MUST, MUST NOT, REQUIRED, SHOULD, SHOULD NOT, and MAY are normative. Base OKF and this profile are separate validation layers: a document can conform to OKF while failing this profile.
 
 ## Bundle and identity
 
-The repository root is the bundle root, by the decision in [Make the repository root an OKF knowledge bundle](../adr/0002-repository-root-okf-knowledge-bundle.md)[^adr-0002]. Root `.git/` and `.agents/` are repository infrastructure outside bundle membership; discovery MUST exclude both trees before applying either validation layer. This tooling boundary is the decision in [Exclude .agents tooling from the SmartDCA knowledge bundle](../adr/0009-exclude-agents-tooling-from-knowledge-bundle.md)[^adr-0009].
+The repository root anchors the SmartDCA bundle namespace, by the decision in [Make the repository root an OKF knowledge bundle](../adr/0002-repository-root-okf-knowledge-bundle.md)[^adr-0002]. Profile 0.5 narrows that decision to a declared bundle view: root `.git/` and `.agents/` are repository infrastructure outside membership, and discovery MUST exclude both trees before applying either validation layer. This tooling boundary is the decision in [Exclude .agents tooling from the SmartDCA knowledge bundle](../adr/0009-exclude-agents-tooling-from-knowledge-bundle.md)[^adr-0009]. Because OKF v0.2 defines no ignore-tree mechanism, this profile does not claim that the raw repository root itself is a conformant OKF bundle.
 
 The root `README.md` is repository-interface documentation for humans and GitHub and is deliberately outside the OKF concept corpus; it MUST NOT carry concept frontmatter. Every other UTF-8 bundle member whose final suffix is `.md` is either a concept or a reserved file, including Markdown below hidden directories other than the two non-bundle infrastructure trees. `index.md` and `log.md` are reserved at every depth; all remaining Markdown bundle members are concepts.
 
@@ -102,9 +102,9 @@ A Concept ID is the bundle-relative path without the `.md` suffix. A published C
 
 External Markdown snapshots are not concepts. Their exact upstream bytes MUST use a non-`.md` final suffix, normally `.md.raw`, under a versioned path such as `references/raw/<source>/<version>/source.md.raw`. A separate conformant concept summarizes and cites the snapshot.
 
-## Base OKF v0.2 conformance
+## Base OKF v0.2 member checks
 
-The base layer implements OKF v0.2 conformance without importing stricter SmartDCA rules. It requires parseable top-of-file YAML frontmatter and a non-empty `type` for every Markdown concept file, plus the reserved-file structures defined by OKF. Non-bundle repository infrastructure and the root `README.md` are not passed to base concept validation.
+The base layer applies OKF v0.2 conformance checks to declared SmartDCA bundle members without importing stricter SmartDCA rules. Passing this layer means every included member satisfies the checked base rules; it is not an unqualified conformance result for the raw repository tree. The layer requires parseable top-of-file YAML frontmatter and a non-empty `type` for every Markdown concept file, plus the reserved-file structures defined by OKF. Non-bundle repository infrastructure and the root `README.md` are not passed to these checks.
 
 The base layer MUST accept:
 
@@ -125,7 +125,7 @@ Every concept MUST have these fields:
 
 | Field | Rule |
 |---|---|
-| `profile` | Exactly `smartdca-okf/0.4`. |
+| `profile` | Exactly `smartdca-okf/0.5`. |
 | `type` | One registered type below. |
 | `title` | Non-empty human-readable string. |
 | `description` | Non-empty, one-line retrieval description. |
@@ -232,7 +232,7 @@ A profile version is the value every concept declares in `profile`; the schema r
 
 `smartdca-okf/0.4` adopts [effort-scoped work tracking](../adr/0007-adopt-effort-scoped-work-tracking.md)[^adr-0007]. It registers `work-specification`, assigns active effort specifications, maps, and tickets, and restricts the legacy project issue directory to resolved history. Every active effort requires both `spec.md` and `map.md`; tickets may be published only after the specification is stable. This schema change lapses the prior structural-freeze certification and resets the supervised-ingest streak.
 
-`smartdca-okf/0.5` makes the repository/bundle boundary explicit, as recorded in [Exclude .agents tooling from the SmartDCA knowledge bundle](../adr/0009-exclude-agents-tooling-from-knowledge-bundle.md)[^adr-0009]. Root `.agents/` joins `.git/` as non-bundle repository infrastructure excluded before base and profile validation; every other hidden-directory Markdown path remains discoverable. No type, metadata field, role, lifecycle rule, or active concept-path assignment changes. This structural change lapses the 0.4 freeze state and resets the supervised-ingest streak to zero without invalidating published concepts.
+`smartdca-okf/0.5` makes the repository/bundle-view boundary explicit, as recorded in [Exclude .agents tooling from the SmartDCA knowledge bundle](../adr/0009-exclude-agents-tooling-from-knowledge-bundle.md)[^adr-0009]. Root `.agents/` joins `.git/` as non-bundle repository infrastructure excluded before base member checks and profile validation; every other hidden-directory Markdown path remains discoverable. The raw repository is no longer described as an unqualified conformant OKF bundle. No type, metadata field, role, lifecycle rule, or active concept-path assignment changes. This structural change lapses the 0.4 freeze state and resets the supervised-ingest streak to zero without invalidating published concepts.
 
 Relabelling across profile versions is a metadata migration: it does not update `generated.at`, demote a high-risk concept to draft, or invalidate a recorded verification. Only a concept whose body actually changed in the same transaction carries a new generation time.
 
@@ -322,7 +322,7 @@ When Git history is available, validation requires every previously committed ev
 
 ## Validator contract
 
-Install the pinned dependency and run the public command from the bundle root:
+Install the pinned dependency and run the public command from the repository root that anchors the bundle view:
 
 ```bash
 python -m pip install -r tools/okf/requirements.txt
@@ -331,7 +331,7 @@ python tools/okf/validate.py . --format json
 python tools/okf/validate.py . --strict
 ```
 
-The validator has two modes. Report mode is the default: content findings always return process status 0, so nonconformance is inventory rather than a gate. Strict mode returns 1 when either layer reports a conformance finding and 0 otherwise; advisory base warnings never change the status because OKF keeps optional-family guidance soft. In both modes an invalid invocation or nonexistent bundle root returns 2, and human text and JSON identify `base_okf` and `smartdca_profile` separately.
+The validator has two modes. Report mode is the default: member and profile findings always return process status 0, so nonconformance is inventory rather than a gate. Strict mode returns 1 when either layer reports a finding and 0 otherwise; advisory base warnings never change the status because OKF keeps optional-family guidance soft. In both modes an invalid invocation or nonexistent root returns 2. Human text states that raw-repository OKF conformance is not claimed; JSON retains the `base_okf` compatibility key but adds `scope: smartdca_bundle_members` and `raw_repository_conformance_claimed: false` beside the separate `smartdca_profile` result.
 
 [Implement the SmartDCA OKF profile and report-only validator](../../.scratch/smartdca/issues/13-implement-smartdca-okf-profile-validator.md)[^ticket-13] exposed report mode only. [Atomically migrate the repository to SmartDCA OKF 0.1](../../.scratch/smartdca/issues/14-atomically-migrate-repository-to-okf.md) added strict mode and, in the same merge transaction as the corpus migration, made `python tools/okf/validate.py . --strict` a blocking CI step alongside the validator fixtures. Every later change to a Markdown concept therefore has to conform before it can merge.
 

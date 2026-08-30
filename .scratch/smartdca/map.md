@@ -7,8 +7,8 @@ knowledge_role: operational
 status: stable
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-30T09:39:25Z
-generation_run: urn:uuid:c151b2eb-777f-4ae7-9f49-877a6401860e
+  at: 2026-08-30T09:52:55Z
+generation_run: urn:uuid:3ec0b72e-e422-4bf2-be87-cf5d49797fa4
 verified:
   - by: openai-codex/writing-for-agents-0.1
     at: 2026-08-23T21:32:48Z
@@ -105,7 +105,7 @@ A thesis- and paper-grade, self-contained Financial Computing study suitable for
 
 - **Agent-facing writing audit:** All 62 Markdown paths were classified; the six active agent instruction surfaces were sharpened around explicit triggers, authoritative layers, and checkable completion bounds. A stale Stripe hosting claim and duplicated tracker lifecycle rules were removed, while the 18 earlier resolved tickets were preserved as provenance-bearing history. No scientific claim changed. See [Audit and sharpen agent-facing wiki instructions](issues/19-audit-agent-facing-writing.md).
 
-- **Repository tooling boundary (pending review):** Profile `smartdca-okf/0.5` reserves root `.agents/` alongside `.git/` as repository infrastructure outside knowledge-bundle membership. Other hidden Markdown remains discoverable, and the tooling tree stays byte-for-byte unchanged. See [Exclude .agents tooling from the SmartDCA knowledge bundle](../../docs/adr/0009-exclude-agents-tooling-from-knowledge-bundle.md).
+- **Repository tooling boundary (pending review):** Profile `smartdca-okf/0.5` reserves root `.agents/` alongside `.git/` as repository infrastructure outside the declared bundle view. Other hidden Markdown remains discoverable, the tooling tree stays byte-for-byte unchanged, and raw-repository OKF conformance is no longer claimed. See [Exclude .agents tooling from the SmartDCA knowledge bundle](../../docs/adr/0009-exclude-agents-tooling-from-knowledge-bundle.md).
 
 - **Reviewed arbitrary-horizon performance checkpoint:** The five-ticket effort establishes the exact ledger boundary \(W_n^c(P)-W_n^T(P)=H_T+P U_T\); single-valley geometry and cash crossing alone remain insufficient, while safety remains the guardrail's contribution. See the [resolved publication ticket](efforts/arbitrary-horizon-performance/issues/05-review-publish-research-package.md).
 

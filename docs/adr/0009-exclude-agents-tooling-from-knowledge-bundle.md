@@ -21,8 +21,8 @@ sources:
     source_kind: internal
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-30T09:34:27Z
-generation_run: urn:uuid:e54b04fe-969e-4f95-81f4-1121a2423495
+  at: 2026-08-30T09:52:55Z
+generation_run: urn:uuid:3ec0b72e-e422-4bf2-be87-cf5d49797fa4
 ---
 # Exclude .agents tooling from the SmartDCA knowledge bundle
 
@@ -30,8 +30,8 @@ generation_run: urn:uuid:e54b04fe-969e-4f95-81f4-1121a2423495
 
 Open Knowledge Format v0.2 reserves only `index.md` and `log.md` inside a bundle
 and validates every other final-suffix Markdown bundle member as a
-concept.[^okf-spec] The accepted architecture makes the repository root the
-SmartDCA bundle root and includes authoritative agent workflows under
+concept.[^okf-spec] The earlier architecture described the repository root as
+the conformant SmartDCA bundle and included authoritative agent workflows under
 `docs/agents/`.[^repository-root] Commit `ea7cca3` later added a separate
 repository-tooling payload below `.agents/`, creating an ambiguity about whether
 physical containment alone made those tool instructions bundle members.[^blocker-ticket]
@@ -48,6 +48,10 @@ This decision narrows ADR 0002's phrase “every non-reserved Markdown file” t
 Markdown bundle members. Its repository-root architecture, role separation,
 and inclusion of authoritative `docs/agents/` workflows remain accepted.
 
+OKF v0.2 does not define this membership filter. The validator therefore labels
+its base result as member checks over the declared SmartDCA bundle view and
+states that raw-repository OKF conformance is not claimed.
+
 No file below `.agents/` receives profile metadata, an index row, a log event,
 or any other SmartDCA knowledge treatment. Its skill-routing metadata and
 instruction bodies remain byte-for-byte as imported.
@@ -62,9 +66,9 @@ trust.
 Treating `.agents/skills/**/*.md` as operational concepts would satisfy a purely
 physical reading of the repository-root bundle, but it would place imported
 executable tooling under repository knowledge policy and require mass metadata
-edits. The user explicitly rejected that ownership boundary. The selected rule
-instead defines bundle membership before applying OKF's complete-tree rule; it
-does not add a base-OKF exception for a file that is already a bundle member.
+edits. The user explicitly rejected that ownership boundary. The selected local
+bundle-view rule prioritizes that ownership decision and gives up the earlier
+unqualified claim that the raw repository root is itself OKF-conformant.
 
 ## Consequences
 

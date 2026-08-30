@@ -222,6 +222,8 @@ class ValidatorCliTests(unittest.TestCase):
         report = self.run_validator(files)
 
         self.assertEqual(report["inventory"], {"markdown_files": 2, "concepts": 0, "reserved_files": 2})
+        self.assertEqual(report["base_okf"]["scope"], "smartdca_bundle_members")
+        self.assertFalse(report["base_okf"]["raw_repository_conformance_claimed"])
         self.assertTrue(report["base_okf"]["ok"], report["base_okf"]["findings"])
         self.assertTrue(report["smartdca_profile"]["ok"], report["smartdca_profile"]["findings"])
 

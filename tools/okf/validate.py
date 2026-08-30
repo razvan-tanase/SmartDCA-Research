@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Report OKF v0.2 and SmartDCA profile findings for a knowledge bundle."""
+"""Report OKF v0.2 member checks and SmartDCA profile findings for the bundle view."""
 
 from __future__ import annotations
 
@@ -23,6 +23,7 @@ PROFILE_VERSION = "smartdca-okf/0.5"
 RESERVED_NAMES = {"index.md", "log.md"}
 NON_CONCEPT_MARKDOWN = {"README.md"}
 NON_BUNDLE_TREES = {".git", ".agents"}
+BASE_SCOPE = "smartdca_bundle_members"
 REGISTERED_TYPES = {
     "project-overview", "specification", "domain-glossary", "definition", "theorem",
     "research-note", "source-summary", "synthesis", "experiment-report", "decision-record",
@@ -889,9 +890,14 @@ def section(findings: list[Finding], warnings: list[Finding] | None = None) -> d
 def build_report(root: Path, strict: bool = False) -> dict[str, Any]:
     base_findings, base_warnings, documents = validate_base(root)
     profile_findings = validate_profile(root, documents)
+    base_result = section(base_findings, base_warnings)
+    base_result.update({
+        "scope": BASE_SCOPE,
+        "raw_repository_conformance_claimed": False,
+    })
     return {
         "mode": "strict" if strict else "report", "root": str(root),
-        "base_okf": section(base_findings, base_warnings),
+        "base_okf": base_result,
         "smartdca_profile": section(profile_findings),
         "inventory": {
             "markdown_files": len(documents),
@@ -903,8 +909,11 @@ def build_report(root: Path, strict: bool = False) -> dict[str, Any]:
 
 def render_text(report: dict[str, Any]) -> str:
     strict = report["mode"] == "strict"
-    lines = [f"SmartDCA OKF validation ({'blocking' if strict else 'report only'})"]
-    for key, label in (("base_okf", "Base OKF v0.2"), ("smartdca_profile", PROFILE_VERSION)):
+    lines = [
+        f"SmartDCA OKF validation ({'blocking' if strict else 'report only'})",
+        "Scope: declared SmartDCA bundle members; raw repository OKF conformance is not claimed.",
+    ]
+    for key, label in (("base_okf", "Base OKF v0.2 member checks"), ("smartdca_profile", PROFILE_VERSION)):
         result = report[key]
         lines.append(f"\n{label}: {'PASS' if result['ok'] else 'FINDINGS'} ({result['finding_count']})")
         for finding in result["findings"]:

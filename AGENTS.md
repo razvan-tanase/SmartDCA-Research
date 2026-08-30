@@ -8,8 +8,8 @@ status: stable
 original_record: true
 generated:
   by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-30T09:39:25Z
-generation_run: urn:uuid:c151b2eb-777f-4ae7-9f49-877a6401860e
+  at: 2026-08-30T09:52:55Z
+generation_run: urn:uuid:3ec0b72e-e422-4bf2-be87-cf5d49797fa4
 verified:
   - by: openai-codex/smartdca-wiki-0.1
     at: 2026-08-23T16:21:37Z
@@ -24,7 +24,7 @@ Select every branch that matches the change:
 
 - **Ticket work:** follow the [Wayfinder ticket workflow](docs/agents/wayfinder-ticket-workflow.md). It governs orientation, one-ticket claiming, execution, review, synchronization, persistence, and the user significance gate.
 - **Domain work:** follow [Domain documentation](docs/agents/domain.md) when terminology, assumptions, the mathematical or financial model, or an ADR may change.
-- **Knowledge work:** follow the [LLM-Wiki workflow](docs/agents/llm-wiki-workflow.md) and its normative [SmartDCA OKF profile](docs/knowledge/okf-profile.md) when a concept, path, metadata field, provenance join, lifecycle state, index row, or log event changes.
+- **Knowledge work:** follow the [LLM-Wiki workflow](docs/agents/llm-wiki-workflow.md) and its normative [SmartDCA OKF profile](docs/knowledge/okf-profile.md) when bundle membership or a bundle concept's assigned path, metadata field, provenance join, lifecycle state, index row, or log event changes.
 - **Scientific work:** link every changed claim to its evidence under `research/notes/` and run the corresponding scripts under `reproducibility/checks/`.
 
 Keep each kind of information in its authoritative layer:
