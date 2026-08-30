@@ -1,17 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Isolate the first nontrivial corrected-mean effect at three purchases"
-description: "Resolved task ticket isolating the first beta-dependent guarded SmartDCA boundary at three purchases."
-knowledge_role: operational
-status: stable
-ticket_type: task
-ticket_status: resolved
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-16T11:28:00Z
-generation_run: urn:uuid:1d09cb3f-94ee-4b73-b0f2-393b4227167d
----
 # Isolate the first nontrivial corrected-mean effect at three purchases
 
 Type: task

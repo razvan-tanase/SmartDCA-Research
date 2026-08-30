@@ -1,23 +1,7 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Establish the historical-data and rolling-episode seam"
-description: "Open task ticket delivering fingerprinted S&P 500 and Bitcoin inputs, point-in-time episode construction, and a non-confirmatory validation run."
-knowledge_role: operational
-status: draft
-original_record: true
-ticket_type: task
-ticket_status: open
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T07:52:38Z
-generation_run: urn:uuid:a5d8aafb-5c01-48a5-8177-23ed524a00a7
----
 # 04 — Establish the historical-data and rolling-episode seam
 
 Type: task
 Status: open
-Label: ready-for-agent
 Blocked by: 01
 Parent: [Safety-adaptivity empirical evaluation](../spec.md)
 

@@ -1,13 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Prove the sharp epsilon-DCA safety guardrail"
-description: "Resolved task ticket proving the sharp epsilon-DCA safety guardrail and its unit-coverage form."
-knowledge_role: operational
-status: stable
-ticket_type: task
-ticket_status: resolved
----
 # Prove the sharp epsilon-DCA safety guardrail
 
 Type: task
@@ -41,7 +31,7 @@ wealth.
 
 ## Comments
 
-- Claimed after the user chose **Continue** at ticket 08's significance gate on 2026-08-15.
+- Claimed after the user chose **Continue** on ticket 08 on 2026-08-15.
 - This is a mathematical task, not a new literature search. Ticket 08 already records the primary-source positioning and novelty limits.
 - The proof must test zero deposits, one purchase date, constant prices, extreme evaluation prices, \(\lambda=1\), \(\lambda\downarrow0\), and a nontrivial multi-date example.
 - Detailed proof and reproducible finite/adversarial checks should live in a linked theorem note and verification script; the ticket answer should remain a concise resolution.

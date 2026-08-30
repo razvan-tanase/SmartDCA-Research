@@ -1,38 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: theorem
-title: "Epsilon-DCA safety is exactly a causal unit-coverage guardrail"
-description: "Universal relative-wealth safety, prefix unit coverage, and a sharp per-purchase floor are equivalent, and the floor is always feasible."
-knowledge_role: canonical
-status: stable
-sources:
-  - id: guardrail
-    title: "Sharp causal epsilon-DCA safety and its unit-coverage guardrail"
-    resource: research/notes/sharp-epsilon-dca-safety-guardrail
-    source_kind: internal
-  - id: ticket-09
-    title: "Prove the sharp epsilon-DCA safety guardrail"
-    resource: .scratch/smartdca/issues/09-prove-sharp-epsilon-dca-safety-guardrail
-    source_kind: internal
-  - id: ticket-08
-    title: "Audit the novelty of the causal DCA boundary and choose a constructive relaxation"
-    resource: .scratch/smartdca/issues/08-audit-causal-dca-novelty-and-relaxation
-    source_kind: internal
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-16T11:00:00Z
-generation_run: urn:uuid:15b108f2-1ab8-4916-965a-89faffe7b3f6
-verified:
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T09:48:00Z
-    review_run: urn:uuid:d037e1ce-def8-4614-a42d-6053d0d49415
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T10:32:00Z
-    review_run: urn:uuid:6e8b3b72-0624-46b2-91ff-071b4879d9d4
-  - by: openai-codex/smartdca-wiki-0.1
-    at: 2026-08-16T11:14:00Z
-    review_run: urn:uuid:5fdc289a-b5ff-4e1f-9d84-777c58a093f2
----
 # Epsilon-DCA safety is exactly a causal unit-coverage guardrail
 
 ## Statement

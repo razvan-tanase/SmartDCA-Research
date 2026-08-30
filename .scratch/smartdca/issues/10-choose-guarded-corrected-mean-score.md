@@ -1,13 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Choose the guarded corrected-mean SmartDCA score"
-description: "Resolved task ticket choosing the guarded corrected-mean SmartDCA score."
-knowledge_role: operational
-status: stable
-ticket_type: task
-ticket_status: resolved
----
 # Choose the guarded corrected-mean SmartDCA score
 
 Type: task

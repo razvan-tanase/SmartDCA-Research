@@ -1,23 +1,7 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Synthesize the empirical safety-adaptivity trade-off"
-description: "Open research ticket integrating deterministic, stochastic, and historical evidence into the thesis-facing empirical conclusion."
-knowledge_role: operational
-status: draft
-original_record: true
-ticket_type: research
-ticket_status: open
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T07:52:38Z
-generation_run: urn:uuid:a5d8aafb-5c01-48a5-8177-23ed524a00a7
----
 # 06 — Synthesize the empirical safety-adaptivity trade-off
 
 Type: research
 Status: open
-Label: ready-for-agent
 Blocked by: 02, 03, 05
 Parent: [Safety-adaptivity empirical evaluation](../spec.md)
 

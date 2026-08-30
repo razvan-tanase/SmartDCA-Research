@@ -1,34 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Falsify the weak single-valley advantage conjecture"
-description: "Resolved task ticket falsifying the weak single-valley advantage conjecture with deterministic exact-rational search."
-knowledge_role: operational
-status: stable
-original_record: true
-ticket_type: task
-ticket_status: resolved
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-24T08:33:04Z
-generation_run: urn:uuid:f667d9d5-4345-4a36-b336-a56d37564458
-verified:
-  - by: openai-codex/writing-for-agents-0.1
-    at: 2026-08-23T21:32:48Z
-    review_run: urn:uuid:d87a04a7-92ae-43c4-a446-998b6f1a8d14
-  - by: openai-codex/standards-review-0.1
-    at: 2026-08-24T08:32:57Z
-    review_run: urn:uuid:8e47900a-b265-4440-819f-2a5326ed440f
-  - by: openai-codex/spec-review-0.1
-    at: 2026-08-24T08:32:57Z
-    review_run: urn:uuid:a7c4c38d-001a-494a-a8de-cd2211240855
-  - by: openai-codex/standards-review-0.1
-    at: 2026-08-24T08:38:49Z
-    review_run: urn:uuid:8a97bf17-69e6-4d16-bcc0-5755d83d8785
-  - by: openai-codex/spec-review-0.1
-    at: 2026-08-24T08:38:49Z
-    review_run: urn:uuid:96546068-7247-4999-906a-ef18ccb9a474
----
 # 02 — Falsify the weak single-valley advantage conjecture
 
 Type: task
@@ -65,7 +34,7 @@ non-discovery is not proof.
 
 ## Comments
 
-- Created from the approved tracer-bullet decomposition of the effort specification on
+- Created from the approved ticket decomposition of the effort specification on
   2026-08-23.
 - Independent Standards and Spec review rejected a floor-divergence proxy as
   causal attribution and found two emitted genuine-cycle witnesses without

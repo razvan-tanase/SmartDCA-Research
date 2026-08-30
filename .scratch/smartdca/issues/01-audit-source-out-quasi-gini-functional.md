@@ -1,13 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Audit whether the source out quasi-Gini functional is a mean"
-description: "Resolved research ticket classifying exactly when the source out quasi-Gini functional is a mean."
-knowledge_role: operational
-status: stable
-ticket_type: research
-ticket_status: resolved
----
 # Audit whether the source out quasi-Gini functional is a mean
 
 Type: research
@@ -22,7 +12,9 @@ For the out construction in Eq. (70) of *SmartDCA superiority*, determine exactl
 ## Comments
 
 - This is the only research ticket authorized to run during initial charting.
-- This audit predates the formal Wayfinder ticket workflow. Its original evidence and conclusion are contemporaneous; claim-state, synchronization, and significance-gate steps from the later workflow are not attributed retroactively.
+- This audit predates the current work-tracking guide. Its original evidence
+  and conclusion are contemporaneous; later process is not attributed
+  retroactively.
 - A later independent [retrospective validation](06-retrospectively-validate-source-audit-and-gate.md) rechecked the source pages, classification proof, counterexamples, and diagonal conclusion without changing the result.
 - Subsequent [prior-theory work](03-locate-prior-theory-for-correction.md) showed that the natural common-weight correction is a known weighted Bajraktarević subfamily, not a new mean class. This later positioning does not alter the source-functional audit.
 

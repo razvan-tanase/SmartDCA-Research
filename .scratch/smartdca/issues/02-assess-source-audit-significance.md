@@ -1,13 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Decide whether the source-audit gap is significant enough to continue"
-description: "Resolved grilling ticket accepting the source-audit gap as significant enough to continue."
-knowledge_role: operational
-status: stable
-ticket_type: grilling
-ticket_status: resolved
----
 # Decide whether the source-audit gap is significant enough to continue
 
 Type: grilling
@@ -21,7 +11,7 @@ After reviewing the source audit, does the identified gap justify continuing tow
 
 ## Comments
 
-- This first major gate is represented as an explicit ticket. The same Continue/Narrow/Pivot/Stop gate now runs automatically after every future ticket through `docs/agents/wayfinder-ticket-workflow.md`.
+- This first major continuation decision is preserved as an explicit ticket.
 - This decision relied on the proved classification and counterexamples in ticket 01; it did not assume that a corrected normalization would be novel.
 - The user explicitly selected **Continue** before the prior-theory ticket was claimed.
 

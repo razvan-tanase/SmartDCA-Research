@@ -1,23 +1,7 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Run the confirmatory historical evaluation"
-description: "Open task ticket executing the frozen rolling S&P 500 and Bitcoin comparison with dependence-aware uncertainty and complete provenance."
-knowledge_role: operational
-status: draft
-original_record: true
-ticket_type: task
-ticket_status: open
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T07:52:38Z
-generation_run: urn:uuid:a5d8aafb-5c01-48a5-8177-23ed524a00a7
----
 # 05 — Run the confirmatory historical evaluation
 
 Type: task
 Status: open
-Label: ready-for-agent
 Blocked by: 04
 Parent: [Safety-adaptivity empirical evaluation](../spec.md)
 

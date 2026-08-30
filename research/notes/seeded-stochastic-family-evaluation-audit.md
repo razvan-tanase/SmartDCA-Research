@@ -1,25 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: research-note
-title: "Audit of the seeded stochastic family evaluation"
-description: "Generator, completeness, reconciliation, accounting, and scope audit for the controlled seeded stochastic SmartDCA study."
-knowledge_role: evidence
-status: draft
-original_record: false
-sources:
-  - id: effort-spec
-    title: "Evaluate the safety-adaptivity trade-off of guarded SmartDCA"
-    resource: .scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec
-    source_kind: internal
-  - id: run-evidence
-    title: "Saved stochastic design, versioned runner sources, and immutable run bundle"
-    resource: "experiments/inputs/seeded-stochastic-families-v1.json; reproducibility/stochastic_study.py; reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/manifest.json"
-    source_kind: scope
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-29T18:35:34Z
-generation_run: urn:uuid:ea4ac886-60a2-4dfd-a510-8c7176cff04d
----
 # Audit of the seeded stochastic family evaluation
 
 ## Audit target
@@ -168,4 +146,4 @@ draft until the ticket review is recorded; the experiment report also remains
 draft under the effort-wide historical-slice promotion gate.
 
 [^effort-spec]: Source join: [approved empirical effort specification](../../.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec.md).
-[^run-evidence]: Source join: the saved study, current generator and orchestration source, and the immutable run manifest named in `sources`.
+[^run-evidence]: Source join: the [saved stochastic study](../../experiments/inputs/seeded-stochastic-families-v1.json), [generator and orchestration source](../../reproducibility/stochastic_study.py), and [immutable run manifest](../../reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/manifest.json).

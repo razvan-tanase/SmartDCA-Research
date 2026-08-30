@@ -1,39 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: experiment-report
-title: "Exact-rational cash single-crossing mechanism search"
-description: "Deterministic finite search locating strict cash double reversals and checking reference-aligned guardrail feedback through the public exact ledger."
-knowledge_role: evidence
-status: stable
-sources:
-  - id: ticket-03
-    title: "Characterize the cash single-crossing mechanism"
-    resource: .scratch/smartdca/efforts/arbitrary-horizon-performance/issues/03-characterize-cash-single-crossing-mechanism
-    source_kind: internal
-  - id: mechanism-note
-    title: "Differential guardrail feedback defeats cash single crossing"
-    resource: research/notes/cash-single-crossing-mechanism
-    source_kind: internal
-  - id: accounting-seam
-    title: "Arbitrary-horizon cash-timing identity and exact-rational verification seam"
-    resource: research/notes/arbitrary-horizon-accounting-verification-seam
-    source_kind: internal
-  - id: gini-region
-    title: "Prior theory for the proposed corrected out quasi-Gini normalization"
-    resource: research/notes/prior-theory-corrected-out-quasi-gini
-    source_kind: internal
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-24T11:05:28Z
-generation_run: urn:uuid:8ebc8071-ab67-4268-a7ca-41e133539603
-verified:
-  - by: openai-codex/standards-review-0.1
-    at: 2026-08-24T11:10:20Z
-    review_run: urn:uuid:a85e3b86-c811-468c-a420-88980df31ea6
-  - by: openai-codex/spec-review-0.1
-    at: 2026-08-24T11:10:20Z
-    review_run: urn:uuid:b3dae0f4-d2b0-4258-a251-f697f9c36cc2
----
 # Exact-rational cash single-crossing mechanism search
 
 ## Verdict

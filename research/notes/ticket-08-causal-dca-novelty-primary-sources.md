@@ -1,47 +1,6 @@
----
-profile: smartdca-okf/0.5
-type: research-note
-title: "Primary-source audit of the causal DCA boundary and constructive relaxations"
-description: "Novelty audit positioning the causal DCA boundary and ordering the admissible constructive relaxations."
-knowledge_role: evidence
-status: stable
-sources:
-  - id: ticket-08
-    title: "Audit the novelty of the causal DCA boundary and choose a constructive relaxation"
-    resource: .scratch/smartdca/issues/08-audit-causal-dca-novelty-and-relaxation
-    source_kind: internal
-  - id: causal-boundary
-    title: "Pathwise DCA dominance under causal budget feasibility"
-    resource: research/notes/pathwise-dca-dominance-under-causal-budget
-    source_kind: internal
-  - id: primary-literature
-    title: "primary pointwise no-arbitrage and DCA minimax sources"
-    resource: "primary mathematical and financial literature cited inline in this note"
-    source_kind: scope
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-16T11:04:00Z
-generation_run: urn:uuid:15b108f2-1ab8-4916-965a-89faffe7b3f6
-verified:
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T07:38:00Z
-    review_run: urn:uuid:16bd7b25-9e03-4aef-9c9a-5301cb317903
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T09:48:00Z
-    review_run: urn:uuid:9a0f9f9a-73a7-4e3f-931d-a34c08fad81a
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T10:30:00Z
-    review_run: urn:uuid:46a8aeeb-e6d2-49da-a062-28c4c51c1348
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T10:48:00Z
-    review_run: urn:uuid:efbd9162-3fdb-43a6-a3c7-7ef6b7141532
-  - by: openai-codex/smartdca-wiki-0.1
-    at: 2026-08-16T11:14:00Z
-    review_run: urn:uuid:5fdc289a-b5ff-4e1f-9d84-777c58a093f2
----
 # Primary-source audit of the causal DCA boundary and constructive relaxations
 
-Canonical home: [Causal DCA dominance impossibility](../theorems/causal-dca-dominance-impossibility.md) for the positioning and [Epsilon-DCA safety is exactly a causal unit-coverage guardrail](../theorems/epsilon-dca-safety-unit-guardrail.md) for the relaxation this note selected. This note carries the novelty audit and the ordering of admissible relaxations.
+Results: [Causal DCA dominance impossibility](../theorems/causal-dca-dominance-impossibility.md) gives the positioning, and [Epsilon-DCA safety is exactly a causal unit-coverage guardrail](../theorems/epsilon-dca-safety-unit-guardrail.md) gives the selected relaxation. This note carries the novelty audit and ordering of admissible relaxations.
 
 Research date: 2026-08-15
 
@@ -256,8 +215,8 @@ terminal wealth.
 
 This section and the next were written as targets for the following ticket, and their
 mathematical content has since been proved. It is retained in the future tense as the
-provenance of the choice rather than rewritten as a result: the canonical home of what was
-proved is [the epsilon-DCA unit-coverage guardrail](../theorems/epsilon-dca-safety-unit-guardrail.md),
+provenance of the choice rather than rewritten as a result: what was proved is
+[the epsilon-DCA unit-coverage guardrail](../theorems/epsilon-dca-safety-unit-guardrail.md),
 and the bounded component it asked for is
 [the guarded corrected-mean SmartDCA rule](../definitions/guarded-corrected-mean-smartdca-rule.md).
 Requirements 1 to 4 of the recommended target below were delivered exactly. Requirement 5

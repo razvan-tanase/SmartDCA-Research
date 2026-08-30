@@ -1,39 +1,6 @@
----
-profile: smartdca-okf/0.5
-type: research-note
-title: "Exact three-purchase corrected-mean effect"
-description: "Derivation of the exact three-purchase DCA boundary and an all-rational beta-driven classification flip."
-knowledge_role: evidence
-status: stable
-sources:
-  - id: ticket-18
-    title: "Isolate the first nontrivial corrected-mean effect at three purchases"
-    resource: .scratch/smartdca/issues/18-isolate-three-purchase-corrected-mean-effect
-    source_kind: internal
-  - id: guarded-rule
-    title: "The guarded corrected-mean SmartDCA rule"
-    resource: research/definitions/guarded-corrected-mean-smartdca-rule
-    source_kind: internal
-  - id: corrected-mean
-    title: "The corrected out quasi-Gini mean"
-    resource: research/definitions/corrected-out-quasi-gini-mean
-    source_kind: internal
-  - id: two-purchase-boundary
-    title: "Two-purchase guarded SmartDCA has an exact DCA boundary"
-    resource: research/theorems/two-purchase-guarded-smartdca-boundary
-    source_kind: internal
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-16T11:28:00Z
-generation_run: urn:uuid:1d09cb3f-94ee-4b73-b0f2-393b4227167d
-verified:
-  - by: openai-codex/smartdca-wiki-0.1
-    at: 2026-08-16T11:30:00Z
-    review_run: urn:uuid:d55d437b-21a4-4ffb-b393-de516fb58c2d
----
 # Exact three-purchase corrected-mean effect
 
-Canonical home: [Three-purchase guarded SmartDCA has an exact beta-sensitive DCA boundary](../theorems/three-purchase-corrected-mean-effect.md). That concept carries the result; this note carries the reduction, proof, complete boundary classification, beta-sensitivity criterion, edge cases, and exact witness.
+Statement: [Three-purchase guarded SmartDCA has an exact beta-sensitive DCA boundary](../theorems/three-purchase-corrected-mean-effect.md). This note carries the reduction, proof, complete boundary classification, beta-sensitivity criterion, edge cases, and exact witness.
 
 ## 1. Scope and notation
 

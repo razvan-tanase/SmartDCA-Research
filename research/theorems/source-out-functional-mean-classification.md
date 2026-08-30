@@ -1,39 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: theorem
-title: "Exact mean classification of the source out quasi-Gini functional"
-description: "The source Eq. (70) out functional is a mean exactly when the transform is the identity or the parameter gap is one."
-knowledge_role: canonical
-status: stable
-sources:
-  - id: audit
-    title: "Audit of the source out quasi-Gini functional"
-    resource: research/notes/source-out-quasi-gini-audit
-    source_kind: internal
-  - id: ticket-01
-    title: "Audit whether the source out quasi-Gini functional is a mean"
-    resource: .scratch/smartdca/issues/01-audit-source-out-quasi-gini-functional
-    source_kind: internal
-  - id: ticket-06
-    title: "Retrospectively validate the source audit and continuation gate"
-    resource: .scratch/smartdca/issues/06-retrospectively-validate-source-audit-and-gate
-    source_kind: internal
-  - id: source-summary
-    title: "Source summary: SmartDCA superiority (arXiv:2308.05200v1)"
-    resource: references/summaries/smartdca-superiority-source-paper
-    source_kind: internal
-generated:
-  by: claude-code/smartdca-wiki-0.1
-  at: 2026-08-16T09:40:00Z
-generation_run: urn:uuid:efe6420b-e236-40b6-96d4-c92a95d505d2
-verified:
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T09:48:00Z
-    review_run: urn:uuid:d037e1ce-def8-4614-a42d-6053d0d49415
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T10:32:00Z
-    review_run: urn:uuid:6e8b3b72-0624-46b2-91ff-071b4879d9d4
----
 # Exact mean classification of the source out quasi-Gini functional
 
 ## Statement

@@ -1,50 +1,32 @@
----
-profile: smartdca-okf/0.5
-type: source-summary
-title: "Source summary: SmartDCA superiority (arXiv:2308.05200v1)"
-description: "Summary of the source paper this project audits, its six theorems, its price-per-unit criterion, and what it does not settle."
-knowledge_role: evidence
-status: stable
-sources:
-  - id: source-paper
-    title: "Emmanuel Calvet, Luca Herranz-Celotti, and Karim Valimamode, SmartDCA superiority, arXiv:2308.05200v1"
-    resource: https://arxiv.org/abs/2308.05200v1
-    source_kind: external
-    retrieved_at: 2026-08-15T15:20:58Z
-    upstream_version: "arXiv:2308.05200v1"
-    sha256: 4dda676c7e4c61dd64b186d3a44d408b3019e962ba0f137f5e1c63fc7cdfeda2
-    local_artifact: references/2308.05200v1.pdf
-  - id: ticket-16
-    title: "Extract initial semantic concepts and certify structural freeze"
-    resource: .scratch/smartdca/issues/16-extract-semantic-concepts-certify-freeze
-    source_kind: internal
-  - id: audit
-    title: "Audit of the source out quasi-Gini functional"
-    resource: research/notes/source-out-quasi-gini-audit
-    source_kind: internal
-generated:
-  by: claude-code/smartdca-wiki-0.1
-  at: 2026-08-16T09:32:00Z
-generation_run: urn:uuid:efe6420b-e236-40b6-96d4-c92a95d505d2
-verified:
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T09:48:00Z
-    review_run: urn:uuid:9a0f9f9a-73a7-4e3f-931d-a34c08fad81a
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T10:32:00Z
-    review_run: urn:uuid:6e8b3b72-0624-46b2-91ff-071b4879d9d4
----
 # Source summary: SmartDCA superiority (arXiv:2308.05200v1)
 
-This is the sixth ingested source and the named freeze-audit cycle of [Extract initial semantic concepts and certify structural freeze](../../.scratch/smartdca/issues/16-extract-semantic-concepts-certify-freeze.md).[^ticket-16] It is also the source the entire project exists to audit: every mathematical result in this bundle is either a classification of what this paper actually proves or a repair of what it asserts without proof. Ingesting it late is deliberate — the five foundation sources established how to ingest anything at all, and this one is the first ingest performed under a schema that was not changed for its sake.
+This is the source the project exists to audit. Every mathematical result here
+either classifies what the paper proves or repairs something it asserts without
+proof.
 
-The paper's claims are recorded here as *the paper's claims*. Where this project has established that a claim is false or unproved, the summary says so and points at the concept that governs the corrected statement; it never restates the corrected mathematics as if the paper contained it.
+The paper's claims are recorded here as *the paper's claims*. Where this project
+has established that a claim is false or unproved, the summary says so and
+links the corrected statement; it never attributes the project's mathematics
+to the paper.
 
 ## Snapshot identity
 
-The snapshot is arXiv:2308.05200v1 (2023), *SmartDCA superiority*, by Emmanuel Calvet, Luca Herranz-Celotti, and Karim Valimamode, who declare equal contribution. The exact bytes are the 697,854-byte PDF preserved at [`references/2308.05200v1.pdf`](../2308.05200v1.pdf) and are byte-verifiable against the recorded fingerprint. The document is 14 pages and typeset in a journal template whose running head reads `VOL. 1 NO. 53 SMARTDCA SUPERIORITY` and `PAPERS AND PROCEEDINGS 08 2023`; that header is template furniture, not evidence of journal publication, and the citable identity is the arXiv version.
+The snapshot is [arXiv:2308.05200v1](https://arxiv.org/abs/2308.05200v1)
+(2023), *SmartDCA superiority*, by Emmanuel Calvet, Luca Herranz-Celotti, and
+Karim Valimamode, who declare equal contribution. The exact bytes are the
+697,854-byte PDF preserved at
+[`references/2308.05200v1.pdf`](../2308.05200v1.pdf), with SHA-256
+`4dda676c7e4c61dd64b186d3a44d408b3019e962ba0f137f5e1c63fc7cdfeda2`.
+The document is 14 pages and typeset in a journal template whose running head
+reads `VOL. 1 NO. 53 SMARTDCA SUPERIORITY` and `PAPERS AND PROCEEDINGS 08
+2023`; that header is template furniture, not evidence of journal publication,
+and the citable identity is the arXiv version.
 
-Two provenance qualifications matter. First, `retrieved_at` is the Git-recorded time at which the PDF entered this repository, not an observed fetch from arXiv: the artifact predates the ingestion workflow and was imported with the initial research structure. It identifies the edition this project has always analysed, and because arXiv versions are immutable the `v1` identifier is stronger evidence of edition than the timestamp is. Second, `resource` is the arXiv abstract page rather than a direct PDF URL, because the abstract page is the stable citable origin for a versioned arXiv record.
+The recorded retrieval time, `2026-08-15T15:20:58Z`, is the Git-recorded time
+at which the PDF entered this repository, not an observed fetch from arXiv. The
+artifact predates this provenance note and was imported with the initial
+research structure. The immutable `v1` identifier is therefore stronger
+edition evidence than the timestamp.
 
 ## What the paper claims
 
@@ -75,15 +57,14 @@ Four further gaps are structural rather than arithmetical:
 
 1. **No budget model.** There is no deposit sequence, no carried-cash account, and no feasibility constraint. The rule scales a base cost by a price ratio, so the cash it demands is an output rather than something a budget bounds; this is exactly the unboundedness the paper mitigates with a bounded \(f\) instead of with funding.
 2. **The reference price is unpinned.** The rules are written against a reference price \(p_r\) whose selection and information timing are not specified. Whether the rule is causal depends entirely on that choice, and an ex-post reference — a full-sample mean or extremum — would make the comparison inadmissible.
-3. **Eq. (70) is asserted, not proved.** This bundle's [audit](../../research/notes/source-out-quasi-gini-audit.md)[^audit] proves the construction is a mean exactly when the transform is the identity or the parameter gap is one, and that it has a global finite diagonal limit only for the identity transform. The corrected statement is governed by [the source out-functional mean classification](../../research/theorems/source-out-functional-mean-classification.md) and the repair by [the corrected out quasi-Gini mean](../../research/definitions/corrected-out-quasi-gini-mean.md).
+3. **Eq. (70) is asserted, not proved.** The project's [audit](../../research/notes/source-out-quasi-gini-audit.md)[^audit] proves the construction is a mean exactly when the transform is the identity or the parameter gap is one, and that it has a global finite diagonal limit only for the identity transform. The corrected statement is governed by [the source out-functional mean classification](../../research/theorems/source-out-functional-mean-classification.md) and the repair by [the corrected out quasi-Gini mean](../../research/definitions/corrected-out-quasi-gini-mean.md).
 4. **Empirical scope is favourable by construction.** Both assets are selected for long-term appreciation and the synthetic prices are independent uniform draws. Neither design can support a universal claim, and the paper does not report a case where a variant loses.
 
-The paper also settles nothing about novelty. It names quasi-Lehmer and quasi-Gini means as new definitions; this bundle's [prior-theory positioning](../../research/notes/prior-theory-corrected-out-quasi-gini.md) locates the corrected construction inside established weighted Bajraktarević theory, with the parameter-gap-one slice already covered by Beckenbach–Gini–Lehmer results.
+The paper also settles nothing about novelty. It names quasi-Lehmer and quasi-Gini means as new definitions; the project's [prior-theory positioning](../../research/notes/prior-theory-corrected-out-quasi-gini.md) locates the corrected construction inside established weighted Bajraktarević theory, with the parameter-gap-one slice already covered by Beckenbach–Gini–Lehmer results.
 
 ## Limits of this summary
 
 The summary was prepared from a text extraction of the fingerprinted PDF in which Greek letters, subscripts, and some mathematical operators were lost, so it deliberately describes structure, criteria, and prose claims rather than transcribing formulae from the glyphs. Every equation number, theorem number, and page reference asserted here was cross-checked against the previously and independently reviewed [audit note](../../research/notes/source-out-quasi-gini-audit.md)[^audit], which read the same fingerprinted artifact; where the two could disagree, the audit note governs. Only the **out** construction is in scope for this project, so the paper's in variants and its Theorems 5 and 6 analogues are recorded as present and not analysed.
 
 [^source-paper]: Emmanuel Calvet, Luca Herranz-Celotti, and Karim Valimamode, *SmartDCA superiority*, arXiv:2308.05200v1 (2023), fingerprinted snapshot at [`references/2308.05200v1.pdf`](../2308.05200v1.pdf)
-[^ticket-16]: [Extract initial semantic concepts and certify structural freeze](../../.scratch/smartdca/issues/16-extract-semantic-concepts-certify-freeze.md)
 [^audit]: [Audit of the source out quasi-Gini functional](../../research/notes/source-out-quasi-gini-audit.md)

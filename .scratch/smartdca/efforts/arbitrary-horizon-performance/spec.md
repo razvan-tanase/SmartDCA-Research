@@ -1,23 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: work-specification
-title: "Test arbitrary-horizon guarded SmartDCA performance on single-valley paths"
-description: "Approved effort contract for a falsification-oriented arbitrary-horizon performance boundary for the guarded corrected-mean SmartDCA rule."
-knowledge_role: operational
-status: stable
-original_record: true
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T21:46:49Z
-generation_run: urn:uuid:8e4b4958-2ede-401f-888d-1d3f31b1cdfa
-verified:
-  - by: openai-codex/writing-for-agents-0.1
-    at: 2026-08-23T21:32:48Z
-    review_run: urn:uuid:d87a04a7-92ae-43c4-a446-998b6f1a8d14
-  - by: human:github:razvan-tanase
-    at: 2026-08-23T21:46:49Z
-    review_run: urn:uuid:d0e39bb8-dc33-4e02-a42c-71ac62981756
----
 # Arbitrary-horizon guarded SmartDCA performance
 
 Approval: approved by the user on 2026-08-23

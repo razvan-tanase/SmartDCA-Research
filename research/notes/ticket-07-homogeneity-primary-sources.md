@@ -1,37 +1,6 @@
----
-profile: smartdca-okf/0.5
-type: research-note
-title: "Primary-source note: homogeneity of the canonical corrected out quasi-Gini mean"
-description: "Characterization of when the corrected mean is degree-one homogeneous, with its source hypotheses."
-knowledge_role: evidence
-status: stable
-sources:
-  - id: ticket-07
-    title: "Characterize homogeneity of the corrected out quasi-Gini mean"
-    resource: .scratch/smartdca/issues/07-characterize-homogeneity-of-corrected-out-quasi-gini
-    source_kind: internal
-  - id: primary-literature
-    title: "primary sources on Bajraktarevic and weighted Gini mean homogeneity"
-    resource: "primary mathematical and financial literature cited inline in this note"
-    source_kind: scope
-generated:
-  by: claude-code/smartdca-wiki-0.1
-  at: 2026-08-16T10:20:00Z
-generation_run: urn:uuid:51b6a4df-c98b-4784-83e4-3b068e4014ab
-verified:
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T07:38:00Z
-    review_run: urn:uuid:16bd7b25-9e03-4aef-9c9a-5301cb317903
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T09:48:00Z
-    review_run: urn:uuid:9a0f9f9a-73a7-4e3f-931d-a34c08fad81a
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T10:30:00Z
-    review_run: urn:uuid:46a8aeeb-e6d2-49da-a062-28c4c51c1348
----
 # Primary-source note: homogeneity of the canonical corrected out quasi-Gini mean
 
-Canonical home: [Homogeneity characterization of the corrected out quasi-Gini mean](../theorems/corrected-mean-homogeneity-characterization.md). That concept carries the criterion; this note carries the proof, the primary sources, and the seven recorded limitations.
+Statement: [Homogeneity characterization of the corrected out quasi-Gini mean](../theorems/corrected-mean-homogeneity-characterization.md). This note carries the proof, primary sources, and seven recorded limitations.
 
 ## Verdict
 

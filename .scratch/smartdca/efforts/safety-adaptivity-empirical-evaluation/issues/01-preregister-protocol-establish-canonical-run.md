@@ -1,33 +1,7 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Preregister the empirical protocol and establish one canonical run"
-description: "Resolved task ticket freezing the empirical protocol and establishing a reviewed deterministic three-policy canonical run before historical outcome access."
-knowledge_role: operational
-status: stable
-original_record: true
-ticket_type: task
-ticket_status: resolved
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T09:15:14Z
-generation_run: urn:uuid:733dc5ac-2f9c-4d46-8af5-23c136197149
-verified:
-  - by: openai-codex/standards-review-0.1
-    at: 2026-08-25T09:13:48Z
-    review_run: urn:uuid:8e4d4bc6-edf2-41c1-8eca-7bef42fbcb46
-  - by: openai-codex/spec-review-0.1
-    at: 2026-08-25T09:13:48Z
-    review_run: urn:uuid:ba2f5fd9-b876-4d98-9487-eeb090be48da
-  - by: openai-codex/independent-empirical-review-0.1
-    at: 2026-08-25T09:13:48Z
-    review_run: urn:uuid:5b34f61f-ac0c-47cf-9db5-c1cb150d864c
----
 # 01 — Preregister the empirical protocol and establish one canonical run
 
 Type: task
 Status: resolved
-Label: ready-for-agent
 Blocked by: none
 Parent: [Safety-adaptivity empirical evaluation](../spec.md)
 

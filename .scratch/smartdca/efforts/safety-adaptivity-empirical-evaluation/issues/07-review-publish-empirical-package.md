@@ -1,23 +1,7 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Independently review and publish the empirical package"
-description: "Open task ticket reproducing, auditing, correcting, and publishing the complete safety-adaptivity empirical package."
-knowledge_role: operational
-status: draft
-original_record: true
-ticket_type: task
-ticket_status: open
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T07:52:38Z
-generation_run: urn:uuid:a5d8aafb-5c01-48a5-8177-23ed524a00a7
----
 # 07 — Independently review and publish the empirical package
 
 Type: task
 Status: open
-Label: ready-for-agent
 Blocked by: 06
 Parent: [Safety-adaptivity empirical evaluation](../spec.md)
 
@@ -33,7 +17,7 @@ A reviewer independent of the producing work can reproduce representative
 synthetic and historical results from raw inputs, audit data and run provenance,
 verify statistics and accounting, trace every thesis-facing statement to
 evidence, resolve all actionable findings, and publish a coherent package whose
-reports, checks, maps, inventory, and lifecycle metadata agree.
+reports, checks, and maps agree.
 
 ## Acceptance criteria
 
@@ -44,15 +28,17 @@ reports, checks, maps, inventory, and lifecycle metadata agree.
 - [ ] Every confirmatory, secondary, robustness, and exploratory statement is classified correctly, and no simulation or historical observation is presented as proof of universal or causal superiority.
 - [ ] Gross safety and net-of-cost performance scope are separated consistently across reports, summaries, figures, and thesis-facing claims.
 - [ ] All actionable standards, specification, empirical-method, statistical, provenance, and writing findings are resolved or explicitly recorded as publication blockers.
-- [ ] Stable experiment reports satisfy the repository's run-specific provenance and independent-review requirements; draft artifacts remain draft when those requirements are not met.
+- [ ] Publication-ready experiment reports satisfy the run-specific provenance and independent-review requirements; provisional reports remain clearly labeled when those requirements are not met.
 - [ ] The final package regenerates in a fresh environment through one documented route and preserves raw results, manifests, receipts, aggregate outputs, tables, figure-ready data, and failure records.
-- [ ] The ticket, effort map, master map, canonical vocabulary where changed, root inventory, immutable log, scientific checks, and strict knowledge validation agree at publication.
+- [ ] The ticket, effort map, master map, canonical vocabulary where changed,
+  reports, and scientific checks agree at publication, and all retained local
+  links resolve.
 
 ## Comments
 
 - Created from the user-approved seven-ticket decomposition on 2026-08-25.
 - Resolving this ticket closes the empirical effort and returns the project to
-  the user significance gate before manuscript assembly or any new mathematics.
+  a manuscript-assembly decision before any new mathematics.
 
 ## Answer
 

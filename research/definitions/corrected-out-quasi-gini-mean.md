@@ -1,42 +1,11 @@
----
-profile: smartdca-okf/0.5
-type: definition
-title: "The corrected out quasi-Gini mean"
-description: "Canonical definition of the numerator-preserving corrected out quasi-Gini mean and its diagonal extension."
-knowledge_role: canonical
-status: stable
-sources:
-  - id: ticket-05
-    title: "Choose the corrected out quasi-Gini definition"
-    resource: .scratch/smartdca/issues/05-choose-corrected-out-quasi-gini-definition
-    source_kind: internal
-  - id: prior-theory
-    title: "Prior theory for the proposed corrected out quasi-Gini normalization"
-    resource: research/notes/prior-theory-corrected-out-quasi-gini
-    source_kind: internal
-  - id: audit
-    title: "Audit of the source out quasi-Gini functional"
-    resource: research/notes/source-out-quasi-gini-audit
-    source_kind: internal
-  - id: homogeneity
-    title: "Primary-source note: homogeneity of the canonical corrected out quasi-Gini mean"
-    resource: research/notes/ticket-07-homogeneity-primary-sources
-    source_kind: internal
-generated:
-  by: claude-code/smartdca-wiki-0.1
-  at: 2026-08-16T09:40:00Z
-generation_run: urn:uuid:efe6420b-e236-40b6-96d4-c92a95d505d2
-verified:
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T09:48:00Z
-    review_run: urn:uuid:d037e1ce-def8-4614-a42d-6053d0d49415
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T10:32:00Z
-    review_run: urn:uuid:6e8b3b72-0624-46b2-91ff-071b4879d9d4
----
 # The corrected out quasi-Gini mean
 
-This is the canonical home of the two-parameter construction this project adopts in place of the source paper's Eq. (70). The construction the paper actually wrote is not defined here as project knowledge, because [the source out-functional mean classification](../theorems/source-out-functional-mean-classification.md) proves it is not a mean over the parameter plane; the paper's own formula is recorded in [its source summary](../../references/summaries/smartdca-superiority-source-paper.md).
+This page defines the two-parameter construction adopted in place of the source
+paper's Eq. (70). [The source out-functional mean
+classification](../theorems/source-out-functional-mean-classification.md)
+proves that the paper's construction is not a mean over the parameter plane;
+the original formula remains in [the source
+summary](../../references/summaries/smartdca-superiority-source-paper.md).
 
 ## Definition
 

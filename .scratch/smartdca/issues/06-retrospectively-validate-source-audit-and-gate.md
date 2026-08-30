@@ -1,13 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Retrospectively validate the source audit and continuation gate"
-description: "Resolved task ticket retrospectively validating the source audit and its continuation gate."
-knowledge_role: operational
-status: stable
-ticket_type: task
-ticket_status: resolved
----
 # Retrospectively validate the source audit and continuation gate
 
 Type: task
@@ -17,7 +7,7 @@ Parent: [Find the rigorous out quasi-Gini route to a complete SmartDCA paper](..
 
 ## Question
 
-Without reopening their settled conclusions, independently validate the mathematical and source basis of tickets 01 and 02, distinguish ticket 01's pre-workflow execution from later retrospective checks, document the full significance-gate decision, and confirm that the project state through ticket 04 is internally consistent.
+Without reopening their settled conclusions, independently validate the mathematical and source basis of tickets 01 and 02, distinguish ticket 01's pre-workflow execution from later retrospective checks, document the continuation decision, and confirm that the project state through ticket 04 is internally consistent.
 
 ## Comments
 

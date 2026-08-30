@@ -1,35 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: theorem
-title: "Homogeneity characterization of the corrected out quasi-Gini mean"
-description: "The corrected mean is degree-one homogeneous exactly when the transform cancels or is normalized-multiplicative, hence a power under project regularity."
-knowledge_role: canonical
-status: stable
-sources:
-  - id: homogeneity
-    title: "Primary-source note: homogeneity of the canonical corrected out quasi-Gini mean"
-    resource: research/notes/ticket-07-homogeneity-primary-sources
-    source_kind: internal
-  - id: ticket-07
-    title: "Characterize homogeneity of the corrected out quasi-Gini mean"
-    resource: .scratch/smartdca/issues/07-characterize-homogeneity-of-corrected-out-quasi-gini
-    source_kind: internal
-  - id: prior-theory
-    title: "Prior theory for the proposed corrected out quasi-Gini normalization"
-    resource: research/notes/prior-theory-corrected-out-quasi-gini
-    source_kind: internal
-generated:
-  by: claude-code/smartdca-wiki-0.1
-  at: 2026-08-16T09:40:00Z
-generation_run: urn:uuid:efe6420b-e236-40b6-96d4-c92a95d505d2
-verified:
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T09:48:00Z
-    review_run: urn:uuid:d037e1ce-def8-4614-a42d-6053d0d49415
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T10:32:00Z
-    review_run: urn:uuid:6e8b3b72-0624-46b2-91ff-071b4879d9d4
----
 # Homogeneity characterization of the corrected out quasi-Gini mean
 
 ## Statement

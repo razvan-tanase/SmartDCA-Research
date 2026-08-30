@@ -1,32 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: theorem
-title: "Arbitrary-horizon terminal wealth has an exact cash-timing identity"
-description: "Every fully funded finite-horizon strategy's terminal wealth is DCA wealth plus an exact functional of its carried-cash path."
-knowledge_role: canonical
-status: stable
-sources:
-  - id: accounting-note
-    title: "Arbitrary-horizon cash-timing identity and exact-rational verification seam"
-    resource: research/notes/arbitrary-horizon-accounting-verification-seam
-    source_kind: internal
-  - id: ticket-01
-    title: "Establish the arbitrary-horizon accounting and verification seam"
-    resource: .scratch/smartdca/efforts/arbitrary-horizon-performance/issues/01-establish-accounting-verification-seam
-    source_kind: internal
-  - id: comparison-model
-    title: "Causal DCA dominance impossibility"
-    resource: research/theorems/causal-dca-dominance-impossibility
-    source_kind: internal
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T22:31:24Z
-generation_run: urn:uuid:62ed4e2a-e3aa-4fb9-933c-8335a647cadc
-verified:
-  - by: openai-codex/spec-review-0.1
-    at: 2026-08-23T22:36:39Z
-    review_run: urn:uuid:7d7be1a1-3482-44ae-be16-e07cd8bc3010
----
 # Arbitrary-horizon terminal wealth has an exact cash-timing identity
 
 ## Statement

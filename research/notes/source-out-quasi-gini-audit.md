@@ -1,37 +1,6 @@
----
-profile: smartdca-okf/0.5
-type: research-note
-title: "Audit of the source out quasi-Gini functional"
-description: "Proof that the source Eq. (70) out construction is a mean exactly when f is the identity or alpha minus beta is one."
-knowledge_role: evidence
-status: stable
-sources:
-  - id: ticket-01
-    title: "Audit whether the source out quasi-Gini functional is a mean"
-    resource: .scratch/smartdca/issues/01-audit-source-out-quasi-gini-functional
-    source_kind: internal
-  - id: source-summary
-    title: "Source summary: SmartDCA superiority (arXiv:2308.05200v1)"
-    resource: references/summaries/smartdca-superiority-source-paper
-    source_kind: internal
-generated:
-  by: claude-code/smartdca-wiki-0.1
-  at: 2026-08-16T10:20:00Z
-generation_run: urn:uuid:51b6a4df-c98b-4784-83e4-3b068e4014ab
-verified:
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T07:38:00Z
-    review_run: urn:uuid:16bd7b25-9e03-4aef-9c9a-5301cb317903
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T09:48:00Z
-    review_run: urn:uuid:9a0f9f9a-73a7-4e3f-931d-a34c08fad81a
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T10:30:00Z
-    review_run: urn:uuid:46a8aeeb-e6d2-49da-a062-28c4c51c1348
----
 # Audit of the source out quasi-Gini functional
 
-Canonical home: [Exact mean classification of the source out quasi-Gini functional](../theorems/source-out-functional-mean-classification.md). That concept carries the statement; this note carries the proof, the counterexamples, and the property-by-property audit.
+Statement: [Exact mean classification of the source out quasi-Gini functional](../theorems/source-out-functional-mean-classification.md). This note carries the proof, counterexamples, and property-by-property audit.
 
 ## Scope and notation
 
@@ -305,8 +274,8 @@ Any corrected two-parameter construction must therefore, at minimum:
 
 This audit does not choose a normalization; that was a separate research decision, since
 settled by [The corrected out quasi-Gini mean](../definitions/corrected-out-quasi-gini-mean.md),
-which is the canonical home of the repair and of the four requirements above as design
-constraints on it.
+which defines the repair and carries the four requirements above as design
+constraints.
 
 ## Sources
 

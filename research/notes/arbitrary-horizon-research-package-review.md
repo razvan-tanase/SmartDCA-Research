@@ -1,50 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: research-note
-title: "Independent review of the arbitrary-horizon research package"
-description: "Ledger-first re-derivation, exact-witness reproduction, and publication audit of the complete arbitrary-horizon performance result."
-knowledge_role: evidence
-status: stable
-sources:
-  - id: ticket-05
-    title: "Review and publish the arbitrary-horizon research package"
-    resource: .scratch/smartdca/efforts/arbitrary-horizon-performance/issues/05-review-publish-research-package
-    source_kind: internal
-  - id: effort-spec
-    title: "Arbitrary-horizon guarded SmartDCA performance"
-    resource: .scratch/smartdca/efforts/arbitrary-horizon-performance/spec
-    source_kind: internal
-  - id: accounting
-    title: "Arbitrary-horizon cash-timing identity and exact-rational verification seam"
-    resource: research/notes/arbitrary-horizon-accounting-verification-seam
-    source_kind: internal
-  - id: falsification
-    title: "Weak single-valley prices do not determine guarded SmartDCA advantage"
-    resource: research/notes/weak-single-valley-advantage-falsification
-    source_kind: internal
-  - id: mechanism
-    title: "Differential guardrail feedback defeats cash single crossing"
-    resource: research/notes/cash-single-crossing-mechanism
-    source_kind: internal
-  - id: boundary
-    title: "Exact arbitrary-horizon evaluation-price boundary for guarded SmartDCA"
-    resource: research/notes/arbitrary-horizon-performance-boundary
-    source_kind: internal
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-24T21:29:22Z
-generation_run: urn:uuid:c8785a76-9c52-4377-ab6e-4a44c3e403e6
-verified:
-  - by: openai-codex/independent-math-review-0.1
-    at: 2026-08-24T21:12:56Z
-    review_run: urn:uuid:1694bf39-9777-4b36-bd09-5c6abc74460e
-  - by: openai-codex/standards-review-0.1
-    at: 2026-08-24T21:31:55Z
-    review_run: urn:uuid:8185820b-9b80-4607-91f0-43335cfbdff5
-  - by: openai-codex/spec-review-0.1
-    at: 2026-08-24T21:31:55Z
-    review_run: urn:uuid:8da58364-ea0f-42bb-a729-d559abe6e7e7
----
 # Independent review of the arbitrary-horizon research package
 
 ## Verdict
@@ -178,11 +131,8 @@ as
 [the independent publication check](../../reproducibility/checks/check_arbitrary_horizon_publication_review.py).
 Its SHA-256 is
 `f25519530fa0f151ace68a732f004a532cd92bd873167b4b04b6596fd6cb23c4`.
-The 32 validator fixtures and strict OKF
-validation also passed.
 
-The separate publication verification run
-`urn:uuid:8fd14f92-d220-4e36-ad3a-32a008e4b541` executed
+The separate publication replay executed
 `python -m reproducibility.weak_single_valley_search` and
 `python -m reproducibility.cash_single_crossing_search` from
 2026-08-24T21:26:10Z through 2026-08-24T21:27:03Z on CPython 3.12.13,
@@ -217,17 +167,10 @@ the original one-run records and recording the publication run separately
 above resolves the provenance finding.
 
 The publication-structure re-review then required preserving the clean-room
-replay as a named CI check, using descriptive exact-rational names, and
-synchronizing lifecycle state, freshness, the root inventory, and the
-immutable event log. Those publication findings were resolved before
-promotion.
+replay as a named CI check and using descriptive exact-rational names. Those
+publication findings were resolved.
 
-Every active scientific and operational artifact link resolves. Six old
-links in immutable `log.md` events name the pre-migration locations of tickets
-20--25. The later migration event links the live effort paths; rewriting the
-historical events would violate the immutable-log rule. The reserved-history
-links are therefore a documented nonblocking limitation, and strict
-validation accepts them.
+Every retained scientific and operational artifact link resolves.
 
 ## Publication conclusion
 

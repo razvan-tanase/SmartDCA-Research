@@ -1,32 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: theorem
-title: "Reference-aligned guardrail feedback preserves cash single crossing"
-description: "On weak single-valley paths the corrected score crosses neutral once, aligned floor differences preserve that crossing, and unaligned repeated floors can create two cash reversals."
-knowledge_role: canonical
-status: stable
-sources:
-  - id: mechanism-note
-    title: "Differential guardrail feedback defeats cash single crossing"
-    resource: research/notes/cash-single-crossing-mechanism
-    source_kind: internal
-  - id: ticket-03
-    title: "Characterize the cash single-crossing mechanism"
-    resource: .scratch/smartdca/efforts/arbitrary-horizon-performance/issues/03-characterize-cash-single-crossing-mechanism
-    source_kind: internal
-  - id: guarded-rule
-    title: "The guarded corrected-mean SmartDCA rule"
-    resource: research/definitions/guarded-corrected-mean-smartdca-rule
-    source_kind: internal
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-24T11:05:28Z
-generation_run: urn:uuid:8ebc8071-ab67-4268-a7ca-41e133539603
-verified:
-  - by: openai-codex/spec-review-0.1
-    at: 2026-08-24T11:10:20Z
-    review_run: urn:uuid:b3dae0f4-d2b0-4258-a251-f697f9c36cc2
----
 # Reference-aligned guardrail feedback preserves cash single crossing
 
 ## Statement

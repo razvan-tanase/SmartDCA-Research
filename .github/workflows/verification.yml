@@ -15,6 +15,10 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
+      - name: Check documentation links
+        run: |
+          python -m unittest tools.test_check_markdown_links
+          python tools/check_markdown_links.py .
       - name: Run reproducibility checks
         run: |
           python reproducibility/checks/check_pathwise_dca_dominance.py
@@ -31,19 +35,3 @@ jobs:
           python -m unittest reproducibility.checks.check_empirical_protocol_canonical_run
           python -m unittest reproducibility.checks.check_deterministic_adversarial_study
           python -m unittest reproducibility.checks.check_stochastic_family_study
-
-  knowledge:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-python@v7
-        with:
-          python-version: "3.12"
-      - name: Install knowledge tooling
-        run: python -m pip install -r tools/okf/requirements.txt
-      - name: Run validator fixtures
-        run: python -m unittest tools.okf.tests.test_validate_cli
-      - name: Enforce SmartDCA OKF conformance
-        run: python tools/okf/validate.py . --strict

@@ -1,40 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: experiment-report
-title: "Canonical synthetic safety-adaptivity run"
-description: "Deterministic non-confirmatory end-to-end run of the frozen three-policy empirical protocol, including cost routes and machine-checkable validation receipts."
-knowledge_role: evidence
-status: draft
-sources:
-  - id: effort-spec
-    title: "Evaluate the safety-adaptivity trade-off of guarded SmartDCA"
-    resource: .scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec
-    source_kind: internal
-  - id: guarded-rule
-    title: "The guarded corrected-mean SmartDCA rule"
-    resource: research/definitions/guarded-corrected-mean-smartdca-rule
-    source_kind: internal
-  - id: guardrail-theorem
-    title: "Epsilon-DCA safety is exactly a causal unit-coverage guardrail"
-    resource: research/theorems/epsilon-dca-safety-unit-guardrail
-    source_kind: internal
-  - id: performance-boundary
-    title: "Terminal cash and units give the exact arbitrary-horizon performance boundary"
-    resource: research/theorems/arbitrary-horizon-performance-boundary
-    source_kind: internal
-  - id: empirical-layers
-    title: "Place empirical protocols, inputs, and run bundles in versioned layers"
-    resource: docs/adr/0008-place-empirical-protocol-input-run-layers
-    source_kind: internal
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T09:13:48Z
-generation_run: urn:uuid:94bf5f10-b9a3-4680-a43c-b4513077c44f
-verified:
-  - by: openai-codex/independent-empirical-review-0.1
-    at: 2026-08-25T09:13:48Z
-    review_run: urn:uuid:5b34f61f-ac0c-47cf-9db5-c1cb150d864c
----
 # Canonical synthetic safety-adaptivity run
 
 ## Verdict
@@ -92,10 +55,11 @@ protocol identity. Both historical datasets remain
 outcome was inspected in this run.
 
 The initial feature-branch artifacts were provisional until independent
-review. Outcome-blind review corrections are preserved in the event log; the
-accepted fingerprints below close that first-publication correction window.
-Any later byte change requires a new version under the empirical artifact
-decision.[^empirical-layers]
+review. Outcome-blind review corrections are recorded in [the originating
+ticket](../../.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md),
+and Git retains their byte history. The accepted fingerprints below close that
+first-publication correction window. Any later byte change requires a new
+version under the empirical artifact decision.[^empirical-layers]
 
 ## Run contract and identity
 

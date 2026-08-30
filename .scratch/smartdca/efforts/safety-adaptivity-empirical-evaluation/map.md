@@ -1,41 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: research-map
-title: "Safety-adaptivity empirical evaluation effort map"
-description: "Approved empirical route through resolved deterministic and seeded stochastic evidence, with the historical-data seam next."
-knowledge_role: operational
-status: stable
-original_record: true
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-30T10:07:02Z
-generation_run: urn:uuid:b3da5f0b-dc5e-45f3-840f-51f3445d0f32
-verified:
-  - by: human:github:razvan-tanase
-    at: 2026-08-25T07:38:45Z
-    review_run: urn:uuid:c8afb7ab-b24c-4fd7-a244-7db644525f3c
-  - by: human:github:razvan-tanase
-    at: 2026-08-25T07:52:38Z
-    review_run: urn:uuid:090561f8-809a-4a62-91ad-8057714a54b6
-  - by: openai-codex/standards-review-0.1
-    at: 2026-08-25T09:13:48Z
-    review_run: urn:uuid:8e4d4bc6-edf2-41c1-8eca-7bef42fbcb46
-  - by: openai-codex/spec-review-0.1
-    at: 2026-08-25T09:13:48Z
-    review_run: urn:uuid:ba2f5fd9-b876-4d98-9487-eeb090be48da
-  - by: openai-codex/independent-empirical-review-0.1
-    at: 2026-08-25T09:13:48Z
-    review_run: urn:uuid:5b34f61f-ac0c-47cf-9db5-c1cb150d864c
-  - by: openai-codex/standards-review-0.1
-    at: 2026-08-25T11:16:26Z
-    review_run: urn:uuid:34df7016-c817-4ad7-b05a-36773412a89c
-  - by: openai-codex/spec-review-0.1
-    at: 2026-08-25T11:12:41Z
-    review_run: urn:uuid:3423b393-7949-4da7-999c-dcfc0747fc29
-  - by: openai-codex/independent-empirical-review-0.1
-    at: 2026-08-25T11:15:20Z
-    review_run: urn:uuid:8a76cee8-e9c9-4ade-9e4d-b08f61a6046c
----
 # Safety-adaptivity empirical evaluation effort map
 
 ## Contract
@@ -57,26 +19,17 @@ project-wide scientific context lives in the
 | [06](issues/06-synthesize-safety-adaptivity-tradeoff.md) | Synthesize deterministic, stochastic, and historical evidence. | open | 02, 03, 05 |
 | [07](issues/07-review-publish-empirical-package.md) | Independently reproduce, review, and publish the empirical package. | open | 06 |
 
-Repository-conformance blocker:
-
-| Ticket | Purpose | Status | Blocked by |
-|---|---|---|---|
-| [08](issues/08-exclude-agents-from-okf-bundle.md) | Reserve `.agents/` as a non-bundle tooling tree without changing its files. | resolved | — |
-
 ## Current frontier
 
 [Preregister the empirical protocol and establish one canonical run](issues/01-preregister-protocol-establish-canonical-run.md)
 is resolved after Standards, specification, and independent empirical review.
 [Evaluate deterministic synthetic and adversarial paths](issues/02-evaluate-deterministic-adversarial-paths.md)
 is also resolved after byte-identical clean-room replay of its 18 generated
-paths, retained exclusions, and exhaustive finite adversarial search.
-[Exclude repository-local agent tooling from the OKF bundle](issues/08-exclude-agents-from-okf-bundle.md)
-is resolved after profile 0.5 made the declared bundle view explicit while
-leaving `.agents/` unchanged. The unblocked
+paths, retained exclusions, and exhaustive finite adversarial search. The
 [seeded stochastic evaluation](issues/03-evaluate-seeded-stochastic-families.md)
 is also resolved: its 90 paths, 3,240 ledgers, 1,080 reconciled aggregate cells,
 and byte-identical replay provide reviewed controlled sensitivity evidence with
 mixed signs across families. Its report and audit remain draft pending the
-registered historical-slice gate. Ticket 04 is the next open unclaimed tracer;
+registered historical-slice gate. Ticket 04 is the next open unclaimed stage;
 ticket 05 still needs that historical-data seam, while synthesis and publication
 remain blocked until their full evidence dependencies resolve.

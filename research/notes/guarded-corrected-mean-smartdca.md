@@ -1,47 +1,6 @@
----
-profile: smartdca-okf/0.5
-type: research-note
-title: "A guarded corrected-mean SmartDCA rule"
-description: "The canonical guarded corrected-mean score inside the epsilon-DCA guardrail with exact accounting."
-knowledge_role: evidence
-status: stable
-sources:
-  - id: ticket-10
-    title: "Choose the guarded corrected-mean SmartDCA score"
-    resource: .scratch/smartdca/issues/10-choose-guarded-corrected-mean-score
-    source_kind: internal
-  - id: guardrail
-    title: "Sharp causal epsilon-DCA safety and its unit-coverage guardrail"
-    resource: research/notes/sharp-epsilon-dca-safety-guardrail
-    source_kind: internal
-  - id: homogeneity
-    title: "Primary-source note: homogeneity of the canonical corrected out quasi-Gini mean"
-    resource: research/notes/ticket-07-homogeneity-primary-sources
-    source_kind: internal
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-16T11:24:00Z
-generation_run: urn:uuid:1d09cb3f-94ee-4b73-b0f2-393b4227167d
-verified:
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T07:38:00Z
-    review_run: urn:uuid:16bd7b25-9e03-4aef-9c9a-5301cb317903
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T09:48:00Z
-    review_run: urn:uuid:9a0f9f9a-73a7-4e3f-931d-a34c08fad81a
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T10:30:00Z
-    review_run: urn:uuid:46a8aeeb-e6d2-49da-a062-28c4c51c1348
-  - by: openai-codex/smartdca-wiki-0.1
-    at: 2026-08-16T11:14:00Z
-    review_run: urn:uuid:5fdc289a-b5ff-4e1f-9d84-777c58a093f2
-  - by: openai-codex/smartdca-wiki-0.1
-    at: 2026-08-16T11:30:00Z
-    review_run: urn:uuid:d55d437b-21a4-4ffb-b393-de516fb58c2d
----
 # A guarded corrected-mean SmartDCA rule
 
-Canonical home: [The guarded corrected-mean SmartDCA rule](../definitions/guarded-corrected-mean-smartdca-rule.md). That concept carries the rule; this note carries its propositions, comparative statics, and exact accounting derivations.
+Definition: [The guarded corrected-mean SmartDCA rule](../definitions/guarded-corrected-mean-smartdca-rule.md). This note carries its propositions, comparative statics, and exact accounting derivations.
 
 ## 1. Setting
 

@@ -1,54 +1,16 @@
----
-profile: smartdca-okf/0.5
-type: definition
-title: "The guarded corrected-mean SmartDCA rule"
-description: "Canonical definition of the guarded SmartDCA rule: the epsilon-DCA safety floor plus the bounded corrected-mean score inside it."
-knowledge_role: canonical
-status: stable
-sources:
-  - id: ticket-10
-    title: "Choose the guarded corrected-mean SmartDCA score"
-    resource: .scratch/smartdca/issues/10-choose-guarded-corrected-mean-score
-    source_kind: internal
-  - id: guarded-score
-    title: "A guarded corrected-mean SmartDCA rule"
-    resource: research/notes/guarded-corrected-mean-smartdca
-    source_kind: internal
-  - id: guardrail
-    title: "Sharp causal epsilon-DCA safety and its unit-coverage guardrail"
-    resource: research/notes/sharp-epsilon-dca-safety-guardrail
-    source_kind: internal
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-16T11:24:00Z
-generation_run: urn:uuid:1d09cb3f-94ee-4b73-b0f2-393b4227167d
-verified:
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T09:48:00Z
-    review_run: urn:uuid:d037e1ce-def8-4614-a42d-6053d0d49415
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T10:32:00Z
-    review_run: urn:uuid:6e8b3b72-0624-46b2-91ff-071b4879d9d4
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T10:48:00Z
-    review_run: urn:uuid:efbd9162-3fdb-43a6-a3c7-7ef6b7141532
-  - by: openai-codex/smartdca-wiki-0.1
-    at: 2026-08-16T11:14:00Z
-    review_run: urn:uuid:5fdc289a-b5ff-4e1f-9d84-777c58a093f2
-  - by: openai-codex/smartdca-wiki-0.1
-    at: 2026-08-16T11:30:00Z
-    review_run: urn:uuid:d55d437b-21a4-4ffb-b393-de516fb58c2d
----
 # The guarded corrected-mean SmartDCA rule
 
-This is the canonical home of the implementable strategy this project proposes: a mandatory safety floor that does the guaranteeing, and a bounded causal score that spends only what the floor leaves free. The separation is the point — the floor is where the guarantee lives and the score is where the corrected mean lives, and neither borrows the other's justification.
+This page defines the implementable strategy: a mandatory safety floor that
+does the guaranteeing, and a bounded causal score that spends only what the
+floor leaves free. The floor supplies the guarantee; the score supplies the
+corrected-mean adaptation.
 
 ## Setting
 
 The comparison model — causal decisions, long-only buy-only purchases, full funding from
 exogenous deposits, cash carried without interest, and terminal wealth including cash — is
-inherited from [the causal DCA dominance impossibility](../theorems/causal-dca-dominance-impossibility.md),
-which is its canonical home. Only the observables this rule reads are named below.
+inherited from [the causal DCA dominance impossibility](../theorems/causal-dca-dominance-impossibility.md).
+Only the observables this rule reads are named below.
 
 Fix a safety factor \(\lambda=1-\varepsilon\in(0,1]\). At purchase date \(t\) the positive prices \(p_1,\ldots,p_t\), the nonnegative deposits \(d_1,\ldots,d_t\), the carried cash \(C_{t-1}\), the strategy's units \(Q_{t-1}\), and DCA's units \(Q_{t-1}^{DCA}\) are observed. Write \(K_{t-1}=Q_{t-1}-\lambda Q_{t-1}^{DCA}\) for the unit-coverage cushion, and \(B_t=C_{t-1}+d_t\) for available cash. The portfolio starts empty, so \(K_0=0\).
 

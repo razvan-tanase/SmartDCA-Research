@@ -1,33 +1,7 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Evaluate deterministic synthetic and adversarial paths"
-description: "Resolved task ticket executing the preregistered three-policy study on deterministic synthetic and adversarial price-path families."
-knowledge_role: operational
-status: stable
-original_record: true
-ticket_type: task
-ticket_status: resolved
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T11:18:28Z
-generation_run: urn:uuid:1e2029d0-e145-456a-ba97-2ddca88bc388
-verified:
-  - by: openai-codex/standards-review-0.1
-    at: 2026-08-25T11:16:26Z
-    review_run: urn:uuid:34df7016-c817-4ad7-b05a-36773412a89c
-  - by: openai-codex/spec-review-0.1
-    at: 2026-08-25T11:12:41Z
-    review_run: urn:uuid:3423b393-7949-4da7-999c-dcfc0747fc29
-  - by: openai-codex/independent-empirical-review-0.1
-    at: 2026-08-25T11:15:20Z
-    review_run: urn:uuid:8a76cee8-e9c9-4ade-9e4d-b08f61a6046c
----
 # 02 — Evaluate deterministic synthetic and adversarial paths
 
 Type: task
 Status: resolved
-Label: ready-for-agent
 Blocked by: 01
 Parent: [Safety-adaptivity empirical evaluation](../spec.md)
 

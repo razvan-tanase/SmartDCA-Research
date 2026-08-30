@@ -1,40 +1,6 @@
----
-profile: smartdca-okf/0.5
-type: research-note
-title: "Sharp causal epsilon-DCA safety and its unit-coverage guardrail"
-description: "Proof that universal epsilon-DCA safety is exactly a causal cumulative-unit coverage guardrail."
-knowledge_role: evidence
-status: stable
-sources:
-  - id: ticket-09
-    title: "Prove the sharp epsilon-DCA safety guardrail"
-    resource: .scratch/smartdca/issues/09-prove-sharp-epsilon-dca-safety-guardrail
-    source_kind: internal
-  - id: causal-boundary
-    title: "Pathwise DCA dominance under causal budget feasibility"
-    resource: research/notes/pathwise-dca-dominance-under-causal-budget
-    source_kind: internal
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-16T11:04:00Z
-generation_run: urn:uuid:15b108f2-1ab8-4916-965a-89faffe7b3f6
-verified:
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T07:38:00Z
-    review_run: urn:uuid:16bd7b25-9e03-4aef-9c9a-5301cb317903
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T09:48:00Z
-    review_run: urn:uuid:9a0f9f9a-73a7-4e3f-931d-a34c08fad81a
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T10:30:00Z
-    review_run: urn:uuid:46a8aeeb-e6d2-49da-a062-28c4c51c1348
-  - by: openai-codex/smartdca-wiki-0.1
-    at: 2026-08-16T11:14:00Z
-    review_run: urn:uuid:5fdc289a-b5ff-4e1f-9d84-777c58a093f2
----
 # Sharp causal epsilon-DCA safety and its unit-coverage guardrail
 
-Canonical home: [Epsilon-DCA safety is exactly a causal unit-coverage guardrail](../theorems/epsilon-dca-safety-unit-guardrail.md). That concept carries the equivalence and the exact worst-case factor; this note carries both directions of the proof and the boundary cases.
+Statement: [Epsilon-DCA safety is exactly a causal unit-coverage guardrail](../theorems/epsilon-dca-safety-unit-guardrail.md). This note carries both directions of the proof and the boundary cases.
 
 ## Scope and model
 

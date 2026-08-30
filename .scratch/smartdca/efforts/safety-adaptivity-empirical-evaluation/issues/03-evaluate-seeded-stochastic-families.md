@@ -1,23 +1,7 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Evaluate seeded stochastic path families"
-description: "Resolved task ticket executing reproducible stochastic sensitivity experiments across declared market-process families."
-knowledge_role: operational
-status: stable
-original_record: true
-ticket_type: task
-ticket_status: resolved
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-30T10:07:02Z
-generation_run: urn:uuid:b3da5f0b-dc5e-45f3-840f-51f3445d0f32
----
 # 03 — Evaluate seeded stochastic path families
 
 Type: task
 Status: resolved
-Label: ready-for-agent
 Blocked by: 01, 08
 Parent: [Safety-adaptivity empirical evaluation](../spec.md)
 
@@ -68,23 +52,6 @@ failures, and a bounded report without treating simulation as a universal proof.
   identity; splitting the latter would alter this run's bound source identity
   and require another complete regeneration and replay. Both are deferred as
   separate architecture work rather than expanding this ticket.
-- Resolution is blocked at the repository LLM-Wiki publish gate. All 32
-  validator fixtures pass under the repository-available CPython 3.11, but
-  strict validation reports 47 base findings and 273 profile findings. Every
-  direct finding belongs to the pre-existing `.agents/**/*.md` corpus added by
-  baseline commit `ea7cca3`; the sole `index.md` finding is the corresponding
-  missing-path inventory. No ticket-owned path adds a validator finding.
-  Clearing this requires a separate versioned profile/path decision or a
-  repository-corpus decision, so this ticket remains claimed and unresolved;
-  no significance gate is entered and ticket 04 remains unclaimed.
-- Interrupted on 2026-08-30 under the Wayfinder rule: the repository/profile
-  decision is now isolated in [ticket 08](08-exclude-agents-from-okf-bundle.md),
-  which is the sole claimed ticket. The reviewed stochastic evidence and its
-  durable run remain unchanged while this ticket is open and blocked.
-- Re-oriented after ticket 08 resolved. The saved study, stochastic runner,
-  report, audit note, and durable run are byte-for-byte unchanged from the
-  independently reviewed checkpoint; only lifecycle and discovery surfaces
-  were synchronized to record this resolution.
 
 ## Answer
 

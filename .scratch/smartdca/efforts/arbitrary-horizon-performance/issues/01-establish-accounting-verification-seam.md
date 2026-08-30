@@ -1,30 +1,7 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Establish the arbitrary-horizon accounting and verification seam"
-description: "Resolved task ticket proving the arbitrary-horizon cash-timing identity and delivering the exact-rational three-policy verification seam."
-knowledge_role: operational
-status: stable
-original_record: true
-ticket_type: task
-ticket_status: resolved
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T22:31:24Z
-generation_run: urn:uuid:62ed4e2a-e3aa-4fb9-933c-8335a647cadc
-verified:
-  - by: openai-codex/writing-for-agents-0.1
-    at: 2026-08-23T21:32:48Z
-    review_run: urn:uuid:d87a04a7-92ae-43c4-a446-998b6f1a8d14
-  - by: openai-codex/spec-review-0.1
-    at: 2026-08-23T22:36:39Z
-    review_run: urn:uuid:7d7be1a1-3482-44ae-be16-e07cd8bc3010
----
 # 01 — Establish the arbitrary-horizon accounting and verification seam
 
 Type: task
 Status: resolved
-Label: ready-for-agent
 Blocked by: `.scratch/smartdca/issues/18-isolate-three-purchase-corrected-mean-effect`
 Parent: [Arbitrary-horizon guarded SmartDCA performance](../spec.md)
 
@@ -58,7 +35,7 @@ ledger must verify each other from independent accounting routes.
 
 ## Comments
 
-- Created from the approved tracer-bullet decomposition of the effort specification on
+- Created from the approved ticket decomposition of the effort specification on
   2026-08-23.
 - Independent Standards and Spec review found malformed inline mathematics,
   duplicated cash-timing coefficients, unrestricted policy labels, eager
@@ -86,6 +63,5 @@ The [executable check](../../../../../reproducibility/checks/check_arbitrary_hor
 reproduces the settled two- and three-purchase fractions, exercises all
 guardrail branches and boundary cases, and verifies five- and six-purchase
 ledgers. The earlier independent two- and three-purchase checks and the full
-repository structural gate also pass. This resolves only the reusable
-accounting seam; ticket 02 is now unblocked but remains unclaimed pending the
-user significance gate.
+scientific suite also pass. This resolves only the reusable accounting seam;
+ticket 02 became unblocked but remained unclaimed pending user approval.

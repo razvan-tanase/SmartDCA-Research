@@ -1,41 +1,6 @@
----
-profile: smartdca-okf/0.5
-type: research-note
-title: "Prior theory for the proposed corrected out quasi-Gini normalization"
-description: "Primary-source positioning identifying the corrected normalization as a known weighted Bajraktarevic mean."
-knowledge_role: evidence
-status: stable
-sources:
-  - id: ticket-03
-    title: "Locate prior theory for a corrected out quasi-Gini mean"
-    resource: .scratch/smartdca/issues/03-locate-prior-theory-for-correction
-    source_kind: internal
-  - id: source-summary
-    title: "Source summary: SmartDCA superiority (arXiv:2308.05200v1)"
-    resource: references/summaries/smartdca-superiority-source-paper
-    source_kind: internal
-  - id: primary-literature
-    title: "Beckenbach-Gini-Lehmer, Bajraktarevic, and weighted Gini mean literature"
-    resource: "primary mathematical and financial literature cited inline in this note"
-    source_kind: scope
-generated:
-  by: claude-code/smartdca-wiki-0.1
-  at: 2026-08-16T10:20:00Z
-generation_run: urn:uuid:51b6a4df-c98b-4784-83e4-3b068e4014ab
-verified:
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T07:38:00Z
-    review_run: urn:uuid:16bd7b25-9e03-4aef-9c9a-5301cb317903
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T09:48:00Z
-    review_run: urn:uuid:9a0f9f9a-73a7-4e3f-931d-a34c08fad81a
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T10:30:00Z
-    review_run: urn:uuid:46a8aeeb-e6d2-49da-a062-28c4c51c1348
----
 # Prior theory for the proposed corrected out quasi-Gini normalization
 
-Canonical home: [The corrected out quasi-Gini mean](../definitions/corrected-out-quasi-gini-mean.md). That concept carries the definition and its identities; this note carries the literature positioning that identifies it as a known weighted Bajraktarevic mean. The source construction this repair replaces is read at paper level in [its source summary](../../references/summaries/smartdca-superiority-source-paper.md) and classified by [the source out-functional mean classification](../theorems/source-out-functional-mean-classification.md).
+Definition: [The corrected out quasi-Gini mean](../definitions/corrected-out-quasi-gini-mean.md). This note carries the literature positioning that identifies it as a known weighted Bajraktarevic mean. The source construction this repair replaces is described in [its source summary](../../references/summaries/smartdca-superiority-source-paper.md) and classified by [the source out-functional mean classification](../theorems/source-out-functional-mean-classification.md).
 
 Research date: 2026-08-15
 
@@ -463,11 +428,11 @@ identification (3). Use **“weighted Gini”** for the power-transform special 
 and **“Beckenbach--Gini--Lehmer”** for the (d=1) slice.
 
 That recommendation was adopted in substance and not in wording, and the divergence is
-recorded here rather than quietly reconciled. The settled canonical name is **“the
+recorded here rather than quietly reconciled. The settled name is **“the
 corrected out quasi-Gini mean”**, fixed by
-[the definition concept](../definitions/corrected-out-quasi-gini-mean.md) and by the
+[the definition](../definitions/corrected-out-quasi-gini-mean.md) and by the
 glossary; the Bajraktarević identification the recommendation was protecting is carried
-instead in that concept's *What this definition does not claim* section, which states
+instead in the definition's *What this definition does not claim* section, which states
 outright that the object is not a new class of means. The shorter name was preferred
 because it names the construction by what it repairs, while the safety the longer name
 bought is supplied by the scope-limit section rather than by the title. The subordinate

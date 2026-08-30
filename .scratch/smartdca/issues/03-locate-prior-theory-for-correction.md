@@ -1,13 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Locate prior theory for a corrected out quasi-Gini mean"
-description: "Resolved research ticket locating prior theory for the corrected out quasi-Gini normalization."
-knowledge_role: operational
-status: stable
-ticket_type: research
-ticket_status: resolved
----
 # Locate prior theory for a corrected out quasi-Gini mean
 
 Type: research
@@ -21,7 +11,7 @@ Which primary sources on classical Gini means, Beckenbach-Gini-Lehmer means, wei
 
 ## Comments
 
-- Claimed after the user accepted the source audit at its significance gate.
+- Claimed after the user accepted the source audit.
 - Search primary mathematical sources and separate exact prior coverage from analogies or naming similarities.
 - Verified the decisive identification algebraically, including constants, both required boundary cases, a nontrivial internal example, and the two-sided diagonal limit.
 - The search was targeted rather than exhaustive; it supports safe positioning, not an absolute novelty claim.

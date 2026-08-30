@@ -1,35 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: theorem
-title: "Two-purchase guarded SmartDCA has an exact DCA boundary"
-description: "The two-purchase guarded rule beats DCA exactly below an explicit affine evaluation-price boundary, with a sharp neutral-score comparison."
-knowledge_role: canonical
-status: stable
-sources:
-  - id: boundary-note
-    title: "Exact two-purchase DCA win/loss boundary"
-    resource: research/notes/two-purchase-dca-win-loss-boundary
-    source_kind: internal
-  - id: ticket-11
-    title: "Characterize the two-purchase DCA win/loss boundary"
-    resource: .scratch/smartdca/issues/11-characterize-two-purchase-dca-win-loss-boundary
-    source_kind: internal
-  - id: guarded-rule
-    title: "The guarded corrected-mean SmartDCA rule"
-    resource: research/definitions/guarded-corrected-mean-smartdca-rule
-    source_kind: internal
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-16T11:02:00Z
-generation_run: urn:uuid:15b108f2-1ab8-4916-965a-89faffe7b3f6
-verified:
-  - by: openai-codex/smartdca-wiki-0.1
-    at: 2026-08-16T11:14:00Z
-    review_run: urn:uuid:5fdc289a-b5ff-4e1f-9d84-777c58a093f2
-  - by: openai-codex/smartdca-wiki-0.1
-    at: 2026-08-16T11:30:00Z
-    review_run: urn:uuid:d55d437b-21a4-4ffb-b393-de516fb58c2d
----
 # Two-purchase guarded SmartDCA has an exact DCA boundary
 
 ## Statement

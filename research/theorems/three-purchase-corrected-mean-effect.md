@@ -1,32 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: theorem
-title: "Three-purchase guarded SmartDCA has an exact beta-sensitive DCA boundary"
-description: "At three purchases the DCA wealth boundary depends on beta only through the first two-input corrected reference and can flip exactly."
-knowledge_role: canonical
-status: stable
-sources:
-  - id: effect-note
-    title: "Exact three-purchase corrected-mean effect"
-    resource: research/notes/three-purchase-corrected-mean-effect
-    source_kind: internal
-  - id: ticket-18
-    title: "Isolate the first nontrivial corrected-mean effect at three purchases"
-    resource: .scratch/smartdca/issues/18-isolate-three-purchase-corrected-mean-effect
-    source_kind: internal
-  - id: guarded-rule
-    title: "The guarded corrected-mean SmartDCA rule"
-    resource: research/definitions/guarded-corrected-mean-smartdca-rule
-    source_kind: internal
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-16T11:20:00Z
-generation_run: urn:uuid:1d09cb3f-94ee-4b73-b0f2-393b4227167d
-verified:
-  - by: openai-codex/smartdca-wiki-0.1
-    at: 2026-08-16T11:30:00Z
-    review_run: urn:uuid:d55d437b-21a4-4ffb-b393-de516fb58c2d
----
 # Three-purchase guarded SmartDCA has an exact beta-sensitive DCA boundary
 
 ## Statement

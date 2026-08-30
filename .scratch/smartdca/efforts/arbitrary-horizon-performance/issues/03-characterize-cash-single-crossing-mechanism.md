@@ -1,28 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Characterize the cash single-crossing mechanism"
-description: "Resolved research ticket disproving unconditional guarded cash single crossing and deriving a sufficient but non-necessary reference-aligned guardrail condition."
-knowledge_role: operational
-status: stable
-original_record: true
-ticket_type: research
-ticket_status: resolved
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-24T11:10:20Z
-generation_run: urn:uuid:36919ee8-c8d4-411c-b5f3-2bab3af11974
-verified:
-  - by: openai-codex/writing-for-agents-0.1
-    at: 2026-08-23T21:32:48Z
-    review_run: urn:uuid:d87a04a7-92ae-43c4-a446-998b6f1a8d14
-  - by: openai-codex/standards-review-0.1
-    at: 2026-08-24T11:10:20Z
-    review_run: urn:uuid:a85e3b86-c811-468c-a420-88980df31ea6
-  - by: openai-codex/spec-review-0.1
-    at: 2026-08-24T11:10:20Z
-    review_run: urn:uuid:70aff5a0-c58b-47c8-a8ea-7d4016beba2c
----
 # 03 — Characterize the cash single-crossing mechanism
 
 Type: research
@@ -60,7 +35,7 @@ support such a class under the initial restrictions.
 
 ## Comments
 
-- Created from the approved tracer-bullet decomposition of the effort specification on
+- Created from the approved ticket decomposition of the effort specification on
   2026-08-23.
 - Claimed on 2026-08-24 after ticket 02 resolved; execution uses the exact-rational
   arbitrary-horizon accounting seam established by ticket 01.
@@ -106,4 +81,4 @@ and [regression check](../../../../../reproducibility/checks/check_cash_single_c
 replay the recurrence, all three emitted counterexample names, diagonal and
 common-floor boundaries, the strict interior and non-necessity cases, and the
 earlier ticket-02 grid. Ticket 04 remains unclaimed pending the user
-significance gate.
+approval to continue.

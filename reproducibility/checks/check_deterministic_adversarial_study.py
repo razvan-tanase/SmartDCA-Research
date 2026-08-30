@@ -625,8 +625,18 @@ class DeterministicStudyContractTest(unittest.TestCase):
         self.assertIn("outside the current safety theorem", report)
         self.assertIn("cannot establish historical or stochastic performance", report)
         self.assertIn("Seed: `none`", report)
-        self.assertIn("original_record: false", report)
-        self.assertIn("sources:", report)
+        self.assertIn(
+            "a508b4f064dcb3930f137e7754180ca0ec43749680278acb5b42fe2345c8d6e4",
+            report,
+        )
+        self.assertIn(
+            "../../experiments/inputs/deterministic-adversarial-v1.json",
+            report,
+        )
+        self.assertIn(
+            "../../docs/adr/0008-place-empirical-protocol-input-run-layers.md",
+            report,
+        )
         generated_tables = (COMMITTED_RUN / "report-tables.txt").read_text(
             encoding="utf-8"
         )

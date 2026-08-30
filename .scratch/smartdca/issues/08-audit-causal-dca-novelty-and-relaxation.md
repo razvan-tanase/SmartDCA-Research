@@ -1,13 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Audit the novelty of the causal DCA boundary and choose a constructive relaxation"
-description: "Resolved research ticket auditing causal DCA novelty and choosing a constructive relaxation."
-knowledge_role: operational
-status: stable
-ticket_type: research
-ticket_status: resolved
----
 # Audit the novelty of the causal DCA boundary and choose a constructive relaxation
 
 Type: research
@@ -28,7 +18,7 @@ This ticket selects and specifies the next theorem target. It does not prove tha
 
 ## Comments
 
-- Claimed after the user chose **Pivot** at ticket 07's significance gate on 2026-08-15.
+- Claimed after the user chose **Pivot** on ticket 07 on 2026-08-15.
 - Generic continuity and axiom-region work is deferred because prior theory makes it a low-novelty route.
 - The novelty search must use primary sources and distinguish an exact literature match from a broad no-arbitrage analogy.
 - Candidate relaxations must be ordered by which assumption they change; a proposal that silently changes deposits, omits cash, or uses future prices is inadmissible.

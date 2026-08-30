@@ -1,22 +1,8 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Characterize the two-purchase DCA win/loss boundary"
-description: "Resolved task ticket characterizing the two-purchase DCA win/loss boundary."
-knowledge_role: operational
-status: stable
-ticket_type: task
-ticket_status: resolved
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-16T11:12:00Z
-generation_run: urn:uuid:15b108f2-1ab8-4916-965a-89faffe7b3f6
----
 # Characterize the two-purchase DCA win/loss boundary
 
 Type: task
 Status: resolved
-Blocked by: 10, 17
+Blocked by: 10
 Parent: [Find the rigorous out quasi-Gini route to a complete SmartDCA paper](../map.md)
 
 ## Question
@@ -41,9 +27,8 @@ generalize to arbitrary horizons or make a stochastic claim in this ticket.
 
 - Opened after [Choose the guarded corrected-mean SmartDCA score](10-choose-guarded-corrected-mean-score.md) supplied a fully specified causal rule with exact accounting.
 - This is the smallest decisive test of whether the corrected-mean discretion creates a mathematically informative strict-improvement region.
-- It remains unclaimed until the user passes the significance gate for [Choose the guarded corrected-mean SmartDCA score](10-choose-guarded-corrected-mean-score.md).
-- On 2026-08-15 the user paused the research frontier for the repository-root LLM-Wiki sequence; this ticket resumes only after [Clean redundancy after structural freeze](17-clean-redundancy-after-structural-freeze.md) completes.
-- Both blockers are now resolved: [Choose the guarded corrected-mean SmartDCA score](10-choose-guarded-corrected-mean-score.md) supplied the rule and [Clean redundancy after structural freeze](17-clean-redundancy-after-structural-freeze.md) closed the wiki sequence on 2026-08-16. The `Blocked by` line above is retained as history, following the convention every resolved ticket in this tracker uses; at that checkpoint this ticket was open, unblocked, and unclaimed pending the user's significance gate.
+- It remained unclaimed until the user approved continuing after [the guarded
+  corrected-mean score](10-choose-guarded-corrected-mean-score.md).
 - Claimed on 2026-08-16 after the user explicitly requested resolution; no other ticket was claimed.
 - The exact-rational verifier covers zero and positive deposits, both floor branches, finite and all-win boundaries, generated ties, neutral/countercyclical/momentum selectors, and the \(\lambda=1\) collapse.
 - A separate domain-review run re-derived the raw-purchase accounting and threshold ordering, checked every ticket clause and linked artifact, and resolved four findings: the zero-deposit qualification, a circular provenance draft, two stale open-ticket statements, and overview punctuation. No mathematical finding remains unresolved.

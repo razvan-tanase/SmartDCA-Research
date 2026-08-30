@@ -1,37 +1,6 @@
----
-profile: smartdca-okf/0.5
-type: research-note
-title: "Pathwise DCA dominance under causal budget feasibility"
-description: "Proof that DCA is the unique causal fully funded strategy able to weakly dominate DCA on every path."
-knowledge_role: evidence
-status: stable
-sources:
-  - id: ticket-04
-    title: "Test pathwise DCA dominance under causal budget feasibility"
-    resource: .scratch/smartdca/issues/04-test-pathwise-dca-dominance
-    source_kind: internal
-  - id: positioning
-    title: "Primary-source positioning for pathwise DCA dominance"
-    resource: research/notes/pathwise-dca-dominance-primary-sources
-    source_kind: internal
-generated:
-  by: claude-code/smartdca-wiki-0.1
-  at: 2026-08-16T10:20:00Z
-generation_run: urn:uuid:51b6a4df-c98b-4784-83e4-3b068e4014ab
-verified:
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T07:38:00Z
-    review_run: urn:uuid:16bd7b25-9e03-4aef-9c9a-5301cb317903
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T09:48:00Z
-    review_run: urn:uuid:9a0f9f9a-73a7-4e3f-931d-a34c08fad81a
-  - by: claude-code/smartdca-wiki-0.1
-    at: 2026-08-16T10:30:00Z
-    review_run: urn:uuid:46a8aeeb-e6d2-49da-a062-28c4c51c1348
----
 # Pathwise DCA dominance under causal budget feasibility
 
-Canonical home: [Causal DCA dominance impossibility](../theorems/causal-dca-dominance-impossibility.md). That concept carries the statement and its sharpness; this note carries the induction proof, the accounting identity, and the boundary checks.
+Statement: [Causal DCA dominance impossibility](../theorems/causal-dca-dominance-impossibility.md). This note carries the induction proof, accounting identity, and boundary checks.
 
 ## Result
 

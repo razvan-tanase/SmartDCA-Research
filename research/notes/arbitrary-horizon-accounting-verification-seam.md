@@ -1,39 +1,6 @@
----
-profile: smartdca-okf/0.5
-type: research-note
-title: "Arbitrary-horizon cash-timing identity and exact-rational verification seam"
-description: "Proof of the finite-horizon cash-timing identities and specification of the exact-rational DCA, corrected, and neutral ledger interface."
-knowledge_role: evidence
-status: stable
-sources:
-  - id: ticket-01
-    title: "Establish the arbitrary-horizon accounting and verification seam"
-    resource: .scratch/smartdca/efforts/arbitrary-horizon-performance/issues/01-establish-accounting-verification-seam
-    source_kind: internal
-  - id: guarded-rule
-    title: "The guarded corrected-mean SmartDCA rule"
-    resource: research/definitions/guarded-corrected-mean-smartdca-rule
-    source_kind: internal
-  - id: two-purchase-boundary
-    title: "Two-purchase guarded SmartDCA has an exact DCA boundary"
-    resource: research/theorems/two-purchase-guarded-smartdca-boundary
-    source_kind: internal
-  - id: three-purchase-effect
-    title: "Three-purchase guarded SmartDCA has an exact beta-sensitive DCA boundary"
-    resource: research/theorems/three-purchase-corrected-mean-effect
-    source_kind: internal
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-23T22:31:24Z
-generation_run: urn:uuid:62ed4e2a-e3aa-4fb9-933c-8335a647cadc
-verified:
-  - by: openai-codex/spec-review-0.1
-    at: 2026-08-23T22:36:39Z
-    review_run: urn:uuid:7d7be1a1-3482-44ae-be16-e07cd8bc3010
----
 # Arbitrary-horizon cash-timing identity and exact-rational verification seam
 
-Canonical home: [Arbitrary-horizon terminal wealth has an exact cash-timing identity](../theorems/arbitrary-horizon-cash-timing-identity.md). That concept carries the statement; this note carries the proof, executable-interface contract, independent accounting routes, and exact regression evidence.
+Statement: [Arbitrary-horizon terminal wealth has an exact cash-timing identity](../theorems/arbitrary-horizon-cash-timing-identity.md). This note carries the proof, executable-interface contract, independent accounting routes, and exact regression evidence.
 
 ## 1. Model and notation
 

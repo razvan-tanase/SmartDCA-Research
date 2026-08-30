@@ -1,24 +1,6 @@
----
-profile: smartdca-okf/0.5
-type: work-specification
-title: "Evaluate the safety-adaptivity trade-off of guarded SmartDCA"
-description: "Approved effort contract for a preregistered empirical comparison of DCA, the neutral guarded selector, and the guarded corrected-mean SmartDCA rule."
-knowledge_role: operational
-status: stable
-original_record: true
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-25T07:38:45Z
-generation_run: urn:uuid:f9b14c1b-1dac-4483-9427-8adee5292c2f
-verified:
-  - by: human:github:razvan-tanase
-    at: 2026-08-25T07:38:45Z
-    review_run: urn:uuid:c8afb7ab-b24c-4fd7-a244-7db644525f3c
----
 # Safety-adaptivity empirical evaluation
 
 Approval: approved by the user through `@To Spec` on 2026-08-25
-Label: ready-for-agent
 Parent: [SmartDCA research map](../../map.md)
 
 ## Question
@@ -226,7 +208,8 @@ the interpretation states what the evidence does and does not establish.
 - Verify every aggregate from independently recomputed episode-level outputs, including sample counts, exclusions, quantiles, relative gaps, activation frequencies, and cash/unit decomposition totals.
 - Verify that overlapping-window uncertainty code reproduces hand-checkable small samples and records its exact block construction and random seed where applicable.
 - Verify that primary tables cannot include undeclared datasets, horizons, coverage levels, parameters, or estimands without changing the run configuration and its identity.
-- Run the repository's structural knowledge checks, scientific checks, and an independent empirical review before promoting an experiment report to stable.
+- Run the repository link check, scientific checks, and an independent
+  empirical review before treating an experiment report as publication-ready.
 - The independent review must reproduce at least one complete synthetic run and one historical slice from raw inputs, audit provenance and exclusions, check the statistical interpretation, and confirm that the prose does not overstate theorem or empirical scope.
 
 ## Out of Scope
@@ -263,17 +246,15 @@ corrected-mean selector will perform well.
 
 The agreed verification seam is one reproducible end-to-end experiment runner
 with independent DCA accounting, a shared guarded-policy interface, complete
-ledgers, and report generation from immutable run outputs. The next planning
-step is to decompose this specification into tracer-bullet tickets; no empirical
-outcome has been claimed or inspected by this specification.
+ledgers, and report generation from immutable run outputs. The [effort
+map](map.md) tracks the seven-stage route: synthetic and stochastic stages are
+complete, and the historical-data seam is next. No confirmatory historical
+outcome has been inspected.
 
 ## Comments
 
-- Synthesized from the accepted arbitrary-horizon significance gate and the
-  agreed recommendation to proceed directly to empirical evaluation.
+- Synthesized from the accepted arbitrary-horizon result and the agreed
+  recommendation to proceed directly to empirical evaluation.
 - The user accepted the proposed empirical direction and previously described
   the thesis as a Financial Computing use-case narrative in which negative and
   bounded advances remain legitimate contributions.
-- `ready-for-agent` applies to specification decomposition. Individual execution
-  tickets are not yet published or claimable.
-

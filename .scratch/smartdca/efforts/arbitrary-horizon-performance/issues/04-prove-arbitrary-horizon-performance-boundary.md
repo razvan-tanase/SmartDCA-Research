@@ -1,28 +1,3 @@
----
-profile: smartdca-okf/0.5
-type: research-ticket
-title: "Prove the arbitrary-horizon performance boundary"
-description: "Resolved research ticket proving the exact terminal-cash-and-units boundary for every finite-horizon guarded SmartDCA comparison."
-knowledge_role: operational
-status: stable
-original_record: true
-ticket_type: research
-ticket_status: resolved
-generated:
-  by: openai-codex/smartdca-wiki-0.1
-  at: 2026-08-24T20:11:40Z
-generation_run: urn:uuid:6a0602e3-5197-442d-bfc1-256ac8a382ba
-verified:
-  - by: openai-codex/writing-for-agents-0.1
-    at: 2026-08-23T21:32:48Z
-    review_run: urn:uuid:d87a04a7-92ae-43c4-a446-998b6f1a8d14
-  - by: openai-codex/standards-review-0.1
-    at: 2026-08-24T20:11:40Z
-    review_run: urn:uuid:2d41dd92-0f83-4940-9eff-8eba11d4196d
-  - by: openai-codex/spec-review-0.1
-    at: 2026-08-24T20:11:40Z
-    review_run: urn:uuid:c830b658-ad37-43ba-b537-690dda4f5455
----
 # 04 — Prove the arbitrary-horizon performance boundary
 
 Type: research
@@ -60,7 +35,7 @@ conditions, safety implications, and counterexamples are explicit.
 
 ## Comments
 
-- Created from the approved tracer-bullet decomposition of the effort specification on
+- Created from the approved ticket decomposition of the effort specification on
   2026-08-23.
 - Claimed on 2026-08-24 after ticket 03 resolved; execution uses the approved
   exact-rational scenario engine as the public verification seam.
