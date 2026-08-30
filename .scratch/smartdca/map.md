@@ -1,67 +1,56 @@
-# Find the rigorous out quasi-Gini route to a complete SmartDCA paper
+# SmartDCA research frontier
 
 ## Destination
 
-A thesis- and paper-grade, self-contained Financial Computing study suitable for arXiv, peer review, and a master's defense that asks whether DCA can be made adaptive without losing a transparent model-free safety guarantee. The paper should tell the progression from attempted SmartDCA superiority, through correction of the source out quasi-Gini functional and the causal DCA impossibility boundary, to the sharp epsilon-DCA unit guardrail and the guarded corrected-mean SmartDCA rule; add one bounded arbitrary-horizon result, positive or negative, support the theory with reproducible experiments, and use proofs as evidence for the use-case narrative rather than as the presentation's center.
+Deliver a thesis- and paper-grade Financial Computing study of whether DCA can
+be made adaptive while retaining a transparent model-free safety guarantee.
+The narrative runs from the source-functional correction and causal dominance
+boundary through the epsilon-DCA guardrail and guarded corrected-mean rule to
+an arbitrary-horizon boundary and reproducible empirical evidence.
 
-## Notes
+The [repository introduction](../../README.md) is the canonical result index,
+and [the domain glossary](../../CONTEXT.md) governs terminology and model
+assumptions. Load a result page or legacy record only when the selected work
+reaches it.
 
-- The attached source is *SmartDCA superiority* (Calvet, Herranz-Celotti, and Valimamode, arXiv:2308.05200v1), especially Appendix B, Eq. (70).
-- The project audits rather than assumes the source paper's claims.
-- Only the out construction is in scope.
-- Use independent parameters \((\alpha,\beta)\), with \(\alpha=\rho+1\) and \(\beta=\gamma\) when translating the source.
-- The abstract theory covers real parameters, the diagonal limiting case, positive external weights, and a general positive increasing transform \(f\); each theorem must state any stronger conditions it needs.
-- A corrected family must recover the classical Gini mean when \(f(x)=x\) and the source out quasi-Lehmer mean when \(\alpha-\beta=1\).
-- Calling an object a mean requires proof or precise characterization of reflexivity, internality, symmetry, continuity, homogeneity, coordinatewise monotonicity, parameter monotonicity, and limiting behavior.
-- The core financial model uses arbitrary finite positive price paths, exogenous deposits, causal information, cash carry without interest, long-only buy-only trades, no leverage, and no spending beyond deposited cash.
-- DCA invests every new deposit immediately. Economic dominance compares terminal wealth including unused cash. Average acquisition cost is a structural identity, not by itself proof of superiority.
-- Negative and impossibility results are acceptable central contributions.
-- Experiments illustrate and stress-test theory; they do not prove universal claims. The eventual workflow is Google Colab-compatible, seeded, provenance-documented, and includes synthetic/adversarial paths plus controlled S&P 500 and Bitcoin source comparisons.
-- The tracked frontier runs through a proof-complete manuscript and
-  reproducibility package.
+## Effort route
 
-## Decisions so far
+| Effort | State | Checkpoint or frontier |
+|---|---|---|
+| [Arbitrary-horizon guarded SmartDCA performance](efforts/arbitrary-horizon-performance/spec.md) | completed | The [reviewed terminal-inventory boundary](../../research/theorems/arbitrary-horizon-performance-boundary.md) closed all five tickets. |
+| [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) | active | Follow its [effort map](efforts/safety-adaptivity-empirical-evaluation/map.md) for ticket state and dependencies. |
 
-- **Source out-functional audit:** Eq. (70) is a mean exactly when \(f=\mathrm{id}\) or \(\alpha-\beta=1\); otherwise it fails reflexivity/internality and has no global finite diagonal limit. See the [audit note](../../research/notes/source-out-quasi-gini-audit.md).
-- **Continue after the source audit:** The exact failure classification is significant enough to proceed, subject next to a primary-source novelty check. See [Decide whether the source-audit gap is significant enough to continue](issues/02-assess-source-audit-significance.md).
-- **Prior-theory location:** The natural common-weight correction is exactly a weighted Bajraktarević mean. Its \(\alpha-\beta=1\) and power-transform cases are already covered by Beckenbach--Gini--Lehmer and weighted Gini theory. Any contribution must come from transform-coupled theorems, the correction contrast, and the SmartDCA application—not from meanhood itself. See [Locate prior theory for a corrected out quasi-Gini mean](issues/03-locate-prior-theory-for-correction.md).
-- **Causal pathwise DCA boundary:** Under the fair same-deposit terminal-wealth comparison, universal weak dominance forces a causal fully funded strategy to be DCA transaction by transaction; no non-DCA strategy can be weakly better on every positive path. Universal dominance becomes constructive only by relaxing causality, while an implementable positive result must restrict the path universe or change the performance criterion. See [Test pathwise DCA dominance under causal budget feasibility](issues/04-test-pathwise-dca-dominance.md).
-- **Retrospective source-audit validation:** An independent recheck of the source pages, classification proof, counterexamples, diagonal argument, and original continuation gate passed without changing tickets 01 or 02; it also records that ticket 01 predates the formal workflow. See [Retrospectively validate the source audit and continuation gate](issues/06-retrospectively-validate-source-audit-and-gate.md).
-- **Canonical corrected definition:** Among the smallest common-weight repairs, choose the numerator-preserving normalization \(\widehat G_{\alpha,\beta}^{f,\mathrm{out}}=[\sum_iw_ix_if(x_i)^{\alpha-1}/\sum_iw_ix_i^{1-\alpha+\beta}f(x_i)^{\alpha-1}]^{1/(\alpha-\beta)}\), with its function-weighted geometric diagonal. It is a known weighted Bajraktarević mean, preserves weighted Gini and the full out quasi-Lehmer line, and accepts positive external weights. The choice conservatively retains the source's \(\alpha-1=\rho\) score semantics; causality alone does not make it unique, no off-slice acquisition-cost identity is yet established, and it does not evade the causal DCA impossibility boundary. See [Choose the corrected out quasi-Gini definition](issues/05-choose-corrected-out-quasi-gini-definition.md).
-- **Homogeneity boundary:** At fixed parameters, the corrected mean is degree-one homogeneous exactly when the transform cancels (\(\alpha=1\), or \(q=1\) on the diagonal) or the positive increasing transform is a power \(f(t)=Ct^r\). Hence one transform makes the entire two-parameter family homogeneous only by reducing it to a reparameterized classical weighted Gini family. See [Characterize homogeneity of the corrected out quasi-Gini mean](issues/07-characterize-homogeneity-of-corrected-out-quasi-gini.md).
-- **Pivot to a novelty-first route:** After ticket 07, the user chose **Pivot** on 2026-08-15. Generic axiom enumeration is deferred; the active route first audits whether the causal fully funded DCA uniqueness theorem is new and identifies the weakest literature-grounded relaxation that permits a non-DCA constructive result. See [Audit the novelty of the causal DCA boundary and choose a constructive relaxation](issues/08-audit-causal-dca-novelty-and-relaxation.md).
-- **Causal-boundary novelty and constructive pivot:** The ticket 04 obstruction is best positioned as a DCA-specific specialization of pointwise no-arbitrage, not a new general impossibility theorem. Retain the unrestricted positive-path and fair-accounting model but relax exact dominance to epsilon-DCA safety; the selected next target is a sharp equivalence between the relative-wealth floor and a causal cumulative-unit guardrail, leaving a discretionary budget for the corrected-mean score. See [Audit the novelty of the causal DCA boundary and choose a constructive relaxation](issues/08-audit-causal-dca-novelty-and-relaxation.md).
-- **Sharp epsilon-DCA safety guardrail:** A causal fully funded strategy has a universal \((1-\varepsilon)\)-DCA terminal-wealth floor exactly when its cumulative units cover that fraction of DCA after every history; the equivalent minimum purchase is always feasible and every safe policy is a causal score inside the remaining funded interval. The zero-tolerance boundary uniquely gives DCA, while every positive tolerance admits non-DCA strategies. See [Prove the sharp epsilon-DCA safety guardrail](issues/09-prove-sharp-epsilon-dca-safety-guardrail.md).
-- **Canonical guarded corrected-mean score:** Normalize each lagged price history by its first price, compare the current normalized price with the lagged corrected out quasi-Gini mean, and map the normalized source score into purchase odds: \(a_t=[1+(f(r_t)/f(1))^{1-\alpha}]^{-1}\). This is causal, bounded, currency-scale invariant for general positive transforms, neutral on short/constant histories, and countercyclical in the current price for nondecreasing \(f\) and \(\alpha\le1\). Inserted into ticket 09's exact interval, it preserves the epsilon-DCA floor and has complete cash, unit, and average-cost accounting, but no strict DCA improvement is claimed. See [Choose the guarded corrected-mean SmartDCA score](issues/10-choose-guarded-corrected-mean-score.md).
-- **Exact two-purchase DCA boundary:** With \(q=p_2/p_1\), \(y=P/p_2\), \(\delta=(1-\lambda)/2\), date-two interval \(H\), terminal cash \(c=(1-a_2)H\), and \(g=\delta d_1(1-q)\), the guarded rule's exact gap is \(W_2^S-W_2^{DCA}=c-y(c-g)\). This gives a finite threshold \(y=c/(c-g)\) when \(c-g>0\) and an all-win slice otherwise; both global strict regions are nonempty for every positive tolerance and nonzero deposit pair, while \(\lambda=1\) collapses to DCA. In the countercyclical parameter region the corrected score weakly enlarges the neutral selector's win set, but \(\beta\) drops out because the lagged reference is a singleton. See [Characterize the two-purchase DCA win/loss boundary](issues/11-characterize-two-purchase-dca-win-loss-boundary.md).
-- **Exact three-purchase beta-sensitive boundary:** With \(q=p_2/p_1\), \(h=p_3/p_2\), \(y=P/p_3\), fixed date-two cash \(C_2\), date-three interval \(H_3\), \(c_\beta=(1-a_3(\beta))H_3\), and \(g=\delta d_1h(1-q)+C_2(1-h)\), the exact gap is again affine: \(W_3^S-W_3^{DCA}=c_\beta-y(c_\beta-g)\). Changing \(\beta\) leaves both earlier actions fixed and changes the classification exactly through the first two-input reference \(R_2\), the third score, and its extended threshold. With \(\lambda=1/2\), unit deposits, prices \((1,4,2)\), \(P=7/3\), \(f=\mathrm{id}\), and \(\alpha=0\), changing only \(\beta\) from \(-1\) to \(1\) flips the exact gap from \(-1/36\) to \(1/144\). This proves parameter sensitivity, not parameter superiority. See [Isolate the first nontrivial corrected-mean effect at three purchases](issues/18-isolate-three-purchase-corrected-mean-effect.md).
+## Current frontier
 
-- **Repository governance:** The retired knowledge-format overlay is replaced by ordinary Markdown, focused agent instructions, scientific evidence checks, and optional work tracking. See [Retire the OKF knowledge layer](../../docs/adr/0010-retire-okf-knowledge-layer.md).
-- **Reviewed arbitrary-horizon performance checkpoint:** The five-ticket effort establishes the exact ledger boundary \(W_n^c(P)-W_n^T(P)=H_T+P U_T\); single-valley geometry and cash crossing alone remain insufficient, while safety remains the guardrail's contribution. See the [resolved publication ticket](efforts/arbitrary-horizon-performance/issues/05-review-publish-research-package.md).
+Establish fingerprinted historical inputs and rolling episodes without opening
+confirmatory aggregate outcomes. The active effort's [map](efforts/safety-adaptivity-empirical-evaluation/map.md)
+is authoritative for ticket dependencies and state. Tickets 05–07 cover the
+confirmatory run, synthesis, and independent publication review after their
+declared prerequisites resolve.
 
-- **Versioned empirical artifact layers:** Outcome-blind registrations live under `experiments/protocols/`, versioned inputs under `experiments/inputs/`, deterministic no-overwrite bundles under `reports/experiments/runs/`, and narrative reports under `reports/experiments/`. Exact byte fingerprints join those layers. See [Place empirical protocols, inputs, and run bundles in versioned layers](../../docs/adr/0008-place-empirical-protocol-input-run-layers.md).
-- **Outcome-blind empirical runner checkpoint:** The frozen protocol, versioned synthetic input, and deterministic three-policy runner now produce the byte-reproducible canonical run `smartdca-run-v1-b029028a9a8e5104359c4999b26e42f1dc81207eb4eb29b1dfba9fcae83473e0`: 36 complete ledgers, 36 included comparisons, 36 strata-preserving aggregate cells, and ten passed validation receipts with no negative cash. Standards, specification, and independent empirical replay all pass. This demonstrates the registered mechanism on one synthetic path only; the [experiment report](../../reports/experiments/canonical-synthetic-run.md) remains draft until ticket 04 supplies the registered historical-slice reproduction. See [Preregister the empirical protocol and establish one canonical run](efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md).
-- **Deterministic adversarial checkpoint:** The content-addressed run `smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db` retains 21 saved attempts, 18 valid paths, three typed exclusions, 648 main comparisons, all 729 finite search candidates, and 1,512 eligible-search comparisons. It executes seven exact boundary contracts and separates complete-system, selector, and guardrail-architecture effects without treating deterministic evidence as historical or stochastic performance. Standards, specification, and independent byte-level empirical replay all pass. See [Evaluate deterministic synthetic and adversarial paths](efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md).
-- **Seeded stochastic checkpoint:** The content-addressed run `smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25` retains all 90 declared trend, mean-reversion, stochastic-volatility, regime-switching, and jump paths, with 3,240 complete ledgers and comparisons and 1,080 independently reconciled aggregate cells. Primary and exploratory results both have mixed signs; they establish controlled sensitivity, not stochastic or market superiority. The run replays byte for byte, and its report and audit remain draft pending the registered historical-slice gate. See [Evaluate seeded stochastic path families](efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md).
+## Historical decisions
 
-## Completed efforts
+The files under `issues/` preserve the read-only pre-effort route from the
+source audit through the three-purchase boundary. Consult them only when
+revisiting one of those decisions; canonical definitions, theorems, and notes
+link to the relevant record.
 
-- [Arbitrary-horizon guarded SmartDCA performance](efforts/arbitrary-horizon-performance/spec.md) delivered the reviewed mathematical bridge from model-free safety to realized adaptive performance. Its [effort map](efforts/arbitrary-horizon-performance/map.md) preserves the complete five-ticket route and publication checkpoint.
+## Deferred branches
 
-## Active efforts
+- Remaining generic mean-axiom and parameter-region results after the accepted
+  homogeneity characterization.
+- Lagged-price comparative statics outside established parameter and transform
+  regions.
+- Manuscript assembly, venue selection, and defense materials after the
+  empirical package is reviewed.
 
-- [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) has an approved seven-ticket route. Tickets [01](efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md), [02](efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md), and [03](efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md) are resolved. Ticket 04 is open and unclaimed, ticket 05 remains blocked by 04, and tickets 06–07 retain their declared dependencies.
+## Scope guardrails
 
-## Not yet specified
-
-- Deferred unless required by the manuscript: the remaining generic axiom and parameter-region theorems after homogeneity.
-- The behavior of the corrected-mean reference under changes in lagged prices outside parameter/transform regions where coordinatewise monotonicity is known.
-- The manuscript outline, target venue, literature positioning, proof organization, reproducibility package, and final verification process.
-
-## Out of scope
-
-- The source paper's in quasi-Gini construction.
-- Short selling, borrowing, leverage, or future-price information in the implementable strategy.
-- Treating stochastic simulations or upward historical trends as proof of the core theorem.
-- Treating lower average acquisition cost under unequal spending as economic dominance.
-- Presenting an ex-post normalized or unbounded rule as the practical strategy.
+- The mathematical project studies the source paper's **out** construction.
+- The implementable baseline uses finite positive prices, exogenous deposits,
+  causal long-only buy-only purchases, cash-inclusive terminal wealth, and no
+  leverage.
+- Empirical results measure realized behavior; universal claims require their
+  own theorem and evidence.
+- Average acquisition cost remains an accounting quantity rather than the
+  economic performance criterion.

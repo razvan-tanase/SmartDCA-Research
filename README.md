@@ -48,25 +48,13 @@ publication review.
 
 The independently reviewed arbitrary-horizon checkpoint is complete. The
 approved [safety-adaptivity empirical effort](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec.md)
-is now active. Its first ticket—[preregister the protocol and establish a
-canonical run](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/01-preregister-protocol-establish-canonical-run.md)—is
-resolved after Standards, specification, and independent empirical review. The
-confirmatory design is frozen before historical outcome access, and the
-deterministic three-policy runner reproduces its canonical synthetic bundle
-byte for byte. [Ticket 02's deterministic and adversarial study](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/02-evaluate-deterministic-adversarial-paths.md)
-is also resolved after Standards, specification, and independent empirical
-replay. [Ticket 03's seeded stochastic study](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/issues/03-evaluate-seeded-stochastic-families.md)
-is resolved after independent review and byte-identical replay of all 90 paths,
-3,240 ledgers, and 1,080 aggregate cells. Its mixed controlled results support
-sensitivity analysis, not a superiority claim. Ticket 04 is the next open
-unclaimed stage. The synthetic empirical reports remain provisional until the
-registered historical-slice reproduction is completed.
+is active. Its [effort map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md)
+is the authority for ticket state, dependencies, and publication gates. The
+[project map](.scratch/smartdca/map.md) records the cross-effort frontier.
 
-The [project map](.scratch/smartdca/map.md) records the tracked frontier.
+## Repository map
 
-## Repository layout
-
-| Path | Purpose |
+| Path | Authoritative content |
 |---|---|
 | `.scratch/smartdca/` | Optional tracked efforts, maps, and numbered research tickets. |
 | `.agents/` | Repository-local agent skills and tooling. |
@@ -120,9 +108,10 @@ push and pull request.
 
 ## Research workflow
 
-The [agent contract](AGENTS.md) defines the applicable branches. Use [work
+For agent execution, the [agent contract](AGENTS.md) routes each change to its
+authoritative context and completion gates. It discloses [work
 tracking](docs/agents/work-tracking.md) only for explicitly tracked or
-multi-stage research; bounded changes are made directly.
+multi-stage research.
 
 ## Source
 

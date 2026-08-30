@@ -10,7 +10,7 @@ revisiting a ticket in this route.
 
 ## Ticket route
 
-| Ticket | Purpose | Status | Blocked by |
+| Ticket | Purpose | Status | Dependencies |
 |---|---|---|---|
 | [01](issues/01-establish-accounting-verification-seam.md) | Prove the cash-timing identity and build the exact-rational verification seam. | resolved | `.scratch/smartdca/issues/18-isolate-three-purchase-corrected-mean-effect` |
 | [02](issues/02-falsify-weak-single-valley-advantage.md) | Search for and minimize counterexamples to the weak single-valley conjecture. | resolved | 01 |

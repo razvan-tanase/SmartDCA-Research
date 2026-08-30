@@ -2,7 +2,7 @@
 
 Type: task
 Status: resolved
-Blocked by: 01, 08
+Blocked by: 01
 Parent: [Safety-adaptivity empirical evaluation](../spec.md)
 
 ## Question

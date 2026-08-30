@@ -15,7 +15,9 @@ G^{f,\mathrm{out}}_{\alpha,\beta}(x)=
 \qquad \alpha\ne\beta,
 \]
 with \(\alpha=\rho+1\) and \(\beta=\gamma\). It is called a functional until its mean properties are established.
-_Avoid_: Gini coefficient, out quasi-Gini mean when referring to the unverified source definition
+**Usage:** Use **out quasi-Gini functional** for the unverified source
+definition. Reserve **out quasi-Gini mean** for validated cases and **Gini
+coefficient** for the inequality statistic.
 
 **Corrected out quasi-Gini mean**[^corrected-definition][^prior-theory]:
 The canonical numerator-preserving normalization
@@ -30,11 +32,16 @@ off the diagonal, with the parameter-continuous function-weighted geometric exte
 \(\alpha=\beta\). It is a weighted Bajraktarević mean, recovers weighted Gini
 for \(f=\mathrm{id}\), and recovers the weighted source out quasi-Lehmer mean
 when \(\alpha-\beta=1\).
-_Avoid_: new mean class, repaired Eq. (70) without stating the normalization, automatic continuity/homogeneity/coordinate monotonicity
+**Claim boundary:** Identify the normalization when describing a repair of Eq.
+(70), position the result inside the known weighted Bajraktarević family, and
+claim continuity, homogeneity, or coordinatewise monotonicity only where each
+property is established.
 
 **Scale-homogeneous corrected subfamily**[^homogeneity-theorem][^homogeneity]:
 At fixed off-diagonal parameters, the corrected mean is degree-one homogeneous exactly when \(\alpha=1\) (where the transform cancels) or \(f(t)=Ct^r\) under the project's increasing-transform assumption; on the diagonal, \(q=1\) is the analogous exception. One transform makes the whole two-parameter family homogeneous exactly in the power-transform case, which is a reparameterized classical weighted Gini family.
-_Avoid_: homogeneity for a general increasing transform, transform novelty on the \(\alpha=q=1\) slice
+**Claim boundary:** State homogeneity only on the characterized
+parameter-transform locus. Describe the \(\alpha=q=1\) slice as
+transform-independent.
 
 **Weighted Bajraktarević identification**[^prior-theory]:
 For \(d=\alpha-\beta\ne0\), the natural common-weight candidate
@@ -48,35 +55,46 @@ is exactly the weighted Bajraktarević mean
 \(A_{t^{-d},\,t f(t)^{\alpha-1}}\). Its \(d=1\) slice is
 Beckenbach--Gini--Lehmer/out quasi-Lehmer, and power transforms reduce to
 classical weighted Gini means.
-_Avoid_: new class of means, or Beckenbach--Gini as a name for the full family
+**Naming:** Use **weighted Bajraktarević mean** for the full family and
+**Beckenbach--Gini--Lehmer mean** for its \(d=1\) slice; position both as known
+mean classes.
 
 **Sequentially admissible strategy**[^impossibility][^causal-boundary]:
 A strategy whose purchase at time \(t\) depends only on deposits, prices, and portfolio state observed through time \(t\), after observing the current price and before observing any future price.
-_Avoid_: future-aware strategy, ex-post normalized strategy
+**Usage:** Apply **sequentially admissible** only to a strategy using
+observations available through time \(t\). Label future-aware and ex-post
+normalized constructions separately.
 
 **Deposit budget**[^impossibility][^causal-boundary]:
 Cash contributed through an exogenous deposit sequence; unused cash carries forward without interest, and purchases cannot exceed cash currently available.
-_Avoid_: leverage, borrowing capacity
+**Usage:** Count contributed cash as the available budget. Treat leverage or
+borrowing as a different model.
 
 **DCA comparator**[^impossibility][^causal-boundary]:
 The strategy that invests the entire new deposit at each purchase time at the current price, using the same deposit sequence and evaluation horizon as the candidate strategy.
-_Avoid_: retrospectively budget-matched DCA
+**Usage:** Give DCA the same exogenous deposits and evaluation horizon as the
+candidate. Label a retrospectively budget-matched comparator separately.
 
 **Economic dominance**[^impossibility]:
 Terminal wealth is at least that of the DCA comparator for every admissible positive price path and deposit sequence, and strictly greater for at least one admissible case.
-_Avoid_: lower average cost alone
+**Claim boundary:** Establish economic dominance from cash-inclusive terminal
+wealth. Report average acquisition cost as a structural accounting quantity.
 
 **Causal DCA impossibility boundary**[^impossibility][^causal-boundary]:
 Under arbitrary finite positive price paths, the same exogenous deposits, and terminal wealth including cash, a causal fully funded buy-only strategy weakly dominates DCA only if it purchases each deposit exactly as DCA. A nontrivial positive result must restrict the path universe, relax causality, or weaken the performance criterion.
-_Avoid_: DCA is optimal on each realized path, no strategy can ever beat DCA
+**Claim boundary:** State the transaction-by-transaction uniqueness result
+under its universal path quantifier and full model. Describe realized-path wins
+or ties separately.
 
 **Epsilon-DCA safety**[^guardrail-theorem][^guardrail]:
 For a fixed \(\varepsilon\in[0,1)\), terminal wealth including cash satisfies \(W^S\ge(1-\varepsilon)W^{DCA}\) for every admissible positive price path and deposit sequence. It is a uniform relative-wealth floor; it is not economic dominance when \(\varepsilon>0\).
-_Avoid_: epsilon-dominance, near-superiority, guaranteed outperformance
+**Naming:** Use **epsilon-DCA safety** or **relative-wealth floor**. Reserve
+dominance and outperformance language for a separately established result.
 
 **Epsilon-DCA unit guardrail**[^guardrail-theorem][^guardrail]:
 With \(\lambda=1-\varepsilon\), the unit-coverage cushion \(Q_t^S-\lambda Q_t^{DCA}\) must remain nonnegative after every history; equivalently, each purchase must meet the sharp causal floor \([\lambda d_t-p_t(Q_{t-1}^S-\lambda Q_{t-1}^{DCA})]_+\). Purchases above that floor are the funded discretionary allocation.
-_Avoid_: cash cushion, dominance budget, optional safety check
+**Usage:** Treat the unit guardrail as the mandatory safety constraint and call
+the interval above its purchase floor the **funded discretionary allocation**.
 
 **Guarded corrected-mean score**[^guarded-rule]:
 The canonical discretionary score anchors prices at \(p_1\), forms the lagged
@@ -89,8 +107,9 @@ a_t=\frac{1}{1+(f(r_t)/f(1))^{1-\alpha}}.
 It is a causal odds calibration inside the epsilon-DCA guardrail, neutral on
 one-point and constant histories, and countercyclical in the current price when
 \(f\) is nondecreasing and \(\alpha\le1\).
-_Avoid_: ex-post normalization, an unnormalized nonhomogeneous price-level
-reference, strict DCA outperformance without a proved criterion
+**Claim boundary:** Use the normalized causal reference and the established
+current-price comparative statics. Attach any strict DCA outperformance claim
+to its proved criterion.
 
 **Two-purchase DCA boundary**[^two-purchase-boundary][^two-purchase-boundary-note]:
 For the exact guarded rule, write \(q=p_2/p_1\), \(y=P/p_2\),
@@ -105,8 +124,9 @@ Then \(W_2^S-W_2^{DCA}=c-y(c-g)\). For
 \(c-g\le0\), every positive finite \(y\) is a win. At \(\lambda=1\) every
 case ties. The singleton lagged reference makes \(\beta\) irrelevant at two
 purchases.
-_Avoid_: win probability, arbitrary-horizon boundary, evidence that
-\(\beta\) improves the rule
+**Claim boundary:** Report the realized two-purchase threshold and win region.
+Treat win probability, arbitrary-horizon behavior, and \(\beta\)'s effect as
+separate questions.
 
 **Three-purchase beta-sensitive DCA boundary**[^three-purchase-effect][^three-purchase-effect-note]:
 For exactly three purchases, let \(b_\beta=a_3\) be the score formed from
@@ -124,15 +144,17 @@ threshold \(c_\beta/(c_\beta-g)\) when its denominator is positive and an
 all-win slice otherwise. Changing \(\beta\) leaves the first two purchases
 fixed but can change this threshold: an exact countercyclical witness flips
 from a DCA loss at \(\beta=-1\) to a win at \(\beta=1\).
-_Avoid_: beta superiority, monotone benefit from increasing beta,
-arbitrary-horizon boundary, stochastic outperformance
+**Claim boundary:** Report beta-sensitive classification and the exact witness.
+Reserve parameter rankings, arbitrary-horizon conclusions, and stochastic
+outperformance for separate evidence.
 
 **Arbitrary-horizon cash-timing identity**[^cash-timing-identity][^cash-timing-note]:
 The exact decomposition of a fully funded strategy's terminal wealth into DCA
 wealth plus coefficients on its carried-cash path; subtracting two such paths
 gives the corresponding two-strategy identity at every finite horizon.
-_Avoid_: score-specific performance formula, stochastic attribution,
-cash-timing advantage
+**Claim boundary:** Present this as a model-general accounting identity.
+Score-specific performance, stochastic attribution, and any cash-timing
+advantage require additional results.
 
 **Corrected-neutral cash single crossing**[^cash-crossing-theorem][^cash-crossing-note]:
 After zeros are deleted, corrected-minus-neutral carried cash has a block of
@@ -145,9 +167,10 @@ corrected-minus-neutral clipped-floor difference is nonnegative before the
 boundary and nonpositive after it. Equal clipped floors are a special case,
 but the condition is not necessary because same-period score forcing can
 outweigh a misaligned floor component.
-_Avoid_: cash single crossing on every weak or strict single-valley path,
-attributing a cash reversal to the score when floor amounts diverge,
-terminal-wealth advantage from cash signs alone
+**Claim boundary:** Require reference-aligned feedback or another proved
+sufficient condition before asserting cash single crossing. Separate score and
+floor effects when clipped floors diverge, and use terminal-inventory analysis
+to establish terminal-wealth order.
 
 **Arbitrary-horizon terminal-inventory boundary**[^performance-boundary-theorem][^performance-boundary-note]:
 For either DCA or the neutral guarded selector \(T\), let
@@ -160,16 +183,18 @@ horizon. The cash-timing identity independently reconstructs \(U_T\). On a
 weak single-valley path evaluated at \(P=p_n\), this becomes the exact balance
 between signed reciprocal-price exposure on the decline and recovery.
 Reference-aligned cash single crossing does not determine that balance.
-_Avoid_: cash signs imply wealth order, corrected-score safety guarantee,
-universal or stochastic outperformance, price-only boundary
+**Claim boundary:** Infer wealth order from \(H_T+P U_T\), attribute the safety
+guarantee to the guardrail, and describe this boundary as ledger-conditioned.
+Universal, stochastic, and price-only conclusions require separate results.
 
 **Terminal wealth**[^impossibility][^causal-boundary]:
 Unspent cash plus the value of accumulated asset units at the common evaluation price.
-_Avoid_: asset value with cash omitted
+**Usage:** Include both unspent cash and accumulated asset value.
 
 **Average acquisition cost**[^guarded-rule][^guarded-score]:
 Total cash spent on the asset divided by total asset units acquired. It is a structural accounting quantity, not by itself a budget-equivalent performance measure.
-_Avoid_: proof of economic superiority
+**Usage:** Treat average acquisition cost as an accounting quantity; establish
+economic performance with cash-inclusive terminal wealth.
 
 ## Sources
 
