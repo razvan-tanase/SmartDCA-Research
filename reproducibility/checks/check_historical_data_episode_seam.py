@@ -24,6 +24,7 @@ from reproducibility.historical_data import (
     AlphaVantageProvider,
     HistoricalSourceSet,
     ProviderResponse,
+    YFinanceProvider,
     acquire_historical_sources,
     load_historical_source_set,
     main as historical_main,
@@ -35,12 +36,36 @@ from reproducibility.historical_data import (
 
 ROOT = Path(__file__).resolve().parents[2]
 PROTOCOL = ROOT / "experiments" / "protocols" / "safety-adaptivity-v1.json"
+YAHOO_PROTOCOL = (
+    ROOT / "experiments" / "protocols" / "safety-adaptivity-yahoo-v2.json"
+)
+YAHOO_SOURCE_RECEIPT = (
+    ROOT / "experiments" / "inputs" / "historical-yahoo-receipts-v2.json"
+)
+YAHOO_NORMALIZATION_RECEIPTS = (
+    ROOT
+    / "experiments"
+    / "inputs"
+    / "historical-yahoo-normalization-receipts-v2.json"
+)
+YAHOO_PREPARATION_VALIDATION = (
+    ROOT
+    / "experiments"
+    / "inputs"
+    / "historical-yahoo-preparation-validation-v2.json"
+)
+YAHOO_PREPARATION_MANIFEST = (
+    ROOT
+    / "experiments"
+    / "inputs"
+    / "historical-yahoo-preparation-manifest-v3.json"
+)
 COMMITTED_SOURCE_SET = (
     ROOT / "experiments" / "inputs" / "historical-validation-sources-v1.json"
 )
 COMMITTED_RUN_ID = (
     "smartdca-historical-validation-v1-"
-    "80dbd990f0afd98ce553d229cb470fe874bac1ec736763855c7efec755797e62"
+    "9523135380007cb4597b991600acb7d5b0c244e955fb17b36d244d6158155a10"
 )
 COMMITTED_RUN = ROOT / "reports" / "experiments" / "runs" / COMMITTED_RUN_ID
 
@@ -138,6 +163,34 @@ class _FixtureProvider:
         return ProviderResponse(self._responses[dataset["dataset_id"]], 200, "text/csv")
 
 
+class _YahooFixtureProvider:
+    def retrieve(self, dataset):
+        body = SPY_CSV if dataset["dataset_id"] == "spy-adjusted-daily" else BTC_CSV
+        return ProviderResponse(
+            body,
+            None,
+            "text/csv",
+            {
+                "adapter": "yfinance-history",
+                "adapter_version": "1.7.0",
+                "client_versions": {
+                    "yfinance": "1.7.0",
+                    "pandas": "3.0.5",
+                    "numpy": "2.5.2",
+                    "curl_cffi": "0.16.2",
+                },
+                "source_timezone": dataset["timezone"],
+                "source_currency": dataset["currency"],
+                "provider_http_metadata_exposed": False,
+                "export_format": "smartdca-canonical-csv/1",
+                "cache_policy": "acquisition-source-root-local",
+                "client_source_commit": "3d9d2f0cacb662bff689874cd6113bae3a30a885",
+                "dependency_lock_sha256": "3a53181ceea7b7b79a80f3005c3b2bd0dbdefab25152ff07826ee1a2ab438a76",
+                "http_backend": "curl_cffi",
+            },
+        )
+
+
 def _acquire_confirmatory_sources(
     config: StudyConfig,
     source_root: Path,
@@ -154,6 +207,326 @@ def _acquire_confirmatory_sources(
 
 
 class HistoricalDataEpisodeSeamTest(unittest.TestCase):
+    def test_yahoo_replacement_is_a_new_locked_protocol_before_data_access(self) -> None:
+        original = load_study_config(PROTOCOL).as_mapping()
+        replacement = load_study_config(YAHOO_PROTOCOL).as_mapping()
+
+        self.assertEqual(replacement["protocol_id"], "safety-adaptivity-yahoo-v2")
+        self.assertEqual(replacement["protocol_version"], 2)
+        self.assertEqual(replacement["supersedes_protocol_id"], "safety-adaptivity-v1")
+        self.assertFalse(replacement["confirmatory_outcomes_accessed"])
+        self.assertEqual(
+            {dataset["provider"] for dataset in replacement["historical_datasets"]},
+            {"Yahoo Finance"},
+        )
+        self.assertEqual(
+            {
+                dataset["dataset_id"]: dataset["request_parameters"]
+                for dataset in replacement["historical_datasets"]
+            },
+            {
+                "spy-adjusted-daily": {
+                    "symbol": "SPY",
+                    "start": "1993-02-01",
+                    "end": "2026-01-01",
+                    "interval": "1d",
+                    "auto_adjust": False,
+                    "actions": True,
+                    "repair": False,
+                    "keepna": True,
+                    "prepost": False,
+                    "rounding": False,
+                    "timeout": 60,
+                },
+                "btc-usd-daily": {
+                    "symbol": "BTC-USD",
+                    "start": "2015-01-01",
+                    "end": "2026-01-01",
+                    "interval": "1d",
+                    "auto_adjust": False,
+                    "actions": True,
+                    "repair": False,
+                    "keepna": True,
+                    "prepost": False,
+                    "rounding": False,
+                    "timeout": 60,
+                },
+            },
+        )
+        for field in (
+            "episode_design",
+            "coverage",
+            "corrected_mean",
+            "cost_scenarios",
+            "hypotheses",
+            "estimands",
+            "multiplicity",
+            "uncertainty",
+            "analysis_tiers",
+            "exclusions",
+            "robustness_design",
+            "canonical_run",
+            "runner_contract",
+        ):
+            self.assertEqual(replacement[field], original[field], field)
+
+    def test_yfinance_adapter_uses_locked_arguments_and_canonicalizes_its_export(self) -> None:
+        captured = {}
+
+        def history_loader(symbol, parameters, cache_directory):
+            captured["symbol"] = symbol
+            captured["parameters"] = parameters
+            captured["cache_directory"] = cache_directory
+            return {
+                "source_timezone": "America/New_York",
+                "source_currency": "USD",
+                "client_versions": {
+                    "yfinance": "1.7.0",
+                    "pandas": "3.0.5",
+                    "numpy": "2.5.2",
+                    "curl_cffi": "0.16.2",
+                },
+                "rows": [
+                    {
+                        "timestamp": "2020-01-02",
+                        "Open": "11.25",
+                        "High": "12.5",
+                        "Low": "9",
+                        "Close": "10",
+                        "Adj Close": "9.75",
+                        "Volume": "100",
+                        "Dividends": "0.5",
+                        "Stock Splits": "0",
+                        "Capital Gains": "0.25",
+                    }
+                ],
+            }
+
+        dataset = load_study_config(YAHOO_PROTOCOL).as_mapping()[
+            "historical_datasets"
+        ][0]
+        cache_directory = Path("ignored-yfinance-cache")
+        response = YFinanceProvider(
+            cache_directory=cache_directory,
+            authorization="true",
+            history_loader=history_loader,
+        ).retrieve(dataset)
+
+        self.assertEqual(captured["symbol"], "SPY")
+        self.assertEqual(captured["cache_directory"], cache_directory)
+        self.assertEqual(
+            captured["parameters"],
+            {
+                "start": "1993-02-01",
+                "end": "2026-01-01",
+                "interval": "1d",
+                "auto_adjust": False,
+                "actions": True,
+                "repair": False,
+                "keepna": True,
+                "prepost": False,
+                "rounding": False,
+                "timeout": 60,
+            },
+        )
+        self.assertEqual(
+            response.body,
+            b"timestamp,open,high,low,close,adjusted_close,volume,"
+            b"dividend_amount,split_coefficient,capital_gains\n"
+            b"2020-01-02,11.25,12.5,9,10,9.75,100,0.5,0,0.25\n",
+        )
+        self.assertIsNone(response.http_status)
+        self.assertEqual(response.content_type, "text/csv")
+        self.assertEqual(
+            response.metadata,
+            {
+                "adapter": "yfinance-history",
+                "adapter_version": "1.7.0",
+                "client_versions": {
+                    "yfinance": "1.7.0",
+                    "pandas": "3.0.5",
+                    "numpy": "2.5.2",
+                    "curl_cffi": "0.16.2",
+                },
+                "source_timezone": "America/New_York",
+                "source_currency": "USD",
+                "provider_http_metadata_exposed": False,
+                "export_format": "smartdca-canonical-csv/1",
+                "cache_policy": "acquisition-source-root-local",
+                "client_source_commit": "3d9d2f0cacb662bff689874cd6113bae3a30a885",
+                "dependency_lock_sha256": "3a53181ceea7b7b79a80f3005c3b2bd0dbdefab25152ff07826ee1a2ab438a76",
+                "http_backend": "curl_cffi",
+            },
+        )
+
+    def test_yfinance_acquisition_is_protocol_bound_and_episode_ready(self) -> None:
+        config_mapping = load_study_config(YAHOO_PROTOCOL).as_mapping()
+        config_mapping["episode_design"]["horizons_months"] = [12]
+        for dataset in config_mapping["historical_datasets"]:
+            dataset["eligible_start"] = "2020-01-01"
+            dataset["data_cutoff"] = "2021-02-01"
+        config = StudyConfig.from_mapping(config_mapping)
+
+        with tempfile.TemporaryDirectory() as directory:
+            source_root = Path(directory)
+            acquired = acquire_historical_sources(
+                config,
+                source_root,
+                _YahooFixtureProvider(),
+                "2026-08-31T10:00:00Z",
+            )
+            prepared = prepare_historical_input(config, acquired, source_root)
+
+        source_mapping = acquired.as_mapping()
+        self.assertEqual(
+            source_mapping["acquisition"],
+            {
+                "adapter": "yfinance-history",
+                "adapter_version": "1.7.0",
+                "provider": "Yahoo Finance",
+                "one_export_per_dataset": True,
+                "credential_recorded": False,
+                "authorization_attested": True,
+                "provider_http_metadata_exposed": False,
+            },
+        )
+        self.assertTrue(
+            source_mapping["source_set_id"].startswith("yahoo-finance-historical-")
+        )
+        self.assertEqual(source_mapping["version"], "2")
+        self.assertEqual(
+            {
+                source["redistribution_decision"]
+                for source in source_mapping["sources"]
+            },
+            {
+                "canonical-client-export-and-normalized-observations-"
+                "access-controlled-outside-git; sanitized-receipts-only-"
+                "without-written-permission"
+            },
+        )
+        self.assertEqual(
+            {source["adapter"] for source in source_mapping["sources"]},
+            {"yfinance-history"},
+        )
+        self.assertEqual(
+            {source["http_status"] for source in source_mapping["sources"]},
+            {None},
+        )
+        receipts = {row["dataset_id"]: row for row in prepared.source_receipts}
+        self.assertEqual(prepared.status, "accepted")
+        self.assertEqual(receipts["spy-adjusted-daily"]["adapter_version"], "1.7.0")
+        self.assertEqual(
+            receipts["btc-usd-daily"]["source_timezone"], "UTC"
+        )
+        self.assertEqual(receipts["btc-usd-daily"]["source_currency"], "USD")
+        self.assertEqual(
+            receipts["btc-usd-daily"]["http_backend"], "curl_cffi"
+        )
+        self.assertFalse(
+            receipts["spy-adjusted-daily"]["provider_http_metadata_exposed"]
+        )
+
+    def test_committed_yahoo_receipts_bind_input_without_exposing_outcomes(self) -> None:
+        source_receipt = load_historical_source_set(YAHOO_SOURCE_RECEIPT)
+        normalization = json.loads(
+            YAHOO_NORMALIZATION_RECEIPTS.read_text(encoding="utf-8")
+        )
+        validation = json.loads(
+            YAHOO_PREPARATION_VALIDATION.read_text(encoding="utf-8")
+        )
+        manifest = json.loads(
+            YAHOO_PREPARATION_MANIFEST.read_text(encoding="utf-8")
+        )
+
+        self.assertEqual(
+            source_receipt.sha256,
+            "346676eb699d4e64cee7f687a04f207d6ab4daff92abae780719368d259f97f4",
+        )
+        self.assertEqual(
+            source_receipt.as_mapping()["protocol_sha256"],
+            load_study_config(YAHOO_PROTOCOL).sha256,
+        )
+        receipts = {
+            row["dataset_id"]: row for row in normalization["receipts"]
+        }
+        self.assertEqual(
+            {
+                dataset_id: (
+                    receipt["row_count"],
+                    receipt["date_min"],
+                    receipt["date_max"],
+                    receipt["schema"]["selected_price_column"],
+                )
+                for dataset_id, receipt in receipts.items()
+            },
+            {
+                "spy-adjusted-daily": (
+                    8287,
+                    "1993-02-01",
+                    "2025-12-31",
+                    "adjusted_close",
+                ),
+                "btc-usd-daily": (
+                    4018,
+                    "2015-01-01",
+                    "2025-12-31",
+                    "close",
+                ),
+            },
+        )
+        self.assertEqual(validation["policy_execution"], "not-run")
+        self.assertEqual(validation["confirmatory_aggregate_outcomes"], "not-computed")
+        self.assertEqual(
+            validation["reconciliation"],
+            {
+                "accepted_dataset_count": 2,
+                "attempted_episode_count": 1365,
+                "dataset_count": 2,
+                "dataset_failures": {},
+                "excluded_episode_count": 0,
+                "exclusion_reasons": {},
+                "failed_dataset_count": 0,
+                "included_episode_count": 1365,
+                "input_status": "accepted",
+                "observation_count": 12305,
+                "runner_input_episode_count": 1365,
+                "validation_episode_count": 0,
+            },
+        )
+        self.assertEqual(
+            manifest["run_id"],
+            "smartdca-historical-input-v1-"
+            "c4e1222c907ffcffe6fd237fd34d97987566a415e45903577cc507fffff12d0f",
+        )
+        self.assertEqual(
+            manifest["runner_input_sha256"],
+            "d49a5a6e0304a7da213082698990d46bec7f7cac2399533990f84a40183bec88",
+        )
+        for path in (
+            YAHOO_SOURCE_RECEIPT,
+            YAHOO_NORMALIZATION_RECEIPTS,
+            YAHOO_PREPARATION_VALIDATION,
+            YAHOO_PREPARATION_MANIFEST,
+        ):
+            retained = path.read_bytes()
+            self.assertNotIn(b'"price":', retained)
+            self.assertNotIn(b'"terminal_wealth":', retained)
+            self.assertNotIn(b'"aggregates":', retained)
+
+    def test_yfinance_adapter_requires_researcher_authorization_before_loading(self) -> None:
+        with self.assertRaises(ExperimentValidationError) as caught:
+            YFinanceProvider(
+                Path("ignored-yfinance-cache"),
+                authorization="",
+            )
+
+        self.assertEqual(caught.exception.code, "missing_authorization")
+        self.assertEqual(
+            caught.exception.field,
+            "YAHOO_FINANCE_AUTOMATED_ACCESS_AUTHORIZED",
+        )
+
     def test_live_adapter_builds_the_locked_request_and_returns_untouched_bytes(self) -> None:
         captured = {}
 
@@ -910,6 +1283,36 @@ class HistoricalDataEpisodeSeamTest(unittest.TestCase):
         rejection = json.loads(completed.stderr)
         self.assertEqual(rejection["code"], "missing_credential")
         self.assertEqual(rejection["field"], "ALPHAVANTAGE_API_KEY")
+
+    def test_yahoo_acquisition_cli_requires_authorization_before_client_import(self) -> None:
+        environment = dict(os.environ)
+        environment.pop("YAHOO_FINANCE_AUTOMATED_ACCESS_AUTHORIZED", None)
+        with tempfile.TemporaryDirectory() as directory:
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    "-m",
+                    "reproducibility.historical_data",
+                    "acquire",
+                    "--config",
+                    str(YAHOO_PROTOCOL),
+                    "--source-root",
+                    directory,
+                ],
+                cwd=ROOT,
+                env=environment,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+        self.assertEqual(completed.returncode, 2)
+        rejection = json.loads(completed.stderr)
+        self.assertEqual(rejection["code"], "missing_authorization")
+        self.assertEqual(
+            rejection["field"],
+            "YAHOO_FINANCE_AUTOMATED_ACCESS_AUTHORIZED",
+        )
 
     def test_prepare_cli_writes_confirmatory_handoff_without_policy_outputs(self) -> None:
         config_mapping = load_study_config(PROTOCOL).as_mapping()

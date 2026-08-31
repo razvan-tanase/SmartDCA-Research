@@ -21,7 +21,7 @@ complete study input without opening the confirmatory result set.
 
 ## Acceptance criteria
 
-- [ ] The selected S&P 500 investable or total-return proxy and Bitcoin/USD spot series match the preregistered provider, series identifier, currency, timezone, adjustment semantics, retrieval rule, and licensing or redistribution decision.
+- [x] The selected S&P 500 investable or total-return proxy and Bitcoin/USD spot series match the preregistered provider, series identifier, currency, timezone, adjustment semantics, retrieval rule, and licensing or redistribution decision.
 - [x] Each retained input has a retrieval timestamp, content fingerprint, source receipt, schema description, date coverage, and an immutable identity used by experiment manifests.
 - [x] Market-calendar alignment, timezone normalization, deposit-date mapping, evaluation-date mapping, and missing-observation handling implement the preregistered rules without silent interpolation.
 - [x] Rolling episodes use only information available through each purchase date and expose their deposit schedule, purchase timestamps, horizon, evaluation timestamp, input rows, and exclusion reason where invalid.
@@ -82,6 +82,38 @@ complete study input without opening the confirmatory result set.
   unavailable Alpha Vantage source with a yfinance-based alternative. The
   accepted version-1 protocol remains immutable; the replacement must receive
   a new preregistration identity before any provider observation is retrieved.
+- Static primary-source review found no better first-party-supported keyless
+  source for both series. The [Yahoo Finance provider review](../../../../../research/notes/yahoo-finance-historical-data-provider-review.md)
+  distinguishes Yahoo Finance from the unaffiliated yfinance client, and the
+  [alternatives review](../../../../../research/notes/keyless-historical-data-provider-alternatives.md)
+  records why Stooq, Coinbase Exchange, and State Street do not satisfy the
+  complete two-series contract.
+- The independently reviewed replacement protocol
+  [`safety-adaptivity-yahoo-v2`](../../../../../experiments/protocols/safety-adaptivity-yahoo-v2.json)
+  was committed at `bae0faf` before live access. It changes only provider and
+  provenance fields, pins yfinance and its full dependency set, and retains
+  every outcome-relevant study object from version 1.
+- The researcher approved the fail-closed authorization prompt covering Yahoo
+  chart-route automation and private research retention. Acquisition then
+  produced two canonical client exports without printing a price or executing
+  a policy. The accepted version-2 [source-set receipt](../../../../../experiments/inputs/historical-yahoo-receipts-v2.json)
+  has SHA-256
+  `346676eb699d4e64cee7f687a04f207d6ab4daff92abae780719368d259f97f4`;
+  its predecessor is retained because review corrected one raw-provider label
+  to the accurate canonical-client-export boundary without changing source
+  content.
+- Offline preparation accepted 8,287 SPY rows covering 1993-02-01 through
+  2025-12-31 and 4,018 BTC-USD rows covering 2015-01-01 through 2025-12-31.
+  Both runtime currencies and timezones match the protocol. The
+  [validation receipt](../../../../../experiments/inputs/historical-yahoo-preparation-validation-v2.json)
+  reconciles 12,305 observations to 1,365 included episodes, zero exclusions,
+  runner-input SHA-256
+  `d49a5a6e0304a7da213082698990d46bec7f7cac2399533990f84a40183bec88`,
+  and `policy_execution=not-run`; raw exports, normalized observations, and
+  episode rows remain under ignored `data/raw/`.
+- Twenty-nine focused historical-seam tests and all sixteen canonical-run
+  tests pass under CPython 3.12. The final repository-wide verification and
+  parallel Standards/specification review remain before resolution.
 
 ## Answer
 

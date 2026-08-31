@@ -330,3 +330,45 @@ material” must not be read as an independent authorization supplied by
 Final result: **protocol alignment passes; live Yahoo acquisition remains
 blocked on external provider authorization**. The authorization gate must fail
 closed until that evidence exists.
+
+## Authorized runtime receipt
+
+After the reviewed protocol was committed at `bae0faf`, the researcher
+affirmatively approved the guarded acquisition prompt confirming authorization
+for Yahoo chart-route automation and private research retention. The command
+then set `YAHOO_FINANCE_AUTOMATED_ACCESS_AUTHORIZED=true` for that process only.
+The underlying authorization material and all yfinance cookie or crumb state
+remain private and are not repository artifacts.
+
+The acquisition ran at `2026-08-31T10:02:47Z`. A pre-acceptance receipt review
+corrected one provenance label from “provider bytes” to “canonical client
+export,” without changing either retained export or its content fingerprint.
+The accepted version-2 source-set receipt has SHA-256
+`346676eb699d4e64cee7f687a04f207d6ab4daff92abae780719368d259f97f4`;
+the provisional version-1 receipt remains preserved as review history.
+The [sanitized acquisition receipt](../../experiments/inputs/historical-yahoo-receipts-v2.json)
+binds it to the independently reviewed protocol SHA-256, client source commit,
+complete dependency-lock fingerprint, exact call arguments, source timezones,
+source currencies, canonical-export fingerprints, and the conservative
+no-redistribution decision. Provider response bodies and headers remain
+unavailable through the public yfinance seam, as preregistered.
+
+Offline preparation accepted both sources without executing a policy. The
+[normalization receipts](../../experiments/inputs/historical-yahoo-normalization-receipts-v2.json)
+record these audited, outcome-free facts:
+
+| Dataset | Rows | Coverage | Selected field | Source timezone | Source currency |
+| --- | ---: | --- | --- | --- | --- |
+| `spy-adjusted-daily` | 8,287 | 1993-02-01 through 2025-12-31 | `adjusted_close` | `America/New_York` | USD |
+| `btc-usd-daily` | 4,018 | 2015-01-01 through 2025-12-31 | `close` | UTC | USD |
+
+The [preparation validation](../../experiments/inputs/historical-yahoo-preparation-validation-v2.json)
+binds 12,305 observations to 1,365 included rolling episodes, zero excluded
+episodes, runner-input SHA-256
+`d49a5a6e0304a7da213082698990d46bec7f7cac2399533990f84a40183bec88`,
+and `policy_execution=not-run`. The corresponding
+[preparation manifest](../../experiments/inputs/historical-yahoo-preparation-manifest-v3.json)
+records run identity
+`smartdca-historical-input-v1-c4e1222c907ffcffe6fd237fd34d97987566a415e45903577cc507fffff12d0f`.
+No provider price value, episode price, policy decision, estimand, or aggregate
+outcome is included in these receipts or this note.

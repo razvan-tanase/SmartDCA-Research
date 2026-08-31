@@ -75,13 +75,15 @@ The strategy that invests the entire new deposit at each purchase time at the cu
 **Usage:** Give DCA the same exogenous deposits and evaluation horizon as the
 candidate. Label a retrospectively budget-matched comparator separately.
 
-**Historical source receipt**[^empirical-protocol][^provider-review]:
+**Historical source receipt**[^empirical-protocol][^provider-review][^yahoo-protocol][^yahoo-provider-review]:
 A sanitized record that binds one declared historical-data source and its
-series semantics to its provenance metadata, exact source-byte fingerprint,
-observed schema, date coverage, parser identity, and redistribution decision.
+series semantics to its provenance metadata, the fingerprint of exact retained
+source bytes, observed schema, date coverage, parser identity, and
+redistribution decision. Retained source bytes may be a raw provider response
+or a versioned canonical client export, but the receipt must identify which.
 **Usage:** Use the receipt to audit the content-derived source identity; do not
-treat a mutable provider URL as an identity or a hand-authored fixture as a
-provider response.
+treat a mutable provider URL as an identity, a canonical client export as raw
+provider bytes, or a hand-authored fixture as a provider response.
 
 **Point-in-time rolling episode**[^empirical-protocol]:
 A recurring-investment episode whose nominal deposits and horizon are mapped
@@ -243,3 +245,5 @@ terminal wealth—share one theorem because they describe one comparison model.
 [^guardrail]: [Sharp causal epsilon-DCA safety and its unit-coverage guardrail](research/notes/sharp-epsilon-dca-safety-guardrail.md)
 [^empirical-protocol]: [Frozen safety-adaptivity empirical protocol](experiments/protocols/safety-adaptivity-v1.json)
 [^provider-review]: [Alpha Vantage historical-data provider review](research/notes/alpha-vantage-historical-data-provider-review.md)
+[^yahoo-protocol]: [Yahoo Finance safety-adaptivity replacement protocol](experiments/protocols/safety-adaptivity-yahoo-v2.json)
+[^yahoo-provider-review]: [Yahoo Finance historical-data provider review](research/notes/yahoo-finance-historical-data-provider-review.md)

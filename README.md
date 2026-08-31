@@ -82,7 +82,7 @@ results; their linked notes carry the arguments.
 
 ## Verification
 
-The current checks use only the Python standard library:
+The verification suite uses only the Python standard library:
 
 ```bash
 python -m unittest tools.test_check_markdown_links
@@ -106,6 +106,13 @@ python -m unittest reproducibility.checks.check_historical_data_episode_seam
 
 GitHub Actions runs the link check and all fifteen scientific checks on every
 push and pull request.
+
+Authorized Yahoo Finance acquisition is a separate, pinned input-production
+step rather than a test dependency. Create its CPython 3.12 environment with
+`python3.12 -m venv .venv` and
+`.venv/bin/python -m pip install -r requirements-historical.txt`, then follow
+the fail-closed acquisition and offline-preparation commands in the
+[historical seam report](reports/experiments/historical-data-episode-seam.md).
 
 ## Research workflow
 

@@ -11,10 +11,11 @@ import os
 import shutil
 import sys
 import tempfile
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from collections import Counter
 from datetime import date, datetime, timezone
 from decimal import Decimal
+from importlib import metadata as importlib_metadata
 from pathlib import Path
 from typing import Any, Callable, Mapping, Protocol
 from urllib.error import HTTPError, URLError
@@ -32,10 +33,28 @@ from reproducibility.empirical import (
 
 PARSER_VERSION = "smartdca-historical-csv/1"
 HISTORICAL_ENGINE_VERSION = "smartdca-historical-preparation/1"
+YFINANCE_VERSION = "1.7.0"
+YFINANCE_SOURCE_COMMIT = "3d9d2f0cacb662bff689874cd6113bae3a30a885"
+YFINANCE_AUTHORIZATION_ENV = "YAHOO_FINANCE_AUTOMATED_ACCESS_AUTHORIZED"
 ZERO = Decimal("0")
 MAPPING_TOLERANCE_DAYS = {
     "spy-adjusted-daily": 7,
     "btc-usd-daily": 1,
+}
+ALPHA_VANTAGE_ACQUISITION = {
+    "adapter": "alpha-vantage-http",
+    "provider": "Alpha Vantage",
+    "one_response_per_dataset": True,
+    "credential_recorded": False,
+}
+YFINANCE_ACQUISITION = {
+    "adapter": "yfinance-history",
+    "adapter_version": YFINANCE_VERSION,
+    "provider": "Yahoo Finance",
+    "one_export_per_dataset": True,
+    "credential_recorded": False,
+    "authorization_attested": True,
+    "provider_http_metadata_exposed": False,
 }
 
 
@@ -118,7 +137,7 @@ def _utc_datetime(value: Any, field: str) -> str:
 
 @dataclass(frozen=True)
 class HistoricalSourceSet:
-    """Validated immutable description of exact historical source responses."""
+    """Validated immutable description of exact historical source exports."""
 
     canonical_document: str
     sha256: str
@@ -189,12 +208,7 @@ class HistoricalSourceSet:
             _require(
                 isinstance(acquisition, dict)
                 and acquisition
-                == {
-                    "adapter": "alpha-vantage-http",
-                    "provider": "Alpha Vantage",
-                    "one_response_per_dataset": True,
-                    "credential_recorded": False,
-                },
+                in (ALPHA_VANTAGE_ACQUISITION, YFINANCE_ACQUISITION),
                 "unverified_confirmatory_provenance",
                 "source_set.acquisition",
                 "confirmatory sources must carry the live acquisition receipt",
@@ -241,21 +255,75 @@ class HistoricalSourceSet:
                 f"{prefix}.expected_sha256",
                 "must be a lowercase SHA-256 digest",
             )
-            _require(
-                isinstance(source["http_status"], int)
-                and not isinstance(source["http_status"], bool),
-                "invalid_source",
-                f"{prefix}.http_status",
-                "must be an integer",
-            )
-            if document["confirmatory"]:
+            if not document["confirmatory"]:
                 _require(
-                    source["adapter"] == "alpha-vantage-http"
+                    isinstance(source["http_status"], int)
+                    and not isinstance(source["http_status"], bool),
+                    "invalid_source",
+                    f"{prefix}.http_status",
+                    "must be an integer",
+                )
+            if document["confirmatory"]:
+                expected_adapter = document["acquisition"]["adapter"]
+                _require(
+                    source["adapter"] == expected_adapter
                     and isinstance(source.get("request_receipt"), dict),
                     "unverified_confirmatory_provenance",
                     prefix,
                     "confirmatory sources must come from the live provider adapter",
                 )
+                if expected_adapter == "alpha-vantage-http":
+                    _require(
+                        isinstance(source["http_status"], int)
+                        and not isinstance(source["http_status"], bool),
+                        "invalid_source",
+                        f"{prefix}.http_status",
+                        "must be an integer",
+                    )
+                else:
+                    adapter_metadata = source.get("adapter_metadata")
+                    _require(
+                        source["http_status"] is None
+                        and isinstance(adapter_metadata, dict)
+                        and adapter_metadata.get("adapter") == "yfinance-history"
+                        and adapter_metadata.get("adapter_version")
+                        == YFINANCE_VERSION
+                        and isinstance(
+                            adapter_metadata.get("source_timezone"), str
+                        )
+                        and bool(adapter_metadata["source_timezone"])
+                        and isinstance(
+                            adapter_metadata.get("source_currency"), str
+                        )
+                        and bool(adapter_metadata["source_currency"])
+                        and isinstance(
+                            adapter_metadata.get("client_versions"), dict
+                        )
+                        and adapter_metadata["client_versions"].get("yfinance")
+                        == YFINANCE_VERSION
+                        and adapter_metadata.get("cache_policy")
+                        == "acquisition-source-root-local"
+                        and adapter_metadata.get("client_source_commit")
+                        == YFINANCE_SOURCE_COMMIT
+                        and isinstance(
+                            adapter_metadata.get("dependency_lock_sha256"), str
+                        )
+                        and len(adapter_metadata["dependency_lock_sha256"]) == 64
+                        and all(
+                            character in "0123456789abcdef"
+                            for character in adapter_metadata[
+                                "dependency_lock_sha256"
+                            ]
+                        )
+                        and adapter_metadata.get("http_backend") == "curl_cffi"
+                        and adapter_metadata.get("provider_http_metadata_exposed")
+                        is False
+                        and adapter_metadata.get("export_format")
+                        == "smartdca-canonical-csv/1",
+                        "unverified_confirmatory_provenance",
+                        prefix,
+                        "yfinance sources must retain exact adapter provenance",
+                    )
                 _require(
                     source["path"]
                     == (
@@ -271,16 +339,20 @@ class HistoricalSourceSet:
                 source["dataset_id"]: source["expected_sha256"]
                 for source in document["sources"]
             }
-            expected_source_set_id = (
+            identity_prefix = (
                 "alpha-vantage-historical-"
-                f"{_fingerprint(_canonical_json(source_hashes).encode('utf-8'))}"
+                if document["acquisition"]["adapter"] == "alpha-vantage-http"
+                else "yahoo-finance-historical-"
+            )
+            expected_source_set_id = identity_prefix + _fingerprint(
+                _canonical_json(source_hashes).encode("utf-8")
             )
             _require(
                 len(source_hashes) == len(document["sources"])
                 and document["source_set_id"] == expected_source_set_id,
                 "unverified_confirmatory_provenance",
                 "source_set.source_set_id",
-                "confirmatory source-set identity must derive from response hashes",
+                "confirmatory source-set identity must derive from source hashes",
             )
         canonical = _canonical_json(document)
         return cls(canonical, _fingerprint(canonical.encode("utf-8")))
@@ -315,18 +387,45 @@ def load_historical_source_set(path: Path) -> HistoricalSourceSet:
 
 @dataclass(frozen=True)
 class ProviderResponse:
-    """Exact response returned by a historical-data provider adapter."""
+    """Exact bytes and metadata returned by a historical-source adapter."""
 
     body: bytes
-    http_status: int
+    http_status: int | None
     content_type: str
+    metadata: Mapping[str, Any] = field(default_factory=dict)
 
 
 class HistoricalProvider(Protocol):
-    """Port implemented by live and fixture historical-provider adapters."""
+    """Port implemented by live and fixture historical-source adapters."""
 
     def retrieve(self, dataset: Mapping[str, Any]) -> ProviderResponse:
-        """Retrieve one exact response for the declared dataset."""
+        """Retrieve one exact source export for the declared dataset."""
+
+
+def _acquisition_profile(config: Mapping[str, Any]) -> Mapping[str, Any]:
+    providers = {
+        dataset["provider"] for dataset in config["historical_datasets"]
+    }
+    if providers == {"Alpha Vantage"}:
+        return ALPHA_VANTAGE_ACQUISITION
+    if providers == {"Yahoo Finance"}:
+        retrieval = config["retrieval_and_fingerprint"]
+        _require(
+            retrieval.get("adapter") == "yfinance-history"
+            and retrieval.get("client_package") == "yfinance"
+            and retrieval.get("client_version") == YFINANCE_VERSION
+            and retrieval.get("one_export_per_dataset") is True
+            and retrieval.get("provider_http_metadata_exposed") is False,
+            "unverified_confirmatory_provenance",
+            "config.retrieval_and_fingerprint",
+            "must pin the supported yfinance acquisition profile",
+        )
+        return YFINANCE_ACQUISITION
+    raise ExperimentValidationError(
+        "unsupported_provider",
+        "config.historical_datasets",
+        "must select one supported provider for both declared datasets",
+    )
 
 
 class AlphaVantageProvider:
@@ -390,6 +489,224 @@ class AlphaVantageProvider:
         return ProviderResponse(body, status, content_type)
 
 
+def _load_yfinance_history(
+    symbol: str,
+    parameters: Mapping[str, Any],
+    cache_directory: Path,
+) -> Mapping[str, Any]:
+    try:
+        import yfinance
+    except ImportError as error:
+        raise ExperimentValidationError(
+            "missing_dependency",
+            "yfinance",
+            "install requirements-historical.txt with CPython 3.12",
+        ) from error
+    installed_version = importlib_metadata.version("yfinance")
+    _require(
+        installed_version == YFINANCE_VERSION,
+        "dependency_version_mismatch",
+        "yfinance",
+        f"must equal the preregistered version {YFINANCE_VERSION}",
+    )
+    cache_directory.mkdir(parents=True, exist_ok=True)
+    yfinance.set_tz_cache_location(str(cache_directory))
+    try:
+        ticker = yfinance.Ticker(symbol)
+        frame = ticker.history(**dict(parameters))
+        history_metadata = ticker.history_metadata
+    except Exception as error:
+        raise ExperimentValidationError(
+            "provider_request_failed",
+            f"provider.{symbol}",
+            "yfinance failed before producing a historical export",
+        ) from error
+    _require(
+        frame is not None and not frame.empty,
+        "provider_error_payload",
+        f"provider.{symbol}",
+        "yfinance returned no historical observations",
+    )
+    index_timezone = str(frame.index.tz) if frame.index.tz is not None else ""
+    source_timezone = str(history_metadata.get("exchangeTimezoneName", ""))
+    source_currency = str(history_metadata.get("currency", ""))
+    _require(
+        source_timezone == index_timezone,
+        "series_semantics_mismatch",
+        f"provider.{symbol}.source_timezone",
+        "Yahoo metadata and the yfinance daily index must carry the same timezone",
+    )
+    rows: list[dict[str, Any]] = []
+    for timestamp, values in frame.iterrows():
+        rows.append(
+            {
+                "timestamp": timestamp.date().isoformat(),
+                **{str(column): values[column] for column in frame.columns},
+            }
+        )
+    dependency_names = ("yfinance", "pandas", "numpy", "curl_cffi")
+    return {
+        "source_timezone": source_timezone,
+        "source_currency": source_currency,
+        "client_versions": {
+            name: importlib_metadata.version(name) for name in dependency_names
+        },
+        "rows": rows,
+    }
+
+
+def _canonical_export_number(value: Any) -> str:
+    try:
+        number = Decimal(str(value))
+    except Exception:
+        return ""
+    return _decimal_text(number) if number.is_finite() else ""
+
+
+class YFinanceProvider:
+    """Pinned yfinance adapter producing exact canonical CSV source bytes."""
+
+    def __init__(
+        self,
+        cache_directory: Path,
+        *,
+        authorization: str,
+        history_loader: Callable[
+            [str, Mapping[str, Any], Path], Mapping[str, Any]
+        ] = _load_yfinance_history,
+    ) -> None:
+        _require(
+            isinstance(cache_directory, Path),
+            "invalid_type",
+            "cache_directory",
+            "must be pathlib.Path",
+        )
+        _require(
+            authorization == "true",
+            "missing_authorization",
+            YFINANCE_AUTHORIZATION_ENV,
+            "must equal true only after the researcher confirms authorized automated access",
+        )
+        self._cache_directory = cache_directory
+        self._history_loader = history_loader
+
+    def retrieve(self, dataset: Mapping[str, Any]) -> ProviderResponse:
+        _require(
+            dataset.get("provider") == "Yahoo Finance"
+            and dataset.get("endpoint")
+            == "https://query2.finance.yahoo.com/v8/finance/chart/{symbol}"
+            and dataset.get("client_method") == "yfinance.Ticker.history",
+            "series_semantics_mismatch",
+            f"provider.{dataset.get('dataset_id', 'unknown')}",
+            "must be the preregistered Yahoo Finance history source",
+        )
+        parameters = dict(dataset["request_parameters"])
+        symbol = parameters.pop("symbol", None)
+        _require(
+            isinstance(symbol, str) and bool(symbol),
+            "series_semantics_mismatch",
+            f"provider.{dataset['dataset_id']}.symbol",
+            "must be a nonempty yfinance ticker",
+        )
+        downloaded = self._history_loader(
+            symbol, parameters, self._cache_directory
+        )
+        _require(
+            isinstance(downloaded, Mapping),
+            "invalid_provider_response",
+            f"provider.{dataset['dataset_id']}",
+            "history loader must return a mapping",
+        )
+        source_timezone = downloaded.get("source_timezone")
+        _require(
+            source_timezone == dataset["timezone"],
+            "series_semantics_mismatch",
+            f"provider.{dataset['dataset_id']}.source_timezone",
+            "must match the preregistered source timezone",
+        )
+        source_currency = downloaded.get("source_currency")
+        _require(
+            source_currency == dataset["currency"],
+            "series_semantics_mismatch",
+            f"provider.{dataset['dataset_id']}.source_currency",
+            "must match the preregistered quote currency",
+        )
+        client_versions = downloaded.get("client_versions")
+        _require(
+            isinstance(client_versions, Mapping)
+            and client_versions.get("yfinance") == YFINANCE_VERSION,
+            "dependency_version_mismatch",
+            f"provider.{dataset['dataset_id']}.client_versions",
+            f"must record yfinance {YFINANCE_VERSION}",
+        )
+        rows = downloaded.get("rows")
+        _require(
+            isinstance(rows, list) and bool(rows),
+            "empty_source",
+            f"provider.{dataset['dataset_id']}.rows",
+            "must contain at least one observation",
+        )
+        if dataset["dataset_id"] == "spy-adjusted-daily":
+            fields = (
+                ("timestamp", "timestamp"),
+                ("open", "Open"),
+                ("high", "High"),
+                ("low", "Low"),
+                ("close", "Close"),
+                ("adjusted_close", "Adj Close"),
+                ("volume", "Volume"),
+                ("dividend_amount", "Dividends"),
+                ("split_coefficient", "Stock Splits"),
+                ("capital_gains", "Capital Gains"),
+            )
+        else:
+            fields = (
+                ("timestamp", "timestamp"),
+                ("open", "Open"),
+                ("high", "High"),
+                ("low", "Low"),
+                ("close", "Close"),
+                ("volume", "Volume"),
+            )
+        output = io.StringIO(newline="")
+        writer = csv.writer(output, lineterminator="\n")
+        writer.writerow([target for target, _ in fields])
+        for row in sorted(rows, key=lambda item: str(item.get("timestamp", ""))):
+            _require(
+                isinstance(row, Mapping),
+                "invalid_provider_response",
+                f"provider.{dataset['dataset_id']}.rows",
+                "each history row must be a mapping",
+            )
+            writer.writerow(
+                [
+                    str(row[source])
+                    if source == "timestamp" and source in row
+                    else _canonical_export_number(row.get(source))
+                    for _, source in fields
+                ]
+            )
+        metadata = {
+            "adapter": "yfinance-history",
+            "adapter_version": YFINANCE_VERSION,
+            "client_versions": dict(client_versions),
+            "source_timezone": source_timezone,
+            "source_currency": source_currency,
+            "provider_http_metadata_exposed": False,
+            "export_format": "smartdca-canonical-csv/1",
+            "cache_policy": "acquisition-source-root-local",
+            "client_source_commit": YFINANCE_SOURCE_COMMIT,
+            "dependency_lock_sha256": _fingerprint(
+                (Path(__file__).resolve().parents[1] / "requirements-historical.txt")
+                .read_bytes()
+            ),
+            "http_backend": "curl_cffi",
+        }
+        return ProviderResponse(
+            output.getvalue().encode("utf-8"), None, "text/csv", metadata
+        )
+
+
 @dataclass(frozen=True)
 class PreparedHistoricalInput:
     """Auditable source receipts and normalized rows at the public seam."""
@@ -433,7 +750,7 @@ def acquire_historical_sources(
     provider: HistoricalProvider,
     retrieved_at_utc: str,
 ) -> HistoricalSourceSet:
-    """Persist one exact provider response per preregistered dataset and its receipt."""
+    """Persist one exact source export per preregistered dataset and its receipt."""
 
     _require(isinstance(config, StudyConfig), "invalid_type", "config", "must be StudyConfig")
     _require(isinstance(source_root, Path), "invalid_type", "source_root", "must be pathlib.Path")
@@ -446,8 +763,10 @@ def acquire_historical_sources(
         "source_root",
         "historical-source-set.json already exists",
     )
+    config_data = config.as_mapping()
+    acquisition = _acquisition_profile(config_data)
     sources: list[dict[str, Any]] = []
-    for dataset in config.as_mapping()["historical_datasets"]:
+    for dataset in config_data["historical_datasets"]:
         response = provider.retrieve(dataset)
         _require(
             isinstance(response, ProviderResponse),
@@ -462,11 +781,17 @@ def acquire_historical_sources(
             "must be exact bytes",
         )
         _require(
-            isinstance(response.http_status, int)
-            and not isinstance(response.http_status, bool),
+            (
+                isinstance(response.http_status, int)
+                and not isinstance(response.http_status, bool)
+            )
+            or (
+                acquisition["adapter"] == "yfinance-history"
+                and response.http_status is None
+            ),
             "invalid_provider_response",
             f"provider.{dataset['dataset_id']}.http_status",
-            "must be an integer",
+            "must be an integer or unavailable through the declared client",
         )
         _require(
             isinstance(response.content_type, str) and bool(response.content_type),
@@ -481,7 +806,7 @@ def acquire_historical_sources(
             not raw_path.exists(),
             "source_identity_collision",
             f"source_root.{filename}",
-            "exact-response path already exists",
+            "exact-source path already exists",
         )
         temporary_path = source_root / f".{filename}.tmp"
         _require(
@@ -497,47 +822,53 @@ def acquire_historical_sources(
             if temporary_path.exists():
                 temporary_path.unlink()
             raise
-        sources.append(
-            {
-                "dataset_id": dataset["dataset_id"],
-                "adapter": "alpha-vantage-http",
-                "path": filename,
-                "retrieved_at_utc": retrieved_at_utc,
-                "http_status": response.http_status,
-                "content_type": response.content_type,
-                "expected_sha256": sha256,
-                "redistribution_decision": (
-                    "provider-bytes-and-normalized-observations-access-controlled-"
-                    "outside-git; sanitized-receipts-only-without-written-permission"
-                ),
-                "request_receipt": {
-                    "provider": dataset["provider"],
-                    "endpoint": dataset["endpoint"],
-                    "request_parameters_without_credentials": dataset[
-                        "request_parameters"
-                    ],
-                },
-            }
-        )
+        source = {
+            "dataset_id": dataset["dataset_id"],
+            "adapter": acquisition["adapter"],
+            "path": filename,
+            "retrieved_at_utc": retrieved_at_utc,
+            "http_status": response.http_status,
+            "content_type": response.content_type,
+            "expected_sha256": sha256,
+            "redistribution_decision": (
+                "canonical-client-export-and-normalized-observations-"
+                "access-controlled-outside-git; sanitized-receipts-only-"
+                "without-written-permission"
+                if acquisition["adapter"] == "yfinance-history"
+                else "provider-bytes-and-normalized-observations-access-"
+                "controlled-outside-git; sanitized-receipts-only-without-"
+                "written-permission"
+            ),
+            "request_receipt": {
+                "provider": dataset["provider"],
+                "endpoint": dataset["endpoint"],
+                "request_parameters_without_credentials": dataset[
+                    "request_parameters"
+                ],
+            },
+        }
+        if response.metadata:
+            source["adapter_metadata"] = dict(response.metadata)
+        sources.append(source)
     identity_payload = _canonical_json(
         {row["dataset_id"]: row["expected_sha256"] for row in sources}
     ).encode("utf-8")
     source_set = HistoricalSourceSet.from_mapping(
         {
             "schema_version": "smartdca-historical-source-set/1",
-            "source_set_id": f"alpha-vantage-historical-{_fingerprint(identity_payload)}",
-            "version": "1",
+            "source_set_id": (
+                "alpha-vantage-historical-"
+                if acquisition["adapter"] == "alpha-vantage-http"
+                else "yahoo-finance-historical-"
+            )
+            + _fingerprint(identity_payload),
+            "version": "2" if acquisition["adapter"] == "yfinance-history" else "1",
             "mode": "confirmatory",
             "confirmatory": True,
             "protocol_sha256": config.sha256,
-            "acquisition": {
-                "adapter": "alpha-vantage-http",
-                "provider": "Alpha Vantage",
-                "one_response_per_dataset": True,
-                "credential_recorded": False,
-            },
+            "acquisition": acquisition,
             "purpose": (
-                "Exact preregistered provider responses retained for point-in-time "
+                "Exact preregistered source exports retained for point-in-time "
                 "historical episode construction; no policy outcome was computed."
             ),
             "sources": sources,
@@ -1080,7 +1411,13 @@ def _build_episodes(
 def _source_receipt_preamble(
     dataset: Mapping[str, Any], source: Mapping[str, Any]
 ) -> dict[str, Any]:
-    return {
+    adapter_metadata = source.get("adapter_metadata")
+    provider_timezone_metadata = (
+        adapter_metadata.get("source_timezone")
+        if isinstance(adapter_metadata, Mapping)
+        else "not-present-in-daily-csv"
+    )
+    receipt = {
         "dataset_id": dataset["dataset_id"],
         "provider": dataset["provider"],
         "endpoint": dataset["endpoint"],
@@ -1095,7 +1432,7 @@ def _source_receipt_preamble(
         "currency": dataset["currency"],
         "timezone": dataset["timezone"],
         "timezone_semantics": {
-            "provider_timezone_metadata": "not-present-in-daily-csv",
+            "provider_timezone_metadata": provider_timezone_metadata,
             "normalization_timezone": dataset["timezone"],
             "normalized_observation": "calendar-date-label-only",
             "intraday_timestamp_invented": False,
@@ -1116,6 +1453,11 @@ def _source_receipt_preamble(
         "redistribution_decision": source["redistribution_decision"],
         "adapter": source["adapter"],
     }
+    if "client_method" in dataset:
+        receipt["client_method"] = dataset["client_method"]
+    if isinstance(adapter_metadata, Mapping):
+        receipt.update(adapter_metadata)
+    return receipt
 
 
 def prepare_historical_input(
@@ -1123,7 +1465,7 @@ def prepare_historical_input(
     source_set: HistoricalSourceSet,
     source_root: Path,
 ) -> PreparedHistoricalInput:
-    """Validate, fingerprint, and normalize the declared exact CSV responses."""
+    """Validate, fingerprint, and normalize the declared exact CSV exports."""
 
     _require(isinstance(config, StudyConfig), "invalid_type", "config", "must be StudyConfig")
     _require(
@@ -1202,12 +1544,33 @@ def prepare_historical_input(
                 f"source_set.sources.{dataset_id}.expected_sha256",
                 "exact source bytes do not match the immutable source-set receipt",
             )
-            _require(
-                source["http_status"] == 200,
-                "provider_error_payload",
-                f"source_set.sources.{dataset_id}.http_status",
-                "must equal 200",
-            )
+            if source["adapter"] in {
+                "alpha-vantage-http",
+                "hand-authored-fixture",
+            }:
+                _require(
+                    source["http_status"] == 200,
+                    "provider_error_payload",
+                    f"source_set.sources.{dataset_id}.http_status",
+                    "must equal 200",
+                )
+            elif source["adapter"] == "yfinance-history":
+                _require(
+                    source["http_status"] is None
+                    and source.get("adapter_metadata", {}).get(
+                        "provider_http_metadata_exposed"
+                    )
+                    is False,
+                    "unverified_confirmatory_provenance",
+                    f"source_set.sources.{dataset_id}.adapter_metadata",
+                    "must state that yfinance does not expose provider HTTP metadata",
+                )
+            else:
+                raise ExperimentValidationError(
+                    "unsupported_provider",
+                    f"source_set.sources.{dataset_id}.adapter",
+                    "must name a supported historical-source adapter",
+                )
             normalized, headers, selected_column = _normalized_rows(
                 dataset, payload, f"source_set.sources.{dataset_id}"
             )
@@ -1646,7 +2009,7 @@ def main(argv: list[str] | None = None) -> int:
     validate.add_argument("--source-root", required=True, type=Path)
     validate.add_argument("--output-root", required=True, type=Path)
     acquire = commands.add_parser(
-        "acquire", help="retrieve and fingerprint the locked provider responses"
+        "acquire", help="retrieve and fingerprint the locked provider-source exports"
     )
     acquire.add_argument("--config", required=True, type=Path)
     acquire.add_argument("--source-root", required=True, type=Path)
@@ -1677,11 +2040,22 @@ def main(argv: list[str] | None = None) -> int:
                 "manifest": str((bundle.output_directory / "manifest.json").resolve()),
             }
         elif arguments.command == "acquire":
-            provider = AlphaVantageProvider(
-                os.environ.get("ALPHAVANTAGE_API_KEY", "")
-            )
+            config = load_study_config(arguments.config)
+            acquisition = _acquisition_profile(config.as_mapping())
+            provider: HistoricalProvider
+            if acquisition["adapter"] == "yfinance-history":
+                provider = YFinanceProvider(
+                    arguments.source_root / ".yfinance-cache",
+                    authorization=os.environ.get(
+                        YFINANCE_AUTHORIZATION_ENV, ""
+                    ),
+                )
+            else:
+                provider = AlphaVantageProvider(
+                    os.environ.get("ALPHAVANTAGE_API_KEY", "")
+                )
             source_set = acquire_historical_sources(
-                load_study_config(arguments.config),
+                config,
                 arguments.source_root,
                 provider,
                 datetime.now(timezone.utc)
