@@ -40,6 +40,10 @@ effects, mechanism attribution, and limitations without post-outcome tuning.
   no other effort ticket is claimed. Execution is bound to replacement
   protocol `safety-adaptivity-yahoo-v2` and accepted private runner-input
   SHA-256 `d49a5a6e0304a7da213082698990d46bec7f7cac2399533990f84a40183bec88`.
+- The outcome-blind evaluator was frozen at commit `9c15cf3` before opening the
+  private runner input. Its six public-contract tests, the 16-case shared-runner
+  checkpoint, the 30-case historical seam, compilation, and the repository
+  link audit passed; no confirmatory policy or estimand had yet been executed.
 
 ## Answer
 
