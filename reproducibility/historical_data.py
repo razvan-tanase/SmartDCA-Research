@@ -41,21 +41,6 @@ MAPPING_TOLERANCE_DAYS = {
     "spy-adjusted-daily": 7,
     "btc-usd-daily": 1,
 }
-ALPHA_VANTAGE_ACQUISITION = {
-    "adapter": "alpha-vantage-http",
-    "provider": "Alpha Vantage",
-    "one_response_per_dataset": True,
-    "credential_recorded": False,
-}
-YFINANCE_ACQUISITION = {
-    "adapter": "yfinance-history",
-    "adapter_version": YFINANCE_VERSION,
-    "provider": "Yahoo Finance",
-    "one_export_per_dataset": True,
-    "credential_recorded": False,
-    "authorization_attested": True,
-    "provider_http_metadata_exposed": False,
-}
 
 
 def _require(condition: bool, code: str, field: str, message: str) -> None:
@@ -191,6 +176,7 @@ class HistoricalSourceSet:
             "source_set.confirmatory",
             "must be true exactly when mode is confirmatory",
         )
+        acquisition_profile: _AcquisitionProfile | None = None
         if document["confirmatory"]:
             protocol_sha256 = document.get("protocol_sha256")
             acquisition = document.get("acquisition")
@@ -206,13 +192,12 @@ class HistoricalSourceSet:
                 "confirmatory sources must bind the exact protocol bytes",
             )
             _require(
-                isinstance(acquisition, dict)
-                and acquisition
-                in (ALPHA_VANTAGE_ACQUISITION, YFINANCE_ACQUISITION),
+                isinstance(acquisition, dict),
                 "unverified_confirmatory_provenance",
                 "source_set.acquisition",
                 "confirmatory sources must carry the live acquisition receipt",
             )
+            acquisition_profile = _acquisition_profile_from_receipt(acquisition)
         _require(
             isinstance(document["sources"], list) and bool(document["sources"]),
             "empty_sources",
@@ -264,66 +249,15 @@ class HistoricalSourceSet:
                     "must be an integer",
                 )
             if document["confirmatory"]:
-                expected_adapter = document["acquisition"]["adapter"]
+                assert acquisition_profile is not None
                 _require(
-                    source["adapter"] == expected_adapter
+                    source["adapter"] == acquisition_profile.adapter
                     and isinstance(source.get("request_receipt"), dict),
                     "unverified_confirmatory_provenance",
                     prefix,
                     "confirmatory sources must come from the live provider adapter",
                 )
-                if expected_adapter == "alpha-vantage-http":
-                    _require(
-                        isinstance(source["http_status"], int)
-                        and not isinstance(source["http_status"], bool),
-                        "invalid_source",
-                        f"{prefix}.http_status",
-                        "must be an integer",
-                    )
-                else:
-                    adapter_metadata = source.get("adapter_metadata")
-                    _require(
-                        source["http_status"] is None
-                        and isinstance(adapter_metadata, dict)
-                        and adapter_metadata.get("adapter") == "yfinance-history"
-                        and adapter_metadata.get("adapter_version")
-                        == YFINANCE_VERSION
-                        and isinstance(
-                            adapter_metadata.get("source_timezone"), str
-                        )
-                        and bool(adapter_metadata["source_timezone"])
-                        and isinstance(
-                            adapter_metadata.get("source_currency"), str
-                        )
-                        and bool(adapter_metadata["source_currency"])
-                        and isinstance(
-                            adapter_metadata.get("client_versions"), dict
-                        )
-                        and adapter_metadata["client_versions"].get("yfinance")
-                        == YFINANCE_VERSION
-                        and adapter_metadata.get("cache_policy")
-                        == "acquisition-source-root-local"
-                        and adapter_metadata.get("client_source_commit")
-                        == YFINANCE_SOURCE_COMMIT
-                        and isinstance(
-                            adapter_metadata.get("dependency_lock_sha256"), str
-                        )
-                        and len(adapter_metadata["dependency_lock_sha256"]) == 64
-                        and all(
-                            character in "0123456789abcdef"
-                            for character in adapter_metadata[
-                                "dependency_lock_sha256"
-                            ]
-                        )
-                        and adapter_metadata.get("http_backend") == "curl_cffi"
-                        and adapter_metadata.get("provider_http_metadata_exposed")
-                        is False
-                        and adapter_metadata.get("export_format")
-                        == "smartdca-canonical-csv/1",
-                        "unverified_confirmatory_provenance",
-                        prefix,
-                        "yfinance sources must retain exact adapter provenance",
-                    )
+                acquisition_profile.validate_source(source, prefix)
                 _require(
                     source["path"]
                     == (
@@ -335,17 +269,14 @@ class HistoricalSourceSet:
                     "confirmatory response path must be content-addressed",
                 )
         if document["confirmatory"]:
+            assert acquisition_profile is not None
             source_hashes = {
                 source["dataset_id"]: source["expected_sha256"]
                 for source in document["sources"]
             }
-            identity_prefix = (
-                "alpha-vantage-historical-"
-                if document["acquisition"]["adapter"] == "alpha-vantage-http"
-                else "yahoo-finance-historical-"
-            )
-            expected_source_set_id = identity_prefix + _fingerprint(
-                _canonical_json(source_hashes).encode("utf-8")
+            expected_source_set_id = (
+                acquisition_profile.source_set_identity_prefix
+                + _fingerprint(_canonical_json(source_hashes).encode("utf-8"))
             )
             _require(
                 len(source_hashes) == len(document["sources"])
@@ -400,32 +331,6 @@ class HistoricalProvider(Protocol):
 
     def retrieve(self, dataset: Mapping[str, Any]) -> ProviderResponse:
         """Retrieve one exact source export for the declared dataset."""
-
-
-def _acquisition_profile(config: Mapping[str, Any]) -> Mapping[str, Any]:
-    providers = {
-        dataset["provider"] for dataset in config["historical_datasets"]
-    }
-    if providers == {"Alpha Vantage"}:
-        return ALPHA_VANTAGE_ACQUISITION
-    if providers == {"Yahoo Finance"}:
-        retrieval = config["retrieval_and_fingerprint"]
-        _require(
-            retrieval.get("adapter") == "yfinance-history"
-            and retrieval.get("client_package") == "yfinance"
-            and retrieval.get("client_version") == YFINANCE_VERSION
-            and retrieval.get("one_export_per_dataset") is True
-            and retrieval.get("provider_http_metadata_exposed") is False,
-            "unverified_confirmatory_provenance",
-            "config.retrieval_and_fingerprint",
-            "must pin the supported yfinance acquisition profile",
-        )
-        return YFINANCE_ACQUISITION
-    raise ExperimentValidationError(
-        "unsupported_provider",
-        "config.historical_datasets",
-        "must select one supported provider for both declared datasets",
-    )
 
 
 class AlphaVantageProvider:
@@ -707,6 +612,282 @@ class YFinanceProvider:
         )
 
 
+def _validate_alpha_vantage_response(
+    response: ProviderResponse, field_name: str
+) -> None:
+    _require(
+        isinstance(response.http_status, int)
+        and not isinstance(response.http_status, bool),
+        "invalid_provider_response",
+        f"{field_name}.http_status",
+        "must be an integer",
+    )
+
+
+def _validate_alpha_vantage_source(
+    source: Mapping[str, Any], field_name: str
+) -> None:
+    _require(
+        isinstance(source["http_status"], int)
+        and not isinstance(source["http_status"], bool),
+        "invalid_source",
+        f"{field_name}.http_status",
+        "must be an integer",
+    )
+
+
+def _validate_alpha_vantage_payload(
+    source: Mapping[str, Any], field_name: str
+) -> None:
+    _require(
+        source["http_status"] == 200,
+        "provider_error_payload",
+        f"{field_name}.http_status",
+        "must equal 200",
+    )
+
+
+def _validate_yfinance_metadata(metadata: Any, field_name: str) -> None:
+    _require(
+        isinstance(metadata, dict)
+        and metadata.get("adapter") == "yfinance-history"
+        and metadata.get("adapter_version") == YFINANCE_VERSION
+        and isinstance(metadata.get("source_timezone"), str)
+        and bool(metadata["source_timezone"])
+        and isinstance(metadata.get("source_currency"), str)
+        and bool(metadata["source_currency"])
+        and isinstance(metadata.get("client_versions"), dict)
+        and metadata["client_versions"].get("yfinance") == YFINANCE_VERSION
+        and metadata.get("cache_policy") == "acquisition-source-root-local"
+        and metadata.get("client_source_commit") == YFINANCE_SOURCE_COMMIT
+        and isinstance(metadata.get("dependency_lock_sha256"), str)
+        and len(metadata["dependency_lock_sha256"]) == 64
+        and all(
+            character in "0123456789abcdef"
+            for character in metadata["dependency_lock_sha256"]
+        )
+        and metadata.get("http_backend") == "curl_cffi"
+        and metadata.get("provider_http_metadata_exposed") is False
+        and metadata.get("export_format") == "smartdca-canonical-csv/1",
+        "unverified_confirmatory_provenance",
+        field_name,
+        "yfinance sources must retain exact adapter provenance",
+    )
+
+
+def _validate_yfinance_response(
+    response: ProviderResponse, field_name: str
+) -> None:
+    _require(
+        response.http_status is None,
+        "invalid_provider_response",
+        f"{field_name}.http_status",
+        "must be unavailable through the declared client",
+    )
+    _validate_yfinance_metadata(response.metadata, f"{field_name}.metadata")
+
+
+def _validate_yfinance_source(
+    source: Mapping[str, Any], field_name: str
+) -> None:
+    _require(
+        source["http_status"] is None,
+        "unverified_confirmatory_provenance",
+        field_name,
+        "yfinance does not expose provider HTTP metadata",
+    )
+    _validate_yfinance_metadata(source.get("adapter_metadata"), field_name)
+
+
+def _validate_yfinance_payload(
+    source: Mapping[str, Any], field_name: str
+) -> None:
+    _validate_yfinance_source(source, field_name)
+
+
+def _alpha_vantage_provider(_: Path) -> HistoricalProvider:
+    return AlphaVantageProvider(os.environ.get("ALPHAVANTAGE_API_KEY", ""))
+
+
+def _yfinance_provider(source_root: Path) -> HistoricalProvider:
+    return YFinanceProvider(
+        source_root / ".yfinance-cache",
+        authorization=os.environ.get(YFINANCE_AUTHORIZATION_ENV, ""),
+    )
+
+
+@dataclass(frozen=True)
+class _AcquisitionProfile:
+    """Provider-owned acquisition behavior behind the historical-source seam."""
+
+    provider: str
+    adapter: str
+    source_set_identity_prefix: str
+    source_set_version: str
+    redistribution_decision: str
+    receipt_fields: tuple[tuple[str, Any], ...]
+    retrieval_requirements: tuple[tuple[str, Any], ...]
+    provider_factory: Callable[[Path], HistoricalProvider] = field(
+        repr=False, compare=False
+    )
+    response_validator: Callable[[ProviderResponse, str], None] = field(
+        repr=False, compare=False
+    )
+    source_validator: Callable[[Mapping[str, Any], str], None] = field(
+        repr=False, compare=False
+    )
+    payload_validator: Callable[[Mapping[str, Any], str], None] = field(
+        repr=False, compare=False
+    )
+
+    @property
+    def acquisition_receipt(self) -> dict[str, Any]:
+        return dict(self.receipt_fields)
+
+    def validate_config(self, config: Mapping[str, Any]) -> None:
+        providers = {
+            dataset["provider"] for dataset in config["historical_datasets"]
+        }
+        _require(
+            providers == {self.provider},
+            "unsupported_provider",
+            "config.historical_datasets",
+            "must select one supported provider for both declared datasets",
+        )
+        if self.retrieval_requirements:
+            retrieval = config.get("retrieval_and_fingerprint")
+            _require(
+                isinstance(retrieval, Mapping)
+                and all(
+                    retrieval.get(name) == expected
+                    for name, expected in self.retrieval_requirements
+                ),
+                "unverified_confirmatory_provenance",
+                "config.retrieval_and_fingerprint",
+                f"must pin the supported {self.adapter} acquisition profile",
+            )
+
+    def new_provider(self, source_root: Path) -> HistoricalProvider:
+        return self.provider_factory(source_root)
+
+    def validate_response(
+        self, response: ProviderResponse, field_name: str
+    ) -> None:
+        self.response_validator(response, field_name)
+
+    def validate_source(
+        self, source: Mapping[str, Any], field_name: str
+    ) -> None:
+        _require(
+            source.get("adapter") == self.adapter,
+            "unverified_confirmatory_provenance",
+            field_name,
+            "confirmatory source adapter must match its acquisition profile",
+        )
+        self.source_validator(source, field_name)
+
+    def validate_payload(
+        self, source: Mapping[str, Any], field_name: str
+    ) -> None:
+        self.payload_validator(source, field_name)
+
+
+_ALPHA_VANTAGE_PROFILE = _AcquisitionProfile(
+    provider="Alpha Vantage",
+    adapter="alpha-vantage-http",
+    source_set_identity_prefix="alpha-vantage-historical-",
+    source_set_version="1",
+    redistribution_decision=(
+        "provider-bytes-and-normalized-observations-access-controlled-outside-"
+        "git; sanitized-receipts-only-without-written-permission"
+    ),
+    receipt_fields=(
+        ("adapter", "alpha-vantage-http"),
+        ("provider", "Alpha Vantage"),
+        ("one_response_per_dataset", True),
+        ("credential_recorded", False),
+    ),
+    retrieval_requirements=(),
+    provider_factory=_alpha_vantage_provider,
+    response_validator=_validate_alpha_vantage_response,
+    source_validator=_validate_alpha_vantage_source,
+    payload_validator=_validate_alpha_vantage_payload,
+)
+_YFINANCE_PROFILE = _AcquisitionProfile(
+    provider="Yahoo Finance",
+    adapter="yfinance-history",
+    source_set_identity_prefix="yahoo-finance-historical-",
+    source_set_version="2",
+    redistribution_decision=(
+        "canonical-client-export-and-normalized-observations-access-controlled-"
+        "outside-git; sanitized-receipts-only-without-written-permission"
+    ),
+    receipt_fields=(
+        ("adapter", "yfinance-history"),
+        ("adapter_version", YFINANCE_VERSION),
+        ("provider", "Yahoo Finance"),
+        ("one_export_per_dataset", True),
+        ("credential_recorded", False),
+        ("authorization_attested", True),
+        ("provider_http_metadata_exposed", False),
+    ),
+    retrieval_requirements=(
+        ("adapter", "yfinance-history"),
+        ("client_package", "yfinance"),
+        ("client_version", YFINANCE_VERSION),
+        ("one_export_per_dataset", True),
+        ("provider_http_metadata_exposed", False),
+    ),
+    provider_factory=_yfinance_provider,
+    response_validator=_validate_yfinance_response,
+    source_validator=_validate_yfinance_source,
+    payload_validator=_validate_yfinance_payload,
+)
+_ACQUISITION_PROFILES_BY_PROVIDER = {
+    profile.provider: profile
+    for profile in (_ALPHA_VANTAGE_PROFILE, _YFINANCE_PROFILE)
+}
+_ACQUISITION_PROFILES_BY_ADAPTER = {
+    profile.adapter: profile
+    for profile in (_ALPHA_VANTAGE_PROFILE, _YFINANCE_PROFILE)
+}
+
+
+def _acquisition_profile(config: Mapping[str, Any]) -> _AcquisitionProfile:
+    providers = {
+        dataset["provider"] for dataset in config["historical_datasets"]
+    }
+    profile = (
+        _ACQUISITION_PROFILES_BY_PROVIDER.get(next(iter(providers)))
+        if len(providers) == 1
+        else None
+    )
+    _require(
+        profile is not None,
+        "unsupported_provider",
+        "config.historical_datasets",
+        "must select one supported provider for both declared datasets",
+    )
+    assert profile is not None
+    profile.validate_config(config)
+    return profile
+
+
+def _acquisition_profile_from_receipt(
+    acquisition: Mapping[str, Any],
+) -> _AcquisitionProfile:
+    profile = _ACQUISITION_PROFILES_BY_ADAPTER.get(acquisition.get("adapter"))
+    _require(
+        profile is not None
+        and dict(acquisition) == profile.acquisition_receipt,
+        "unverified_confirmatory_provenance",
+        "source_set.acquisition",
+        "confirmatory sources must carry one exact supported acquisition receipt",
+    )
+    assert profile is not None
+    return profile
+
+
 @dataclass(frozen=True)
 class PreparedHistoricalInput:
     """Auditable source receipts and normalized rows at the public seam."""
@@ -764,7 +945,7 @@ def acquire_historical_sources(
         "historical-source-set.json already exists",
     )
     config_data = config.as_mapping()
-    acquisition = _acquisition_profile(config_data)
+    acquisition_profile = _acquisition_profile(config_data)
     sources: list[dict[str, Any]] = []
     for dataset in config_data["historical_datasets"]:
         response = provider.retrieve(dataset)
@@ -780,18 +961,8 @@ def acquire_historical_sources(
             f"provider.{dataset['dataset_id']}.body",
             "must be exact bytes",
         )
-        _require(
-            (
-                isinstance(response.http_status, int)
-                and not isinstance(response.http_status, bool)
-            )
-            or (
-                acquisition["adapter"] == "yfinance-history"
-                and response.http_status is None
-            ),
-            "invalid_provider_response",
-            f"provider.{dataset['dataset_id']}.http_status",
-            "must be an integer or unavailable through the declared client",
+        acquisition_profile.validate_response(
+            response, f"provider.{dataset['dataset_id']}"
         )
         _require(
             isinstance(response.content_type, str) and bool(response.content_type),
@@ -824,20 +995,14 @@ def acquire_historical_sources(
             raise
         source = {
             "dataset_id": dataset["dataset_id"],
-            "adapter": acquisition["adapter"],
+            "adapter": acquisition_profile.adapter,
             "path": filename,
             "retrieved_at_utc": retrieved_at_utc,
             "http_status": response.http_status,
             "content_type": response.content_type,
             "expected_sha256": sha256,
             "redistribution_decision": (
-                "canonical-client-export-and-normalized-observations-"
-                "access-controlled-outside-git; sanitized-receipts-only-"
-                "without-written-permission"
-                if acquisition["adapter"] == "yfinance-history"
-                else "provider-bytes-and-normalized-observations-access-"
-                "controlled-outside-git; sanitized-receipts-only-without-"
-                "written-permission"
+                acquisition_profile.redistribution_decision
             ),
             "request_receipt": {
                 "provider": dataset["provider"],
@@ -857,16 +1022,14 @@ def acquire_historical_sources(
         {
             "schema_version": "smartdca-historical-source-set/1",
             "source_set_id": (
-                "alpha-vantage-historical-"
-                if acquisition["adapter"] == "alpha-vantage-http"
-                else "yahoo-finance-historical-"
-            )
-            + _fingerprint(identity_payload),
-            "version": "2" if acquisition["adapter"] == "yfinance-history" else "1",
+                acquisition_profile.source_set_identity_prefix
+                + _fingerprint(identity_payload)
+            ),
+            "version": acquisition_profile.source_set_version,
             "mode": "confirmatory",
             "confirmatory": True,
             "protocol_sha256": config.sha256,
-            "acquisition": acquisition,
+            "acquisition": acquisition_profile.acquisition_receipt,
             "purpose": (
                 "Exact preregistered source exports retained for point-in-time "
                 "historical episode construction; no policy outcome was computed."
@@ -1477,6 +1640,11 @@ def prepare_historical_input(
     _require(isinstance(source_root, Path), "invalid_type", "source_root", "must be pathlib.Path")
     config_data = config.as_mapping()
     source_data = source_set.as_mapping()
+    acquisition_profile = (
+        _acquisition_profile_from_receipt(source_data["acquisition"])
+        if source_data["confirmatory"]
+        else None
+    )
     if source_data["confirmatory"]:
         _require(
             source_data["protocol_sha256"] == config.sha256,
@@ -1544,26 +1712,16 @@ def prepare_historical_input(
                 f"source_set.sources.{dataset_id}.expected_sha256",
                 "exact source bytes do not match the immutable source-set receipt",
             )
-            if source["adapter"] in {
-                "alpha-vantage-http",
-                "hand-authored-fixture",
-            }:
+            if acquisition_profile is not None:
+                acquisition_profile.validate_payload(
+                    source, f"source_set.sources.{dataset_id}"
+                )
+            elif source["adapter"] == "hand-authored-fixture":
                 _require(
                     source["http_status"] == 200,
                     "provider_error_payload",
                     f"source_set.sources.{dataset_id}.http_status",
                     "must equal 200",
-                )
-            elif source["adapter"] == "yfinance-history":
-                _require(
-                    source["http_status"] is None
-                    and source.get("adapter_metadata", {}).get(
-                        "provider_http_metadata_exposed"
-                    )
-                    is False,
-                    "unverified_confirmatory_provenance",
-                    f"source_set.sources.{dataset_id}.adapter_metadata",
-                    "must state that yfinance does not expose provider HTTP metadata",
                 )
             else:
                 raise ExperimentValidationError(
@@ -2041,19 +2199,8 @@ def main(argv: list[str] | None = None) -> int:
             }
         elif arguments.command == "acquire":
             config = load_study_config(arguments.config)
-            acquisition = _acquisition_profile(config.as_mapping())
-            provider: HistoricalProvider
-            if acquisition["adapter"] == "yfinance-history":
-                provider = YFinanceProvider(
-                    arguments.source_root / ".yfinance-cache",
-                    authorization=os.environ.get(
-                        YFINANCE_AUTHORIZATION_ENV, ""
-                    ),
-                )
-            else:
-                provider = AlphaVantageProvider(
-                    os.environ.get("ALPHAVANTAGE_API_KEY", "")
-                )
+            acquisition_profile = _acquisition_profile(config.as_mapping())
+            provider = acquisition_profile.new_provider(arguments.source_root)
             source_set = acquire_historical_sources(
                 config,
                 arguments.source_root,

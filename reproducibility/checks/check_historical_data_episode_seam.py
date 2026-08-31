@@ -58,14 +58,17 @@ YAHOO_PREPARATION_MANIFEST = (
     ROOT
     / "experiments"
     / "inputs"
-    / "historical-yahoo-preparation-manifest-v3.json"
+    / "historical-yahoo-preparation-manifest-v4.json"
+)
+HISTORICAL_SEAM_REPORT = (
+    ROOT / "reports" / "experiments" / "historical-data-episode-seam.md"
 )
 COMMITTED_SOURCE_SET = (
     ROOT / "experiments" / "inputs" / "historical-validation-sources-v1.json"
 )
 COMMITTED_RUN_ID = (
     "smartdca-historical-validation-v1-"
-    "9523135380007cb4597b991600acb7d5b0c244e955fb17b36d244d6158155a10"
+    "c42025596701b1932dc81da6d1316b16a812667b227108b0ae136fa18909613e"
 )
 COMMITTED_RUN = ROOT / "reports" / "experiments" / "runs" / COMMITTED_RUN_ID
 
@@ -207,6 +210,14 @@ def _acquire_confirmatory_sources(
 
 
 class HistoricalDataEpisodeSeamTest(unittest.TestCase):
+    def test_report_replays_the_accepted_yahoo_source_receipt(self) -> None:
+        report = HISTORICAL_SEAM_REPORT.read_text(encoding="utf-8")
+
+        self.assertIn(
+            "--source-set experiments/inputs/historical-yahoo-receipts-v2.json",
+            report,
+        )
+
     def test_yahoo_replacement_is_a_new_locked_protocol_before_data_access(self) -> None:
         original = load_study_config(PROTOCOL).as_mapping()
         replacement = load_study_config(YAHOO_PROTOCOL).as_mapping()
@@ -497,7 +508,7 @@ class HistoricalDataEpisodeSeamTest(unittest.TestCase):
         self.assertEqual(
             manifest["run_id"],
             "smartdca-historical-input-v1-"
-            "c4e1222c907ffcffe6fd237fd34d97987566a415e45903577cc507fffff12d0f",
+            "9134a1e12b86546a2479e76f162d09d667217d7ccaf24a627075c7a89c7d85fd",
         )
         self.assertEqual(
             manifest["runner_input_sha256"],

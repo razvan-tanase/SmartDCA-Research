@@ -111,9 +111,30 @@ complete study input without opening the confirmatory result set.
   `d49a5a6e0304a7da213082698990d46bec7f7cac2399533990f84a40183bec88`,
   and `policy_execution=not-run`; raw exports, normalized observations, and
   episode rows remain under ignored `data/raw/`.
-- Twenty-nine focused historical-seam tests and all sixteen canonical-run
-  tests pass under CPython 3.12. The final repository-wide verification and
-  parallel Standards/specification review remain before resolution.
+- Initial Yahoo-change review found that the reproduction command named the
+  provisional receipt, provider behavior was selected by repeated switches,
+  and the expanded glossary definition lacked a recorded domain review. The
+  command now names the accepted version-2 receipt, one internal typed
+  acquisition profile owns provider-specific behavior, and an executable
+  documentation check protects the replay route.
+- Independent domain review found that the revised **Historical source
+  receipt** wording initially omitted declared fixtures from its artifact
+  classes. Independent re-review passed after the definition explicitly
+  distinguished raw provider responses, versioned canonical client exports,
+  and declared hand-authored fixtures; exact-byte source identity remains
+  distinct from experiment-input identity.
+- Offline replay from the accepted receipt produced version-4 [preparation
+  manifest](../../../../../experiments/inputs/historical-yahoo-preparation-manifest-v4.json)
+  with run identity
+  `smartdca-historical-input-v1-9134a1e12b86546a2479e76f162d09d667217d7ccaf24a627075c7a89c7d85fd`
+  and `policy_execution=not-run`. The new immutable non-confirmatory validation
+  bundle is
+  `smartdca-historical-validation-v1-c42025596701b1932dc81da6d1316b16a812667b227108b0ae136fa18909613e`;
+  all predecessors remain preserved.
+- Thirty focused historical-seam tests, all sixteen canonical-run tests, and
+  all six Markdown-linker tests pass under CPython 3.12. The final
+  repository-wide verification and parallel Standards/specification review
+  remain before resolution.
 
 ## Answer
 

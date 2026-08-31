@@ -79,8 +79,9 @@ candidate. Label a retrospectively budget-matched comparator separately.
 A sanitized record that binds one declared historical-data source and its
 series semantics to its provenance metadata, the fingerprint of exact retained
 source bytes, observed schema, date coverage, parser identity, and
-redistribution decision. Retained source bytes may be a raw provider response
-or a versioned canonical client export, but the receipt must identify which.
+redistribution decision. Retained source bytes may be a raw provider response,
+a versioned canonical client export, or a declared hand-authored fixture; the
+receipt must identify the artifact class without conflating one with another.
 **Usage:** Use the receipt to audit the content-derived source identity; do not
 treat a mutable provider URL as an identity, a canonical client export as raw
 provider bytes, or a hand-authored fixture as a provider response.
