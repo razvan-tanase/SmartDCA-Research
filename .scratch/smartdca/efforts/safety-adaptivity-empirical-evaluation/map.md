@@ -16,14 +16,13 @@ follow the [work-tracking workflow](../../../../docs/agents/work-tracking.md).
 | [02](issues/02-evaluate-deterministic-adversarial-paths.md) | Evaluate deterministic synthetic and adversarial path families. | resolved | 01 |
 | [03](issues/03-evaluate-seeded-stochastic-families.md) | Evaluate seeded stochastic path families. | resolved | 01 |
 | [04](issues/04-establish-historical-data-episode-seam.md) | Establish fingerprinted historical inputs and rolling episodes without opening confirmatory outcomes. | resolved | 01 |
-| [05](issues/05-run-confirmatory-historical-evaluation.md) | Execute the frozen rolling S&P 500 and Bitcoin evaluation. | open | 04 |
+| [05](issues/05-run-confirmatory-historical-evaluation.md) | Execute the frozen rolling S&P 500 and Bitcoin evaluation. | claimed | 04 |
 | [06](issues/06-synthesize-safety-adaptivity-tradeoff.md) | Synthesize deterministic, stochastic, and historical evidence. | open | 02, 03, 05 |
 | [07](issues/07-review-publish-empirical-package.md) | Independently reproduce, review, and publish the empirical package. | open | 06 |
 
 ## Current frontier
 
-No ticket is claimed. [Ticket
-05](issues/05-run-confirmatory-historical-evaluation.md) is open and unblocked:
+Ticket [05](issues/05-run-confirmatory-historical-evaluation.md) is claimed:
 execute the frozen historical evaluation from ticket 04's exact private Yahoo
 runner input without altering the accepted protocol or receipt identities.
 Tickets 06 and 07 remain behind their listed dependencies. The resolved ticket

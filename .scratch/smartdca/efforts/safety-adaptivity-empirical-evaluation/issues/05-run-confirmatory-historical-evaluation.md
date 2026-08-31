@@ -1,7 +1,7 @@
 # 05 — Run the confirmatory historical evaluation
 
 Type: task
-Status: open
+Status: claimed
 Blocked by: 04
 Parent: [Safety-adaptivity empirical evaluation](../spec.md)
 
@@ -36,6 +36,10 @@ effects, mechanism attribution, and limitations without post-outcome tuning.
 - Created from the user-approved seven-ticket decomposition on 2026-08-25.
 - This ticket depends only on the validated historical-data seam; deterministic
   and stochastic studies do not gate faithful confirmatory execution.
+- Claimed on `main` on 2026-08-31 after confirming ticket 04 is resolved and
+  no other effort ticket is claimed. Execution is bound to replacement
+  protocol `safety-adaptivity-yahoo-v2` and accepted private runner-input
+  SHA-256 `d49a5a6e0304a7da213082698990d46bec7f7cac2399533990f84a40183bec88`.
 
 ## Answer
 

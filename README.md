@@ -107,9 +107,10 @@ python -m unittest reproducibility.checks.check_empirical_protocol_canonical_run
 python -m unittest reproducibility.checks.check_deterministic_adversarial_study
 python -m unittest reproducibility.checks.check_stochastic_family_study
 python -m unittest reproducibility.checks.check_historical_data_episode_seam
+python -m unittest reproducibility.checks.check_historical_confirmatory_evaluation
 ```
 
-GitHub Actions runs the link check and all fifteen scientific checks on every
+GitHub Actions runs the link check and all sixteen scientific checks on every
 push and pull request.
 
 Authorized Yahoo Finance acquisition is a separate, pinned input-production
