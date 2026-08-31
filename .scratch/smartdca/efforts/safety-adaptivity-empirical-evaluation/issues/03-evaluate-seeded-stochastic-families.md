@@ -92,6 +92,7 @@ receipts, even though the durable run itself has none.
 The independently reviewed [experiment report](../../../../../reports/experiments/seeded-stochastic-families.md)
 and [audit note](../../../../../research/notes/seeded-stochastic-family-evaluation-audit.md)
 record the distributions, downside, cash drag, exposure, guardrail activation,
-purchase activity, attribution, provenance, and limits. Both remain draft until
-the effort's registered historical-slice promotion gate; resolving this ticket
-does not convert controlled simulation into historical or universal evidence.
+purchase activity, attribution, provenance, and limits. Ticket 04 satisfied the
+registered historical-slice promotion gate on 2026-08-31, so both are stable
+controlled-simulation evidence inputs for later synthesis. That promotion does
+not convert controlled simulation into historical or universal evidence.

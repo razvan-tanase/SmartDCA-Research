@@ -49,9 +49,11 @@ and a bounded experiment report generated through the shared runner.
 - Independent empirical review reproduced all 23 final bundle files byte for
   byte and recomputed the search, accounting, attribution, and theorem-scope
   receipts without a blocking or non-blocking finding.
-- The experiment report intentionally remains draft because the effort's
-  stable-promotion gate awaits the registered historical-slice reproduction in
-  ticket 04. No historical provider response or stochastic outcome was used.
+- The experiment report was initially draft because the effort's
+  stable-promotion gate awaited the registered historical-slice reproduction
+  in ticket 04. Ticket 04 satisfied that gate on 2026-08-31, promoting the
+  report to a stable deterministic-evidence input without changing its scope.
+  No historical provider response or stochastic outcome was used here.
 
 ## Answer
 

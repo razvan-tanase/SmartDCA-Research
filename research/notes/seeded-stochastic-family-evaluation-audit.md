@@ -141,9 +141,12 @@ python -m unittest reproducibility.checks.check_stochastic_family_study
 The checkpoint validates the public contract, manifest and compressed-ledger
 fingerprints, report claims, and a clean replay whose substantive artifacts
 are byte-identical across the declared CPython 3.12 runtime. The outer manifest
-retains the installed patch version as an environment receipt. This note stays
-draft until the ticket review is recorded; the experiment report also remains
-draft under the effort-wide historical-slice promotion gate.
+retains the installed patch version as an environment receipt. The ticket
+review and effort-wide historical-slice promotion gate are now satisfied by
+the reviewed [historical-data
+seam](../../reports/experiments/historical-data-episode-seam.md). This note and
+its experiment report are stable controlled-simulation evidence for later
+synthesis, without changing their scientific claim boundary.
 
 [^effort-spec]: Source join: [approved empirical effort specification](../../.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec.md).
 [^run-evidence]: Source join: the [saved stochastic study](../../experiments/inputs/seeded-stochastic-families-v1.json), [generator and orchestration source](../../reproducibility/stochastic_study.py), and [immutable run manifest](../../reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/manifest.json).

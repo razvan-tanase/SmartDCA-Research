@@ -1,7 +1,7 @@
 # 04 — Establish the historical-data and rolling-episode seam
 
 Type: task
-Status: claimed
+Status: resolved
 Blocked by: 01
 Parent: [Safety-adaptivity empirical evaluation](../spec.md)
 
@@ -30,7 +30,7 @@ complete study input without opening the confirmatory result set.
 - [x] One explicitly non-confirmatory validation episode for each asset runs end to end through DCA, neutral guarded, and corrected guarded policies and emits the standard manifest, ledgers, validations, and estimands.
 - [x] Confirmatory aggregate outcomes remain unopened and unreported; validation output is labeled as infrastructure evidence rather than a study conclusion.
 - [x] Every unavailable, malformed, incomplete, or excluded episode is retained with a machine-readable reason and reconciles with dataset and episode counts.
-- [ ] The data receipts, episode builder, validation runs, checks, and ticket resolution are reproducible without hidden manual steps.
+- [x] The data receipts, episode builder, validation runs, checks, and ticket resolution are reproducible without hidden manual steps.
 
 ## Comments
 
@@ -131,11 +131,47 @@ complete study input without opening the confirmatory result set.
   bundle is
   `smartdca-historical-validation-v1-d376ff1411774e40978ea1aa4c0dcf4e18603d93fbfcb017cbfa18538ea7b499`;
   all predecessors remain preserved.
-- Thirty focused historical-seam tests, all sixteen canonical-run tests, and
-  all six Markdown-linker tests pass under CPython 3.12. The final
-  repository-wide verification and parallel Standards/specification review
-  remain before resolution.
+- Final parallel Standards and specification review of the implementation
+  through `e905e28` against base `62342b4` found no remaining violation,
+  smell, missing requirement, incorrect behavior, or scope creep. The
+  specification reviewer independently replayed the accepted receipt, verified
+  all private and committed artifact hashes, and confirmed the outcome-blind
+  boundary.
+- The complete README verification matrix passed under CPython 3.12 on
+  2026-08-31: 6 link-checker tests, the repository-wide Markdown link audit,
+  all standalone scientific programs, 16 canonical-run tests, 14
+  deterministic-study tests, 39 stochastic-study tests, and 30
+  historical-seam tests. The stochastic replay completed in 1,709.796 seconds.
 
 ## Answer
 
-_Not yet resolved._
+Yes. The immutable [Yahoo replacement
+protocol](../../../../../experiments/protocols/safety-adaptivity-yahoo-v2.json)
+and accepted [source-set
+receipt](../../../../../experiments/inputs/historical-yahoo-receipts-v2.json)
+bind Yahoo Finance series `SPY` and `BTC-USD` to pinned yfinance 1.7.0
+canonical exports, exact source fingerprints, runtime currency/timezone
+checks, and the conservative private-retention decision.
+
+Outcome-blind preparation accepted 8,287 SPY rows and 4,018 BTC-USD rows,
+covering the registered ranges through 2025-12-31. It reconciled all 12,305
+observations into 1,365 point-in-time rolling episodes with zero exclusions.
+The exact runner input has SHA-256
+`d49a5a6e0304a7da213082698990d46bec7f7cac2399533990f84a40183bec88`;
+the accepted [version-5 preparation
+manifest](../../../../../experiments/inputs/historical-yahoo-preparation-manifest-v5.json)
+records run
+`smartdca-historical-input-v1-4da2c9a1982b48cc821969e802118270d7a95e44cc03107e8d2846729df0e14f`
+with `policy_execution=not-run`.
+
+The 30-case [historical seam
+checkpoint](../../../../../reproducibility/checks/check_historical_data_episode_seam.py)
+replays acquisition, normalization, calendar mapping, complete exclusion
+ledgers, prefix stability, the full-grid handoff, and the accepted
+non-confirmatory two-asset validation bundle
+`smartdca-historical-validation-v1-d376ff1411774e40978ea1aa4c0dcf4e18603d93fbfcb017cbfa18538ea7b499`.
+The [reviewed report](../../../../../reports/experiments/historical-data-episode-seam.md)
+documents the exact commands and limits. Raw exports, normalized observations,
+and episode rows remain outside Git; no confirmatory policy, estimand,
+aggregate, or conclusion was opened. Ticket 05 may now consume this exact
+private runner input under the replacement protocol.

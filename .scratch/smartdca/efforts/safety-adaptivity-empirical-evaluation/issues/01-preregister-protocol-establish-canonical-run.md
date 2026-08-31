@@ -52,9 +52,10 @@ boundary before historical outcomes are read.
 - The accepted version-1 protocol and input fingerprints close the explicitly
   logged, outcome-blind first-publication correction window. No SPY or BTC/USD
   provider response or derived historical policy result was retrieved.
-- The canonical experiment report intentionally remains draft: the effort's
-  stable-promotion gate also requires a historical-slice reproduction, which
-  belongs to ticket 04 rather than this outcome-blind checkpoint.
+- The canonical experiment report was initially draft because the effort's
+  stable-promotion gate also required a historical-slice reproduction. Ticket
+  04 satisfied that gate on 2026-08-31, promoting the report to a stable
+  infrastructure-evidence input without changing its non-confirmatory scope.
 
 ## Answer
 

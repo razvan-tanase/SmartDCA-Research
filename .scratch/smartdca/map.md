@@ -22,11 +22,11 @@ reaches it.
 
 ## Current frontier
 
-Establish fingerprinted historical inputs and rolling episodes without opening
-confirmatory aggregate outcomes. The active effort's [map](efforts/safety-adaptivity-empirical-evaluation/map.md)
-is authoritative for ticket dependencies and state. Tickets 05–07 cover the
-confirmatory run, synthesis, and independent publication review after their
-declared prerequisites resolve.
+Run the frozen confirmatory historical evaluation from the reviewed Yahoo
+Finance receipt and exact private runner input. The active effort's
+[map](efforts/safety-adaptivity-empirical-evaluation/map.md) is authoritative
+for ticket dependencies and state. Tickets 06 and 07 cover synthesis and
+independent publication review after their declared prerequisites resolve.
 
 ## Historical decisions
 

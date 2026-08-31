@@ -48,8 +48,13 @@ publication review.
 
 The independently reviewed arbitrary-horizon checkpoint is complete. The
 approved [safety-adaptivity empirical effort](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec.md)
-is active. Its [effort map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md)
-is the authority for ticket state, dependencies, and publication gates. The
+is active. Its reviewed [historical-data
+seam](reports/experiments/historical-data-episode-seam.md) now binds the frozen
+Yahoo replacement protocol to an exact outcome-blind runner input; confirmatory
+policy outcomes remain unopened. Ticket 05, the frozen historical evaluation,
+is the current frontier. The [effort
+map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md) is
+the authority for ticket state, dependencies, and publication gates, while the
 [project map](.scratch/smartdca/map.md) records the cross-effort frontier.
 
 ## Repository map

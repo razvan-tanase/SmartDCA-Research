@@ -170,8 +170,10 @@ historical asset. It supplies controlled sensitivity, implementation stress,
 and mechanism attribution. It does not establish historical relevance,
 stochastic optimality, statistical significance, causal superiority,
 parameter superiority, expected outperformance, or universal performance.
-The report stays draft until the effort's registered historical-slice review
-gate is satisfied.
+The registered historical-slice review gate is now satisfied by the reviewed
+[historical-data seam](historical-data-episode-seam.md). This report is stable
+controlled-simulation evidence for later synthesis, not publication of the
+final empirical package; all limitations above remain unchanged.
 
 [^effort-spec]: Source join: [approved empirical effort specification](../../.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec.md).
 [^guarded-rule]: Source join: [canonical guarded-rule definition](../../research/definitions/guarded-corrected-mean-smartdca-rule.md).

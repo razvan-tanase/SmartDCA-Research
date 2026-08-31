@@ -15,17 +15,19 @@ follow the [work-tracking workflow](../../../../docs/agents/work-tracking.md).
 | [01](issues/01-preregister-protocol-establish-canonical-run.md) | Freeze the protocol and establish one complete non-confirmatory empirical run. | resolved | — |
 | [02](issues/02-evaluate-deterministic-adversarial-paths.md) | Evaluate deterministic synthetic and adversarial path families. | resolved | 01 |
 | [03](issues/03-evaluate-seeded-stochastic-families.md) | Evaluate seeded stochastic path families. | resolved | 01 |
-| [04](issues/04-establish-historical-data-episode-seam.md) | Establish fingerprinted historical inputs and rolling episodes without opening confirmatory outcomes. | claimed | 01 |
+| [04](issues/04-establish-historical-data-episode-seam.md) | Establish fingerprinted historical inputs and rolling episodes without opening confirmatory outcomes. | resolved | 01 |
 | [05](issues/05-run-confirmatory-historical-evaluation.md) | Execute the frozen rolling S&P 500 and Bitcoin evaluation. | open | 04 |
 | [06](issues/06-synthesize-safety-adaptivity-tradeoff.md) | Synthesize deterministic, stochastic, and historical evidence. | open | 02, 03, 05 |
 | [07](issues/07-review-publish-empirical-package.md) | Independently reproduce, review, and publish the empirical package. | open | 06 |
 
 ## Current frontier
 
-[Ticket 04](issues/04-establish-historical-data-episode-seam.md) is claimed.
-Its authorized Yahoo/yfinance acquisition and outcome-blind preparation are
-complete; final repository verification and review are in progress. Ticket 05
-remains blocked; tickets 06 and 07 remain behind their listed dependencies.
-The resolved ticket answers and linked reports are the authority for
-completed-run details. The seeded stochastic report remains draft until the
-registered historical-slice gate is complete.
+No ticket is claimed. [Ticket
+05](issues/05-run-confirmatory-historical-evaluation.md) is open and unblocked:
+execute the frozen historical evaluation from ticket 04's exact private Yahoo
+runner input without altering the accepted protocol or receipt identities.
+Tickets 06 and 07 remain behind their listed dependencies. The resolved ticket
+answers and linked reports are the authority for completed-run details. The
+registered historical-slice review gate is complete, so the canonical,
+deterministic, and seeded stochastic reports are stable evidence inputs for
+later synthesis without changing their stated scope.
