@@ -58,7 +58,7 @@ YAHOO_PREPARATION_MANIFEST = (
     ROOT
     / "experiments"
     / "inputs"
-    / "historical-yahoo-preparation-manifest-v4.json"
+    / "historical-yahoo-preparation-manifest-v5.json"
 )
 HISTORICAL_SEAM_REPORT = (
     ROOT / "reports" / "experiments" / "historical-data-episode-seam.md"
@@ -68,7 +68,7 @@ COMMITTED_SOURCE_SET = (
 )
 COMMITTED_RUN_ID = (
     "smartdca-historical-validation-v1-"
-    "c42025596701b1932dc81da6d1316b16a812667b227108b0ae136fa18909613e"
+    "d376ff1411774e40978ea1aa4c0dcf4e18603d93fbfcb017cbfa18538ea7b499"
 )
 COMMITTED_RUN = ROOT / "reports" / "experiments" / "runs" / COMMITTED_RUN_ID
 
@@ -508,7 +508,7 @@ class HistoricalDataEpisodeSeamTest(unittest.TestCase):
         self.assertEqual(
             manifest["run_id"],
             "smartdca-historical-input-v1-"
-            "9134a1e12b86546a2479e76f162d09d667217d7ccaf24a627075c7a89c7d85fd",
+            "4da2c9a1982b48cc821969e802118270d7a95e44cc03107e8d2846729df0e14f",
         )
         self.assertEqual(
             manifest["runner_input_sha256"],

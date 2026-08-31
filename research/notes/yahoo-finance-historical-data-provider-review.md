@@ -367,8 +367,8 @@ binds 12,305 observations to 1,365 included rolling episodes, zero excluded
 episodes, runner-input SHA-256
 `d49a5a6e0304a7da213082698990d46bec7f7cac2399533990f84a40183bec88`,
 and `policy_execution=not-run`. The corresponding
-[preparation manifest](../../experiments/inputs/historical-yahoo-preparation-manifest-v4.json)
+[preparation manifest](../../experiments/inputs/historical-yahoo-preparation-manifest-v5.json)
 records run identity
-`smartdca-historical-input-v1-9134a1e12b86546a2479e76f162d09d667217d7ccaf24a627075c7a89c7d85fd`.
+`smartdca-historical-input-v1-4da2c9a1982b48cc821969e802118270d7a95e44cc03107e8d2846729df0e14f`.
 No provider price value, episode price, policy decision, estimand, or aggregate
 outcome is included in these receipts or this note.

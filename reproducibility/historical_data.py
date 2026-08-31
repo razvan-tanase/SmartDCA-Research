@@ -699,12 +699,6 @@ def _validate_yfinance_source(
     _validate_yfinance_metadata(source.get("adapter_metadata"), field_name)
 
 
-def _validate_yfinance_payload(
-    source: Mapping[str, Any], field_name: str
-) -> None:
-    _validate_yfinance_source(source, field_name)
-
-
 def _alpha_vantage_provider(_: Path) -> HistoricalProvider:
     return AlphaVantageProvider(os.environ.get("ALPHAVANTAGE_API_KEY", ""))
 
@@ -841,15 +835,14 @@ _YFINANCE_PROFILE = _AcquisitionProfile(
     provider_factory=_yfinance_provider,
     response_validator=_validate_yfinance_response,
     source_validator=_validate_yfinance_source,
-    payload_validator=_validate_yfinance_payload,
+    payload_validator=_validate_yfinance_source,
 )
+_ACQUISITION_PROFILES = (_ALPHA_VANTAGE_PROFILE, _YFINANCE_PROFILE)
 _ACQUISITION_PROFILES_BY_PROVIDER = {
-    profile.provider: profile
-    for profile in (_ALPHA_VANTAGE_PROFILE, _YFINANCE_PROFILE)
+    profile.provider: profile for profile in _ACQUISITION_PROFILES
 }
 _ACQUISITION_PROFILES_BY_ADAPTER = {
-    profile.adapter: profile
-    for profile in (_ALPHA_VANTAGE_PROFILE, _YFINANCE_PROFILE)
+    profile.adapter: profile for profile in _ACQUISITION_PROFILES
 }
 
 

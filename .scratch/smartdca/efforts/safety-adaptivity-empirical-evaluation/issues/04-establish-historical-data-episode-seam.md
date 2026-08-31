@@ -123,13 +123,13 @@ complete study input without opening the confirmatory result set.
   distinguished raw provider responses, versioned canonical client exports,
   and declared hand-authored fixtures; exact-byte source identity remains
   distinct from experiment-input identity.
-- Offline replay from the accepted receipt produced version-4 [preparation
-  manifest](../../../../../experiments/inputs/historical-yahoo-preparation-manifest-v4.json)
+- Offline replay from the accepted receipt produced version-5 [preparation
+  manifest](../../../../../experiments/inputs/historical-yahoo-preparation-manifest-v5.json)
   with run identity
-  `smartdca-historical-input-v1-9134a1e12b86546a2479e76f162d09d667217d7ccaf24a627075c7a89c7d85fd`
+  `smartdca-historical-input-v1-4da2c9a1982b48cc821969e802118270d7a95e44cc03107e8d2846729df0e14f`
   and `policy_execution=not-run`. The new immutable non-confirmatory validation
   bundle is
-  `smartdca-historical-validation-v1-c42025596701b1932dc81da6d1316b16a812667b227108b0ae136fa18909613e`;
+  `smartdca-historical-validation-v1-d376ff1411774e40978ea1aa4c0dcf4e18603d93fbfcb017cbfa18538ea7b499`;
   all predecessors remain preserved.
 - Thirty focused historical-seam tests, all sixteen canonical-run tests, and
   all six Markdown-linker tests pass under CPython 3.12. The final
