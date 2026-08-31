@@ -1,0 +1,73 @@
+{
+  "schema_version": "smartdca-historical-robustness-execution/1",
+  "execution_id": "historical-yahoo-registered-robustness-v1",
+  "version": "1",
+  "locked": true,
+  "created_at": "2026-08-31T21:05:01Z",
+  "created_after_confirmatory_outcome_access": true,
+  "purpose": "Execute the safety factors and rolling horizons registered before outcome access but omitted from the primary confirmatory run. Every result is robustness evidence and cannot enter the confirmatory H1/H2 family.",
+  "parent_protocol": {
+    "path": "experiments/protocols/safety-adaptivity-yahoo-v2.json",
+    "protocol_id": "safety-adaptivity-yahoo-v2",
+    "sha256": "a5194248f7b55073e60b357c01c4993c1e50ed20c9c9672daf4780db1127f2be"
+  },
+  "accepted_preparation": {
+    "manifest_path": "experiments/inputs/historical-yahoo-preparation-manifest-v5.json",
+    "manifest_sha256": "f86691e21acb8f1f70d9d9124c020f126014aae5aa631c90a0f82165814e5894",
+    "run_id": "smartdca-historical-input-v1-4da2c9a1982b48cc821969e802118270d7a95e44cc03107e8d2846729df0e14f",
+    "runner_input_sha256": "d49a5a6e0304a7da213082698990d46bec7f7cac2399533990f84a40183bec88"
+  },
+  "shared_grid": {
+    "corrected_mean_configurations": ["identity-a0-b0"],
+    "cost_scenarios": ["frictionless", "proportional-10bps", "fixed-1-usd"],
+    "policies": ["dca", "neutral_guarded", "corrected_guarded"],
+    "comparisons": [
+      "corrected_guarded_vs_dca",
+      "corrected_guarded_vs_neutral_guarded",
+      "neutral_guarded_vs_dca"
+    ]
+  },
+  "monthly_coverage_extension": {
+    "schedule_id": "primary-monthly-robustness-coverage",
+    "design_tier": "primary",
+    "episode_design_source": "episode_design",
+    "deposit_interval_months": 1,
+    "rolling_stride_months": 1,
+    "horizons_months": [12, 36, 60],
+    "coverage_source": "coverage.robustness",
+    "coverage": ["0.99", "0.95", "0.8", "0.6", "0.25"],
+    "runner_compatibility_coverage": ["1", "0.99", "0.95", "0.8", "0.6", "0.25"],
+    "lambda_one_role": "The shared runner requires lambda=1 in each execution configuration. Its repeated monthly rows are secondary accounting revalidation and are not counted as missing robustness coverage."
+  },
+  "quarterly_horizon_extension": {
+    "schedule_id": "robustness-quarterly-horizons",
+    "design_tier": "robustness",
+    "episode_design_source": "robustness_design",
+    "deposit_interval_months": 3,
+    "rolling_stride_months": 3,
+    "horizons_months": [6, 24, 120],
+    "coverage_source": "coverage.primary plus coverage.robustness",
+    "coverage": ["1", "0.9", "0.75", "0.5", "0.99", "0.95", "0.8", "0.6", "0.25"],
+    "deposit_count_rule": "For horizon H, include one deposit at nominal start plus 3k calendar months for k=0 through H/3-1; the horizon date receives no deposit.",
+    "episode_start_grid_rule": "For each dataset and horizon H, use every third first-of-month nominal start on or after eligible_start whose nominal start plus H calendar months is on or before data_cutoff."
+  },
+  "analysis": {
+    "tier": "robustness",
+    "uncertainty": "descriptive-only; no confirmatory bootstrap or multiplicity test",
+    "confirmatory_family_change": "none",
+    "classification_rule": "A row is robustness when its coverage, horizon, corrected-mean configuration, cost route, or schedule is registered outside the primary frictionless grid. Only the sealed primary run can emit confirmatory H1/H2 rows."
+  },
+  "registered_but_not_required_here": {
+    "corrected_mean_robustness_configurations": [
+      "identity-a0-b-1",
+      "identity-a0-b1",
+      "identity-a-1-b0",
+      "identity-a1-b0-neutral-boundary"
+    ],
+    "reason": "Ticket 05 requires the primary corrected-mean configuration. Alternate corrected-mean parameter sensitivity remains a separately declared robustness axis and is not substituted into the ticket's primary policy."
+  },
+  "retention": {
+    "private": "Source-bearing schedules, inputs, episode outcomes, and price-bearing ledgers remain below ignored data/raw.",
+    "public": "Only aggregate robustness evidence, validation, generated tables, figure-ready data, manifests, and cryptographic receipts publish."
+  }
+}

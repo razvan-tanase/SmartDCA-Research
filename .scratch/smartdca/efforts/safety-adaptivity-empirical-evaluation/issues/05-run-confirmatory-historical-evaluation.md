@@ -1,7 +1,7 @@
 # 05 — Run the confirmatory historical evaluation
 
 Type: task
-Status: resolved
+Status: claimed
 Blocked by: 04
 Parent: [Safety-adaptivity empirical evaluation](../spec.md)
 
@@ -21,7 +21,7 @@ effects, mechanism attribution, and limitations without post-outcome tuning.
 ## Acceptance criteria
 
 - [x] The executed configuration matches the frozen protocol and historical input fingerprints exactly; any mismatch stops before outcomes are produced.
-- [x] Every declared rolling episode, horizon, safety factor, primary corrected-mean configuration, and cost scenario is attempted for DCA, neutral guarded, and corrected guarded policies under identical information and timing.
+- [ ] Every declared rolling episode, horizon, safety factor, primary corrected-mean configuration, and cost scenario is attempted for DCA, neutral guarded, and corrected guarded policies under identical information and timing.
 - [x] No confirmatory dataset, parameter, episode rule, estimand, uncertainty method, or exclusion rule changes after outcome access; deviations, if unavoidable, are preserved as protocol violations rather than silently incorporated.
 - [x] Frictionless results verify full funding, causality, unit coverage, direct accounting, and terminal cash/unit attribution for every guarded episode.
 - [x] Gross frictionless and net-of-cost results are reported separately, and observed cost-induced shortfalls are not described as violations of the existing theorem.
@@ -65,8 +65,24 @@ effects, mechanism attribution, and limitations without post-outcome tuning.
   deterministic-study tests, 39 stochastic-study tests, 30 historical-seam
   tests, and 11 confirmatory-evaluation tests. The clean stochastic replay
   completed in 1,680.654 seconds.
+- Final specification review against pre-task base `5d2c7a1` found that the
+  public run executes primary horizons and coverage plus cost robustness, but
+  not the protocol's five robustness coverage values or 6/24/120-month
+  quarterly episodes. It also found that the sealed confirmatory-only tier
+  classifier would mislabel those rows if reused. Ticket 05 remains claimed
+  while a separately identified post-confirmatory robustness extension closes
+  both gaps without mutating the completed run.
+- The outcome-blind correction is frozen by execution-plan SHA-256
+  `2cc155f6c63a74a0dce7cad202d6a5870a6f59bf239733ce2ad5e117919eae14`
+  and robustness-engine SHA-256
+  `c909f8d87bf954771da24c0313bd6e749bc050cee1177528a862f479afbcdd72`.
+  Independent pre-execution domain review passed the quarterly 0/3/.../H-3
+  deposit interpretation, all registered coverage/horizon projections, the
+  grid-aware tier classifier, post-outcome disclosure, and private-retention
+  boundary. Six public fixture tests passed; no robustness policy outcome had
+  yet been executed.
 
-## Answer
+## Interim result
 
 The exact frozen configuration completed as immutable run
 [`smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221`](../../../../../reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/manifest.json).
@@ -95,5 +111,10 @@ report](../../../../../reports/experiments/confirmatory-historical-evaluation.md
 [audit note](../../../../../research/notes/confirmatory-historical-evaluation-audit.md),
 and eleven-case [public
 checkpoint](../../../../../reproducibility/checks/check_historical_confirmatory_evaluation.py)
-preserve the exact results and their claim boundaries. Ticket 06 may now
-synthesize this result with the deterministic and stochastic evidence.
+preserve the exact results and their claim boundaries. Ticket 06 remains
+blocked until the registered robustness extension resolves.
+
+## Answer
+
+_Not yet resolved. The registered robustness coverage and quarterly-horizon
+extension remains in progress._

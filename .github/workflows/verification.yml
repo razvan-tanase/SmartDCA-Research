@@ -37,3 +37,4 @@ jobs:
           python -m unittest reproducibility.checks.check_stochastic_family_study
           python -m unittest reproducibility.checks.check_historical_data_episode_seam
           python -m unittest reproducibility.checks.check_historical_confirmatory_evaluation
+          python -m unittest reproducibility.checks.check_historical_robustness_evaluation

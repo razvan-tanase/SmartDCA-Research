@@ -46,15 +46,16 @@ publication review.
 
 ## Current frontier
 
-The independently reviewed arbitrary-horizon checkpoint and the frozen
-[confirmatory historical evaluation](reports/experiments/confirmatory-historical-evaluation.md)
-are complete. Across all 18 non-unit primary frictionless historical cells,
-corrected guarded had a negative median gap against DCA; nine H1 cells were
-Holm-significant in the negative direction, while no signal-only H2 cell was
-Holm-significant. The linked [audit
-note](research/notes/confirmatory-historical-evaluation-audit.md) preserves the
-run identity, evidence, independent domain review, and claim limits. Ticket 06,
-the cross-layer safety-adaptivity synthesis, is the current frontier. The
+The independently reviewed arbitrary-horizon checkpoint and the immutable
+primary [confirmatory historical
+run](reports/experiments/confirmatory-historical-evaluation.md) are complete.
+Across all 18 non-unit primary frictionless historical cells, corrected guarded
+had a negative median gap against DCA; nine H1 cells were Holm-significant in
+the negative direction, while no signal-only H2 cell was Holm-significant. The
+linked [audit note](research/notes/confirmatory-historical-evaluation-audit.md)
+preserves the run identity, evidence, independent domain review, and claim
+limits. Ticket 05 remains the frontier while the registered robustness coverage
+and quarterly-horizon grids are executed without changing that run. The
 [effort map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md)
 is the authority for ticket state, dependencies, and publication gates, while
 the [project map](.scratch/smartdca/map.md) records the cross-effort frontier.
@@ -110,9 +111,10 @@ python -m unittest reproducibility.checks.check_deterministic_adversarial_study
 python -m unittest reproducibility.checks.check_stochastic_family_study
 python -m unittest reproducibility.checks.check_historical_data_episode_seam
 python -m unittest reproducibility.checks.check_historical_confirmatory_evaluation
+python -m unittest reproducibility.checks.check_historical_robustness_evaluation
 ```
 
-GitHub Actions runs the link check and all sixteen scientific checks on every
+GitHub Actions runs the link check and all seventeen scientific checks on every
 push and pull request.
 
 Authorized Yahoo Finance acquisition is a separate, pinned input-production
