@@ -22,6 +22,13 @@ from reproducibility.historical_study import (
 
 ROOT = Path(__file__).resolve().parents[2]
 CONFIG = ROOT / "experiments/protocols/safety-adaptivity-yahoo-v2.json"
+RUN_ID = (
+    "smartdca-historical-study-v1-"
+    "5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221"
+)
+COMMITTED_RUN = ROOT / "reports/experiments/runs" / RUN_ID
+REPORT = ROOT / "reports/experiments/confirmatory-historical-evaluation.md"
+AUDIT = ROOT / "research/notes/confirmatory-historical-evaluation-audit.md"
 
 
 def _canonical_json(value: object) -> str:
@@ -152,6 +159,352 @@ def _reseal_preparation(preparation: Path, accepted_manifest: Path) -> None:
 
 
 class ConfirmatoryHistoricalEvaluationTest(unittest.TestCase):
+    def test_committed_manifest_binds_code_inputs_and_public_artifacts(self) -> None:
+        manifest = json.loads(
+            (COMMITTED_RUN / "manifest.json").read_text(encoding="utf-8")
+        )
+
+        self.assertEqual(manifest["study_run_id"], RUN_ID)
+        self.assertEqual(manifest["config_sha256"], _sha256(CONFIG.read_bytes()))
+        self.assertEqual(
+            manifest["accepted_preparation_manifest_sha256"],
+            _sha256(
+                (
+                    ROOT
+                    / "experiments/inputs/historical-yahoo-preparation-manifest-v5.json"
+                ).read_bytes()
+            ),
+        )
+        self.assertEqual(
+            manifest["study_sha256"],
+            _sha256((ROOT / "reproducibility/historical_study.py").read_bytes()),
+        )
+        self.assertEqual(
+            manifest["runner_sha256"],
+            _sha256((ROOT / "reproducibility/empirical.py").read_bytes()),
+        )
+        public_artifacts = [
+            artifact
+            for artifact in manifest["artifacts"]
+            if artifact["retention"] == "public-derived"
+        ]
+        self.assertEqual(len(public_artifacts), 7)
+        for artifact in public_artifacts:
+            self.assertEqual(
+                _sha256((COMMITTED_RUN / artifact["path"]).read_bytes()),
+                artifact["sha256"],
+            )
+        self.assertEqual(
+            {path.name for path in COMMITTED_RUN.iterdir()},
+            {"manifest.json", *(artifact["path"] for artifact in public_artifacts)},
+        )
+        self.assertFalse((COMMITTED_RUN / "runner").exists())
+
+    def test_committed_validation_reconciles_the_complete_execution(self) -> None:
+        validation = json.loads(
+            (COMMITTED_RUN / "study-validation.json").read_text(encoding="utf-8")
+        )
+
+        self.assertEqual(validation["status"], "passed")
+        self.assertEqual(validation["protocol_violations"], [])
+        self.assertEqual(validation["deviations"], [])
+        self.assertEqual(
+            validation["sample_reconciliation"],
+            {
+                "source_observation_count": 12305,
+                "attempted_episode_count": 1365,
+                "included_episode_count": 1365,
+                "excluded_episode_count": 0,
+                "runner_episode_count": 1365,
+                "runner_comparison_count": 49140,
+                "confirmatory_uncertainty_cell_count": 36,
+            },
+        )
+        self.assertEqual(
+            validation["aggregate_reconciliation"]["status"], "passed"
+        )
+        self.assertEqual(
+            validation["aggregate_reconciliation"]["group_count"], 216
+        )
+        self.assertTrue(
+            all(
+                check["status"] == "passed"
+                for check in validation["shared_runner_validation"]["checks"]
+            )
+        )
+
+    def test_committed_outcomes_keep_analysis_tiers_and_claims_bounded(self) -> None:
+        aggregates = json.loads(
+            (COMMITTED_RUN / "historical-aggregates.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        uncertainty = json.loads(
+            (COMMITTED_RUN / "uncertainty.json").read_text(encoding="utf-8")
+        )
+        h1 = [
+            group
+            for group in aggregates["groups"]
+            if group["analysis_tier"] == "confirmatory"
+            and group["comparison"] == "corrected_guarded_vs_dca"
+        ]
+        h2 = [
+            group
+            for group in aggregates["groups"]
+            if group["analysis_tier"] == "confirmatory"
+            and group["comparison"] == "corrected_guarded_vs_neutral_guarded"
+        ]
+        net = [
+            group
+            for group in aggregates["groups"]
+            if group["cost_scenario"] != "frictionless"
+            and group["coverage"] != "1"
+            and group["comparison"] == "corrected_guarded_vs_dca"
+        ]
+        architecture = [
+            group
+            for group in aggregates["groups"]
+            if group["cost_scenario"] == "frictionless"
+            and group["coverage"] != "1"
+            and group["comparison"] == "neutral_guarded_vs_dca"
+        ]
+        collapsed = [
+            group for group in aggregates["groups"] if group["coverage"] == "1"
+        ]
+
+        self.assertEqual(len(h1), 18)
+        self.assertTrue(
+            all(Decimal(group["median_relative_terminal_wealth_gap"]) < 0 for group in h1)
+        )
+        self.assertEqual(
+            min(Decimal(group["median_relative_terminal_wealth_gap"]) for group in h1),
+            Decimal(
+                "-0.0459315460329597585944088669914816089333859199860058448171075"
+            ),
+        )
+        self.assertEqual(len(h2), 18)
+        self.assertEqual(
+            sum(
+                Decimal(group["median_relative_terminal_wealth_gap"]) < 0
+                for group in h2
+            ),
+            17,
+        )
+        self.assertEqual(len(architecture), 18)
+        self.assertTrue(
+            all(
+                Decimal(group["median_relative_terminal_wealth_gap"]) < 0
+                for group in architecture
+            )
+        )
+        self.assertEqual(len(net), 36)
+        self.assertTrue(
+            all(Decimal(group["median_relative_terminal_wealth_gap"]) < 0 for group in net)
+        )
+        self.assertTrue(
+            all(
+                Decimal(group["minimum_relative_terminal_wealth_gap"])
+                >= Decimal(group["coverage"]) - 1
+                for group in net
+            )
+        )
+        self.assertTrue(
+            all(
+                group["analysis_tier"] == "robustness"
+                and group["theorem_scope"] == "outside-current-safety-theorem"
+                for group in net
+            )
+        )
+        self.assertEqual(len(collapsed), 54)
+        self.assertTrue(
+            all(
+                group["minimum_relative_terminal_wealth_gap"] == "0"
+                and group["maximum_relative_terminal_wealth_gap"] == "0"
+                for group in collapsed
+            )
+        )
+        h1_uncertainty = [
+            cell
+            for cell in uncertainty["cells"]
+            if cell["hypothesis_id"] == "H1-complete-system"
+        ]
+        self.assertEqual(len(h1_uncertainty), 18)
+        self.assertTrue(
+            all(Decimal(cell["interval_upper"]) < 0 for cell in h1_uncertainty)
+        )
+        self.assertEqual(
+            sum(
+                Decimal(cell["holm_adjusted_p_value"]) < Decimal("0.05")
+                for cell in uncertainty["cells"]
+                if cell["hypothesis_id"] == "H1-complete-system"
+            ),
+            9,
+        )
+        self.assertEqual(
+            sum(
+                Decimal(cell["holm_adjusted_p_value"]) < Decimal("0.05")
+                for cell in uncertainty["cells"]
+                if cell["hypothesis_id"] == "H2-signal-contribution"
+            ),
+            0,
+        )
+        self.assertEqual(
+            {
+                (
+                    cell["dataset_id"],
+                    cell["horizon_months"],
+                    cell["coverage"],
+                )
+                for cell in h1_uncertainty
+                if Decimal(cell["holm_adjusted_p_value"]) < Decimal("0.05")
+            },
+            {
+                ("btc-usd-daily", 36, "0.9"),
+                ("btc-usd-daily", 60, "0.5"),
+                ("btc-usd-daily", 60, "0.9"),
+                ("spy-adjusted-daily", 12, "0.5"),
+                ("spy-adjusted-daily", 12, "0.75"),
+                ("spy-adjusted-daily", 12, "0.9"),
+                ("spy-adjusted-daily", 36, "0.5"),
+                ("spy-adjusted-daily", 36, "0.75"),
+                ("spy-adjusted-daily", 36, "0.9"),
+            },
+        )
+
+    def test_report_and_audit_join_the_run_and_bound_the_claims(self) -> None:
+        report = REPORT.read_text(encoding="utf-8")
+        audit = AUDIT.read_text(encoding="utf-8")
+
+        required_report_text = {
+            RUN_ID,
+            "18 non-unit primary frictionless cells",
+            "full 36-cell H1/H2",
+            "does not establish that the signal is zero or equivalent",
+            "cellwise and not multiplicity-adjusted",
+            "not covered by the current safety theorem",
+            "This run did not execute the protocol's separate robustness",
+            "realized associations among overlapping historical windows",
+            "../../research/notes/yahoo-finance-historical-data-provider-review.md",
+            "../../research/theorems/epsilon-dca-safety-unit-guardrail.md",
+            "../../research/theorems/arbitrary-horizon-performance-boundary.md",
+            "../../docs/adr/0008-place-empirical-protocol-input-run-layers.md",
+        }
+        self.assertEqual(
+            {text for text in required_report_text if text not in report}, set()
+        )
+        self.assertIn("## Independent domain review", audit)
+        self.assertIn("Result: **pass**", audit)
+        self.assertIn("recomputed every bootstrap seed", audit)
+        self.assertIn("unexecuted robustness grids are not claimed", audit)
+
+    def test_report_summary_tables_are_derived_from_committed_aggregates(self) -> None:
+        aggregates = json.loads(
+            (COMMITTED_RUN / "historical-aggregates.json").read_text(
+                encoding="utf-8"
+            )
+        )["groups"]
+        uncertainty = json.loads(
+            (COMMITTED_RUN / "uncertainty.json").read_text(encoding="utf-8")
+        )["cells"]
+        report = REPORT.read_text(encoding="utf-8")
+
+        def percent(value: object, *, signed: bool = True) -> str:
+            sign = "+" if signed else ""
+            return f"{Decimal(str(value)) * Decimal('100'):{sign}.3f}%"
+
+        dataset_labels = {
+            "btc-usd-daily": "BTC-USD",
+            "spy-adjusted-daily": "SPY",
+        }
+        missing_rows: list[str] = []
+        for dataset_id, horizon in (
+            ("btc-usd-daily", 12),
+            ("btc-usd-daily", 36),
+            ("btc-usd-daily", 60),
+            ("spy-adjusted-daily", 12),
+            ("spy-adjusted-daily", 36),
+            ("spy-adjusted-daily", 60),
+        ):
+            cells = [
+                group
+                for group in aggregates
+                if group["analysis_tier"] == "confirmatory"
+                and group["dataset_id"] == dataset_id
+                and group["horizon_months"] == horizon
+            ]
+            h1 = [
+                group
+                for group in cells
+                if group["comparison"] == "corrected_guarded_vs_dca"
+            ]
+            h2 = [
+                group
+                for group in cells
+                if group["comparison"]
+                == "corrected_guarded_vs_neutral_guarded"
+            ]
+
+            def median_range(groups: list[dict[str, object]]) -> str:
+                medians = [
+                    Decimal(str(group["median_relative_terminal_wealth_gap"]))
+                    for group in groups
+                ]
+                return f"{percent(min(medians))} to {percent(max(medians))}"
+
+            def significant_coverages(hypothesis_id: str) -> str:
+                coverages = sorted(
+                    (
+                        Decimal(str(cell["coverage"]))
+                        for cell in uncertainty
+                        if cell["hypothesis_id"] == hypothesis_id
+                        and cell["dataset_id"] == dataset_id
+                        and cell["horizon_months"] == horizon
+                        and Decimal(str(cell["holm_adjusted_p_value"]))
+                        < Decimal("0.05")
+                    )
+                )
+                return ", ".join(format(value, "f") for value in coverages) or "none"
+
+            expected_row = (
+                f"| {dataset_labels[dataset_id]} | {horizon} months | "
+                f"{h1[0]['sample_count']} | {median_range(h1)} | "
+                f"{significant_coverages('H1-complete-system')} | "
+                f"{median_range(h2)} | "
+                f"{significant_coverages('H2-signal-contribution')} |"
+            )
+            if expected_row not in report:
+                missing_rows.append(expected_row)
+
+        cost_labels = {
+            "proportional-10bps": "Proportional 10 bps",
+            "fixed-1-usd": "Fixed USD 1 per purchase",
+        }
+        for cost_id in ("proportional-10bps", "fixed-1-usd"):
+            cells = [
+                group
+                for group in aggregates
+                if group["cost_scenario"] == cost_id
+                and group["coverage"] != "1"
+                and group["comparison"] == "corrected_guarded_vs_dca"
+            ]
+            medians = [
+                Decimal(str(group["median_relative_terminal_wealth_gap"]))
+                for group in cells
+            ]
+            worst = max(
+                Decimal(str(group["worst_observed_relative_shortfall"]))
+                for group in cells
+            )
+            expected_row = (
+                f"| {cost_labels[cost_id]} | {len(cells)} | "
+                f"{percent(min(medians))} to {percent(max(medians))} | "
+                f"{percent(worst, signed=False)} |"
+            )
+            if expected_row not in report:
+                missing_rows.append(expected_row)
+
+        self.assertEqual(missing_rows, [])
+
     def test_reconciliation_mismatch_stops_before_policy_execution(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
