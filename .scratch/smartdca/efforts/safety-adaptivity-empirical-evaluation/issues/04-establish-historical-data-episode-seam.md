@@ -1,7 +1,7 @@
 # 04 — Establish the historical-data and rolling-episode seam
 
 Type: task
-Status: open
+Status: claimed
 Blocked by: 01
 Parent: [Safety-adaptivity empirical evaluation](../spec.md)
 
@@ -78,6 +78,10 @@ complete study input without opening the confirmatory result set.
 - No licensed `ALPHAVANTAGE_API_KEY` was available after final verification.
   Per the interrupted-work policy, the ticket returned to `open`; authorized
   provider retrieval is the sole blocker.
+- Reclaimed on `main` on 2026-08-31 after the user authorized replacing the
+  unavailable Alpha Vantage source with a yfinance-based alternative. The
+  accepted version-1 protocol remains immutable; the replacement must receive
+  a new preregistration identity before any provider observation is retrieved.
 
 ## Answer
 
