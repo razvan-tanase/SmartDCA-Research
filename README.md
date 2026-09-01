@@ -54,8 +54,12 @@ had a negative median gap against DCA; nine H1 cells were Holm-significant in
 the negative direction, while no signal-only H2 cell was Holm-significant. The
 linked [audit note](research/notes/confirmatory-historical-evaluation-audit.md)
 preserves the run identity, evidence, independent domain review, and claim
-limits. Ticket 05 remains the frontier while the registered robustness coverage
-and quarterly-horizon grids are executed without changing that run. The
+limits. The separately identified registered robustness run is also complete:
+all 30 monthly robustness-coverage and all 48 quarterly non-unit frictionless
+complete-system medians were negative, while the quarterly signal-only rows
+had 40 negative and eight positive medians. Those post-confirmatory results are
+descriptive, do not change H1/H2, and retain the primary run unchanged. Ticket
+05 remains the frontier through its final Standards and specification review. The
 [effort map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md)
 is the authority for ticket state, dependencies, and publication gates, while
 the [project map](.scratch/smartdca/map.md) records the cross-effort frontier.

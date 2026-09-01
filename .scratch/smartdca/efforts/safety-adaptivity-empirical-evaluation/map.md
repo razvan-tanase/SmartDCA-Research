@@ -25,8 +25,9 @@ follow the [work-tracking workflow](../../../../docs/agents/work-tracking.md).
 Ticket [05](issues/05-run-confirmatory-historical-evaluation.md) remains claimed.
 Its immutable primary [confirmatory
 run](../../../../reports/experiments/confirmatory-historical-evaluation.md) is
-complete, but final specification review requires the separately registered
-robustness coverage and quarterly-horizon grids before resolution. Ticket 06
-therefore remains blocked. Resolved ticket answers and linked reports are the
+complete, and the separately registered robustness coverage and quarterly-
+horizon grids have completed with no change to the primary run or confirmatory
+family. Final Standards and specification review remains before resolution, so
+ticket 06 is still blocked. Resolved ticket answers and linked reports are the
 authority for completed run identities, detailed results, and publication
 gates.

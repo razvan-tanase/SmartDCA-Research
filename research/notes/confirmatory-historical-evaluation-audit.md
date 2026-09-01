@@ -1,4 +1,4 @@
-# Audit of the confirmatory historical evaluation
+# Audit of the confirmatory historical evaluation and robustness extension
 
 ## Audit target
 
@@ -6,12 +6,14 @@ This note audits the machine evidence behind the
 [confirmatory historical report](../../reports/experiments/confirmatory-historical-evaluation.md).
 It checks the frozen identities, outcome-access boundary, source retention,
 execution grid, sample reconciliation, policy accounting, registered
-dependence-aware inference, analysis-tier separation, and scientific claim
-boundary.[^effort-spec]
+dependence-aware inference, analysis-tier separation, the separately frozen
+robustness extension, and scientific claim boundary.[^effort-spec]
 
 The audited result is run
 [`smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221`](../../reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/manifest.json).
-[^run-evidence]
+The separately audited robustness result is
+[`smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184`](../../reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/manifest.json).
+[^run-evidence][^robustness-evidence]
 
 ## Identity and outcome access
 
@@ -48,6 +50,16 @@ dataset, policy, parameter, episode rule, estimand, uncertainty method, or
 exclusion rule changed after access; the run records `deviations=[]` and
 `protocol_violations=[]`.
 
+After that boundary was recorded, execution plan
+`historical-yahoo-registered-robustness-v1` froze the omitted registered axes
+before their outcomes were executed. Its SHA-256 is
+`2cc155f6c63a74a0dce7cad202d6a5870a6f59bf239733ce2ad5e117919eae14`;
+the frozen robustness engine SHA-256 is
+`c909f8d87bf954771da24c0313bd6e749bc050cee1177528a862f479afbcdd72`.
+The outer robustness manifest records post-confirmatory execution and is
+authoritative over the nested projected configuration's inherited
+registration-time schema field.[^robustness-plan]
+
 ## Source and retention boundary
 
 The reviewed Yahoo source seam accepted 8,287 SPY adjusted-close rows and
@@ -65,6 +77,11 @@ The receipt binds every private artifact by path, byte length, encoding where
 applicable, and SHA-256 without redistributing observations. This separation
 implements [ADR 0008](../../docs/adr/0008-place-empirical-protocol-input-run-layers.md).
 [^provider-review][^empirical-layers]
+
+The robustness bundle applies the same boundary. All schedule inputs,
+episode-level results, and price-bearing ledgers remain private; its public
+[artifact receipt](../../reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/private-artifact-receipt.json)
+binds the retained bytes without exposing price or episode rows.
 
 ## Completeness and reconciliation
 
@@ -88,11 +105,11 @@ configuration, three cost scenarios, and all three policies. The resulting
 216 cells cover all three comparisons. An independent regrouping route
 recomputed 27 declared aggregate fields for every cell with no mismatch.
 
-The run does not execute the protocol's separately registered robustness
-coverage values, alternate corrected-mean configurations, 6/24/120-month
-horizons, or quarterly schedule. Only proportional and fixed-cost rows from
-the robustness tier appear. The report states this explicitly and makes no
-claim about the unexecuted grids.
+The primary run alone does not execute the protocol's separately registered
+robustness coverage, 6/24/120-month horizons, or quarterly schedule. The
+separately identified post-confirmatory extension executes those coverage and
+horizon axes without mutating the primary run. The four alternate
+corrected-mean configurations remain explicitly deferred.
 
 ## Accounting and safety audit
 
@@ -171,9 +188,9 @@ decomposition of H1.
 
 ## Independent domain review
 
-An independent domain reviewer audited the frozen protocol, public run,
-private receipts, evaluator, and registered inference without participating in
-the narrative drafting. The reviewer independently:
+An independent domain reviewer audited the confirmatory run's frozen protocol,
+public bundle, private receipts, evaluator, and registered inference without
+participating in the narrative drafting. The reviewer independently:
 
 - matched the protocol, input, shared-runner, and historical-study hashes and
   recomputed the study run ID;
@@ -191,7 +208,73 @@ cellwise intervals from multiplicity-adjusted tests; avoid interpreting H2
 non-significance as equivalence; keep architecture descriptive rather than
 causal; and separate realized gross safety from net cost rows outside the
 theorem. The report incorporates each requirement. The reviewer also confirmed
-that the unexecuted robustness grids are not claimed.
+that the unexecuted robustness grids are not claimed by the primary run; they
+were opened later only under the separate extension identity.
+
+## Registered robustness extension audit
+
+The extension reused all 1,365 sealed primary monthly episodes at the five
+registered robustness coverage values and repeated \(\lambda=1\) for runner
+compatibility. It separately built quarterly starts at a three-month stride
+with deposits at \(0,3,\ldots,H-3\): 2, 8, and 40 deposits for 6, 24, and 120
+months. All nine primary-plus-robustness coverage values were executed for the
+quarterly design. Both slices used only the primary `identity-a0-b0`
+configuration, all three costs, all three policies, and all three comparisons.
+
+The extension reconciles exactly:
+
+| Stage | Monthly | Quarterly | Total |
+|---|---:|---:|---:|
+| Source observations | 12,305 | 12,305 | 12,305 unique |
+| Attempted schedule episodes | 1,365 | 428 | 1,793 |
+| Included schedule episodes | 1,365 | 428 | 1,793 |
+| Excluded schedule episodes | 0 | 0 | 0 |
+| Ledgers and comparison rows | 73,710 | 34,668 | 108,378 |
+| Aggregate cells | 324 | 486 | 810 |
+
+The combined extension therefore contains 108,378 ledgers and comparison rows
+without treating the two schedule-specific episode sets as one cadence.
+
+The quarterly sample counts are BTC-USD `42/36/4` and SPY `130/124/92` for
+6/24/120 months. All 20 shared-runner checks across the two slices passed. An
+independent private-ledger audit also found zero transaction-path mismatches in
+the \(\lambda=1\) collapse across 4,095 monthly and 1,284 quarterly scenario
+groups. The public directory contains only its five derived artifacts plus the
+manifest, while all 26 manifest-listed artifacts exist and match inside the
+private bundle.
+
+Among frictionless non-unit cells, corrected guarded versus DCA had 30
+negative monthly medians (`-4.8134%` to `-0.0335%`) and 48 negative quarterly
+medians (`-23.4841%` to `-0.0260%`). Corrected guarded versus neutral guarded
+had 30 negative monthly medians (`-0.5836%` to `-0.0002%`) and, quarterly, 40
+negative and eight positive medians (`-9.2164%` to `+0.0570%`). The eight
+positive quarterly signal medians are exactly the eight non-unit 6-month
+BTC-USD cells. These are median relative terminal-wealth gaps within each
+schedule; raw wealth is not compared between cadences. In particular, the
+120-month BTC-USD rows have `N=4`.
+
+Every frictionless corrected-versus-DCA minimum respects its numerical
+\(\lambda-1\) floor, and every \(\lambda=1\) aggregate is an exact tie. Negative
+DCA gaps remain allowed by epsilon-DCA safety. The 156 non-unit cost-adjusted
+complete-system medians were negative and did not cross the numerical floor,
+but those finite rows remain outside the current theorem.
+
+Tier separation is exact:
+`analysis_tier_counts={"robustness":792,"secondary":18}`. The 18 secondary
+cells are the monthly frictionless \(\lambda=1\) compatibility rows; every
+quarterly row is robustness evidence. All 810 cells record
+`uncertainty_status=not-run-robustness`; no row enters H1/H2, and the sealed
+36-test Holm family is unchanged. The run records no deviation or protocol
+violation.
+
+An independent post-run domain reviewer recomputed the outer and nested run
+identities; matched the engine, runner, protocol, plan, preparation, private,
+and public artifact hashes; independently checked the schedule projections,
+counts, all 36 generated table rows, tier labels, and \(\lambda=1\) transaction
+paths; and found no mismatch. Result: **pass**, with no blocking scientific
+error. The required interpretation is descriptive and within-schedule: it
+makes no universal, causal, optimality, significance, or expected-performance
+claim, and the four alternate corrected-mean configurations remain deferred.
 
 ## Reproduction and claim boundary
 
@@ -199,13 +282,17 @@ The exact private run is preserved at
 `data/raw/smartdca-historical-confirmatory-yahoo-v1/<study-run-id>/` and the
 accepted preparation at
 `data/raw/smartdca-historical-preparation-yahoo-v1/<preparation-run-id>/`.
+The robustness extension is preserved separately at
+`data/raw/smartdca-historical-robustness-yahoo-v1/<robustness-run-id>/`.
 Given those retained inputs, `python3.12 -m reproducibility.historical_study`
-regenerates the private and public bundles under the manifest's collision/no-
-overwrite rule. The public checkpoint is:
+regenerates the primary bundle and
+`python3.12 -m reproducibility.historical_robustness` regenerates the extension
+under the manifests' collision/no-overwrite rule. The public checkpoint is:
 
 ```bash
 python3.12 -m unittest \
-  reproducibility.checks.check_historical_confirmatory_evaluation
+  reproducibility.checks.check_historical_confirmatory_evaluation \
+  reproducibility.checks.check_historical_robustness_evaluation
 ```
 
 This evidence describes overlapping-window associations for the declared SPY
@@ -219,6 +306,8 @@ ticket 07 remains the independent publication-package gate.
 
 [^effort-spec]: Contract join: [approved safety-adaptivity empirical specification](../../.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec.md).
 [^run-evidence]: Machine-evidence join: [immutable historical study manifest](../../reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/manifest.json).
+[^robustness-evidence]: Robustness-evidence join: [immutable registered robustness manifest](../../reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/manifest.json).
+[^robustness-plan]: Robustness-registration join: [post-confirmatory execution plan](../../experiments/inputs/historical-yahoo-registered-robustness-v1.json).
 [^protocol]: Registration join: [frozen Yahoo historical protocol](../../experiments/protocols/safety-adaptivity-yahoo-v2.json).
 [^provider-review]: External-source and retention join: [Yahoo Finance historical-data provider review](yahoo-finance-historical-data-provider-review.md).
 [^guardrail-theorem]: Safety join: [epsilon-DCA unit-coverage theorem](../theorems/epsilon-dca-safety-unit-guardrail.md).

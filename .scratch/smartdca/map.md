@@ -22,11 +22,12 @@ reaches it.
 
 ## Current frontier
 
-Complete the registered historical robustness coverage and quarterly-horizon
-grids without changing the immutable primary confirmatory run. The active
-effort's [map](efforts/safety-adaptivity-empirical-evaluation/map.md) is
-authoritative for ticket dependencies and state. Tickets 06 and 07 remain
-blocked behind historical completion and synthesis, respectively.
+Complete final review of the registered historical robustness coverage and
+quarterly-horizon grids, which finished without changing the immutable primary
+confirmatory run. The active effort's
+[map](efforts/safety-adaptivity-empirical-evaluation/map.md) is authoritative
+for ticket dependencies and state. Tickets 06 and 07 remain blocked behind
+historical completion and synthesis, respectively.
 
 ## Historical decisions
 
