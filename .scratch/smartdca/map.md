@@ -23,7 +23,7 @@ reaches it.
 
 ## Current frontier
 
-Thesis manuscript assembly is now the active effort. Its
+Manuscript assembly is now the project frontier. The active thesis effort's
 [approved contract](efforts/thesis-manuscript-assembly/spec.md) fixes the
 Financial Computing narrative, the contribution and non-claim discipline, and
 one complete manuscript release as the verification seam. The
