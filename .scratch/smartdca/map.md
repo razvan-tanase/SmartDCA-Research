@@ -22,12 +22,12 @@ reaches it.
 
 ## Current frontier
 
-Complete final review of the registered historical robustness coverage and
-quarterly-horizon grids, which finished without changing the immutable primary
-confirmatory run. The active effort's
+Synthesize the completed deterministic, stochastic, and historical evidence
+under ticket 06. The historical checkpoint now includes the immutable primary
+confirmatory run and separately registered robustness coverage and quarterly-
+horizon grids. The active effort's
 [map](efforts/safety-adaptivity-empirical-evaluation/map.md) is authoritative
-for ticket dependencies and state. Tickets 06 and 07 remain blocked behind
-historical completion and synthesis, respectively.
+for ticket dependencies and state. Ticket 07 remains blocked behind synthesis.
 
 ## Historical decisions
 

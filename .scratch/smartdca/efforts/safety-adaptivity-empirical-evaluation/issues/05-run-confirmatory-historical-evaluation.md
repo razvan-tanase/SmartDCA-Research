@@ -1,7 +1,7 @@
 # 05 — Run the confirmatory historical evaluation
 
 Type: task
-Status: claimed
+Status: resolved
 Blocked by: 04
 Parent: [Safety-adaptivity empirical evaluation](../spec.md)
 
@@ -99,6 +99,18 @@ effects, mechanism attribution, and limitations without post-outcome tuning.
   no blocking scientific correction and required within-schedule,
   descriptive-only wording, explicit BTC 120-month `N=4`, theorem/cost
   separation, and no raw-wealth comparison across cadences.
+- Final parallel Standards and specification review against pre-task base
+  `5d2c7a1` passed. There were no documented-standard violations and no missing,
+  extraneous, or incorrect specification behaviors. Three nonblocking
+  architecture judgments remain deferred: consolidating artifact helpers,
+  reusing the typed historical cell key in the sealed confirmatory engine, and
+  centralizing comparison metadata. Rewriting either frozen evaluator in place
+  would invalidate reviewed run identities; any such cleanup requires a new
+  versioned engine identity.
+- Final focused verification passed under CPython 3.12: 11 confirmatory tests,
+  11 robustness tests, 6 link-checker tests, compilation, diff checks, and the
+  repository-wide Markdown link audit. The earlier complete README matrix
+  remains the verification evidence for unchanged suites.
 
 ## Result
 
@@ -155,4 +167,10 @@ preserve the exact extension and its limits.
 
 ## Answer
 
-_Pending final Standards and specification review against the pre-task base._
+Resolved. The sealed confirmatory run and separately identified registered
+robustness extension now cover every declared episode, horizon, safety factor,
+primary corrected-mean configuration, policy, comparison, and cost route. The
+result remains negative for corrected guarded versus DCA in every non-unit
+frictionless complete-system cell, with inference limited to the original
+36-cell H1/H2 family and all extension rows descriptive. Ticket 06 is
+unblocked for cross-layer synthesis.

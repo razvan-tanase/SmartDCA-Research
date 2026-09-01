@@ -16,18 +16,18 @@ follow the [work-tracking workflow](../../../../docs/agents/work-tracking.md).
 | [02](issues/02-evaluate-deterministic-adversarial-paths.md) | Evaluate deterministic synthetic and adversarial path families. | resolved | 01 |
 | [03](issues/03-evaluate-seeded-stochastic-families.md) | Evaluate seeded stochastic path families. | resolved | 01 |
 | [04](issues/04-establish-historical-data-episode-seam.md) | Establish fingerprinted historical inputs and rolling episodes without opening confirmatory outcomes. | resolved | 01 |
-| [05](issues/05-run-confirmatory-historical-evaluation.md) | Execute the frozen rolling S&P 500 and Bitcoin evaluation. | claimed | 04 |
+| [05](issues/05-run-confirmatory-historical-evaluation.md) | Execute the frozen rolling S&P 500 and Bitcoin evaluation. | resolved | 04 |
 | [06](issues/06-synthesize-safety-adaptivity-tradeoff.md) | Synthesize deterministic, stochastic, and historical evidence. | open | 02, 03, 05 |
 | [07](issues/07-review-publish-empirical-package.md) | Independently reproduce, review, and publish the empirical package. | open | 06 |
 
 ## Current frontier
 
-Ticket [05](issues/05-run-confirmatory-historical-evaluation.md) remains claimed.
+Ticket [05](issues/05-run-confirmatory-historical-evaluation.md) is resolved.
 Its immutable primary [confirmatory
-run](../../../../reports/experiments/confirmatory-historical-evaluation.md) is
-complete, and the separately registered robustness coverage and quarterly-
-horizon grids have completed with no change to the primary run or confirmatory
-family. Final Standards and specification review remains before resolution, so
-ticket 06 is still blocked. Resolved ticket answers and linked reports are the
-authority for completed run identities, detailed results, and publication
-gates.
+run](../../../../reports/experiments/confirmatory-historical-evaluation.md) and
+separately registered robustness extension passed independent domain,
+Standards, and specification review without changing the primary run or
+confirmatory family. Ticket [06](issues/06-synthesize-safety-adaptivity-tradeoff.md)
+is the current unblocked frontier for cross-layer synthesis. Resolved ticket
+answers and linked reports are the authority for run identities, detailed
+results, and publication gates.

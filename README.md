@@ -59,7 +59,8 @@ all 30 monthly robustness-coverage and all 48 quarterly non-unit frictionless
 complete-system medians were negative, while the quarterly signal-only rows
 had 40 negative and eight positive medians. Those post-confirmatory results are
 descriptive, do not change H1/H2, and retain the primary run unchanged. Ticket
-05 remains the frontier through its final Standards and specification review. The
+05 passed independent domain, Standards, and specification review. Ticket 06
+is now the unblocked frontier for cross-layer synthesis. The
 [effort map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md)
 is the authority for ticket state, dependencies, and publication gates, while
 the [project map](.scratch/smartdca/map.md) records the cross-effort frontier.
