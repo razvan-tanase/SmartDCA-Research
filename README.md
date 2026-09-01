@@ -65,11 +65,19 @@ synthesis](reports/experiments/safety-adaptivity-tradeoff-synthesis.md) now
 joins 2,754 reviewed deterministic, stochastic, and historical aggregate cells
 without pooling their inferential units. It supports a proved frictionless
 safety floor but no universal, optimal, or confirmed incremental superiority
-claim for the corrected-mean signal. Ticket 07 is the unblocked frontier for
-independent reproduction, final package review, and publication. The
-[effort map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md)
-is the authority for ticket state, dependencies, and publication gates, while
-the [project map](.scratch/smartdca/map.md) records the cross-effort frontier.
+claim for the corrected-mean signal. The final [independent empirical-package
+review](research/notes/safety-adaptivity-empirical-package-review.md)
+regenerated the accepted deterministic study and synthesis, reproduced a
+383-episode historical slice from retained inputs, and reconciled all 54
+primary/architecture historical aggregates and all 36 registered bootstrap
+and Holm cells. The empirical effort is complete with no publication blocker;
+the [retained private-pass
+receipt](reports/experiments/runs/smartdca-empirical-package-review-v1-6cb6c1cd94b901be90ebd553a022c922e53984afafeb22948747be084b37c14f/review-receipt.json)
+keeps the final review reproducible without publishing provider observations,
+and the project returns to a manuscript-assembly decision. The [effort
+map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md)
+and [project map](.scratch/smartdca/map.md) record the completed state and next
+frontier.
 
 ## Repository map
 
@@ -124,9 +132,10 @@ python -m unittest reproducibility.checks.check_historical_data_episode_seam
 python -m unittest reproducibility.checks.check_historical_confirmatory_evaluation
 python -m unittest reproducibility.checks.check_historical_robustness_evaluation
 python -m unittest reproducibility.checks.check_safety_adaptivity_synthesis
+python -m unittest reproducibility.checks.check_empirical_package_publication_review
 ```
 
-GitHub Actions runs the link check and all eighteen scientific checks on every
+GitHub Actions runs the link check and all nineteen scientific checks on every
 push and pull request.
 
 Authorized Yahoo Finance acquisition is a separate, pinned input-production
@@ -135,6 +144,11 @@ step rather than a test dependency. Create its CPython 3.12 environment with
 `.venv/bin/python -m pip install -r requirements-historical.txt`, then follow
 the fail-closed acquisition and offline-preparation commands in the
 [historical seam report](reports/experiments/historical-data-episode-seam.md).
+The final [publication review](research/notes/safety-adaptivity-empirical-package-review.md)
+documents the single clean-environment route that regenerates the public
+deterministic and synthesis evidence and, when the receipt-bound private paths
+are present, independently replays the historical slice and registered
+inference without redistributing source observations.
 
 ## Research workflow
 

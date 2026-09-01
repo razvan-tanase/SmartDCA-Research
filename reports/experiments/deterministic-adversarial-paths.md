@@ -1,5 +1,8 @@
 # Deterministic synthetic and adversarial path evaluation
 
+Publication status: **publication-ready**. Cleared by the [independent
+empirical-package review](../../research/notes/safety-adaptivity-empirical-package-review.md).
+
 ## Question
 
 How do DCA, the neutral epsilon-DCA-guarded selector, and the
@@ -218,7 +221,7 @@ plain-text table blocks reproduced above.
 From a fresh repository checkout, regenerate the complete bundle with:
 
 ```bash
-python -m reproducibility.deterministic_study \
+python3.12 -m reproducibility.deterministic_study \
   --config experiments/protocols/safety-adaptivity-v1.json \
   --study experiments/inputs/deterministic-adversarial-v1.json \
   --output-root /tmp/smartdca-deterministic-replay
@@ -227,7 +230,7 @@ python -m reproducibility.deterministic_study \
 Then run the executable checkpoint:
 
 ```bash
-python -m unittest \
+python3.12 -m unittest \
   reproducibility.checks.check_deterministic_adversarial_study
 ```
 
@@ -241,8 +244,8 @@ architecture mechanisms, exact regression drift, cash drag, exposure, and
 finite counterexamples. Deterministic evidence cannot establish historical or stochastic performance,
 path probabilities, expected returns, statistical
 significance, market causality, parameter optimality, or universal
-outperformance. The stochastic and historical evidence layers remain separate
-open tickets.
+outperformance. The final package keeps the stochastic and historical layers
+separate and makes cross-layer claims only through the reviewed synthesis.
 
 [^effort-spec]: Source join: [approved empirical effort specification](../../.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec.md).
 [^guarded-rule]: Source join: [canonical guarded-rule definition](../../research/definitions/guarded-corrected-mean-smartdca-rule.md).

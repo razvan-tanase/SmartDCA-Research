@@ -1,5 +1,8 @@
 # Confirmatory historical safety-adaptivity evaluation
 
+Publication status: **publication-ready**. Cleared by the [independent
+empirical-package review](../../research/notes/safety-adaptivity-empirical-package-review.md).
+
 ## Question
 
 What realized performance did DCA, the neutral epsilon-DCA-guarded selector,
@@ -309,9 +312,10 @@ confirmatory design; robustness rows have no uncertainty analysis.
 The finding is not individualized investment advice and does not establish a
 causal market effect, stochastic optimum, parameter ranking, expected return,
 or universal rule. The linked [audit note](../../research/notes/confirmatory-historical-evaluation-audit.md)
-records the independent domain review.[^historical-audit] This report is the
-reviewed historical input to ticket 06's cross-layer synthesis, not the final
-publication package; the independent package review remains ticket 07.
+records the run-specific independent domain review.[^historical-audit] The
+final package review independently reproduced a registered historical slice,
+reconciled its dependence-aware inference, and retains this report as the
+historical input to the publication-ready cross-layer synthesis.
 
 [^protocol]: Source join: [frozen Yahoo historical protocol](../../experiments/protocols/safety-adaptivity-yahoo-v2.json).
 [^robustness-plan]: Robustness join: [registered post-confirmatory execution plan](../../experiments/inputs/historical-yahoo-registered-robustness-v1.json).

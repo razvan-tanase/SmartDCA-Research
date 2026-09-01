@@ -1,5 +1,8 @@
 # Historical-data and rolling-episode seam
 
+Publication status: **publication-ready**. Cleared as supporting infrastructure
+by the [independent empirical-package review](../../research/notes/safety-adaptivity-empirical-package-review.md).
+
 ## Verdict
 
 The historical-input seam is complete without exposing a confirmatory policy
@@ -239,9 +242,10 @@ and patch-independent CPython 3.12 runtime metadata.
 This checkpoint establishes the historical-data and episode interface and an
 accepted Yahoo source/input handoff. It does not estimate historical behavior,
 test a confirmatory hypothesis, run the registered bootstrap, or support a
-claim of market superiority. Ticket 05 may consume the exact private runner
-input only under the replacement protocol and retained receipt identities; any
-refresh or design change receives a new identity.[^effort-spec]
+claim of market superiority. The completed [confirmatory
+evaluation](confirmatory-historical-evaluation.md) consumed the exact accepted
+private runner input through its retained receipt identities; any refresh or
+design change receives a new identity.[^effort-spec]
 
 [^effort-spec]: [Safety-adaptivity empirical evaluation specification](../../.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec.md)
 [^protocol]: [Frozen safety-adaptivity protocol](../../experiments/protocols/safety-adaptivity-v1.json)

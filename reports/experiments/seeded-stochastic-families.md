@@ -1,5 +1,8 @@
 # Seeded stochastic path-family evaluation
 
+Publication status: **publication-ready**. Cleared by the [independent
+empirical-package review](../../research/notes/safety-adaptivity-empirical-package-review.md).
+
 ## Question
 
 How do DCA, the neutral epsilon-DCA-guarded selector, and the
@@ -146,7 +149,7 @@ included, and excluded counts.
 With CPython 3.12 and a fresh output directory:
 
 ```bash
-python -m reproducibility.stochastic_study \
+python3.12 -m reproducibility.stochastic_study \
   --config experiments/protocols/safety-adaptivity-v1.json \
   --study experiments/inputs/seeded-stochastic-families-v1.json \
   --output-root /tmp/smartdca-stochastic-replay
@@ -155,7 +158,7 @@ python -m reproducibility.stochastic_study \
 Then run:
 
 ```bash
-python -m unittest reproducibility.checks.check_stochastic_family_study
+python3.12 -m unittest reproducibility.checks.check_stochastic_family_study
 ```
 
 The checkpoint verifies all fingerprints and regenerates every substantive
@@ -172,8 +175,8 @@ stochastic optimality, statistical significance, causal superiority,
 parameter superiority, expected outperformance, or universal performance.
 The registered historical-slice review gate is now satisfied by the reviewed
 [historical-data seam](historical-data-episode-seam.md). This report is stable
-controlled-simulation evidence for later synthesis, not publication of the
-final empirical package; all limitations above remain unchanged.
+controlled-simulation evidence in the final empirical package; its role and
+all limitations above remain unchanged.
 
 [^effort-spec]: Source join: [approved empirical effort specification](../../.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec.md).
 [^guarded-rule]: Source join: [canonical guarded-rule definition](../../research/definitions/guarded-corrected-mean-smartdca-rule.md).

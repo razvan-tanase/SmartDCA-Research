@@ -1,5 +1,8 @@
 # Canonical synthetic safety-adaptivity run
 
+Publication status: **publication-ready**. Cleared as supporting infrastructure
+by the [independent empirical-package review](../../research/notes/safety-adaptivity-empirical-package-review.md).
+
 ## Verdict
 
 The frozen empirical protocol executes end to end through one public runner.
@@ -70,7 +73,7 @@ The public interface is
 The command-line interface calls the same seam:
 
 ```bash
-python -m reproducibility.empirical \
+python3.12 -m reproducibility.empirical \
   --config experiments/protocols/safety-adaptivity-v1.json \
   --input experiments/inputs/canonical-synthetic-v1.json \
   --output-root "$(mktemp -d)"
@@ -151,7 +154,7 @@ tests, or evidence of policy superiority.
 Run the complete checkpoint with:
 
 ```bash
-python -m unittest reproducibility.checks.check_empirical_protocol_canonical_run
+python3.12 -m unittest reproducibility.checks.check_empirical_protocol_canonical_run
 ```
 
 The 16-test suite checks the committed bundle byte for byte, caller decimal-
@@ -160,10 +163,12 @@ estimand-to-aggregate fields, and exact-rational named cases covering two
 purchases, the three-purchase beta flip, constant prices, repeated floor
 activation, and \(\lambda=1\).
 
-No historical, stochastic, adversarial-family, bootstrap, or multiplicity run
-has occurred. The canonical path has one episode, so its aggregate quantiles,
-medians, and win/tie/loss counts merely restate that path. Later tickets must
-create the declared evidence layers without editing this registration.
+This canonical run itself contains no historical, stochastic,
+adversarial-family, bootstrap, or multiplicity evidence. Its one-episode
+aggregate quantiles, medians, and win/tie/loss counts merely restate that path.
+The final package retains the immutable registration and uses the separately
+identified deterministic, stochastic, historical, robustness, and synthesis
+runs for substantive evidence.
 
 [^effort-spec]: [Safety-adaptivity empirical evaluation specification](../../.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/spec.md)
 [^guarded-rule]: [The guarded corrected-mean SmartDCA rule](../../research/definitions/guarded-corrected-mean-smartdca-rule.md)

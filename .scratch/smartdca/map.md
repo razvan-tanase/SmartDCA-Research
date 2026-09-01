@@ -18,17 +18,18 @@ reaches it.
 | Effort | State | Checkpoint or frontier |
 |---|---|---|
 | [Arbitrary-horizon guarded SmartDCA performance](efforts/arbitrary-horizon-performance/spec.md) | completed | The [reviewed terminal-inventory boundary](../../research/theorems/arbitrary-horizon-performance-boundary.md) closed all five tickets. |
-| [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) | active | Follow its [effort map](efforts/safety-adaptivity-empirical-evaluation/map.md) for ticket state and dependencies. |
+| [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) | completed | The [independent empirical-package review](../../research/notes/safety-adaptivity-empirical-package-review.md) cleared the immutable evidence package for manuscript use. |
 
 ## Current frontier
 
-Independently reproduce, review, and publish the completed empirical package
-under ticket 07. Ticket 06 produced the reviewed [cross-layer
-synthesis](../../reports/experiments/safety-adaptivity-tradeoff-synthesis.md)
-from the deterministic, stochastic, primary historical, and separately
-registered robustness runs without pooling their inferential units. The active
-effort's [map](efforts/safety-adaptivity-empirical-evaluation/map.md) is
-authoritative for ticket dependencies and state.
+Manuscript assembly is now the project frontier. The completed empirical
+effort's [independent publication
+review](../../research/notes/safety-adaptivity-empirical-package-review.md)
+cleared the deterministic, stochastic, primary historical, and separately
+registered robustness evidence without pooling their inferential units or
+overstating the corrected-mean signal. Its [effort
+map](efforts/safety-adaptivity-empirical-evaluation/map.md) remains the
+authority for the resolved route and publication boundaries.
 
 ## Historical decisions
 
@@ -43,8 +44,8 @@ link to the relevant record.
   homogeneity characterization.
 - Lagged-price comparative statics outside established parameter and transform
   regions.
-- Manuscript assembly, venue selection, and defense materials after the
-  empirical package is reviewed.
+- Venue selection and defense materials after the manuscript evidence is
+  assembled.
 
 ## Scope guardrails
 

@@ -1,5 +1,8 @@
 # Safety-adaptivity trade-off synthesis
 
+Publication status: **publication-ready**. Cleared as the thesis-facing
+empirical checkpoint by the [independent empirical-package review](../../research/notes/safety-adaptivity-empirical-package-review.md).
+
 ## Question
 
 What conclusion about guarded corrected-mean SmartDCA is jointly supported by
@@ -256,9 +259,10 @@ not change the recorded runtime metadata; it does not assert identical
 computation across arbitrary interpreter patch releases. The linked
 [synthesis audit
 note](../../research/notes/safety-adaptivity-tradeoff-synthesis-audit.md)
-records the claim reconstruction and independent domain review. This resolves
-the cross-layer synthesis; ticket 07 remains the separate reproduction,
-review, and final publication gate.
+records the claim reconstruction and run-specific independent domain review.
+The final empirical-package review separately reproduces the deterministic
+study, the complete synthesis, and a registered historical slice; audits all
+accepted identities and claims; and clears this synthesis for publication.
 
 [^synthesis-audit]: Synthesis evidence: [cross-layer synthesis audit](../../research/notes/safety-adaptivity-tradeoff-synthesis-audit.md).
 [^deterministic]: Deterministic evidence: [reviewed deterministic and adversarial report](deterministic-adversarial-paths.md).

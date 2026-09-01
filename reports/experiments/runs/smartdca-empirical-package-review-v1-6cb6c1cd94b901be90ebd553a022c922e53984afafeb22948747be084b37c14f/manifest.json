@@ -1,0 +1,20 @@
+{
+  "accepted_run_manifests": [
+    {"run_id": "smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db", "sha256": "faf91057ab859c0d32c28ef61875f5095fe7fd470e5ddd939d3de48eccf4769e"},
+    {"run_id": "smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184", "sha256": "48dcdf94979b216b29f6cafa64349d5917c42042bc92a2ef4ac039a544e9f567"},
+    {"run_id": "smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221", "sha256": "d94b94375ede88757b3e485b7db0f09393778dbaed7477914c846766da6d9184"},
+    {"run_id": "smartdca-historical-validation-v1-d376ff1411774e40978ea1aa4c0dcf4e18603d93fbfcb017cbfa18538ea7b499", "sha256": "57e6c4c70eddd9099fdcd3b9b021bbce33034d89d80232d287a5189c6d2fb237"},
+    {"run_id": "smartdca-run-v1-b029028a9a8e5104359c4999b26e42f1dc81207eb4eb29b1dfba9fcae83473e0", "sha256": "cc229e251b9d79cbb50c6f0e5840fb351bbc872e84d19ac438e06f67ae4dd8d1"},
+    {"run_id": "smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25", "sha256": "c9198fa41e9bc1e5114b8c7c5ee8fd9a8549f5ca241ebed3e8637cd984d5ad5b"},
+    {"run_id": "smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26", "sha256": "1d4229a36c88f3062c96474629ad07534d078b3cc223c760f127620851566dd0"}
+  ],
+  "artifacts": [
+    {"bytes": 5723, "path": "review-receipt.json", "retention": "public-sanitized", "sha256": "9ad1daa4c43e81232fdfbabb295c37a67b87422f11b8de7abf8c2c9b38df1e9b"},
+    {"bytes": 0, "path": "failure-records.jsonl", "retention": "public-sanitized", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+  ],
+  "checkpoint_sha256": "59ef2044d20c5c5d896ac24ce2cccd84df5d6d41da153d2ee0c698a357bc80c5",
+  "review_id": "smartdca-empirical-package-review-v1-6cb6c1cd94b901be90ebd553a022c922e53984afafeb22948747be084b37c14f",
+  "review_module_sha256": "a7180fbd04fb2e945524ae8afc5fd5ddcc24ec5d42432a0f6072ec4052ea1e66",
+  "runtime": {"implementation": "CPython", "python": "3.12", "third_party": []},
+  "schema_version": "smartdca-empirical-package-review-manifest/1"
+}

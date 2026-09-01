@@ -18,17 +18,16 @@ follow the [work-tracking workflow](../../../../docs/agents/work-tracking.md).
 | [04](issues/04-establish-historical-data-episode-seam.md) | Establish fingerprinted historical inputs and rolling episodes without opening confirmatory outcomes. | resolved | 01 |
 | [05](issues/05-run-confirmatory-historical-evaluation.md) | Execute the frozen rolling S&P 500 and Bitcoin evaluation. | resolved | 04 |
 | [06](issues/06-synthesize-safety-adaptivity-tradeoff.md) | Synthesize deterministic, stochastic, and historical evidence. | resolved | 02, 03, 05 |
-| [07](issues/07-review-publish-empirical-package.md) | Independently reproduce, review, and publish the empirical package. | open | 06 |
+| [07](issues/07-review-publish-empirical-package.md) | Independently reproduce, review, and publish the empirical package. | resolved | 06 |
 
 ## Current frontier
 
-Ticket [06](issues/06-synthesize-safety-adaptivity-tradeoff.md) is resolved.
-Its independently reviewed [cross-layer
-synthesis](../../../../reports/experiments/safety-adaptivity-tradeoff-synthesis.md)
-keeps complete-system, corrected-mean signal, and safety-architecture evidence
-separate while joining the deterministic, stochastic, primary historical, and
-registered robustness runs through one versioned manifest. Ticket
-[07](issues/07-review-publish-empirical-package.md) is the current unblocked
-frontier for independent reproduction, final package review, and publication.
-Resolved ticket answers and linked reports remain the authority for run
-identities, detailed results, and publication gates.
+All seven tickets are resolved. The [independent publication
+review](../../../../research/notes/safety-adaptivity-empirical-package-review.md)
+regenerates the accepted public evidence, replays the receipt-bound historical
+slice and registered inference, reconciles the raw robustness evidence, and
+retains a sanitized private-pass receipt without redistributing provider data.
+The empirical evaluation effort is complete; its reports and figure-ready
+outputs are now inputs to manuscript assembly. Resolved ticket answers and
+linked reports remain the authority for run identities, detailed results, and
+publication boundaries.
