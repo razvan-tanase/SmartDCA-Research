@@ -17,19 +17,20 @@ reaches it.
 
 | Effort | State | Checkpoint or frontier |
 |---|---|---|
-| [Thesis manuscript assembly](efforts/thesis-manuscript-assembly/spec.md) | specified | The complete-release seam and claim-to-evidence contract are approved; ticket decomposition is next. |
+| [Thesis manuscript assembly](efforts/thesis-manuscript-assembly/spec.md) | active | The approved 17-ticket route begins with the institutional contract and canonical manuscript build. |
 | [Arbitrary-horizon guarded SmartDCA performance](efforts/arbitrary-horizon-performance/spec.md) | completed | The [reviewed terminal-inventory boundary](../../research/theorems/arbitrary-horizon-performance-boundary.md) closed all five tickets. |
 | [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) | completed | The [independent empirical-package review](../../research/notes/safety-adaptivity-empirical-package-review.md) cleared the immutable evidence package for manuscript use. |
 
 ## Current frontier
 
-Thesis manuscript assembly is now the active specified effort. Its
+Thesis manuscript assembly is now the active effort. Its
 [approved contract](efforts/thesis-manuscript-assembly/spec.md) fixes the
 Financial Computing narrative, the contribution and non-claim discipline, and
-one complete manuscript release as the verification seam. Ticket decomposition
-is the next step; implementation should begin with the institutional contract,
-chapter skeleton, notation register, and claim-to-evidence map rather than
-Chapter 1 prose.
+one complete manuscript release as the verification seam. The
+[effort map](efforts/thesis-manuscript-assembly/map.md) records the approved
+17-ticket route. Ticket 01 is the only current frontier: implementation begins
+by freezing the institutional contract and canonical manuscript build rather
+than by drafting Chapter 1 prose.
 
 The completed empirical effort's [independent publication
 review](../../research/notes/safety-adaptivity-empirical-package-review.md)
