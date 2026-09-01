@@ -17,19 +17,27 @@ reaches it.
 
 | Effort | State | Checkpoint or frontier |
 |---|---|---|
+| [Thesis manuscript assembly](efforts/thesis-manuscript-assembly/spec.md) | specified | The complete-release seam and claim-to-evidence contract are approved; ticket decomposition is next. |
 | [Arbitrary-horizon guarded SmartDCA performance](efforts/arbitrary-horizon-performance/spec.md) | completed | The [reviewed terminal-inventory boundary](../../research/theorems/arbitrary-horizon-performance-boundary.md) closed all five tickets. |
 | [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) | completed | The [independent empirical-package review](../../research/notes/safety-adaptivity-empirical-package-review.md) cleared the immutable evidence package for manuscript use. |
 
 ## Current frontier
 
-Manuscript assembly is now the project frontier. The completed empirical
-effort's [independent publication
+Thesis manuscript assembly is now the active specified effort. Its
+[approved contract](efforts/thesis-manuscript-assembly/spec.md) fixes the
+Financial Computing narrative, the contribution and non-claim discipline, and
+one complete manuscript release as the verification seam. Ticket decomposition
+is the next step; implementation should begin with the institutional contract,
+chapter skeleton, notation register, and claim-to-evidence map rather than
+Chapter 1 prose.
+
+The completed empirical effort's [independent publication
 review](../../research/notes/safety-adaptivity-empirical-package-review.md)
-cleared the deterministic, stochastic, primary historical, and separately
-registered robustness evidence without pooling their inferential units or
-overstating the corrected-mean signal. Its [effort
-map](efforts/safety-adaptivity-empirical-evaluation/map.md) remains the
-authority for the resolved route and publication boundaries.
+remains the publication-readiness authority for the frozen deterministic,
+stochastic, primary historical, and separately registered robustness evidence.
+Its [effort map](efforts/safety-adaptivity-empirical-evaluation/map.md) remains
+the authority for run identities, resolved work, and empirical claim
+boundaries.
 
 ## Historical decisions
 
