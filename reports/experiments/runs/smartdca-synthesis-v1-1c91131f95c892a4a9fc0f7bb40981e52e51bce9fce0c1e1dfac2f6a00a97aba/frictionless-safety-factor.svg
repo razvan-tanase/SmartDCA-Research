@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1080" viewBox="0 0 1280 1080" role="img">
+<title>Gross frictionless safety-factor curve</title>
+<desc>Complete-system descriptive summaries from reviewed aggregate cells; no cross-layer pooling.</desc>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="40" y="42" font-family="sans-serif" font-size="26" font-weight="700">Gross frictionless safety-factor curve</text>
+<text x="40" y="70" font-family="sans-serif" font-size="14" fill="#444">Complete-system descriptive summaries from reviewed aggregate cells; no cross-layer pooling.</text>
+<line x1="45" y1="97" x2="69" y2="97" stroke="#005f73" stroke-width="3"/>
+<text x="76" y="102" font-family="sans-serif" font-size="12">Deterministic primary catalog</text>
+<line x1="450" y1="97" x2="474" y2="97" stroke="#ca6702" stroke-width="3"/>
+<text x="481" y="102" font-family="sans-serif" font-size="12">Stochastic primary families</text>
+<line x1="855" y1="97" x2="879" y2="97" stroke="#6a4c93" stroke-width="3"/>
+<text x="886" y="102" font-family="sans-serif" font-size="12">Historical primary monthly design</text>
+<line x1="45" y1="119" x2="69" y2="119" stroke="#2a9d8f" stroke-width="3"/>
+<text x="76" y="124" font-family="sans-serif" font-size="12">Historical monthly robustness coverage</text>
+<line x1="450" y1="119" x2="474" y2="119" stroke="#bb3e03" stroke-width="3"/>
+<text x="481" y="124" font-family="sans-serif" font-size="12">Historical quarterly robustness horizons</text>
+<text x="40" y="177" font-family="sans-serif" font-size="17" font-weight="600">Median of cell median relative-wealth gaps</text>
+<line x1="105" y1="367" x2="1240" y2="367" stroke="#555"/>
+<line x1="105" y1="192" x2="105" y2="367" stroke="#555"/>
+<text x="93" y="198" text-anchor="end" font-family="monospace" font-size="11">0.34%</text>
+<text x="93" y="367" text-anchor="end" font-family="monospace" font-size="11">-4.55%</text>
+<line x1="105.00" y1="367" x2="105.00" y2="372" stroke="#555"/>
+<text x="105.00" y="387" text-anchor="middle" font-family="monospace" font-size="11">0.25</text>
+<line x1="483.33" y1="367" x2="483.33" y2="372" stroke="#555"/>
+<text x="483.33" y="387" text-anchor="middle" font-family="monospace" font-size="11">0.5</text>
+<line x1="861.67" y1="367" x2="861.67" y2="372" stroke="#555"/>
+<text x="861.67" y="387" text-anchor="middle" font-family="monospace" font-size="11">0.75</text>
+<line x1="1240.00" y1="367" x2="1240.00" y2="372" stroke="#555"/>
+<text x="1240.00" y="387" text-anchor="middle" font-family="monospace" font-size="11">1</text>
+<text x="672.50" y="409" text-anchor="middle" font-family="sans-serif" font-size="12">Safety factor λ</text>
+<polyline points="483.33,234.88 861.67,234.61 1088.67,216.38 1240.00,204.07" fill="none" stroke="#005f73" stroke-width="2.5"/>
+<circle cx="483.33" cy="234.88" r="3.5" fill="#005f73"/>
+<circle cx="861.67" cy="234.61" r="3.5" fill="#005f73"/>
+<circle cx="1088.67" cy="216.38" r="3.5" fill="#005f73"/>
+<circle cx="1240.00" cy="204.07" r="3.5" fill="#005f73"/>
+<polyline points="483.33,221.88 861.67,218.67 1088.67,213.14 1240.00,204.07" fill="none" stroke="#ca6702" stroke-width="2.5"/>
+<circle cx="483.33" cy="221.88" r="3.5" fill="#ca6702"/>
+<circle cx="861.67" cy="218.67" r="3.5" fill="#ca6702"/>
+<circle cx="1088.67" cy="213.14" r="3.5" fill="#ca6702"/>
+<circle cx="1240.00" cy="204.07" r="3.5" fill="#ca6702"/>
+<polyline points="483.33,287.33 861.67,282.51 1088.67,248.38 1240.00,204.07" fill="none" stroke="#6a4c93" stroke-width="2.5"/>
+<circle cx="483.33" cy="287.33" r="3.5" fill="#6a4c93"/>
+<circle cx="861.67" cy="282.51" r="3.5" fill="#6a4c93"/>
+<circle cx="1088.67" cy="248.38" r="3.5" fill="#6a4c93"/>
+<circle cx="1240.00" cy="204.07" r="3.5" fill="#6a4c93"/>
+<polyline points="105.00,289.43 634.67,286.89 937.33,276.08 1164.33,230.28 1224.87,209.54 1240.00,204.07" fill="none" stroke="#2a9d8f" stroke-width="2.5"/>
+<circle cx="105.00" cy="289.43" r="3.5" fill="#2a9d8f"/>
+<circle cx="634.67" cy="286.89" r="3.5" fill="#2a9d8f"/>
+<circle cx="937.33" cy="276.08" r="3.5" fill="#2a9d8f"/>
+<circle cx="1164.33" cy="230.28" r="3.5" fill="#2a9d8f"/>
+<circle cx="1224.87" cy="209.54" r="3.5" fill="#2a9d8f"/>
+<circle cx="1240.00" cy="204.07" r="3.5" fill="#2a9d8f"/>
+<polyline points="105.00,354.93 483.33,312.63 634.67,293.74 861.67,272.43 937.33,265.55 1088.67,246.88 1164.33,230.61 1224.87,209.38 1240.00,204.07" fill="none" stroke="#bb3e03" stroke-width="2.5"/>
+<circle cx="105.00" cy="354.93" r="3.5" fill="#bb3e03"/>
+<circle cx="483.33" cy="312.63" r="3.5" fill="#bb3e03"/>
+<circle cx="634.67" cy="293.74" r="3.5" fill="#bb3e03"/>
+<circle cx="861.67" cy="272.43" r="3.5" fill="#bb3e03"/>
+<circle cx="937.33" cy="265.55" r="3.5" fill="#bb3e03"/>
+<circle cx="1088.67" cy="246.88" r="3.5" fill="#bb3e03"/>
+<circle cx="1164.33" cy="230.61" r="3.5" fill="#bb3e03"/>
+<circle cx="1224.87" cy="209.38" r="3.5" fill="#bb3e03"/>
+<circle cx="1240.00" cy="204.07" r="3.5" fill="#bb3e03"/>
+<text x="40" y="457" font-family="sans-serif" font-size="17" font-weight="600">Minimum cell 5% downside</text>
+<line x1="105" y1="647" x2="1240" y2="647" stroke="#555"/>
+<line x1="105" y1="472" x2="105" y2="647" stroke="#555"/>
+<text x="93" y="478" text-anchor="end" font-family="monospace" font-size="11">2.19%</text>
+<text x="93" y="647" text-anchor="end" font-family="monospace" font-size="11">-29.57%</text>
+<line x1="105.00" y1="647" x2="105.00" y2="652" stroke="#555"/>
+<text x="105.00" y="667" text-anchor="middle" font-family="monospace" font-size="11">0.25</text>
+<line x1="483.33" y1="647" x2="483.33" y2="652" stroke="#555"/>
+<text x="483.33" y="667" text-anchor="middle" font-family="monospace" font-size="11">0.5</text>
+<line x1="861.67" y1="647" x2="861.67" y2="652" stroke="#555"/>
+<text x="861.67" y="667" text-anchor="middle" font-family="monospace" font-size="11">0.75</text>
+<line x1="1240.00" y1="647" x2="1240.00" y2="652" stroke="#555"/>
+<text x="1240.00" y="667" text-anchor="middle" font-family="monospace" font-size="11">1</text>
+<text x="672.50" y="689" text-anchor="middle" font-family="sans-serif" font-size="12">Safety factor λ</text>
+<polyline points="483.33,531.25 861.67,511.49 1088.67,495.04 1240.00,484.07" fill="none" stroke="#005f73" stroke-width="2.5"/>
+<circle cx="483.33" cy="531.25" r="3.5" fill="#005f73"/>
+<circle cx="861.67" cy="511.49" r="3.5" fill="#005f73"/>
+<circle cx="1088.67" cy="495.04" r="3.5" fill="#005f73"/>
+<circle cx="1240.00" cy="484.07" r="3.5" fill="#005f73"/>
+<polyline points="483.33,492.72 861.67,492.04 1088.67,488.41 1240.00,484.07" fill="none" stroke="#ca6702" stroke-width="2.5"/>
+<circle cx="483.33" cy="492.72" r="3.5" fill="#ca6702"/>
+<circle cx="861.67" cy="492.04" r="3.5" fill="#ca6702"/>
+<circle cx="1088.67" cy="488.41" r="3.5" fill="#ca6702"/>
+<circle cx="1240.00" cy="484.07" r="3.5" fill="#ca6702"/>
+<polyline points="483.33,568.32 861.67,550.50 1088.67,526.34 1240.00,484.07" fill="none" stroke="#6a4c93" stroke-width="2.5"/>
+<circle cx="483.33" cy="568.32" r="3.5" fill="#6a4c93"/>
+<circle cx="861.67" cy="550.50" r="3.5" fill="#6a4c93"/>
+<circle cx="1088.67" cy="526.34" r="3.5" fill="#6a4c93"/>
+<circle cx="1240.00" cy="484.07" r="3.5" fill="#6a4c93"/>
+<polyline points="105.00,572.82 634.67,560.62 937.33,544.40 1164.33,506.99 1224.87,488.83 1240.00,484.07" fill="none" stroke="#2a9d8f" stroke-width="2.5"/>
+<circle cx="105.00" cy="572.82" r="3.5" fill="#2a9d8f"/>
+<circle cx="634.67" cy="560.62" r="3.5" fill="#2a9d8f"/>
+<circle cx="937.33" cy="544.40" r="3.5" fill="#2a9d8f"/>
+<circle cx="1164.33" cy="506.99" r="3.5" fill="#2a9d8f"/>
+<circle cx="1224.87" cy="488.83" r="3.5" fill="#2a9d8f"/>
+<circle cx="1240.00" cy="484.07" r="3.5" fill="#2a9d8f"/>
+<polyline points="105.00,634.93 483.33,614.90 634.67,602.42 861.67,580.93 937.33,568.92 1088.67,534.33 1164.33,510.20 1224.87,489.31 1240.00,484.07" fill="none" stroke="#bb3e03" stroke-width="2.5"/>
+<circle cx="105.00" cy="634.93" r="3.5" fill="#bb3e03"/>
+<circle cx="483.33" cy="614.90" r="3.5" fill="#bb3e03"/>
+<circle cx="634.67" cy="602.42" r="3.5" fill="#bb3e03"/>
+<circle cx="861.67" cy="580.93" r="3.5" fill="#bb3e03"/>
+<circle cx="937.33" cy="568.92" r="3.5" fill="#bb3e03"/>
+<circle cx="1088.67" cy="534.33" r="3.5" fill="#bb3e03"/>
+<circle cx="1164.33" cy="510.20" r="3.5" fill="#bb3e03"/>
+<circle cx="1224.87" cy="489.31" r="3.5" fill="#bb3e03"/>
+<circle cx="1240.00" cy="484.07" r="3.5" fill="#bb3e03"/>
+<text x="40" y="737" font-family="sans-serif" font-size="17" font-weight="600">Maximum observed relative shortfall</text>
+<line x1="105" y1="927" x2="1240" y2="927" stroke="#555"/>
+<line x1="105" y1="752" x2="105" y2="927" stroke="#555"/>
+<text x="93" y="758" text-anchor="end" font-family="monospace" font-size="11">34.73%</text>
+<text x="93" y="927" text-anchor="end" font-family="monospace" font-size="11">-2.57%</text>
+<line x1="105.00" y1="927" x2="105.00" y2="932" stroke="#555"/>
+<text x="105.00" y="947" text-anchor="middle" font-family="monospace" font-size="11">0.25</text>
+<line x1="483.33" y1="927" x2="483.33" y2="932" stroke="#555"/>
+<text x="483.33" y="947" text-anchor="middle" font-family="monospace" font-size="11">0.5</text>
+<line x1="861.67" y1="927" x2="861.67" y2="932" stroke="#555"/>
+<text x="861.67" y="947" text-anchor="middle" font-family="monospace" font-size="11">0.75</text>
+<line x1="1240.00" y1="927" x2="1240.00" y2="932" stroke="#555"/>
+<text x="1240.00" y="947" text-anchor="middle" font-family="monospace" font-size="11">1</text>
+<text x="672.50" y="969" text-anchor="middle" font-family="sans-serif" font-size="12">Safety factor λ</text>
+<polyline points="483.33,874.75 861.67,891.58 1088.67,905.59 1240.00,914.93" fill="none" stroke="#005f73" stroke-width="2.5"/>
+<circle cx="483.33" cy="874.75" r="3.5" fill="#005f73"/>
+<circle cx="861.67" cy="891.58" r="3.5" fill="#005f73"/>
+<circle cx="1088.67" cy="905.59" r="3.5" fill="#005f73"/>
+<circle cx="1240.00" cy="914.93" r="3.5" fill="#005f73"/>
+<polyline points="483.33,907.21 861.67,907.72 1088.67,911.16 1240.00,914.93" fill="none" stroke="#ca6702" stroke-width="2.5"/>
+<circle cx="483.33" cy="907.21" r="3.5" fill="#ca6702"/>
+<circle cx="861.67" cy="907.72" r="3.5" fill="#ca6702"/>
+<circle cx="1088.67" cy="911.16" r="3.5" fill="#ca6702"/>
+<circle cx="1240.00" cy="914.93" r="3.5" fill="#ca6702"/>
+<polyline points="483.33,825.98 861.67,840.99 1088.67,877.75 1240.00,914.93" fill="none" stroke="#6a4c93" stroke-width="2.5"/>
+<circle cx="483.33" cy="825.98" r="3.5" fill="#6a4c93"/>
+<circle cx="861.67" cy="840.99" r="3.5" fill="#6a4c93"/>
+<circle cx="1088.67" cy="877.75" r="3.5" fill="#6a4c93"/>
+<circle cx="1240.00" cy="914.93" r="3.5" fill="#6a4c93"/>
+<polyline points="105.00,820.06 634.67,829.73 937.33,850.14 1164.33,893.28 1224.87,910.60 1240.00,914.93" fill="none" stroke="#2a9d8f" stroke-width="2.5"/>
+<circle cx="105.00" cy="820.06" r="3.5" fill="#2a9d8f"/>
+<circle cx="634.67" cy="829.73" r="3.5" fill="#2a9d8f"/>
+<circle cx="937.33" cy="850.14" r="3.5" fill="#2a9d8f"/>
+<circle cx="1164.33" cy="893.28" r="3.5" fill="#2a9d8f"/>
+<circle cx="1224.87" cy="910.60" r="3.5" fill="#2a9d8f"/>
+<circle cx="1240.00" cy="914.93" r="3.5" fill="#2a9d8f"/>
+<polyline points="105.00,764.07 483.33,793.55 634.67,804.66 861.67,826.78 937.33,840.94 1088.67,872.04 1164.33,892.64 1224.87,910.46 1240.00,914.93" fill="none" stroke="#bb3e03" stroke-width="2.5"/>
+<circle cx="105.00" cy="764.07" r="3.5" fill="#bb3e03"/>
+<circle cx="483.33" cy="793.55" r="3.5" fill="#bb3e03"/>
+<circle cx="634.67" cy="804.66" r="3.5" fill="#bb3e03"/>
+<circle cx="861.67" cy="826.78" r="3.5" fill="#bb3e03"/>
+<circle cx="937.33" cy="840.94" r="3.5" fill="#bb3e03"/>
+<circle cx="1088.67" cy="872.04" r="3.5" fill="#bb3e03"/>
+<circle cx="1164.33" cy="892.64" r="3.5" fill="#bb3e03"/>
+<circle cx="1224.87" cy="910.46" r="3.5" fill="#bb3e03"/>
+<circle cx="1240.00" cy="914.93" r="3.5" fill="#bb3e03"/>
+<text x="40" y="1052" font-family="sans-serif" font-size="12" fill="#444">Generated from reviewed aggregate cells. Lines connect descriptive summaries; they are not cross-layer estimates or independent-sample intervals.</text>
+</svg>

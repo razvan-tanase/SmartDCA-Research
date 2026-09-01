@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="454" viewBox="0 0 1280 454" role="img">
+<title>Net-of-cost empirical robustness</title>
+<desc>Cost-adjusted complete-system median ranges, outside current safety theorem.</desc>
+<rect width="100%" height="100%" fill="#fff7ed"/>
+<text x="38" y="40" font-family="sans-serif" font-size="26" font-weight="700">Net-of-cost empirical robustness</text>
+<text x="38" y="68" font-family="sans-serif" font-size="14">All rows are outside current safety theorem and have no confirmatory inference.</text>
+<text x="38" y="105" font-family="sans-serif" font-size="13" font-weight="700">Reviewed source</text>
+<text x="520" y="105" font-family="sans-serif" font-size="13" font-weight="700">Cost</text>
+<text x="740" y="105" font-family="sans-serif" font-size="13" font-weight="700">Median range</text>
+<text x="1030" y="105" font-family="sans-serif" font-size="13" font-weight="700">Neg / zero / pos</text>
+<text x="38" y="140" font-family="monospace" font-size="12">deterministic-primary-v1</text>
+<text x="520" y="140" font-family="sans-serif" font-size="12">fixed-1-usd</text>
+<text x="740" y="140" font-family="monospace" font-size="12">-8.572% to +34.915%</text>
+<text x="1030" y="140" font-family="monospace" font-size="12">28 / 24 / 20</text>
+<text x="38" y="178" font-family="monospace" font-size="12">deterministic-primary-v1</text>
+<text x="520" y="178" font-family="sans-serif" font-size="12">proportional-10bps</text>
+<text x="740" y="178" font-family="monospace" font-size="12">-8.548% to +34.917%</text>
+<text x="1030" y="178" font-family="monospace" font-size="12">28 / 18 / 26</text>
+<text x="38" y="216" font-family="monospace" font-size="12">historical-confirmatory-v1</text>
+<text x="520" y="216" font-family="sans-serif" font-size="12">fixed-1-usd</text>
+<text x="740" y="216" font-family="monospace" font-size="12">-4.598% to +0.000%</text>
+<text x="1030" y="216" font-family="monospace" font-size="12">18 / 6 / 0</text>
+<text x="38" y="254" font-family="monospace" font-size="12">historical-confirmatory-v1</text>
+<text x="520" y="254" font-family="sans-serif" font-size="12">proportional-10bps</text>
+<text x="740" y="254" font-family="monospace" font-size="12">-4.592% to +0.000%</text>
+<text x="1030" y="254" font-family="monospace" font-size="12">18 / 6 / 0</text>
+<text x="38" y="292" font-family="monospace" font-size="12">historical-registered-robustness-v1</text>
+<text x="520" y="292" font-family="sans-serif" font-size="12">fixed-1-usd</text>
+<text x="740" y="292" font-family="monospace" font-size="12">-23.508% to +0.000%</text>
+<text x="1030" y="292" font-family="monospace" font-size="12">78 / 12 / 0</text>
+<text x="38" y="330" font-family="monospace" font-size="12">historical-registered-robustness-v1</text>
+<text x="520" y="330" font-family="sans-serif" font-size="12">proportional-10bps</text>
+<text x="740" y="330" font-family="monospace" font-size="12">-23.484% to +0.000%</text>
+<text x="1030" y="330" font-family="monospace" font-size="12">78 / 12 / 0</text>
+<text x="38" y="368" font-family="monospace" font-size="12">stochastic-primary-v1</text>
+<text x="520" y="368" font-family="sans-serif" font-size="12">fixed-1-usd</text>
+<text x="740" y="368" font-family="monospace" font-size="12">-1.207% to +1.207%</text>
+<text x="1030" y="368" font-family="monospace" font-size="12">50 / 30 / 40</text>
+<text x="38" y="406" font-family="monospace" font-size="12">stochastic-primary-v1</text>
+<text x="520" y="406" font-family="sans-serif" font-size="12">proportional-10bps</text>
+<text x="740" y="406" font-family="monospace" font-size="12">-1.196% to +1.214%</text>
+<text x="1030" y="406" font-family="monospace" font-size="12">50 / 30 / 40</text>
+</svg>

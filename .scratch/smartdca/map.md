@@ -22,12 +22,13 @@ reaches it.
 
 ## Current frontier
 
-Synthesize the completed deterministic, stochastic, and historical evidence
-under ticket 06. The historical checkpoint now includes the immutable primary
-confirmatory run and separately registered robustness coverage and quarterly-
-horizon grids. The active effort's
-[map](efforts/safety-adaptivity-empirical-evaluation/map.md) is authoritative
-for ticket dependencies and state. Ticket 07 remains blocked behind synthesis.
+Independently reproduce, review, and publish the completed empirical package
+under ticket 07. Ticket 06 produced the reviewed [cross-layer
+synthesis](../../reports/experiments/safety-adaptivity-tradeoff-synthesis.md)
+from the deterministic, stochastic, primary historical, and separately
+registered robustness runs without pooling their inferential units. The active
+effort's [map](efforts/safety-adaptivity-empirical-evaluation/map.md) is
+authoritative for ticket dependencies and state.
 
 ## Historical decisions
 
