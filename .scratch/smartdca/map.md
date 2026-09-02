@@ -28,9 +28,10 @@ Manuscript assembly is now the project frontier. The active thesis effort's
 Financial Computing narrative, the contribution and non-claim discipline, and
 one complete manuscript release as the verification seam. The
 [effort map](efforts/thesis-manuscript-assembly/map.md) records the approved
-17-ticket route. Ticket 01 is the only current frontier: implementation begins
-by freezing the institutional contract and canonical manuscript build rather
-than by drafting Chapter 1 prose.
+17-ticket route. Ticket 01 is resolved: the institutional contract and
+canonical manuscript build are frozen. Ticket 02 is the current frontier for
+the thesis architecture and evidence controls; continuous Chapter 1 prose
+remains deferred until that seam is in place.
 
 The completed empirical effort's [independent publication
 review](../../research/notes/safety-adaptivity-empirical-package-review.md)

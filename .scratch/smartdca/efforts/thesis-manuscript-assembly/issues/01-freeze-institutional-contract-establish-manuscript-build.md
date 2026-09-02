@@ -1,7 +1,7 @@
 # 01 — Freeze the institutional contract and establish the manuscript build
 
 Type: task
-Status: open
+Status: resolved
 Triage: ready-for-agent
 Blocked by: none
 Parent: [Thesis manuscript assembly](../spec.md)
@@ -20,7 +20,7 @@ A master's candidate can inspect one approved manuscript contract, build a minim
 - [x] The contract records language, working title status, submission date, expected extent, required front matter, citation style, page and typography rules, file format, metadata, archival requirements, and supervisor-specific constraints.
 - [x] Any requirement that cannot be established authoritatively is assigned to the candidate or supervisor as an explicit unresolved decision rather than guessed.
 - [x] The canonical authoring and build format is selected only after the official template is inspected, and the decision preserves one authoritative source with derived rendered releases.
-- [ ] One documented clean-environment command builds a minimal body, appendix, bibliography, generated-asset placeholder, and submission-format PDF.
+- [x] One documented clean-environment command builds a minimal body, appendix, bibliography, generated-asset placeholder, and submission-format PDF.
 - [x] The rendered shell is checked against every institutional requirement that can already be tested.
 - [x] The release check fails when a required institutional value, placeholder, citation, or build input remains unresolved.
 - [x] The contract and build instructions are understandable without hidden conversation context, and continuous chapter drafting has not begun.
@@ -33,3 +33,15 @@ A master's candidate can inspect one approved manuscript contract, build a minim
 - Local verification: 14 manuscript/release tests pass; direct LaTeX build passes; the rendered PDF is nine A4 pages with bilingual covers, one-page synopsis/abstract, body, appendix, generated asset, and bibliography; `git diff --check` passes; the release gate exits 1 for the intentionally unresolved candidate/supervisor decisions and visible placeholders.
 - Interrupted publication on 2026-09-02: the selected GitHub connector reached its enforced usage limit after uploading 15 of 33 blobs. No remote commit, branch ref, or workflow run was created. Docker is not installed in this workspace, so the clean-container command could not be executed locally. Resume by publishing commit `85b6595` through GitHub and verifying the `manuscript-shell` workflow before resolving this ticket.
 - The repository-wide verification command was started after the focused checks and reached the pre-existing `check_stochastic_family_study` replay, which remained CPU-bound for roughly 64 minutes without emitting a failure. It was interrupted to avoid an unbounded wait; no full-suite pass is claimed.
+- Follow-up on 2026-09-02: the complete tree was published to `main` as GitHub commit `145114e50b84a118bd65453e79ac0b229a045dc9`. Verification run 238 completed successfully: both the scientific `checks` job and the `manuscript-shell` clean-container job passed.
+
+## Answer
+
+Ticket 01 is resolved. The institutional contract, machine-readable mirror,
+retained official template, current university source artifacts, canonical
+LaTeX/BibTeX source, generated-asset seam, clean Docker build, PDF inspection
+tests, and fail-closed release checker are now versioned and published on
+`main`. The release checker continues to reject the shell until the explicitly
+owned candidate and supervisor decisions are supplied. Ticket 02 is the next
+frontier: establish the thesis architecture and evidence controls before
+continuous chapter drafting.
