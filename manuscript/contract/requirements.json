@@ -1,0 +1,661 @@
+{
+  "schema_version": 1,
+  "contract_id": "smartdca-thesis-institutional-contract-v1",
+  "frozen_on": "2026-09-02",
+  "contract_status": "frozen-with-explicit-release-blockers",
+  "authority_rule": "Verified institutional requirements require an official source, an access date, and a bounded evidence statement. Missing requirements remain unresolved and are never inferred from another faculty or an older session.",
+  "sources": [
+    {
+      "id": "upb-finalization-regulation-2025-2026",
+      "authority": "official",
+      "publisher": "Universitatea Nationala de Stiinta si Tehnologie POLITEHNICA Bucuresti",
+      "title": "Regulament privind organizarea si desfasurarea examenelor de absolvire, licenta/diploma si disertatie pentru anul universitar 2025-2026",
+      "approved_on": "2026-03-26",
+      "accessed_on": "2026-09-01",
+      "url": "https://upb.ro/wp-content/uploads/2026/03/Regulament_finalizare_studii_2025-2026.pdf",
+      "local_path": "references/institutional/politehnica-finalization-regulation-2025-2026.pdf",
+      "sha256": "dafe9bb886f69b4b83dfad4649747c6d5f93f1376d9aed8d016fd83c15c85261"
+    },
+    {
+      "id": "upb-regulations-index",
+      "authority": "official",
+      "publisher": "Universitatea Nationala de Stiinta si Tehnologie POLITEHNICA Bucuresti",
+      "title": "Regulamente si Rapoarte",
+      "accessed_on": "2026-09-01",
+      "url": "https://upb.ro/regulamente-si-rapoarte/"
+    },
+    {
+      "id": "upb-english-identity",
+      "authority": "official",
+      "publisher": "Universitatea Nationala de Stiinta si Tehnologie POLITEHNICA Bucuresti",
+      "title": "Erasmus Policy Statement",
+      "accessed_on": "2026-09-01",
+      "url": "https://upb.ro/en/erasmus/erasmus-policy-statement/"
+    },
+    {
+      "id": "acs-master-studies",
+      "authority": "official",
+      "publisher": "Facultatea de Automatica si Calculatoare",
+      "title": "Master Studies",
+      "accessed_on": "2026-09-01",
+      "url": "https://acs.pub.ro/en/admission/master-studies/"
+    },
+    {
+      "id": "acs-official-thesis-template-2018",
+      "authority": "official",
+      "publisher": "Faculty of Automatic Control and Computers, Computer Science and Engineering Department",
+      "title": "Proiect de diploma / Diploma Project template",
+      "version": "2018",
+      "accessed_on": "2026-09-02",
+      "provenance": "Supplied directly by the candidate on 2026-09-02 and explicitly identified as the official thesis template; retained byte-for-byte.",
+      "original_filename": "Proiect_de_diploma.pdf",
+      "local_path": "references/institutional/acs-official-thesis-template-2018.pdf",
+      "sha256": "d2d35bc047816a8ad4672f088dac72ed2bcd86837f1c70ce11da143db7e487d5"
+    },
+    {
+      "id": "thesis-effort-spec",
+      "authority": "repository",
+      "publisher": "SmartDCA Research",
+      "title": "Thesis manuscript assembly specification",
+      "accessed_on": "2026-09-01",
+      "repository_path": ".scratch/smartdca/efforts/thesis-manuscript-assembly/spec.md"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "institution_name",
+      "field": "Institution",
+      "value": "Universitatea Nationala de Stiinta si Tehnologie POLITEHNICA Bucuresti / National University of Science and Technology POLITEHNICA Bucharest",
+      "status": "verified",
+      "owner": "university",
+      "release_blocking": true,
+      "source_ids": [
+        "upb-finalization-regulation-2025-2026",
+        "upb-english-identity"
+      ],
+      "evidence": "The regulation supplies the official Romanian name; the university's English Erasmus policy supplies the official English rendering."
+    },
+    {
+      "id": "faculty_name",
+      "field": "Faculty",
+      "value": "Facultatea de Automatica si Calculatoare / Faculty of Automatic Control and Computers",
+      "status": "verified",
+      "owner": "faculty",
+      "release_blocking": true,
+      "source_ids": [
+        "upb-regulations-index",
+        "acs-master-studies"
+      ],
+      "evidence": "The university index identifies the faculty; the faculty's English page supplies its English name."
+    },
+    {
+      "id": "program_name",
+      "field": "Program",
+      "value": "Financial Computing",
+      "status": "verified",
+      "owner": "faculty",
+      "release_blocking": true,
+      "source_ids": [
+        "acs-master-studies"
+      ],
+      "evidence": "Listed by the faculty as a master's program."
+    },
+    {
+      "id": "program_language",
+      "field": "Program teaching language",
+      "value": "English",
+      "status": "verified",
+      "owner": "faculty",
+      "release_blocking": true,
+      "source_ids": [
+        "acs-master-studies"
+      ],
+      "evidence": "The official program listing states that Financial Computing is taught in English."
+    },
+    {
+      "id": "department_name",
+      "field": "Department shown by the official faculty template",
+      "value": "Departamentul de Calculatoare / Computer Science and Engineering Department",
+      "status": "verified",
+      "owner": "faculty",
+      "release_blocking": true,
+      "source_ids": [
+        "acs-official-thesis-template-2018"
+      ],
+      "evidence": "The Romanian and English template covers identify the department. Current university and faculty names come from newer official sources."
+    },
+    {
+      "id": "manuscript_language",
+      "field": "Permitted and approved dissertation language",
+      "value": null,
+      "status": "unresolved",
+      "owner": "supervisor",
+      "consult_with": [
+        "candidate",
+        "faculty secretariat"
+      ],
+      "release_blocking": true,
+      "resolution_evidence": "Written supervisor or faculty confirmation that the dissertation may be submitted in English. The program teaching language is supporting context, not a substitute for this approval."
+    },
+    {
+      "id": "working_title",
+      "field": "Working title",
+      "value": "Safe Adaptivity in Dollar-Cost Averaging: From an Impossibility Boundary to a Reproducible Empirical Evaluation",
+      "status": "approved",
+      "owner": "candidate",
+      "release_blocking": false,
+      "source_ids": [
+        "thesis-effort-spec"
+      ],
+      "evidence": "User-approved effort specification; explicitly provisional."
+    },
+    {
+      "id": "final_title_approval",
+      "field": "Final title and official capitalization",
+      "value": null,
+      "status": "unresolved",
+      "owner": "supervisor",
+      "release_blocking": true,
+      "resolution_evidence": "Signed topic/title record and exact title approved for the registration form."
+    },
+    {
+      "id": "target_submission_session",
+      "field": "Target defense/submission session",
+      "value": null,
+      "status": "unresolved",
+      "owner": "candidate",
+      "consult_with": [
+        "supervisor",
+        "faculty secretariat"
+      ],
+      "release_blocking": true,
+      "resolution_evidence": "Candidate selects the target session and retains the faculty's current announcement for that session."
+    },
+    {
+      "id": "submission_date",
+      "field": "Exact manuscript upload deadline",
+      "value": null,
+      "status": "unresolved",
+      "owner": "candidate",
+      "consult_with": [
+        "faculty secretariat"
+      ],
+      "release_blocking": true,
+      "resolution_evidence": "Current faculty announcement or direct written confirmation for the selected session."
+    },
+    {
+      "id": "expected_extent",
+      "field": "Expected page or word extent and exclusions",
+      "value": null,
+      "status": "unresolved",
+      "owner": "supervisor",
+      "consult_with": [
+        "faculty secretariat"
+      ],
+      "release_blocking": true,
+      "resolution_evidence": "Current faculty template/guidance or written supervisor decision identifying what counts toward the extent."
+    },
+    {
+      "id": "official_manuscript_template",
+      "field": "Official ACS thesis template",
+      "value": "The retained 2018 Faculty of Automatic Control and Computers / Computer Science and Engineering Department LaTeX-produced Diploma Project template, supplied and identified by the candidate as the official thesis template.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "acs-official-thesis-template-2018"
+      ],
+      "evidence": "Candidate-supplied official artifact inspected in full on 2026-09-02 and retained at its recorded SHA-256. Its 2018 identity wording is superseded by the current official university identity; its cover structure, front matter, layout, typography, and manuscript guidance remain the template contract."
+    },
+    {
+      "id": "originality_declaration",
+      "field": "Required originality declaration",
+      "value": "Annex 2 must be completed by hand, signed, approved by the scientific supervisor, deposited at registration, and included as an integral part of the dissertation.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "upb-finalization-regulation-2025-2026"
+      ],
+      "evidence": "Annex 2, pages 21-22 (PDF page indices 20-21), including footnote 5."
+    },
+    {
+      "id": "front_matter_beyond_declaration",
+      "field": "Required front matter and order beyond Annex 2",
+      "value": "Romanian cover, English cover, contents, one-page bilingual synopsis/abstract, and optional acknowledgements precede the body. The synopsis and abstract are each limited to 200 words and must share one page.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "acs-official-thesis-template-2018"
+      ],
+      "evidence": "Template PDF pages 1-5. The newer Annex 2 declaration is additionally required; its exact placement relative to these sections remains unresolved."
+    },
+    {
+      "id": "template_cover_sequence",
+      "field": "Template cover sequence and fields",
+      "value": "The template starts with Romanian and English covers showing institution, faculty, department, two brand marks, document type, title, optional subtitle, candidate, scientific supervisor/advisor with academic title, Bucharest, and year.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "acs-official-thesis-template-2018"
+      ],
+      "evidence": "Template PDF pages 1-2. Current identity wording takes precedence over the historical 2018 wording."
+    },
+    {
+      "id": "bilingual_abstracts",
+      "field": "Romanian synopsis and English abstract",
+      "value": "Provide both a Romanian SINOPSIS and an English ABSTRACT, each no more than 200 words; together they fit on one page and summarize the problem, results, and conclusions for a non-specialist reader without losing specificity.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "acs-official-thesis-template-2018"
+      ],
+      "evidence": "Template PDF page 4."
+    },
+    {
+      "id": "optional_acknowledgements",
+      "field": "Acknowledgements",
+      "value": "A dedicated acknowledgements section is optional.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": false,
+      "source_ids": [
+        "acs-official-thesis-template-2018"
+      ],
+      "evidence": "Template PDF page 5."
+    },
+    {
+      "id": "research_manuscript_structure",
+      "field": "Research-thesis chapter guidance",
+      "value": "The research route covers introduction (context, problem, objectives, proposed solution, obtained results, document structure), requirements analysis/motivation, worldwide state of the art with precise positioning and technology alternatives, proposed solution and architecture/theory, difficult implementation details, quantitative evaluation against clear metrics and alternatives, conclusions, bibliography, and optional annexes.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "acs-official-thesis-template-2018"
+      ],
+      "evidence": "Template PDF pages 6-17. This is structural input to ticket 02; ticket 01 does not begin continuous chapter drafting."
+    },
+    {
+      "id": "figure_policy",
+      "field": "Figure presentation and attribution",
+      "value": "Figures are centered, numbered, and referred to in the text; every figure not made by the candidate is cited in its caption or at least a footnote; figures larger than half a page move to annexes.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "acs-official-thesis-template-2018"
+      ],
+      "evidence": "Template PDF pages 10-11 (printed pages 5-6)."
+    },
+    {
+      "id": "formula_policy",
+      "field": "Formula presentation",
+      "value": "Mathematical formulas are centered and numbered; the recommended formula font size is 12 pt.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "acs-official-thesis-template-2018"
+      ],
+      "evidence": "Template PDF pages 6 and 12 (printed pages 1 and 7)."
+    },
+    {
+      "id": "table_policy",
+      "field": "Table presentation",
+      "value": "Tables use 9 pt text, are numbered, and are referred to in the text.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "acs-official-thesis-template-2018"
+      ],
+      "evidence": "Template PDF pages 13-14 (printed pages 8-9)."
+    },
+    {
+      "id": "bibliography_policy",
+      "field": "Faculty bibliography and citation guidance",
+      "value": "Use one consistent APA, IEEE, Harvard, or numbered style; cite internet access dates; cite non-candidate figures; attach references directly to the supported prose; support quantitative or importance claims; cite every bibliography entry; do not copy or translate source text; LaTeX citation commands and a separate BibTeX file are accepted.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "acs-official-thesis-template-2018"
+      ],
+      "evidence": "Template PDF pages 18-20 (printed pages 13-15)."
+    },
+    {
+      "id": "appendix_policy",
+      "field": "Annex/appendix policy",
+      "value": "Annexes are optional and may hold configuration/build files, tables or figures larger than half a page, long source listings, screenshots, command output, and other material longer than one page that would interrupt the document's natural flow.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "acs-official-thesis-template-2018"
+      ],
+      "evidence": "Template PDF page 21 (printed page 16)."
+    },
+    {
+      "id": "citation_style",
+      "field": "Citation and bibliography style",
+      "value": null,
+      "status": "unresolved",
+      "owner": "supervisor",
+      "consult_with": [
+        "faculty secretariat"
+      ],
+      "release_blocking": true,
+      "resolution_evidence": "Current faculty/supervisor style decision. The regulation evaluates breadth, currency, correctness, and correct use of references but does not prescribe a named style."
+    },
+    {
+      "id": "bibliography_quality",
+      "field": "Bibliography quality",
+      "value": "The evaluation considers the breadth, currency, and correctness of the bibliography and the correct use of bibliographic references.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "upb-finalization-regulation-2025-2026"
+      ],
+      "evidence": "Article 17(7), page 12 (PDF page index 11)."
+    },
+    {
+      "id": "public_defense",
+      "field": "Dissertation examination format",
+      "value": "The dissertation examination consists of one public presentation and defense of the dissertation.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "upb-finalization-regulation-2025-2026"
+      ],
+      "evidence": "Article 17(4), page 11 (PDF page index 10)."
+    },
+    {
+      "id": "evaluation_criteria",
+      "field": "Institutional dissertation evaluation criteria",
+      "value": "Evaluation covers the imposed structure, alignment with the signed topic, written quality, scientific level, originality, candidate contribution, bibliography breadth and currency, correct reference use, conclusions, engineering correctness, program relevance, and presentation quality.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "upb-finalization-regulation-2025-2026"
+      ],
+      "evidence": "Article 17(7), page 12 (PDF page index 11)."
+    },
+    {
+      "id": "page_geometry",
+      "field": "Recommended page size and margins",
+      "value": "A4 with 2.54 cm top, right, bottom, and left margins.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "acs-official-thesis-template-2018"
+      ],
+      "evidence": "Template PDF page 6 (printed page 1). The template labels these parameters as recommended."
+    },
+    {
+      "id": "print_and_binding_rules",
+      "field": "Duplex/recto-verso, binding, and binding offset",
+      "value": null,
+      "status": "unresolved",
+      "owner": "candidate",
+      "consult_with": [
+        "supervisor",
+        "faculty secretariat"
+      ],
+      "release_blocking": true,
+      "resolution_evidence": "Written faculty or supervisor guidance; the supplied template does not specify print mode, binding, or binding offset."
+    },
+    {
+      "id": "typography",
+      "field": "Recommended body and heading typography",
+      "value": "12 pt justified body; 1.5 line spacing; 8 pt after paragraphs; Heading 1 at 14 pt bold all caps; Heading 2 at 14 pt bold; Heading 3 at 12 pt; formulas at 12 pt; tables at 9 pt.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "acs-official-thesis-template-2018"
+      ],
+      "evidence": "Template PDF pages 6 and 13 (printed pages 1 and 8). The template labels the main formatting parameters as recommended."
+    },
+    {
+      "id": "font_family_caption_and_pagination",
+      "field": "Font family, detailed caption style, and pagination rules",
+      "value": null,
+      "status": "unresolved",
+      "owner": "candidate",
+      "consult_with": [
+        "supervisor",
+        "faculty secretariat"
+      ],
+      "release_blocking": true,
+      "resolution_evidence": "Written faculty or supervisor guidance; the supplied template does not prescribe a font family or a complete pagination/caption style."
+    },
+    {
+      "id": "online_submission",
+      "field": "Manuscript hand-in channel",
+      "value": "The dissertation is handed in online according to faculty instructions; registration includes proof of online hand-in.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "upb-finalization-regulation-2025-2026"
+      ],
+      "evidence": "Article 12(1)(b), page 6 (PDF page index 5)."
+    },
+    {
+      "id": "submission_file_format",
+      "field": "Accepted upload file format, size, naming, and packaging",
+      "value": null,
+      "status": "unresolved",
+      "owner": "candidate",
+      "consult_with": [
+        "faculty secretariat"
+      ],
+      "release_blocking": true,
+      "resolution_evidence": "Current faculty upload instructions. The repository builds PDF, but the regulation does not establish the exact upload format or filename."
+    },
+    {
+      "id": "submission_metadata",
+      "field": "Required cover, form, PDF, and repository metadata",
+      "value": null,
+      "status": "unresolved",
+      "owner": "candidate",
+      "consult_with": [
+        "supervisor",
+        "faculty secretariat"
+      ],
+      "release_blocking": true,
+      "resolution_evidence": "Current template/upload instructions plus the candidate's official identity, department, supervisor title, session, and year."
+    },
+    {
+      "id": "current_cover_brand_assets",
+      "field": "Current official cover logos and their placement",
+      "value": null,
+      "status": "unresolved",
+      "owner": "candidate",
+      "consult_with": [
+        "faculty secretariat"
+      ],
+      "release_blocking": true,
+      "resolution_evidence": "Current faculty/university logo files or written confirmation that the 2018 template marks remain current. The shell uses a visible placeholder rather than silently reusing potentially superseded branding."
+    },
+    {
+      "id": "originality_declaration_placement",
+      "field": "Placement of the newer Annex 2 declaration within template front matter",
+      "value": null,
+      "status": "unresolved",
+      "owner": "supervisor",
+      "consult_with": [
+        "candidate",
+        "faculty secretariat"
+      ],
+      "release_blocking": true,
+      "resolution_evidence": "Written faculty or supervisor guidance reconciling the 2025-2026 Annex 2 requirement with the 2018 template sequence."
+    },
+    {
+      "id": "topic_and_supervisor_approval",
+      "field": "Topic and scientific supervisor approval",
+      "value": "The dissertation must answer the topic signed by the department director and scientific supervisor; the supervisor decides whether the work is admitted to defense.",
+      "status": "verified",
+      "owner": "supervisor",
+      "release_blocking": true,
+      "source_ids": [
+        "upb-finalization-regulation-2025-2026"
+      ],
+      "evidence": "Article 18(1)-(4), pages 12-13 (PDF page indices 11-12)."
+    },
+    {
+      "id": "registration_title_and_supervisor_fields",
+      "field": "Registration-form title and supervisor identity",
+      "value": "Annex 1b records the exact dissertation title in uppercase and the scientific supervisor's academic title and name.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "upb-finalization-regulation-2025-2026"
+      ],
+      "evidence": "Annex 1b, page 20 (PDF page index 19). The actual title and supervisor identity remain separately unresolved."
+    },
+    {
+      "id": "similarity_review",
+      "field": "Similarity review",
+      "value": "The faculty must run an approved similarity program before defense; the supervisor interprets the report, which is included in the examination file.",
+      "status": "verified",
+      "owner": "candidate",
+      "release_blocking": true,
+      "source_ids": [
+        "upb-finalization-regulation-2025-2026"
+      ],
+      "evidence": "Article 12(1)(i) and Article 18(9)-(11), pages 7 and 13 (PDF page indices 6 and 12)."
+    },
+    {
+      "id": "similarity_threshold",
+      "field": "Maximum accepted similarity percentage and exclusions",
+      "value": null,
+      "status": "unresolved",
+      "owner": "candidate",
+      "consult_with": [
+        "supervisor",
+        "faculty council or secretariat"
+      ],
+      "release_blocking": true,
+      "resolution_evidence": "The current Financial Computing/faculty threshold. Article 18(10) delegates this value to the faculty council."
+    },
+    {
+      "id": "archive_and_repository",
+      "field": "Archival deposit, retention, embargo, licensing, and repository requirements",
+      "value": null,
+      "status": "unresolved",
+      "owner": "candidate",
+      "consult_with": [
+        "faculty secretariat"
+      ],
+      "release_blocking": true,
+      "resolution_evidence": "Current faculty/library/repository instructions. Annex 2 consents to originality checking and database ingestion but does not establish the complete archival contract."
+    },
+    {
+      "id": "supervisor_constraints",
+      "field": "Supervisor-specific structure, style, review, and delivery constraints",
+      "value": null,
+      "status": "unresolved",
+      "owner": "supervisor",
+      "release_blocking": true,
+      "resolution_evidence": "A dated written supervisor decision or an approved review note incorporated into this contract."
+    },
+    {
+      "id": "candidate_official_name",
+      "field": "Candidate name exactly as required on official documents",
+      "value": null,
+      "status": "unresolved",
+      "owner": "candidate",
+      "release_blocking": true,
+      "resolution_evidence": "Candidate confirms the exact official form, including diacritics and any parent initial required by the registration form."
+    },
+    {
+      "id": "supervisor_identity",
+      "field": "Scientific supervisor's name and academic title",
+      "value": null,
+      "status": "unresolved",
+      "owner": "supervisor",
+      "release_blocking": true,
+      "resolution_evidence": "Signed topic record or supervisor confirmation."
+    },
+    {
+      "id": "canonical_authoring_format",
+      "field": "Authoritative manuscript source",
+      "value": "LaTeX source under manuscript/source with BibTeX bibliography and generated TeX asset inputs; rendered PDFs are derived outputs.",
+      "status": "approved",
+      "owner": "repository",
+      "release_blocking": true,
+      "source_ids": [
+        "acs-official-thesis-template-2018",
+        "thesis-effort-spec"
+      ],
+      "evidence": "ADR 0011 records the decision after inspecting the supplied official template. The template was produced by LaTeX and explicitly describes LaTeX citation commands and a separate BibTeX file, so the selected source/build seam is directly compatible."
+    },
+    {
+      "id": "rendered_shell_format",
+      "field": "Current derived output",
+      "value": "A4 PDF draft shell generated by pdfLaTeX/BibTeX through latexmk, with the official template's bilingual cover/front-matter route, 25.4 mm margins, and recommended typography.",
+      "status": "approved",
+      "owner": "repository",
+      "release_blocking": false,
+      "source_ids": [
+        "thesis-effort-spec"
+      ],
+      "evidence": "This proves template-compatible PDF generation while unresolved personal, session, branding, supervisor, and upload values keep the artifact from release."
+    }
+  ],
+  "release_gate": {
+    "release_ready_statuses": [
+      "verified",
+      "approved"
+    ],
+    "placeholder_patterns": [
+      {
+        "id": "UNRESOLVED",
+        "pattern": "\\[UNRESOLVED:"
+      },
+      {
+        "id": "work-marker",
+        "pattern": "\\b(?:TODO|TBD|FIXME)\\b"
+      },
+      {
+        "id": "template-token",
+        "pattern": "\\{\\{\\s*[A-Z][A-Z0-9_-]{2,}\\s*\\}\\}"
+      }
+    ]
+  },
+  "contract_mirror": {
+    "path": "contract/institutional-contract.md",
+    "requirements_sha256": "48d20f5cbe08e04a6e8e8f0c72013a454a596cd692e0bdd6b6142b9f43feedc8",
+    "sha256": "8c2848f95e3cdcbcb81522e1f472b12cd7c86407d7e40ba49fbeeb4d71dbfea3"
+  },
+  "release_inputs": {
+    "required_files": [
+      "source/thesis.tex",
+      "generated/asset-placeholder.tex",
+      "bibliography/references.bib",
+      "contract/institutional-contract.md",
+      "environment/Dockerfile",
+      "environment/image-tag.txt",
+      "build-clean.sh",
+      "../references/institutional/acs-official-thesis-template-2018.pdf",
+      "../references/institutional/politehnica-finalization-regulation-2025-2026.pdf"
+    ],
+    "text_files": [
+      "source/thesis.tex",
+      "generated/asset-placeholder.tex",
+      "bibliography/references.bib",
+      "contract/institutional-contract.md"
+    ],
+    "bibliography": "bibliography/references.bib"
+  }
+}

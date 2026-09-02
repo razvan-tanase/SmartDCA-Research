@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "submission_date",
+      "status": "unresolved",
+      "owner": "candidate",
+      "release_blocking": true,
+      "value": null
+    }
+  ]
+}

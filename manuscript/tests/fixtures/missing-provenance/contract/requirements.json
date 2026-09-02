@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "sources": [],
+  "requirements": [
+    {
+      "id": "program_language",
+      "status": "verified",
+      "owner": "faculty",
+      "release_blocking": true,
+      "value": "English",
+      "source_ids": []
+    }
+  ]
+}

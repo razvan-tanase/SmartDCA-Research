@@ -9,3 +9,5 @@ venv/
 .DS_Store
 data/raw/
 results/
+manuscript/build/
+tmp/pdfs/

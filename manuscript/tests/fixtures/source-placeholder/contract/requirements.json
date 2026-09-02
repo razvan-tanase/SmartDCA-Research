@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "requirements": [],
+  "release_inputs": {
+    "required_files": [
+      "source/main.tex"
+    ],
+    "text_files": [
+      "source/main.tex"
+    ]
+  }
+}

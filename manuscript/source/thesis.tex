@@ -1,0 +1,173 @@
+\documentclass[12pt,a4paper,oneside]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=25.4mm]{geometry}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{setspace}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\thesistitle}{Safe Adaptivity in Dollar-Cost Averaging: From an Impossibility Boundary to a Reproducible Empirical Evaluation}
+
+\hypersetup{
+  pdftitle={\thesistitle},
+  pdfauthor={[UNRESOLVED: candidate's official name]},
+  pdfsubject={Financial Computing master's dissertation shell},
+  pdfkeywords={dollar-cost averaging, Financial Computing, reproducibility}
+}
+
+\onehalfspacing
+\setlength{\parskip}{8pt}
+
+\makeatletter
+\def\@makechapterhead#1{%
+  \vspace*{0pt}%
+  {\parindent \z@ \raggedright \normalfont
+    \fontsize{14}{17}\selectfont\bfseries
+    \thechapter\quad\MakeUppercase{#1}\par\nobreak
+    \vskip 24pt}}
+\def\@makeschapterhead#1{%
+  \vspace*{0pt}%
+  {\parindent \z@ \raggedright \normalfont
+    \fontsize{14}{17}\selectfont\bfseries
+    \MakeUppercase{#1}\par\nobreak
+    \vskip 24pt}}
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {-3.5ex \@plus -1ex \@minus -.2ex}%
+  {2.3ex \@plus .2ex}%
+  {\normalfont\fontsize{14}{17}\selectfont\bfseries}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {-3.25ex\@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}%
+  {\normalfont\fontsize{12}{15}\selectfont\bfseries}}
+\makeatother
+
+\newcommand{\brandmarksplaceholder}{%
+  \fbox{\parbox[c][16mm][c]{0.72\textwidth}{\centering
+    \textbf{[UNRESOLVED: insert current official university and department brand marks]}}}}
+
+\begin{document}
+\hypersetup{pageanchor=false}
+
+\begin{titlepage}
+  \centering
+  {\small\bfseries UNIVERSITATEA NAȚIONALĂ DE ȘTIINȚĂ ȘI TEHNOLOGIE\par
+  POLITEHNICA BUCUREȘTI\par
+  FACULTATEA DE AUTOMATICĂ ȘI CALCULATOARE\par
+  DEPARTAMENTUL DE CALCULATOARE\par
+  FINANCIAL COMPUTING\par}
+  \vspace{1.2cm}
+  \brandmarksplaceholder
+  \vfill
+  {\Large\bfseries LUCRARE DE DISERTAȚIE\par}
+  \vspace{1.2cm}
+  {\large\bfseries \thesistitle\par}
+  \vspace{0.35cm}
+  {\normalsize Titlu de lucru --- aprobarea finală este nerezolvată\par}
+  \vfill
+  {\normalsize\textbf{[UNRESOLVED: numele oficial al candidatului]}\par}
+  \vfill
+  \begin{flushright}
+    \textbf{Coordonator științific:}\par
+    \textbf{[UNRESOLVED: nume și titlu academic]}\par
+  \end{flushright}
+  \vfill
+  {\bfseries BUCUREȘTI\par}
+  {\bfseries [UNRESOLVED: anul depunerii]\par}
+\end{titlepage}
+
+\begin{titlepage}
+  \centering
+  {\small\bfseries NATIONAL UNIVERSITY OF SCIENCE AND TECHNOLOGY\par
+  POLITEHNICA BUCHAREST\par
+  FACULTY OF AUTOMATIC CONTROL AND COMPUTERS\par
+  COMPUTER SCIENCE AND ENGINEERING DEPARTMENT\par
+  FINANCIAL COMPUTING\par}
+  \vspace{1.2cm}
+  \brandmarksplaceholder
+  \vfill
+  {\Large\bfseries MASTER'S DISSERTATION\par}
+  \vspace{1.2cm}
+  {\large\bfseries \thesistitle\par}
+  \vspace{0.35cm}
+  {\normalsize Working title --- final approval unresolved\par}
+  \vfill
+  {\normalsize\textbf{[UNRESOLVED: candidate's official name]}\par}
+  \vfill
+  \begin{flushright}
+    \textbf{Scientific supervisor:}\par
+    \textbf{[UNRESOLVED: name and academic title]}\par
+  \end{flushright}
+  \vfill
+  {\bfseries BUCHAREST\par}
+  {\bfseries [UNRESOLVED: submission year]\par}
+\end{titlepage}
+
+\hypersetup{pageanchor=true}
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+
+\section*{SINOPSIS}
+\addcontentsline{toc}{chapter}{SINOPSIS}
+\textbf{[UNRESOLVED: sinopsis în limba română, maximum 200 de cuvinte]}
+
+Sinopsisul va rezuma problema, rezultatele și concluziile într-un limbaj
+accesibil, dar suficient de specific pentru proiect.
+
+\vfill
+
+\section*{ABSTRACT}
+\addcontentsline{toc}{chapter}{ABSTRACT}
+\textbf{[UNRESOLVED: English abstract, maximum 200 words]}
+
+The abstract will summarize the problem, results, and conclusions for a reader
+outside the immediate specialty while retaining project-specific detail.
+
+\clearpage
+\chapter*{Originality declaration placeholder}
+\addcontentsline{toc}{chapter}{Originality declaration placeholder}
+\textbf{[UNRESOLVED: insert the hand-completed official Annex 2 declaration at the approved position]}
+
+\chapter*{Institutional status}
+\addcontentsline{toc}{chapter}{Institutional status}
+This document is a build-verification shell, not a submission candidate. The
+official 2025--2026 finalization regulation requires online hand-in, a public
+presentation and defense, a hand-completed originality declaration that forms
+part of the dissertation, and faculty similarity
+review~\citep{politehnica2026finalization}. The candidate-supplied official
+faculty template~\citep{acs2018thesistemplate} fixes the bilingual cover and
+synopsis/abstract route, A4 geometry, and recommended typography. Personal,
+session, branding, citation, submission, and supervisor inputs remain explicit
+release blockers in the institutional contract.
+
+\clearpage
+\pagenumbering{arabic}
+
+\chapter{Minimal manuscript body}
+Continuous thesis drafting has intentionally not begun. This minimal body
+exists only to exercise the authoritative source, cross-reference,
+bibliography, generated-asset, appendix, and PDF build path. Figure
+\ref{fig:generated-asset-placeholder} is candidate-generated and proves the
+numbered, centered, referenced figure seam.
+
+\input{../generated/asset-placeholder.tex}
+
+\appendix
+\chapter{Appendix release-control placeholder}
+This appendix proves that the canonical build already includes an appendix
+route. Detailed proofs and supplementary validation material will be added by
+later, separately tracked tickets.
+
+\clearpage
+\renewcommand{\bibname}{Bibliography}
+\begingroup
+\raggedright
+\bibliographystyle{plainnat}
+\bibliography{references}
+\endgroup
+
+\end{document}

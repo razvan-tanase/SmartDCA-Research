@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "official-program-page",
+      "authority": "official",
+      "url": "https://example.edu/program",
+      "accessed_on": "2026-09-01"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "program_language",
+      "status": "verified",
+      "owner": "faculty",
+      "release_blocking": true,
+      "value": "English",
+      "source_ids": [
+        "official-program-page"
+      ]
+    }
+  ],
+  "release_gate": {
+    "release_ready_statuses": [
+      "verified",
+      "approved"
+    ],
+    "placeholder_patterns": [
+      {
+        "id": "UNRESOLVED",
+        "pattern": "\\[UNRESOLVED:"
+      },
+      {
+        "id": "work-marker",
+        "pattern": "\\b(?:TODO|TBD|FIXME)\\b"
+      },
+      {
+        "id": "template-token",
+        "pattern": "\\{\\{\\s*[A-Z][A-Z0-9_-]{2,}\\s*\\}\\}"
+      }
+    ]
+  },
+  "contract_mirror": {
+    "path": "contract/institutional-contract.md",
+    "requirements_sha256": "c90c84e0079c84f440a66307be7076f42cab3bac9fa50819424ff68830491c69",
+    "sha256": "028aa0efa16580f0a33f03bd946c0bbe9d86dfba7e4d36f7a4549c701661bbdf"
+  },
+  "release_inputs": {
+    "required_files": [
+      "source/main.tex",
+      "bibliography/references.bib",
+      "contract/institutional-contract.md"
+    ],
+    "text_files": [
+      "source/main.tex",
+      "contract/institutional-contract.md"
+    ],
+    "bibliography": "bibliography/references.bib"
+  }
+}

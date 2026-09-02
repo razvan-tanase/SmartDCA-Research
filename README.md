@@ -93,6 +93,7 @@ frontier.
 | `reports/experiments/` | Reviewable experiment reports and fingerprinted canonical run bundles. |
 | `reproducibility/checks/` | Deterministic and exhaustive verification programs. |
 | `references/` | Preserved source material and its research-facing summary. |
+| `manuscript/` | Authoritative thesis source, institutional contract, bibliography, build, and fail-closed release check. |
 | `CONTEXT.md` | Canonical domain glossary and language constraints. |
 | `docs/agents/` | Optional work-tracking workflow. |
 | `docs/adr/` | Durable repository and research-process decisions. |
@@ -109,7 +110,9 @@ results; their linked notes carry the arguments.
 
 ## Verification
 
-The verification suite uses only the Python standard library:
+The link and scientific checks use only the Python standard library. The
+manuscript build and rendered-PDF test additionally use the declared TeX and
+Poppler tools documented in [`manuscript/README.md`](manuscript/README.md):
 
 ```bash
 python -m unittest tools.test_check_markdown_links
@@ -133,10 +136,18 @@ python -m unittest reproducibility.checks.check_historical_confirmatory_evaluati
 python -m unittest reproducibility.checks.check_historical_robustness_evaluation
 python -m unittest reproducibility.checks.check_safety_adaptivity_synthesis
 python -m unittest reproducibility.checks.check_empirical_package_publication_review
+python -m unittest manuscript.tests.test_release_check
+python -m unittest manuscript.tests.test_manuscript_build
+python manuscript/build.py
 ```
 
-GitHub Actions runs the link check and all nineteen scientific checks on every
-push and pull request.
+GitHub Actions runs the link check, all nineteen scientific checks, the
+manuscript seam tests, and the dated clean-container manuscript build on every
+push and pull request. The current ticket-01 shell is intentionally not a
+submission candidate: `python manuscript/check_release.py` must exit with
+status 1 while the owned institutional and supervisor decisions in the
+[manuscript contract](manuscript/contract/institutional-contract.md) remain
+unresolved.
 
 Authorized Yahoo Finance acquisition is a separate, pinned input-production
 step rather than a test dependency. Create its CPython 3.12 environment with
