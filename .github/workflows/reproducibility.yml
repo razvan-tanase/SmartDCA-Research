@@ -1,0 +1,50 @@
+name: Reproducibility
+
+# Keep the scientific suite available without running it for manuscript-only work.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/reproducibility.yml"
+      - "experiments/**"
+      - "research/**"
+      - "reproducibility/**"
+  pull_request:
+    paths:
+      - ".github/workflows/reproducibility.yml"
+      - "experiments/**"
+      - "research/**"
+      - "reproducibility/**"
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Run reproducibility checks
+        run: |
+          python reproducibility/checks/check_pathwise_dca_dominance.py
+          python reproducibility/checks/check_corrected_out_quasi_gini_homogeneity.py
+          python reproducibility/checks/check_epsilon_dca_safety_guardrail.py
+          python reproducibility/checks/check_guarded_corrected_mean_smartdca.py
+          python reproducibility/checks/check_two_purchase_dca_win_loss_boundary.py
+          python reproducibility/checks/check_three_purchase_corrected_mean_effect.py
+          python -m reproducibility.checks.check_arbitrary_horizon_accounting_verification
+          python -m reproducibility.checks.check_weak_single_valley_falsification
+          python -m reproducibility.checks.check_cash_single_crossing_mechanism
+          python -m reproducibility.checks.check_arbitrary_horizon_performance_boundary
+          python reproducibility/checks/check_arbitrary_horizon_publication_review.py
+          python -m unittest reproducibility.checks.check_empirical_protocol_canonical_run
+          python -m unittest reproducibility.checks.check_deterministic_adversarial_study
+          python -m unittest reproducibility.checks.check_stochastic_family_study
+          python -m unittest reproducibility.checks.check_historical_data_episode_seam
+          python -m unittest reproducibility.checks.check_historical_confirmatory_evaluation
+          python -m unittest reproducibility.checks.check_historical_robustness_evaluation
+          python -m unittest reproducibility.checks.check_safety_adaptivity_synthesis
+          python -m unittest reproducibility.checks.check_empirical_package_publication_review
