@@ -9,12 +9,14 @@ on:
       - "experiments/**"
       - "research/**"
       - "reproducibility/**"
+      - "reports/**"
   pull_request:
     paths:
       - ".github/workflows/reproducibility.yml"
       - "experiments/**"
       - "research/**"
       - "reproducibility/**"
+      - "reports/**"
 
 permissions:
   contents: read

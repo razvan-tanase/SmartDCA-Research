@@ -700,7 +700,7 @@ class DeterministicStudyContractTest(unittest.TestCase):
     def test_repository_reproducibility_workflow_runs_the_deterministic_checkpoint(self) -> None:
         workflow = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("workflow_dispatch:", workflow)
-        for path in ("research/**", "reproducibility/**", "experiments/**"):
+        for path in ("research/**", "reproducibility/**", "experiments/**", "reports/**"):
             self.assertIn(f'      - "{path}"', workflow)
         self.assertIn(
             "python -m unittest "

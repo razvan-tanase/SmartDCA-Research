@@ -146,9 +146,9 @@ python manuscript/build.py
 GitHub Actions runs the link check and the manuscript
 control/build/release tests on every push and pull request. The nineteen
 scientific checks remain in the separate [Reproducibility workflow](.github/workflows/reproducibility.yml):
-it runs automatically only when `research/`, `reproducibility/`, or
-`experiments/` changes (or when its workflow file changes) and can also be
-started manually. Manuscript-only changes therefore do not invoke the
+it runs automatically only when `research/`, `reproducibility/`,
+`experiments/`, or `reports/` changes (or when its workflow file changes) and
+can also be started manually. Manuscript-only changes therefore do not invoke the
 scientific suite. The structural shell is intentionally not a submission
 candidate: `python manuscript/check_release.py` must exit with status 1 while
 the owned institutional and supervisor decisions in the [manuscript
