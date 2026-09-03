@@ -27,7 +27,7 @@ RUN_ID = (
 COMMITTED_RUN = ROOT / "reports/experiments/runs" / RUN_ID
 REPORT = ROOT / "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"
 AUDIT = ROOT / "research/notes/safety-adaptivity-tradeoff-synthesis-audit.md"
-WORKFLOW = ROOT / ".github/workflows/verification.yml"
+WORKFLOW = ROOT / ".github/workflows/reproducibility.yml"
 README = ROOT / "README.md"
 
 
