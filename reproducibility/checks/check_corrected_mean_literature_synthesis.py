@@ -117,6 +117,59 @@ class CorrectedMeanLiteratureSynthesisTest(unittest.TestCase):
             ):
                 audit_corrected_mean_literature_synthesis(root)
 
+    def test_parameter_gap_uses_registered_manuscript_notation(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = _copy_literature_surface(Path(temporary_directory) / "repository")
+            source_path = root / "manuscript/source/thesis.tex"
+            source = source_path.read_text(encoding="utf-8")
+            source_path.write_text(
+                source.replace(
+                    r"\Delta=\alpha-\beta\ne0",
+                    r"d=\alpha-\beta\ne0",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(
+                LiteratureSynthesisError, "corrected-mean boundary"
+            ):
+                audit_corrected_mean_literature_synthesis(root)
+
+    def test_mean_inputs_use_registered_manuscript_notation(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = _copy_literature_surface(Path(temporary_directory) / "repository")
+            source_path = root / "manuscript/source/thesis.tex"
+            source = source_path.read_text(encoding="utf-8")
+            source_path.write_text(
+                source.replace(
+                    r"\mathrm{out}}(u;w)",
+                    r"\mathrm{out}}(x;w)",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(
+                LiteratureSynthesisError, "corrected-mean boundary"
+            ):
+                audit_corrected_mean_literature_synthesis(root)
+
+    def test_transform_domain_is_stated_at_first_use(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = _copy_literature_surface(Path(temporary_directory) / "repository")
+            source_path = root / "manuscript/source/thesis.tex"
+            source = source_path.read_text(encoding="utf-8")
+            source_path.write_text(
+                source.replace("positive finite transform", "positive transform", 1),
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(
+                LiteratureSynthesisError, "corrected-mean boundary"
+            ):
+                audit_corrected_mean_literature_synthesis(root)
+
     def test_unsafe_new_mean_class_claim_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = _copy_literature_surface(Path(temporary_directory) / "repository")

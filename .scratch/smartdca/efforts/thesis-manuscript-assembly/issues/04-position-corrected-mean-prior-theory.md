@@ -31,7 +31,7 @@ A mathematical or Financial Computing reader can verify the source-paper correct
 - This ticket is a vertical manuscript slice: its prose, citations, evidence mappings, generated assets where applicable, and canonical build must agree before resolution.
 - Claimed on 2026-09-04. The implementation will add one bounded primary-source positioning note, the corresponding Chapter 2 section, bibliography and claim-to-evidence entries, and a focused fail-closed mean-literature audit before the canonical manuscript build and independent citation/novelty review.
 - Independent citation and novelty review on 2026-09-04 found one section-local citation gap at the contribution boundary. The manuscript and audit were tightened, a negative regression test was added, and the same reviewer passed the follow-up with no remaining finding.
-- Verification on 2026-09-04 passed the six focused corrected-mean literature tests, the four existing DCA literature tests, 27 manuscript control and release tests, the direct control and repository-link checks, all 4,005 homogeneity checks, and the canonical manuscript build.
+- Verification on 2026-09-04 passed the nine focused corrected-mean literature tests, the four existing DCA literature tests, 27 manuscript control and release tests, the direct control and repository-link checks, all 4,005 homogeneity checks, and the canonical manuscript build.
 
 ## Answer
 

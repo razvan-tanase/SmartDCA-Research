@@ -163,7 +163,7 @@
       "repository_notation": "f",
       "manuscript_notation": "f",
       "reconciliation": "Retained; state positivity, finiteness, and any monotonicity assumptions at each result rather than globally strengthening them.",
-      "first_use": "ch:model-signal/sec:source-functional",
+      "first_use": "ch:literature/sec:lit-mean-source-functional",
       "mandatory": true,
       "review_state": "accepted"
     },
@@ -174,7 +174,7 @@
       "repository_notation": "alpha, beta, d",
       "manuscript_notation": "alpha, beta, Delta",
       "reconciliation": "Rename the repository's d = alpha - beta to Delta because d_t is reserved for deposits; preserve d only inside verbatim source quotations.",
-      "first_use": "ch:model-signal/sec:corrected-mean",
+      "first_use": "ch:literature/sec:lit-mean-source-functional",
       "mandatory": true,
       "review_state": "accepted"
     },
@@ -185,7 +185,7 @@
       "repository_notation": "x_i, w_i",
       "manuscript_notation": "u_i, w_i",
       "reconciliation": "Rename mean input x_i to u_i to avoid collision with repository purchase outlay x_t; retain w_i.",
-      "first_use": "ch:model-signal/sec:corrected-mean",
+      "first_use": "ch:literature/sec:lit-mean-family-identification",
       "mandatory": true,
       "review_state": "accepted"
     },
@@ -196,7 +196,7 @@
       "repository_notation": "G-hat_{alpha,beta}^{f,out}(x;w)",
       "manuscript_notation": "G-hat_{alpha,beta}^{f,out}(u;w)",
       "reconciliation": "Only the input letter changes from x to u; the hat and out qualifier remain mandatory to distinguish the correction from the source functional.",
-      "first_use": "ch:model-signal/sec:corrected-mean",
+      "first_use": "ch:literature/sec:lit-mean-family-identification",
       "mandatory": true,
       "review_state": "accepted"
     },

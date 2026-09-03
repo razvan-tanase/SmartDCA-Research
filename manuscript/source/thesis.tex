@@ -335,16 +335,17 @@ Appendix B of the SmartDCA source introduces its out quasi-Gini expression as a
 ``mean'' and records two algebraic reductions, but supplies no reflexivity,
 internality, continuity, homogeneity, coordinatewise-monotonicity, or diagonal
 argument \citep{calvet2023smartdca}. The thesis therefore calls the unverified
-object the \emph{out quasi-Gini functional}. With
-$d=\alpha-\beta\ne0$, its constant-input value is
+object the \emph{out quasi-Gini functional}. For finite positive inputs and a
+positive finite transform $f$, write $\Delta=\alpha-\beta\ne0$; its
+constant-input value is
 
 \[
   Q_{\alpha,\beta}^{f}(c,\ldots,c)
-  =c^{1/d}f(c)^{(d-1)/d}.
+  =c^{1/\Delta}f(c)^{(\Delta-1)/\Delta}.
 \]
 
 The project classification follows immediately at the necessary reflexivity
-seam and is exact: the source functional is a mean precisely when $d=1$ or
+seam and is exact: the source functional is a mean precisely when $\Delta=1$ or
 $f$ is the identity, and it has a finite extension over the whole diagonal
 only in the identity case. Calling this a classification, rather than a proof
 of a result asserted by the source, keeps the attribution explicit.
@@ -365,39 +366,41 @@ properties from one subfamily to another.
 
 \subsection{Exact weighted Bajraktarevi\'c identification}
 \label{sec:lit-mean-family-identification}
-The numerator-preserving correction uses positive external weights and, off
-the diagonal, is
+For finite positive inputs $u_i$, positive external weights $w_i$, and a
+positive finite transform $f$, the numerator-preserving correction is, off the
+diagonal,
 
 \[
- \widehat G_{\alpha,\beta}^{f,\mathrm{out}}(x;w)
+ \widehat G_{\alpha,\beta}^{f,\mathrm{out}}(u;w)
  =\left(
- \frac{\sum_i w_i x_i f(x_i)^{\alpha-1}}
-      {\sum_i w_i x_i^{1-d}f(x_i)^{\alpha-1}}
- \right)^{1/d}.
+ \frac{\sum_i w_i u_i f(u_i)^{\alpha-1}}
+      {\sum_i w_i u_i^{1-\Delta}f(u_i)^{\alpha-1}}
+ \right)^{1/\Delta}.
 \]
 
-Set $\varphi_d(t)=t^{-d}$ and $R_\alpha(t)=t f(t)^{\alpha-1}$.
+Set $\varphi_\Delta(t)=t^{-\Delta}$ and
+$R_\alpha(t)=t f(t)^{\alpha-1}$.
 Substitution into the established weighted Bajraktarevi\'c form
 
 \[
- A_{\varphi,R}(x;w)=\varphi^{-1}\!\left(
-   \frac{\sum_i w_iR(x_i)\varphi(x_i)}{\sum_i w_iR(x_i)}
+ A_{\varphi,R}(u;w)=\varphi^{-1}\!\left(
+   \frac{\sum_i w_iR(u_i)\varphi(u_i)}{\sum_i w_iR(u_i)}
  \right)
 \]
 
 gives $\widehat G_{\alpha,\beta}^{f,\mathrm{out}}
-=A_{\varphi_d,R_\alpha}$ exactly. The original function-weighted class and
+=A_{\varphi_\Delta,R_\alpha}$ exactly. The original function-weighted class and
 its modern weighted formulation are prior theory
-\citep{bajraktarevic1958,paleszakaria2020}. Because $\varphi_d$ is continuous
+\citep{bajraktarevic1958,paleszakaria2020}. Because $\varphi_\Delta$ is continuous
 and strictly monotone and $R_\alpha$ is positive, established meanhood applies;
 it is not supplied by a new general construction in this thesis.
 
 The identification also fixes the special cases. If $f(t)=t^r$, the result is
 the classical weighted Gini mean $G_{p,q}$ with
-$p=1+r(\alpha-1)$ and $q=p-d$; $f=\mathrm{id}$ gives
-$(p,q)=(\alpha,\beta)$. If $d=1$, it is the weighted
+$p=1+r(\alpha-1)$ and $q=p-\Delta$; $f=\mathrm{id}$ gives
+$(p,q)=(\alpha,\beta)$. If $\Delta=1$, it is the weighted
 Beckenbach--Gini--Lehmer form, and a power function weight gives a weighted
-Lehmer mean. On $d=0$, the adopted parameter-continuous value is the
+Lehmer mean. On $\Delta=0$, the adopted parameter-continuous value is the
 function-weighted geometric Bajraktarevi\'c mean $A_{\log,R_q}$. Modern
 weighted treatments record the corresponding Gini branches and comparison
 results \citep{lehmer1971,chuzhao2015,matkowskiwrobel2020,
