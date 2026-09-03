@@ -25,7 +25,8 @@ DETERMINISTIC_STUDY = (
     ROOT / "experiments" / "inputs" / "deterministic-adversarial-v1.json"
 )
 REPORT = ROOT / "reports" / "experiments" / "deterministic-adversarial-paths.md"
-WORKFLOW = ROOT / ".github" / "workflows" / "verification.yml"
+WORKFLOW = ROOT / ".github" / "workflows" / "reproducibility.yml"
+MANUSCRIPT_WORKFLOW = ROOT / ".github" / "workflows" / "verification.yml"
 COMMITTED_RUN_ID = (
     "smartdca-deterministic-v1-"
     "80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db"
@@ -696,12 +697,20 @@ class DeterministicStudyContractTest(unittest.TestCase):
         self.assertIn("fully retained performance-based", study["purpose"])
         self.assertNotIn("without performance-based selection", study["purpose"])
 
-    def test_repository_verification_gate_runs_the_deterministic_checkpoint(self) -> None:
+    def test_repository_reproducibility_workflow_runs_the_deterministic_checkpoint(self) -> None:
         workflow = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("workflow_dispatch:", workflow)
+        for path in ("research/**", "reproducibility/**", "experiments/**", "reports/**"):
+            self.assertIn(f'      - "{path}"', workflow)
         self.assertIn(
             "python -m unittest "
             "reproducibility.checks.check_deterministic_adversarial_study",
             workflow,
+        )
+        self.assertNotIn(
+            "python -m unittest "
+            "reproducibility.checks.check_deterministic_adversarial_study",
+            MANUSCRIPT_WORKFLOW.read_text(encoding="utf-8"),
         )
 
 
