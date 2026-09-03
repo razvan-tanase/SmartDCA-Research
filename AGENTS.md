@@ -30,9 +30,14 @@ Apply every matching branch:
 ## Completion
 
 Run the checks that cover the changed behavior and
-`python tools/check_markdown_links.py .`. For a repository-wide or release
-change, run the complete verification suite documented in `README.md`. When
-work tracking applies, synchronize the ticket and maps. The final diff is
+`python tools/check_markdown_links.py .`. For bounded changes, mirror the
+reachability split in `.github/workflows/`: manuscript work runs the manuscript
+seam plus directly intersecting scientific checks; stochastic and historical
+replays belong to changes that reach those artifacts. For a repository-wide or
+release change, run the complete verification suite documented in `README.md`.
+In a managed macOS sandbox that loses Homebrew tools between calls, use the
+[single-process manuscript helper](manuscript/README.md#managed-macos-agent-sandboxes).
+When work tracking applies, synchronize the ticket and maps. The final diff is
 self-contained when its claims, evidence, state, and instructions agree.
 
 ## Agent skills

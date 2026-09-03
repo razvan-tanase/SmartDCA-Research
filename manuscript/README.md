@@ -92,3 +92,23 @@ python -m unittest reproducibility.checks.check_corrected_mean_literature_synthe
 python manuscript/check_controls.py
 python tools/check_markdown_links.py .
 ```
+
+## Managed macOS agent sandboxes
+
+Some managed agent sandboxes allow an approved Homebrew installation but do
+not expose its `/opt` changes to a later tool call. Keep dependency installation
+and the focused manuscript checks in one approved process:
+
+```bash
+./manuscript/verify-homebrew.sh
+./manuscript/verify-homebrew.sh --build
+```
+
+The helper installs Homebrew's CPython 3.12, TeX Live, and Poppler, then runs
+the link, manuscript control/build/release, literature-audit, and rendered-PDF
+checks listed above. In these sandboxes, only the first process tree after
+installation can still see the tools, so `--build` performs the canonical build
+as a separate single-process invocation. Both modes require approval because
+Homebrew writes outside the repository. Run additional scientific programs
+only for the claims or artifacts reached by the ticket; use the complete
+root-README suite for repository-wide or release work.

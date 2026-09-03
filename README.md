@@ -156,6 +156,12 @@ candidate: `python manuscript/check_release.py` must exit with status 1 while
 the owned institutional and supervisor decisions in the [manuscript
 contract](manuscript/contract/institutional-contract.md) remain unresolved.
 
+The command catalog above is the repository-wide/release suite, not the
+default for every bounded ticket. Local agents mirror the workflow split in
+[`AGENTS.md`](AGENTS.md); manuscript work can use the focused
+[single-process Homebrew helper](manuscript/README.md#managed-macos-agent-sandboxes)
+when managed sandboxing would otherwise hide TeX or Poppler between calls.
+
 Authorized Yahoo Finance acquisition is a separate, pinned input-production
 step rather than a test dependency. Create its CPython 3.12 environment with
 `python3.12 -m venv .venv` and
