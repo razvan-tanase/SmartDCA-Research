@@ -55,6 +55,7 @@
       "source/main.tex",
       "contract/institutional-contract.md"
     ],
-    "bibliography": "bibliography/references.bib"
+    "bibliography": "bibliography/references.bib",
+    "controls_manifest": "controls/control-manifest.json"
   }
 }

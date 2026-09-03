@@ -644,6 +644,8 @@
       "generated/asset-placeholder.tex",
       "bibliography/references.bib",
       "contract/institutional-contract.md",
+      "controls/control-manifest.json",
+      "controls/README.md",
       "environment/Dockerfile",
       "environment/image-tag.txt",
       "build-clean.sh",
@@ -654,8 +656,10 @@
       "source/thesis.tex",
       "generated/asset-placeholder.tex",
       "bibliography/references.bib",
-      "contract/institutional-contract.md"
+      "contract/institutional-contract.md",
+      "controls/README.md"
     ],
-    "bibliography": "bibliography/references.bib"
+    "bibliography": "bibliography/references.bib",
+    "controls_manifest": "controls/control-manifest.json"
   }
 }

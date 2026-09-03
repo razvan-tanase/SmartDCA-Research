@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "register": "governance",
+  "records": [
+    {
+      "id": "governance-chapter-dependencies",
+      "control_type": "chapter-dependencies",
+      "rule": "Draft a chapter only after its architecture prerequisites are accepted. Later integrative chapters may depend on earlier technical chapters, while the introduction and abstract are finalized only after results and conclusions stabilize.",
+      "authority_paths": [
+        "manuscript/controls/architecture.json",
+        ".scratch/smartdca/efforts/thesis-manuscript-assembly/map.md"
+      ],
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "governance-terminology-authority",
+      "control_type": "terminology-authority",
+      "rule": "CONTEXT.md governs domain terminology and claim boundaries. The notation register governs manuscript symbols. A chapter may introduce local shorthand only when it records the mapping and does not change the domain meaning.",
+      "authority_paths": [
+        "CONTEXT.md",
+        "manuscript/controls/notation.json"
+      ],
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "governance-citation-workflow",
+      "control_type": "citation-workflow",
+      "rule": "Classify each statement before drafting as repository-derived, externally dependent, quantitative, or interpretive. Link repository-derived claims to their canonical evidence entry; add primary external sources and BibTeX keys for externally dependent claims; generate quantitative statements from accepted artifacts; then review the nearby citation for scope before changing its review state.",
+      "authority_paths": [
+        "manuscript/controls/claims.json",
+        "manuscript/bibliography/references.bib",
+        "manuscript/contract/institutional-contract.md"
+      ],
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "governance-generated-assets",
+      "control_type": "generated-asset-policy",
+      "rule": "Every manuscript table and quantitative figure is generated from an accepted versioned artifact or independently reconciled to one. Generated assets live under manuscript/generated, carry a stable claim-register ID and source identity, are never hand-edited after generation, and are rebuilt before a release. Candidate-created conceptual diagrams must identify their governing claims and remain distinct from empirical figures.",
+      "authority_paths": [
+        "docs/adr/0008-place-empirical-protocol-input-run-layers.md",
+        "manuscript/controls/claims.json",
+        "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"
+      ],
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "governance-supervisor-feedback",
+      "control_type": "supervisor-feedback",
+      "rule": "Record each dated supervisor concern in supervisor-feedback.json with its source, affected locations, classification, decision, owner, resolution evidence, and verification state. Editorial feedback may update the manuscript; any request that changes frozen science, data, parameters, hypotheses, or registered inference opens separately tracked research instead of silently revising accepted evidence.",
+      "authority_paths": [
+        "manuscript/controls/supervisor-feedback.json",
+        ".scratch/smartdca/efforts/thesis-manuscript-assembly/spec.md"
+      ],
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "governance-release-states",
+      "control_type": "release-state-transitions",
+      "rule": "The manuscript moves only through structural-shell, chapter-draft, integrated-draft, review-candidate, supervisor-candidate, and submission-candidate. Each transition requires all mandatory controls for that state, a clean canonical build, current evidence and notation registers, regenerated assets, and the reviews assigned by the effort map. Submission-candidate additionally requires every institutional blocker and supervisor feedback item to be resolved.",
+      "states": [
+        {"state": "structural-shell", "entry_condition": "Ticket 02 controls and complete chapter/appendix shell pass."},
+        {"state": "chapter-draft", "entry_condition": "The chapter's prerequisite tickets and mandatory evidence entries pass."},
+        {"state": "integrated-draft", "entry_condition": "All planned chapters, appendices, bibliography, tables, and figures build together."},
+        {"state": "review-candidate", "entry_condition": "Ticket 14 release checks pass and no unresolved mandatory content control remains."},
+        {"state": "supervisor-candidate", "entry_condition": "Independent ticket 15 audit has no blocker."},
+        {"state": "submission-candidate", "entry_condition": "Supervisor feedback, institutional contract, final audit, and release identity all pass."}
+      ],
+      "authority_paths": [
+        ".scratch/smartdca/efforts/thesis-manuscript-assembly/map.md",
+        "manuscript/contract/requirements.json"
+      ],
+      "mandatory": true,
+      "review_state": "accepted"
+    }
+  ]
+}

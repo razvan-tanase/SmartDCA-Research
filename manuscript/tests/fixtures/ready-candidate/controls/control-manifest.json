@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "control_set_id": "ready-candidate-controls-v1",
+  "registers": [
+    {
+      "name": "sample",
+      "path": "controls/sample.json"
+    }
+  ]
+}

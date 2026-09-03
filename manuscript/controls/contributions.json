@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "register": "contributions",
+  "records": [
+    {
+      "id": "contribution-mathematical",
+      "category": "mathematical",
+      "contribution": "A linked chain of exact results: source-functional classification, a numerator-preserving corrected construction, the causal DCA impossibility boundary, the sharp epsilon-DCA guardrail, and finite- through arbitrary-horizon performance classifications.",
+      "evidence_paths": [
+        "research/definitions/corrected-out-quasi-gini-mean.md",
+        "research/theorems/source-out-functional-mean-classification.md",
+        "research/theorems/causal-dca-dominance-impossibility.md",
+        "research/theorems/epsilon-dca-safety-unit-guardrail.md",
+        "research/theorems/arbitrary-horizon-performance-boundary.md"
+      ],
+      "manuscript_locations": [
+        "ch:model-signal",
+        "ch:safety",
+        "ch:boundaries",
+        "app:proofs",
+        "app:performance-cases"
+      ],
+      "novelty_boundary": "Treat these as project results whose external novelty wording remains conditional on the bounded literature reviews; never present the corrected family itself as a new mean class.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "contribution-computational",
+      "category": "computational",
+      "contribution": "Exact-rational checks, causal policy implementations, deterministic and stochastic runners, historical episode construction, immutable run bundles, and generated figure/table seams that make the analytical and empirical claims replayable.",
+      "evidence_paths": [
+        "reproducibility/checks/check_arbitrary_horizon_performance_boundary.py",
+        "reproducibility/checks/check_deterministic_adversarial_study.py",
+        "reproducibility/checks/check_stochastic_family_study.py",
+        "reproducibility/checks/check_historical_confirmatory_evaluation.py",
+        "reproducibility/checks/check_safety_adaptivity_synthesis.py"
+      ],
+      "manuscript_locations": [
+        "ch:methodology",
+        "ch:synthetic-results",
+        "ch:historical-results",
+        "app:reproducibility"
+      ],
+      "novelty_boundary": "Claim reproducible project artifacts and validation coverage, not production-trading readiness or a generally validated simulation platform.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "contribution-methodological",
+      "category": "methodological",
+      "contribution": "A fair same-deposit, cash-inclusive comparison model and an evidence design that separates complete-system, signal-only, and safety-architecture comparisons across deterministic, stochastic, confirmatory historical, and post-confirmatory robustness layers.",
+      "evidence_paths": [
+        "research/notes/pathwise-dca-dominance-under-causal-budget.md",
+        "experiments/protocols/safety-adaptivity-v1.json",
+        "experiments/protocols/safety-adaptivity-yahoo-v2.json",
+        "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"
+      ],
+      "manuscript_locations": [
+        "ch:model-signal",
+        "ch:methodology",
+        "ch:discussion",
+        "app:protocols"
+      ],
+      "novelty_boundary": "Present the design as the thesis's controlled evaluation method; do not imply that preregistration, block bootstrap, Holm correction, or reproducibility principles were invented here.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "contribution-empirical",
+      "category": "empirical",
+      "contribution": "A frozen evaluation showing path- and parameter-sensitive synthetic behavior, a verified frictionless safety floor, negative complete-system historical medians in every non-unit primary cell, and no confirmed incremental historical value from the corrected-mean signal.",
+      "evidence_paths": [
+        "reports/experiments/deterministic-adversarial-paths.md",
+        "reports/experiments/seeded-stochastic-families.md",
+        "reports/experiments/confirmatory-historical-evaluation.md",
+        "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"
+      ],
+      "manuscript_locations": [
+        "ch:synthetic-results",
+        "ch:historical-results",
+        "ch:discussion"
+      ],
+      "novelty_boundary": "Limit inference to the frozen paths, proxy series, schedules, parameters, costs, and registered tests; do not convert finite realized evidence into universal, causal, optimal, or expected-performance claims.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "contribution-integrative",
+      "category": "integrative",
+      "contribution": "A Financial Computing narrative that starts from an adaptive-superiority ambition, proves its causal boundary, constructs an attainable safety relaxation, implements it as a guarded policy, and treats an informative negative empirical result as the final scientific finding.",
+      "evidence_paths": [
+        ".scratch/smartdca/efforts/thesis-manuscript-assembly/spec.md",
+        "reports/experiments/safety-adaptivity-tradeoff-synthesis.md",
+        "research/notes/safety-adaptivity-empirical-package-review.md"
+      ],
+      "manuscript_locations": [
+        "ch:introduction",
+        "ch:discussion",
+        "ch:conclusion"
+      ],
+      "novelty_boundary": "Claim the synthesis and traceable architecture as thesis work, while attributing every mathematical, methodological, and external component at its own level.",
+      "mandatory": true,
+      "review_state": "accepted"
+    }
+  ]
+}

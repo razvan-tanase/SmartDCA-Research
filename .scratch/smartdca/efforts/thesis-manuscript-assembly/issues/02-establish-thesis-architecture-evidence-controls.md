@@ -1,7 +1,7 @@
 # 02 — Establish the thesis architecture and evidence controls
 
 Type: task
-Status: open
+Status: claimed
 Triage: ready-for-agent
 Blocked by: 01
 Parent: [Thesis manuscript assembly](../spec.md)
@@ -30,3 +30,4 @@ A supervisor or implementing agent can navigate the complete thesis skeleton, un
 
 - Created from the user-approved 17-ticket decomposition on 2026-09-01.
 - This ticket is a vertical manuscript slice: its prose, citations, evidence mappings, generated assets where applicable, and canonical build must agree before resolution.
+- Claimed on 2026-09-02. The public verification seams are `python manuscript/check_controls.py` for the architecture and evidence controls and `python manuscript/build.py` for the rendered structural shell; the canonical build must fail before LaTeX when mandatory controls are invalid.

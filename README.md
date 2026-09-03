@@ -137,18 +137,20 @@ python -m unittest reproducibility.checks.check_historical_confirmatory_evaluati
 python -m unittest reproducibility.checks.check_historical_robustness_evaluation
 python -m unittest reproducibility.checks.check_safety_adaptivity_synthesis
 python -m unittest reproducibility.checks.check_empirical_package_publication_review
+python -m unittest manuscript.tests.test_controls
 python -m unittest manuscript.tests.test_release_check
 python -m unittest manuscript.tests.test_manuscript_build
+python manuscript/check_controls.py
 python manuscript/build.py
 ```
 
 GitHub Actions runs the link check, all nineteen scientific checks, the
-manuscript seam tests, and the dated clean-container manuscript build on every
-push and pull request. The current ticket-01 shell is intentionally not a
-submission candidate: `python manuscript/check_release.py` must exit with
-status 1 while the owned institutional and supervisor decisions in the
-[manuscript contract](manuscript/contract/institutional-contract.md) remain
-unresolved.
+manuscript control/build/release tests, and the dated clean-container
+manuscript build on every push and pull request. The structural shell is
+intentionally not a submission candidate: `python manuscript/check_release.py`
+must exit with status 1 while the owned institutional and supervisor decisions
+in the [manuscript contract](manuscript/contract/institutional-contract.md)
+remain unresolved.
 
 Authorized Yahoo Finance acquisition is a separate, pinned input-production
 step rather than a test dependency. Create its CPython 3.12 environment with

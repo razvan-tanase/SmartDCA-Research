@@ -15,6 +15,60 @@ BUILDER = MANUSCRIPT_ROOT / "build.py"
 
 
 class ManuscriptBuildTests(unittest.TestCase):
+    def test_invalid_controls_stop_build_before_latex(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            controls = root / "controls"
+            controls.mkdir()
+            (controls / "control-manifest.json").write_text(
+                json.dumps(
+                    {
+                        "schema_version": 1,
+                        "control_set_id": "invalid-controls-v1",
+                        "registers": [
+                            {"name": "sample", "path": "controls/sample.json"}
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (controls / "sample.json").write_text(
+                json.dumps(
+                    {
+                        "schema_version": 1,
+                        "register": "sample",
+                        "records": [
+                            {
+                                "id": "unresolved-build-control",
+                                "mandatory": True,
+                                "review_state": "pending",
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            build = subprocess.run(
+                [
+                    sys.executable,
+                    str(BUILDER),
+                    "--root",
+                    str(root),
+                    "--output-dir",
+                    str(root / "build"),
+                ],
+                cwd=REPOSITORY_ROOT,
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+
+        self.assertEqual(build.returncode, 1, build.stdout + build.stderr)
+        self.assertIn("unresolved-build-control", build.stdout)
+        self.assertIn("BUILD FAILED: manuscript controls are invalid", build.stdout)
+        self.assertNotIn("latexmk", build.stdout)
+
     def test_candidate_can_build_template_conformant_manuscript_shell(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             output_directory = Path(temporary_directory)
@@ -45,7 +99,32 @@ class ManuscriptBuildTests(unittest.TestCase):
             ).stdout
             normalized_text = " ".join(text.split())
             normalized_upper = normalized_text.upper()
-            self.assertIn("Minimal manuscript body", normalized_text)
+            for title in (
+                "Introduction",
+                "Literature and Research Positioning",
+                "Financial Model and Corrected Signal Foundations",
+                "Causal Impossibility and Safety Architecture",
+                "Exact Performance Boundaries",
+                "Empirical Methodology and Reproducibility",
+                "Deterministic and Stochastic Evaluation",
+                "Historical Evaluation and Robustness",
+                "Safety, Adaptivity, and Limitations",
+                "Conclusions",
+                "Mathematical Proofs",
+                "Exact Performance Cases and Witnesses",
+                "Empirical Protocols and Statistical Controls",
+                "Reproducibility and Artifact Provenance",
+                "Supplementary Tables and Figures",
+            ):
+                self.assertIn(title, normalized_text)
+            self.assertIn(
+                "universal pathwise dominance forces the strategy to purchase exactly as DCA",
+                normalized_text,
+            )
+            self.assertIn(
+                "incremental value from the corrected-mean signal is not confirmed",
+                normalized_text,
+            )
             self.assertIn("Generated-asset placeholder", normalized_text)
             self.assertIn("Appendix", normalized_text)
             self.assertIn("BIBLIOGRAPHY", normalized_text)
@@ -122,7 +201,7 @@ class ManuscriptBuildTests(unittest.TestCase):
             )
             heading = re.search(
                 r'<word xMin="[0-9.]+" yMin="([0-9.]+)" '
-                r'xMax="[0-9.]+" yMax="([0-9.]+)">MINIMAL</word>',
+                r'xMax="[0-9.]+" yMax="([0-9.]+)">INTRODUCTION</word>',
                 bounding_boxes,
             )
             self.assertIsNotNone(heading)

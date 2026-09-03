@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "control_set_id": "smartdca-thesis-controls-v1",
+  "profile": "thesis-architecture-v1",
+  "frozen_on": "2026-09-02",
+  "authority": ".scratch/smartdca/efforts/thesis-manuscript-assembly/spec.md",
+  "source_shell": "source/thesis.tex",
+  "coverage": {
+    "canonical_definitions": "research/definitions/*.md",
+    "canonical_theorems": "research/theorems/*.md"
+  },
+  "registers": [
+    {
+      "name": "architecture",
+      "path": "controls/architecture.json"
+    },
+    {
+      "name": "contributions",
+      "path": "controls/contributions.json"
+    },
+    {
+      "name": "non_claims",
+      "path": "controls/non-claims.json"
+    },
+    {
+      "name": "claims",
+      "path": "controls/claims.json"
+    },
+    {
+      "name": "notation",
+      "path": "controls/notation.json"
+    },
+    {
+      "name": "governance",
+      "path": "controls/governance.json"
+    },
+    {
+      "name": "supervisor_feedback",
+      "path": "controls/supervisor-feedback.json"
+    }
+  ]
+}

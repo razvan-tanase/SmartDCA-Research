@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "register": "notation",
+  "records": [
+    {
+      "id": "notation-horizon-index",
+      "symbol": "n, t",
+      "meaning": "Finite purchase horizon and purchase-date index.",
+      "repository_notation": "n, t",
+      "manuscript_notation": "n, t",
+      "reconciliation": "Retained unchanged across the comparison model and empirical chapters.",
+      "first_use": "ch:model-signal/sec:comparison-model",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-purchase-price",
+      "symbol": "p_t",
+      "meaning": "Positive asset purchase price observed at date t.",
+      "repository_notation": "p_t",
+      "manuscript_notation": "p_t",
+      "reconciliation": "Retained; never use p_t for an evaluation price outside a purchase date.",
+      "first_use": "ch:model-signal/sec:comparison-model",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-evaluation-price",
+      "symbol": "P",
+      "meaning": "Common positive terminal evaluation price.",
+      "repository_notation": "P in most boundary notes; p_{n+1} in the impossibility theorem.",
+      "manuscript_notation": "P",
+      "reconciliation": "Standardize on P and state once that P equals p_{n+1} in the impossibility theorem's indexing convention.",
+      "first_use": "ch:model-signal/sec:comparison-model",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-deposit",
+      "symbol": "d_t",
+      "meaning": "Nonnegative exogenous deposit arriving at purchase date t.",
+      "repository_notation": "d_t",
+      "manuscript_notation": "d_t",
+      "reconciliation": "Retained; never use D_t for a cash difference in the body because it is visually confusable with deposits.",
+      "first_use": "ch:model-signal/sec:comparison-model",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-purchase-outlay",
+      "symbol": "b_t^S",
+      "meaning": "Cash spent by strategy S on the asset at date t.",
+      "repository_notation": "x_t",
+      "manuscript_notation": "b_t^S",
+      "reconciliation": "Rename repository purchase x_t to b_t^S in the manuscript so x or u can denote mean inputs without collision; every imported theorem must state this mapping.",
+      "first_use": "ch:model-signal/sec:portfolio-recursion",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-cash",
+      "symbol": "C_t^S",
+      "meaning": "Cash carried by strategy S immediately after its date-t purchase.",
+      "repository_notation": "C_t or C_t^S",
+      "manuscript_notation": "C_t^S",
+      "reconciliation": "Use the strategy superscript whenever more than one policy appears; omit it only in a single-policy derivation.",
+      "first_use": "ch:model-signal/sec:portfolio-recursion",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-units",
+      "symbol": "Q_t^S",
+      "meaning": "Asset units held by strategy S immediately after date t.",
+      "repository_notation": "Q_t or Q_t^S",
+      "manuscript_notation": "Q_t^S",
+      "reconciliation": "Use an explicit strategy superscript in comparisons.",
+      "first_use": "ch:model-signal/sec:portfolio-recursion",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-terminal-wealth",
+      "symbol": "W_n^S(P)",
+      "meaning": "Cash-inclusive terminal wealth of strategy S at evaluation price P.",
+      "repository_notation": "W^S, W_n^S, or W_n^S(P)",
+      "manuscript_notation": "W_n^S(P)",
+      "reconciliation": "Retain horizon and evaluation-price arguments when stating comparisons; abbreviate only after both are fixed.",
+      "first_use": "ch:model-signal/sec:terminal-wealth",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-policy-labels",
+      "symbol": "S in {c, 0, D}",
+      "meaning": "Corrected guarded, neutral guarded, and DCA policies.",
+      "repository_notation": "c, 0, DCA, D, or T depending on the result.",
+      "manuscript_notation": "c, 0, D",
+      "reconciliation": "Standardize policy superscripts to c, 0, and D; use T only as a local theorem placeholder explicitly defined as 0 or D.",
+      "first_use": "ch:model-signal/sec:comparators",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-dca-units",
+      "symbol": "Q_t^D",
+      "meaning": "Cumulative DCA units after date t.",
+      "repository_notation": "A_t or Q_t^{DCA}",
+      "manuscript_notation": "Q_t^D",
+      "reconciliation": "Use Q_t^D in exposition; introduce A_t := Q_t^D only inside the compact guardrail proof if it materially shortens equations.",
+      "first_use": "ch:model-signal/sec:comparators",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-safety-factor",
+      "symbol": "lambda = 1 - epsilon",
+      "meaning": "Protected DCA wealth fraction and its tolerated relative shortfall.",
+      "repository_notation": "lambda = 1 - epsilon",
+      "manuscript_notation": "lambda = 1 - epsilon",
+      "reconciliation": "Retained; use lambda for coverage in algorithms and epsilon when naming epsilon-DCA safety.",
+      "first_use": "ch:safety/sec:safety-relaxation",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-coverage-cushion",
+      "symbol": "K_t^S",
+      "meaning": "Unit-coverage cushion Q_t^S minus lambda Q_t^D.",
+      "repository_notation": "K_t or Q_t^S - lambda Q_t^{DCA}",
+      "manuscript_notation": "K_t^S",
+      "reconciliation": "Retain K and add the strategy superscript when comparing guarded selectors.",
+      "first_use": "ch:safety/sec:unit-guardrail",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-available-cash",
+      "symbol": "B_t^S",
+      "meaning": "Cash available before the date-t purchase, C_{t-1}^S plus d_t.",
+      "repository_notation": "B_t",
+      "manuscript_notation": "B_t^S",
+      "reconciliation": "Add a strategy superscript when floors or purchases differ.",
+      "first_use": "ch:safety/sec:unit-guardrail",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-mandatory-floor",
+      "symbol": "m_t^S(lambda)",
+      "meaning": "Sharp minimum date-t purchase required by the unit guardrail.",
+      "repository_notation": "m_t(lambda) or m_t^S",
+      "manuscript_notation": "m_t^S(lambda)",
+      "reconciliation": "Show lambda on first definition and retain S whenever comparing policy-specific clipped floors.",
+      "first_use": "ch:safety/sec:unit-guardrail",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-transform",
+      "symbol": "f",
+      "meaning": "Positive transform used by the source functional, corrected mean, and selector.",
+      "repository_notation": "f",
+      "manuscript_notation": "f",
+      "reconciliation": "Retained; state positivity, finiteness, and any monotonicity assumptions at each result rather than globally strengthening them.",
+      "first_use": "ch:model-signal/sec:source-functional",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-mean-parameters",
+      "symbol": "alpha, beta, Delta",
+      "meaning": "Corrected-mean parameters and their difference Delta = alpha - beta.",
+      "repository_notation": "alpha, beta, d",
+      "manuscript_notation": "alpha, beta, Delta",
+      "reconciliation": "Rename the repository's d = alpha - beta to Delta because d_t is reserved for deposits; preserve d only inside verbatim source quotations.",
+      "first_use": "ch:model-signal/sec:corrected-mean",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-mean-inputs",
+      "symbol": "u_i, w_i",
+      "meaning": "Positive mean inputs and positive external weights.",
+      "repository_notation": "x_i, w_i",
+      "manuscript_notation": "u_i, w_i",
+      "reconciliation": "Rename mean input x_i to u_i to avoid collision with repository purchase outlay x_t; retain w_i.",
+      "first_use": "ch:model-signal/sec:corrected-mean",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-corrected-mean",
+      "symbol": "G-hat_{alpha,beta}^{f,out}(u;w)",
+      "meaning": "Corrected out quasi-Gini mean, including its diagonal extension.",
+      "repository_notation": "G-hat_{alpha,beta}^{f,out}(x;w)",
+      "manuscript_notation": "G-hat_{alpha,beta}^{f,out}(u;w)",
+      "reconciliation": "Only the input letter changes from x to u; the hat and out qualifier remain mandatory to distinguish the correction from the source functional.",
+      "first_use": "ch:model-signal/sec:corrected-mean",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-reference-score",
+      "symbol": "R_{t-1}, r_t, a_t",
+      "meaning": "Lagged dimensionless corrected-mean reference, current relative price, and discretionary score.",
+      "repository_notation": "R_{t-1}, r_t, a_t",
+      "manuscript_notation": "R_{t-1}, r_t, a_t",
+      "reconciliation": "Retained; state the p_1 anchor and first-date neutral warm-up before use.",
+      "first_use": "ch:safety/sec:adaptive-selector",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-terminal-differences",
+      "symbol": "H_T, U_T",
+      "meaning": "Corrected-minus-comparator terminal cash and unit differences.",
+      "repository_notation": "H_T, U_T",
+      "manuscript_notation": "H_T, U_T",
+      "reconciliation": "Retained; T must be declared as DCA or the neutral guarded selector before each theorem use.",
+      "first_use": "ch:boundaries/sec:terminal-inventory",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-cash-path-difference",
+      "symbol": "Delta C_t^{c,T}",
+      "meaning": "Corrected-minus-comparator carried-cash difference at date t.",
+      "repository_notation": "D_t^T or Delta C_t",
+      "manuscript_notation": "Delta C_t^{c,T}",
+      "reconciliation": "Standardize on Delta C to avoid confusing repository D_t with deposits d_t or DCA superscript D.",
+      "first_use": "ch:boundaries/sec:cash-timing",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-two-purchase-ratios",
+      "symbol": "q, y, delta",
+      "meaning": "Two-purchase price ratio p_2/p_1, evaluation ratio P/p_2, and half-discretionary factor (1-lambda)/2.",
+      "repository_notation": "q, y, delta",
+      "manuscript_notation": "q, y, delta",
+      "reconciliation": "Retained as theorem-local shorthand only; delta never replaces Delta = alpha - beta.",
+      "first_use": "ch:boundaries/sec:two-purchase",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-three-purchase-ratio",
+      "symbol": "h",
+      "meaning": "Three-purchase ratio p_3/p_2.",
+      "repository_notation": "h",
+      "manuscript_notation": "h",
+      "reconciliation": "Retained as theorem-local shorthand.",
+      "first_use": "ch:boundaries/sec:three-purchase",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-relative-gap",
+      "symbol": "g^{S,T}",
+      "meaning": "Relative terminal-wealth gap (W^S-W^T)/W^T in empirical tables.",
+      "repository_notation": "relative_wealth_gap and several local gap symbols",
+      "manuscript_notation": "g^{S,T}",
+      "reconciliation": "Reserve g for empirical relative gaps outside the finite-horizon theorem sections, where local g has a different exact definition and must be explicitly scoped.",
+      "first_use": "ch:methodology/sec:estimands",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-average-acquisition-cost",
+      "symbol": "AC_t^S",
+      "meaning": "Total asset spending divided by acquired units for strategy S.",
+      "repository_notation": "average acquisition cost or S_t/Q_t",
+      "manuscript_notation": "AC_t^S",
+      "reconciliation": "Introduce AC only as an accounting quantity and never use it as a substitute for cash-inclusive terminal wealth.",
+      "first_use": "ch:model-signal/sec:accounting-quantities",
+      "mandatory": true,
+      "review_state": "accepted"
+    }
+  ]
+}

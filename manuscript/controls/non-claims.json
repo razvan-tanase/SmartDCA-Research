@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "register": "non_claims",
+  "records": [
+    {
+      "id": "nonclaim-new-mean-class",
+      "rejected_claim": "The corrected out quasi-Gini construction is a newly discovered general class of means.",
+      "required_wording": "The corrected construction is a weighted Bajraktarevic mean; its contribution is the correction contrast, proved parameter-transform properties, and use inside the SmartDCA architecture.",
+      "reason": "Prior-theory review identifies the off-diagonal construction exactly within a known family.",
+      "authority_paths": [
+        "research/definitions/corrected-out-quasi-gini-mean.md",
+        "research/notes/prior-theory-corrected-out-quasi-gini.md"
+      ],
+      "affected_locations": [
+        "ch:introduction",
+        "ch:literature",
+        "ch:model-signal",
+        "ch:conclusion"
+      ],
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "nonclaim-universal-superiority",
+      "rejected_claim": "An economically distinct causal, fully funded SmartDCA policy universally dominates the same-deposit DCA comparator.",
+      "required_wording": "Universal pathwise dominance forces transaction-level DCA; the guarded policy supplies only a chosen relative-wealth floor.",
+      "reason": "The causal DCA impossibility theorem excludes the stronger claim under the complete comparison model.",
+      "authority_paths": [
+        "research/theorems/causal-dca-dominance-impossibility.md",
+        "research/theorems/epsilon-dca-safety-unit-guardrail.md"
+      ],
+      "affected_locations": [
+        "ch:introduction",
+        "ch:safety",
+        "ch:discussion",
+        "ch:conclusion"
+      ],
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "nonclaim-confirmed-signal-value",
+      "rejected_claim": "The frozen corrected-mean score has confirmed incremental historical value over the neutral guarded selector.",
+      "required_wording": "The registered signal-only comparison had no Holm-significant H2 result and therefore did not confirm incremental signal value; this is not an equivalence result.",
+      "reason": "Seventeen of eighteen signal-only medians were negative, one was positive, and none was significant after the registered correction.",
+      "authority_paths": [
+        "reports/experiments/confirmatory-historical-evaluation.md",
+        "research/notes/confirmatory-historical-evaluation-audit.md"
+      ],
+      "affected_locations": [
+        "ch:historical-results",
+        "ch:discussion",
+        "ch:conclusion"
+      ],
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "nonclaim-frictional-safety",
+      "rejected_claim": "The epsilon-DCA theorem guarantees the same relative-wealth floor after transaction costs, taxes, slippage, interest, dividends outside declared series semantics, or market impact.",
+      "required_wording": "The theorem is frictionless; cost-adjusted outputs are finite empirical robustness calculations outside the current safety theorem.",
+      "reason": "The proof uses the frictionless unit-coverage model and no extension to frictions has been established.",
+      "authority_paths": [
+        "research/theorems/epsilon-dca-safety-unit-guardrail.md",
+        "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"
+      ],
+      "affected_locations": [
+        "ch:safety",
+        "ch:methodology",
+        "ch:synthetic-results",
+        "ch:historical-results",
+        "ch:discussion"
+      ],
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "nonclaim-empirical-causality",
+      "rejected_claim": "Historical or stochastic outcomes establish causal, expected, or market-wide superiority or inferiority.",
+      "required_wording": "Report realized associations and controlled sensitivities within each declared evidence layer, preserving overlapping-window and small-seed limits.",
+      "reason": "The empirical design does not randomize market regimes, define a population from deterministic catalogs, or support pooling across inferential units.",
+      "authority_paths": [
+        "reports/experiments/seeded-stochastic-families.md",
+        "reports/experiments/confirmatory-historical-evaluation.md",
+        "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"
+      ],
+      "affected_locations": [
+        "ch:methodology",
+        "ch:synthetic-results",
+        "ch:historical-results",
+        "ch:discussion"
+      ],
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "nonclaim-acquisition-cost-performance",
+      "rejected_claim": "A lower average acquisition cost by itself establishes superior economic performance under unequal spending paths.",
+      "required_wording": "Average acquisition cost is an accounting quantity; economic comparison uses cash-inclusive terminal wealth under the same deposits and horizon.",
+      "reason": "Different carried-cash and unit paths can reverse the ranking implied by acquisition cost alone.",
+      "authority_paths": [
+        "CONTEXT.md",
+        "research/notes/pathwise-dca-dominance-under-causal-budget.md"
+      ],
+      "affected_locations": [
+        "ch:model-signal",
+        "ch:safety",
+        "ch:discussion"
+      ],
+      "mandatory": true,
+      "review_state": "accepted"
+    }
+  ]
+}

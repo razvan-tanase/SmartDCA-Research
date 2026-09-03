@@ -1,0 +1,567 @@
+{
+  "schema_version": 1,
+  "register": "claims",
+  "records": [
+    {
+      "id": "claim-def-corrected-mean",
+      "entry_type": "definition",
+      "wording": "The adopted numerator-preserving correction is total on positive inputs, preserves the declared Gini and quasi-Lehmer identities, and is a known weighted Bajraktarevic mean rather than a new mean class.",
+      "claim_class": "mathematical-definition",
+      "scope": "Positive inputs and positive external weights for real alpha and beta, using the parameter-continuous geometric branch on the diagonal; no general homogeneity or coordinatewise-monotonicity claim.",
+      "authority": [
+        {"role": "canonical-definition", "path": "research/definitions/corrected-out-quasi-gini-mean.md"},
+        {"role": "prior-theory-evidence", "path": "research/notes/prior-theory-corrected-out-quasi-gini.md"},
+        {"role": "source-audit", "path": "research/notes/source-out-quasi-gini-audit.md"}
+      ],
+      "manuscript_location": "ch:model-signal/def:corrected-mean",
+      "citation_need": "Cite the source paper and primary Bajraktarevic-family literature beside the classification and novelty boundary.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-def-guarded-policy",
+      "entry_type": "definition",
+      "wording": "The guarded corrected-mean SmartDCA rule combines the mandatory epsilon-DCA purchase floor with a bounded causal corrected-mean score applied only to the funded discretionary interval.",
+      "claim_class": "financial-computing-definition",
+      "scope": "Causal, long-only, buy-only, fully funded purchases with positive prices, nonnegative exogenous deposits, no cash interest, and cash-inclusive terminal wealth; the floor, not the score, supplies the guarantee.",
+      "authority": [
+        {"role": "canonical-definition", "path": "research/definitions/guarded-corrected-mean-smartdca-rule.md"},
+        {"role": "design-evidence", "path": "research/notes/guarded-corrected-mean-smartdca.md"},
+        {"role": "executable-check", "path": "reproducibility/checks/check_guarded_corrected_mean_smartdca.py"}
+      ],
+      "manuscript_location": "ch:safety/def:guarded-policy",
+      "citation_need": "Cite the corrected-mean and guardrail authorities; attribute source-score semantics where discussed.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-thm-source-classification",
+      "entry_type": "theorem",
+      "wording": "Off the diagonal, the source paper's out functional is a mean exactly when alpha minus beta equals one or the transform is the identity; a global finite diagonal extension exists only for the identity transform.",
+      "claim_class": "mathematical-theorem",
+      "scope": "Fixed finite arity, positive inputs, real off-diagonal parameters, and an arbitrary positive transform; the result concerns only the source out construction.",
+      "authority": [
+        {"role": "canonical-theorem", "path": "research/theorems/source-out-functional-mean-classification.md"},
+        {"role": "proof-and-counterexamples", "path": "research/notes/source-out-quasi-gini-audit.md"}
+      ],
+      "manuscript_location": "ch:model-signal/thm:source-classification",
+      "citation_need": "Cite the audited source formula and distinguish project proof from source-paper claims.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-thm-corrected-homogeneity",
+      "entry_type": "theorem",
+      "wording": "The corrected mean is degree-one homogeneous only on the characterized parameter-transform locus: the transform-independent alpha-equals-one slice or power transforms off the diagonal, with the analogous diagonal exception.",
+      "claim_class": "mathematical-theorem",
+      "scope": "The project's increasing-transform assumptions and the parameter cases stated by the canonical theorem; no general monotonicity conclusion.",
+      "authority": [
+        {"role": "canonical-theorem", "path": "research/theorems/corrected-mean-homogeneity-characterization.md"},
+        {"role": "primary-source-note", "path": "research/notes/ticket-07-homogeneity-primary-sources.md"},
+        {"role": "executable-check", "path": "reproducibility/checks/check_corrected_out_quasi_gini_homogeneity.py"}
+      ],
+      "manuscript_location": "ch:model-signal/thm:homogeneity",
+      "citation_need": "Cite primary homogeneity and Bajraktarevic-family sources used by the positioning note.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-thm-causal-dca-impossibility",
+      "entry_type": "theorem",
+      "wording": "A causal fully funded buy-only strategy that weakly dominates the same-deposit DCA comparator on every admissible finite positive price path must purchase exactly as DCA after every history.",
+      "claim_class": "mathematical-finance-theorem",
+      "scope": "Every finite positive price path, nonnegative exogenous deposits, common horizon, no borrowing, cash carried without interest, and cash-inclusive terminal wealth.",
+      "authority": [
+        {"role": "canonical-theorem", "path": "research/theorems/causal-dca-dominance-impossibility.md"},
+        {"role": "proof", "path": "research/notes/pathwise-dca-dominance-under-causal-budget.md"},
+        {"role": "executable-check", "path": "reproducibility/checks/check_pathwise_dca_dominance.py"}
+      ],
+      "manuscript_location": "ch:safety/thm:dca-impossibility",
+      "citation_need": "Cite the bounded novelty review and relevant robust-portfolio literature without claiming exhaustive novelty.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-thm-epsilon-guardrail",
+      "entry_type": "theorem",
+      "wording": "Epsilon-DCA safety is equivalent to maintaining lambda times DCA's units after every history and to satisfying the sharp causal purchase floor at every date.",
+      "claim_class": "mathematical-finance-theorem",
+      "scope": "The frictionless causal comparison model with lambda in (0,1]; the result is a relative-wealth floor, not DCA dominance or a transaction-cost theorem.",
+      "authority": [
+        {"role": "canonical-theorem", "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"},
+        {"role": "proof-and-sharpness", "path": "research/notes/sharp-epsilon-dca-safety-guardrail.md"},
+        {"role": "executable-check", "path": "reproducibility/checks/check_epsilon_dca_safety_guardrail.py"}
+      ],
+      "manuscript_location": "ch:safety/thm:epsilon-guardrail",
+      "citation_need": "Cite the bounded prior-art review and keep the DCA-specific result distinct from broader portfolio-insurance concepts.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-thm-two-purchase-boundary",
+      "entry_type": "theorem",
+      "wording": "At two purchases, the guarded rule has an exact affine evaluation-price boundary separating DCA wins, ties, and losses; beta cannot affect the purchase because the lagged reference is a singleton.",
+      "claim_class": "mathematical-finance-theorem",
+      "scope": "Exactly two purchase dates with positive prices, nonnegative deposits, and lambda in (0,1]; deterministic and not an arbitrary-horizon or stochastic claim.",
+      "authority": [
+        {"role": "canonical-theorem", "path": "research/theorems/two-purchase-guarded-smartdca-boundary.md"},
+        {"role": "proof-and-witnesses", "path": "research/notes/two-purchase-dca-win-loss-boundary.md"},
+        {"role": "executable-check", "path": "reproducibility/checks/check_two_purchase_dca_win_loss_boundary.py"}
+      ],
+      "manuscript_location": "ch:boundaries/thm:two-purchase",
+      "citation_need": "Internal theorem citation; external citation only for contextual comparison.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-thm-three-purchase-boundary",
+      "entry_type": "theorem",
+      "wording": "At three purchases, the first multi-input corrected reference yields an exact beta-sensitive evaluation-price boundary, and an exact countercyclical witness flips from a strict DCA loss to a strict win when only beta changes.",
+      "claim_class": "mathematical-finance-theorem",
+      "scope": "Exactly three purchases; the witness proves possibility, not monotone benefit from increasing beta or a parameter ranking.",
+      "authority": [
+        {"role": "canonical-theorem", "path": "research/theorems/three-purchase-corrected-mean-effect.md"},
+        {"role": "proof-and-witness", "path": "research/notes/three-purchase-corrected-mean-effect.md"},
+        {"role": "executable-check", "path": "reproducibility/checks/check_three_purchase_corrected_mean_effect.py"}
+      ],
+      "manuscript_location": "ch:boundaries/thm:three-purchase",
+      "citation_need": "Internal theorem citation; do not attach a general empirical interpretation to the witness.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-thm-cash-timing-identity",
+      "entry_type": "theorem",
+      "wording": "At every finite horizon, terminal wealth admits an exact cash-timing decomposition relative to DCA, and subtraction gives the corresponding identity for any two fully funded strategies.",
+      "claim_class": "accounting-theorem",
+      "scope": "Any fully funded strategy in the common-deposit model; an identity rather than a sign, bound, score-specific result, or stochastic statement.",
+      "authority": [
+        {"role": "canonical-theorem", "path": "research/theorems/arbitrary-horizon-cash-timing-identity.md"},
+        {"role": "proof-and-verification", "path": "research/notes/arbitrary-horizon-accounting-verification-seam.md"},
+        {"role": "executable-check", "path": "reproducibility/checks/check_arbitrary_horizon_accounting_verification.py"}
+      ],
+      "manuscript_location": "ch:boundaries/thm:cash-timing",
+      "citation_need": "Internal theorem citation; cite external accounting context only if used in exposition.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-thm-cash-single-crossing",
+      "entry_type": "theorem",
+      "wording": "Reference-aligned guardrail feedback is sufficient for corrected-minus-neutral carried cash to single-cross from nonpositive to nonnegative on a weak single-valley path; valley geometry alone is insufficient.",
+      "claim_class": "mathematical-finance-theorem",
+      "scope": "Equal positive deposits, equal reference weights, identity transform, alpha below one, alpha times beta nonpositive, and the theorem's floor-feedback condition; no terminal-wealth ordering follows.",
+      "authority": [
+        {"role": "canonical-theorem", "path": "research/theorems/reference-aligned-guardrail-cash-single-crossing.md"},
+        {"role": "counterexample-and-proof", "path": "research/notes/cash-single-crossing-mechanism.md"},
+        {"role": "executable-check", "path": "reproducibility/checks/check_cash_single_crossing_mechanism.py"}
+      ],
+      "manuscript_location": "ch:boundaries/thm:cash-single-crossing",
+      "citation_need": "Internal theorem citation; explicitly state that the condition is sufficient and not necessary.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-thm-terminal-inventory-boundary",
+      "entry_type": "theorem",
+      "wording": "For DCA or the neutral guarded selector, the corrected-rule terminal-wealth gap is exactly H plus P times U, so terminal cash, terminal units, and the positive evaluation-price root give a necessary-and-sufficient finite-horizon classification.",
+      "claim_class": "mathematical-finance-theorem",
+      "scope": "Every realized finite positive purchase path after causal ledgers are fixed; ledger-conditioned, not a price-only, universal, expected-performance, or parameter-superiority result.",
+      "authority": [
+        {"role": "canonical-theorem", "path": "research/theorems/arbitrary-horizon-performance-boundary.md"},
+        {"role": "proof-and-witnesses", "path": "research/notes/arbitrary-horizon-performance-boundary.md"},
+        {"role": "independent-review", "path": "research/notes/arbitrary-horizon-research-package-review.md"},
+        {"role": "executable-check", "path": "reproducibility/checks/check_arbitrary_horizon_performance_boundary.py"}
+      ],
+      "manuscript_location": "ch:boundaries/thm:terminal-inventory",
+      "citation_need": "Internal theorem and review citations; no stochastic language.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-empirical-deterministic-mixed",
+      "entry_type": "empirical-headline",
+      "wording": "The fixed deterministic catalog contains both favorable and adverse complete-system and signal-only outcomes, with mechanisms that separate carried cash, unit exposure, and guardrail effects.",
+      "claim_class": "descriptive-empirical",
+      "scope": "The declared finite catalog and grids only; signs are examples and stress cases, not market frequencies or probabilities.",
+      "authority": [
+        {"role": "reviewed-report", "path": "reports/experiments/deterministic-adversarial-paths.md"},
+        {"role": "immutable-run", "path": "reports/experiments/runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/manifest.json"},
+        {"role": "executable-check", "path": "reproducibility/checks/check_deterministic_adversarial_study.py"}
+      ],
+      "manuscript_location": "ch:synthetic-results/sec:deterministic",
+      "citation_need": "Cite the immutable run and reviewed report; no external prevalence citation.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-empirical-stochastic-sensitive",
+      "entry_type": "empirical-headline",
+      "wording": "Across five seeded stochastic constructions, realized complete-system and signal-only median signs change with the controlled process and sensitivity configuration.",
+      "claim_class": "descriptive-empirical",
+      "scope": "Five simple process families, three saved seeds per configuration, declared horizons and parameters; no population inference, calibration claim, expected return, or stochastic optimality.",
+      "authority": [
+        {"role": "reviewed-report", "path": "reports/experiments/seeded-stochastic-families.md"},
+        {"role": "immutable-run", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/manifest.json"},
+        {"role": "independent-audit", "path": "research/notes/seeded-stochastic-family-evaluation-audit.md"}
+      ],
+      "manuscript_location": "ch:synthetic-results/sec:stochastic",
+      "citation_need": "Cite the generator design, immutable run, and report; cite external process literature when the models are introduced.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-empirical-historical-complete-system",
+      "entry_type": "empirical-headline",
+      "wording": "All 18 non-unit primary frictionless historical cells had a negative median corrected-versus-DCA gap, and nine H1 cells rejected the two-sided zero null in the negative direction after Holm adjustment over the registered 36-cell H1/H2 family.",
+      "claim_class": "confirmatory-empirical",
+      "scope": "Frozen overlapping SPY adjusted-close and BTC-USD proxy episodes, primary parameter grid, registered block bootstrap, and sealed multiplicity procedure; realized association, not universal or causal inferiority.",
+      "authority": [
+        {"role": "publication-ready-report", "path": "reports/experiments/confirmatory-historical-evaluation.md"},
+        {"role": "immutable-run", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/manifest.json"},
+        {"role": "independent-audit", "path": "research/notes/confirmatory-historical-evaluation-audit.md"}
+      ],
+      "manuscript_location": "ch:historical-results/sec:primary-complete-system",
+      "citation_need": "Cite the protocol, provider semantics, immutable run, report, and audit beside the numerical statement.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-empirical-historical-signal",
+      "entry_type": "empirical-headline",
+      "wording": "The corrected-versus-neutral signal-only comparison had 17 negative and one positive primary median, with no Holm-significant H2 cell; the run did not confirm incremental historical signal value and did not establish equivalence.",
+      "claim_class": "confirmatory-empirical",
+      "scope": "The same frozen historical design and registered H2 tests; absence of rejection is not evidence that the signal effect is exactly zero.",
+      "authority": [
+        {"role": "publication-ready-report", "path": "reports/experiments/confirmatory-historical-evaluation.md"},
+        {"role": "registered-uncertainty", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/uncertainty.json"},
+        {"role": "independent-audit", "path": "research/notes/confirmatory-historical-evaluation-audit.md"}
+      ],
+      "manuscript_location": "ch:historical-results/sec:primary-signal",
+      "citation_need": "Cite the protocol, run, report, and audit; retain the non-equivalence qualification.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-empirical-robustness",
+      "entry_type": "empirical-headline",
+      "wording": "The separately registered robustness extension retained negative complete-system medians in all 30 monthly coverage cells and all 48 quarterly non-unit frictionless cells, while the quarterly signal-only medians included 40 negative and eight positive cells.",
+      "claim_class": "post-confirmatory-descriptive",
+      "scope": "Registered robustness grids only, with no uncertainty or multiplicity test; descriptive and not a revision of H1, H2, or the sealed primary run.",
+      "authority": [
+        {"role": "reviewed-report", "path": "reports/experiments/confirmatory-historical-evaluation.md"},
+        {"role": "immutable-robustness-run", "path": "reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/manifest.json"},
+        {"role": "generated-aggregates", "path": "reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/robustness-aggregates.json"}
+      ],
+      "manuscript_location": "ch:historical-results/sec:registered-robustness",
+      "citation_need": "Cite the separate registration, run identity, and report; label every row post-confirmatory and descriptive.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-empirical-lambda-one-collapse",
+      "entry_type": "empirical-headline",
+      "wording": "At lambda equal to one, both guarded policies collapsed transaction by transaction to DCA throughout the reviewed deterministic, stochastic, and historical evidence.",
+      "claim_class": "cross-layer-regression-receipt",
+      "scope": "A computational confirmation of the already proved accounting boundary, not a new empirical proof or market claim.",
+      "authority": [
+        {"role": "synthesis-report", "path": "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"},
+        {"role": "synthesis-claim-receipts", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/claim-receipts.json"},
+        {"role": "theorem", "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"}
+      ],
+      "manuscript_location": "ch:methodology/sec:accounting-regressions",
+      "citation_need": "Cite the theorem as authority and the synthesis receipt as implementation evidence.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-empirical-observed-safety-floor",
+      "entry_type": "empirical-headline",
+      "wording": "No observed frictionless aggregate cell in the reviewed synthesis crossed its numerical lambda-minus-one relative-gap floor.",
+      "claim_class": "cross-layer-regression-receipt",
+      "scope": "Reviewed finite runs only; a regression receipt for the theorem implementation, not a proof of the universal floor.",
+      "authority": [
+        {"role": "synthesis-report", "path": "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"},
+        {"role": "synthesis-validation", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/source-validation.json"},
+        {"role": "theorem", "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"}
+      ],
+      "manuscript_location": "ch:synthetic-results/sec:safety-checks",
+      "citation_need": "Cite both the theorem and finite synthesis receipt, with their distinct evidentiary roles.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-empirical-cost-scope",
+      "entry_type": "empirical-headline",
+      "wording": "Cost-adjusted outcomes remain empirical robustness calculations outside the current epsilon-DCA safety theorem, and all reported historical complete-system cost-adjusted medians were negative.",
+      "claim_class": "descriptive-empirical",
+      "scope": "The declared proportional and fixed-fee routes in the reviewed runs; no frictional safety theorem or confirmatory cost hypothesis.",
+      "authority": [
+        {"role": "synthesis-report", "path": "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"},
+        {"role": "cost-summary", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/cost-scope-summary.csv"}
+      ],
+      "manuscript_location": "ch:historical-results/sec:cost-robustness",
+      "citation_need": "Cite the generated cost summary and keep the theorem-scope disclaimer adjacent.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-empirical-central-synthesis",
+      "entry_type": "empirical-headline",
+      "wording": "The combined evidence supports a proved frictionless safety floor but no universal, optimal, or confirmed incremental superiority claim for the corrected-mean signal.",
+      "claim_class": "integrative-synthesis",
+      "scope": "The reviewed analytical results and 2,754 normalized aggregate cells kept at their source-specific inferential grain; no cross-layer pooling.",
+      "authority": [
+        {"role": "publication-ready-synthesis", "path": "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"},
+        {"role": "independent-audit", "path": "research/notes/safety-adaptivity-tradeoff-synthesis-audit.md"},
+        {"role": "independent-package-review", "path": "research/notes/safety-adaptivity-empirical-package-review.md"}
+      ],
+      "manuscript_location": "ch:discussion/sec:central-finding",
+      "citation_need": "Cite the analytical theorems, synthesis run, and independent review at their respective clauses.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-computational-weak-valley-falsification",
+      "entry_type": "empirical-headline",
+      "wording": "Exact-rational search falsified an unqualified weak-single-valley advantage conjecture, motivating the qualified cash-feedback and terminal-inventory boundaries.",
+      "claim_class": "computational-counterexample",
+      "scope": "A finite exact search and minimized witnesses; it falsifies the stated universal conjecture but does not enumerate all possible mechanisms.",
+      "authority": [
+        {"role": "search-report", "path": "reports/experiments/weak-single-valley-falsification.md"},
+        {"role": "evidence-note", "path": "research/notes/weak-single-valley-advantage-falsification.md"},
+        {"role": "executable-check", "path": "reproducibility/checks/check_weak_single_valley_falsification.py"}
+      ],
+      "manuscript_location": "ch:boundaries/sec:single-valley-limit",
+      "citation_need": "Internal search and theorem citations; describe the search domain explicitly.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-computational-cash-crossing-counterexample",
+      "entry_type": "empirical-headline",
+      "wording": "Exact-rational mechanism search found that policy-specific clipped floors can create a second corrected-minus-neutral cash-sign reversal on a strict valley.",
+      "claim_class": "computational-counterexample",
+      "scope": "The retained exact witness and declared search; a mechanism counterexample, not a market-frequency observation.",
+      "authority": [
+        {"role": "search-report", "path": "reports/experiments/cash-single-crossing-search.md"},
+        {"role": "evidence-note", "path": "research/notes/cash-single-crossing-mechanism.md"},
+        {"role": "executable-check", "path": "reproducibility/checks/check_cash_single_crossing_mechanism.py"}
+      ],
+      "manuscript_location": "ch:boundaries/sec:guardrail-feedback",
+      "citation_need": "Internal search and theorem citations with exact witness parameters in the appendix.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-table-contribution-matrix",
+      "entry_type": "planned-table",
+      "wording": "Contribution and non-claim matrix by mathematical, computational, methodological, empirical, and integrative category.",
+      "claim_class": "manuscript-control-table",
+      "scope": "Summary only; every row links to its detailed register and evidence authority.",
+      "authority": [
+        {"role": "contribution-register", "path": "manuscript/controls/contributions.json"},
+        {"role": "non-claim-register", "path": "manuscript/controls/non-claims.json"}
+      ],
+      "manuscript_location": "ch:introduction/tab:contribution-boundaries",
+      "citation_need": "Cite evidence per substantive row; control-only cells need no external citation.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-theorem-scope",
+      "entry_type": "planned-table",
+      "wording": "Theorem map listing assumptions, guarantee or classification, sharpness, and explicit non-conclusions.",
+      "claim_class": "mathematical-summary-table",
+      "scope": "Concise restatement only; canonical theorem pages govern exact wording.",
+      "authority": [
+        {"role": "theorem-directory", "path": "research/theorems"},
+        {"role": "claim-register", "path": "manuscript/controls/claims.json"}
+      ],
+      "manuscript_location": "ch:boundaries/tab:theorem-scope",
+      "citation_need": "Cite each canonical theorem or its manuscript label from the corresponding row.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-deterministic-primary",
+      "entry_type": "planned-table",
+      "wording": "Primary deterministic comparison table separating complete-system, signal-only, and safety-architecture gaps with mechanism fields.",
+      "claim_class": "generated-results-table",
+      "scope": "Fixed deterministic catalog at the selected displayed slice; signs are not frequencies.",
+      "authority": [
+        {"role": "generated-table-source", "path": "reports/experiments/runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/report-tables.txt"},
+        {"role": "reviewed-report", "path": "reports/experiments/deterministic-adversarial-paths.md"}
+      ],
+      "manuscript_location": "ch:synthetic-results/tab:deterministic-primary",
+      "citation_need": "Cite the immutable run and report in the caption or adjacent prose.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-stochastic-primary",
+      "entry_type": "planned-table",
+      "wording": "Primary seeded-stochastic table reporting medians, downside, worst shortfall, and all three policy comparisons by process family.",
+      "claim_class": "generated-results-table",
+      "scope": "Three saved seeds per primary family at the displayed horizon and coverage; descriptive only.",
+      "authority": [
+        {"role": "generated-table-source", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/report-tables.txt"},
+        {"role": "reviewed-report", "path": "reports/experiments/seeded-stochastic-families.md"}
+      ],
+      "manuscript_location": "ch:synthetic-results/tab:stochastic-primary",
+      "citation_need": "Cite the immutable run and generation design.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-historical-primary",
+      "entry_type": "planned-table",
+      "wording": "Primary historical H1/H2 table reporting medians, block-bootstrap intervals, adjusted decisions, episode counts, and comparison tier.",
+      "claim_class": "generated-confirmatory-table",
+      "scope": "Sealed primary cells only; preserve overlapping-window units and the full 36-cell Holm family.",
+      "authority": [
+        {"role": "generated-table-source", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/report-tables.md"},
+        {"role": "registered-uncertainty", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/uncertainty.json"}
+      ],
+      "manuscript_location": "ch:historical-results/tab:historical-primary",
+      "citation_need": "Cite protocol, source seam, run, and audit in caption or adjacent prose.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-cross-layer",
+      "entry_type": "planned-table",
+      "wording": "Cross-layer comparison table retaining evidence slice, analysis tier, comparator, cell grain, sign counts, ranges, and inference boundary.",
+      "claim_class": "generated-synthesis-table",
+      "scope": "Source-specific cells without pooling; deterministic signs and stochastic seeds are not population frequencies.",
+      "authority": [
+        {"role": "generated-table-source", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/primary-tables.md"},
+        {"role": "normalized-evidence", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/normalized-evidence.csv"}
+      ],
+      "manuscript_location": "ch:discussion/tab:cross-layer",
+      "citation_need": "Cite all source layers through the synthesis manifest and independent review.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-cost-scope",
+      "entry_type": "planned-table",
+      "wording": "Gross-versus-net scope table separating frictionless theorem checks from proportional- and fixed-cost empirical robustness outcomes.",
+      "claim_class": "generated-synthesis-table",
+      "scope": "Declared cost models and evidence layers only; no transfer of the frictionless theorem label.",
+      "authority": [
+        {"role": "generated-table-source", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/cost-scope-summary.csv"},
+        {"role": "synthesis-report", "path": "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"}
+      ],
+      "manuscript_location": "ch:discussion/tab:cost-scope",
+      "citation_need": "Cite the generated source and theorem scope.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-reproducibility",
+      "entry_type": "planned-table",
+      "wording": "Reproducibility inventory binding protocols, inputs, run identities, public artifacts, private receipts, checks, and manuscript assets.",
+      "claim_class": "provenance-table",
+      "scope": "Accepted artifact identities only; private provider observations remain undistributed.",
+      "authority": [
+        {"role": "artifact-layer-decision", "path": "docs/adr/0008-place-empirical-protocol-input-run-layers.md"},
+        {"role": "package-review", "path": "research/notes/safety-adaptivity-empirical-package-review.md"}
+      ],
+      "manuscript_location": "app:reproducibility/tab:artifact-inventory",
+      "citation_need": "Cite external providers and software where introduced; internal identities remain exact repository references.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-figure-thesis-logic",
+      "entry_type": "planned-figure",
+      "wording": "Thesis logic from universal-superiority ambition through impossibility, safety relaxation, guarded policy, reproducible evaluation, and negative signal finding.",
+      "claim_class": "candidate-created-conceptual-figure",
+      "scope": "A navigation diagram, not quantitative evidence or a causal graph.",
+      "authority": [
+        {"role": "approved-specification", "path": ".scratch/smartdca/efforts/thesis-manuscript-assembly/spec.md"},
+        {"role": "architecture-register", "path": "manuscript/controls/architecture.json"}
+      ],
+      "manuscript_location": "ch:introduction/fig:thesis-logic",
+      "citation_need": "No external image citation; cite the underlying theorem and empirical claims in adjacent prose.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-figure-policy-architecture",
+      "entry_type": "planned-figure",
+      "wording": "Guarded policy flow separating the mandatory unit-coverage floor from the corrected-mean selector and funded discretionary allocation.",
+      "claim_class": "candidate-created-conceptual-figure",
+      "scope": "Algorithm structure in the canonical causal model; the guarantee attaches only to the floor branch.",
+      "authority": [
+        {"role": "canonical-policy", "path": "research/definitions/guarded-corrected-mean-smartdca-rule.md"},
+        {"role": "guardrail-theorem", "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"}
+      ],
+      "manuscript_location": "ch:safety/fig:policy-architecture",
+      "citation_need": "Candidate-created; cite the governing definition and theorem in the caption or adjacent prose.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-figure-safety-factor",
+      "entry_type": "planned-figure",
+      "wording": "Gross frictionless safety-factor curves across separately retained evidence layers and policy comparisons.",
+      "claim_class": "generated-results-figure",
+      "scope": "Descriptive summaries of source-level aggregate cells with no cross-layer pooling.",
+      "authority": [
+        {"role": "generated-svg", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/frictionless-safety-factor.svg"},
+        {"role": "figure-data", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/safety-factor-curve.csv"}
+      ],
+      "manuscript_location": "ch:discussion/fig:safety-factor",
+      "citation_need": "Cite the synthesis run and label the summary grain in the caption.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-figure-mechanisms",
+      "entry_type": "planned-figure",
+      "wording": "Frictionless mechanism curves for cash drag, exposure, guardrail activation, and mandatory floor share across coverage.",
+      "claim_class": "generated-results-figure",
+      "scope": "Descriptive source-cell summaries; mechanisms do not determine a monotone performance law.",
+      "authority": [
+        {"role": "generated-svg", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/mechanism-curves.svg"},
+        {"role": "figure-data", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/safety-factor-curve.csv"}
+      ],
+      "manuscript_location": "ch:discussion/fig:mechanisms",
+      "citation_need": "Cite the synthesis run and define activation and floor-share denominators in the caption.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-figure-terminal-attribution",
+      "entry_type": "planned-figure",
+      "wording": "Terminal cash and evaluation-price unit contribution attribution at the original evidence-cell grain.",
+      "claim_class": "generated-results-figure",
+      "scope": "Ledger-conditioned accounting normalized by contributed capital; not a causal decomposition of market outcomes.",
+      "authority": [
+        {"role": "generated-svg", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/terminal-attribution.svg"},
+        {"role": "normalized-evidence", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/normalized-evidence.csv"}
+      ],
+      "manuscript_location": "ch:discussion/fig:terminal-attribution",
+      "citation_need": "Cite the terminal-inventory theorem and synthesis run; retain the non-causal qualification.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-figure-net-cost",
+      "entry_type": "planned-figure",
+      "wording": "Net-of-cost empirical robustness summaries kept separate from frictionless theorem evidence.",
+      "claim_class": "generated-results-figure",
+      "scope": "Declared proportional and fixed-fee models; descriptive and outside the current safety theorem.",
+      "authority": [
+        {"role": "generated-svg", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/net-cost-summary.svg"},
+        {"role": "figure-data", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/cost-scope-summary.csv"}
+      ],
+      "manuscript_location": "ch:discussion/fig:net-cost",
+      "citation_need": "Cite the synthesis run and place the theorem-scope disclaimer in the caption.",
+      "mandatory": true,
+      "review_state": "accepted"
+    }
+  ]
+}

@@ -1,0 +1,274 @@
+{
+  "schema_version": 1,
+  "register": "architecture",
+  "records": [
+    {
+      "id": "spine-safety-adaptivity",
+      "record_type": "spine",
+      "mandatory": true,
+      "review_state": "accepted",
+      "working_title": "Safe Adaptivity in Dollar-Cost Averaging: From an Impossibility Boundary to a Reproducible Empirical Evaluation",
+      "narrative": "A universal-superiority ambition is bounded by causal impossibility, relaxed into an exact safety architecture, implemented as a guarded adaptive policy, and tested by a frozen reproducible evaluation whose negative signal result is retained.",
+      "research_questions": [
+        {
+          "id": "rq1-universal-dominance",
+          "question": "Can a sequentially admissible, fully funded strategy universally dominate the same-deposit DCA comparator?",
+          "conservative_answer": "No economically distinct strategy can: universal pathwise dominance forces the strategy to purchase exactly as DCA."
+        },
+        {
+          "id": "rq2-safe-adaptivity",
+          "question": "Can an economically distinct adaptive strategy retain a transparent, model-free relative-wealth floor?",
+          "conservative_answer": "Yes in the frictionless comparison model: the epsilon-DCA unit guardrail gives the sharp causal floor and leaves a funded discretionary allocation when epsilon is positive."
+        },
+        {
+          "id": "rq3-signal-value",
+          "question": "Does the guarded corrected-mean score add empirical value inside that safety architecture?",
+          "conservative_answer": "Not in the frozen historical evaluation: the floor is confirmed operationally, but incremental value from the corrected-mean signal is not confirmed."
+        }
+      ]
+    },
+    {
+      "id": "chapter-introduction",
+      "record_type": "chapter",
+      "number": 1,
+      "title": "Introduction",
+      "manuscript_label": "ch:introduction",
+      "purpose": "Frame the Financial Computing problem, the three research questions, the safety-versus-adaptivity narrative, the contribution boundary, and the route through the thesis.",
+      "prerequisites": [
+        "spine-safety-adaptivity",
+        "chapter-discussion",
+        "chapter-conclusion"
+      ],
+      "intended_reader_outcome": "The reader understands why fair DCA accounting changes the original superiority ambition and knows the precise questions the thesis answers.",
+      "placement_rule": "Keep motivation, research questions, conservative answers, contributions, non-claims, and chapter route in the body; defer proof details and supplementary validation to appendices.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "chapter-literature",
+      "record_type": "chapter",
+      "number": 2,
+      "title": "Literature and Research Positioning",
+      "manuscript_label": "ch:literature",
+      "purpose": "Position DCA and adaptive accumulation, generalized and Bajraktarevic means, causal portfolio safety, and reproducible computational finance against primary literature.",
+      "prerequisites": [
+        "thesis-ticket-03",
+        "thesis-ticket-04",
+        "thesis-ticket-05"
+      ],
+      "intended_reader_outcome": "The reader can distinguish prior theory, project-specific results, methodological choices, and claims the thesis explicitly does not make.",
+      "placement_rule": "Keep the comparative synthesis and direct support for manuscript claims in the body; place exhaustive search logs and extended source tables outside the body or in supplementary material.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "chapter-model-signal",
+      "record_type": "chapter",
+      "number": 3,
+      "title": "Financial Model and Corrected Signal Foundations",
+      "manuscript_label": "ch:model-signal",
+      "purpose": "Define the same-deposit comparison model, exact cash-inclusive accounting, the source-functional defect, the corrected mean, and the lagged dimensionless signal.",
+      "prerequisites": [
+        "chapter-literature",
+        "thesis-ticket-06"
+      ],
+      "intended_reader_outcome": "The reader can reconstruct the financial comparison and understand why the corrected mean is a known Bajraktarevic construction used as a signal rather than a newly claimed mean class.",
+      "placement_rule": "Keep definitions, decisive equations, compatibility identities, and interpretation in the body; place full classification, diagonal-limit, and homogeneity proofs in the mathematical-proof appendix.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "chapter-impossibility-safety",
+      "record_type": "chapter",
+      "number": 4,
+      "title": "Causal Impossibility and Safety Architecture",
+      "manuscript_label": "ch:safety",
+      "purpose": "Establish the universal DCA impossibility boundary, derive the sharp epsilon-DCA unit guardrail, and define the guarded corrected-mean policy with the guarantee assigned only to the floor.",
+      "prerequisites": [
+        "chapter-model-signal",
+        "thesis-ticket-07"
+      ],
+      "intended_reader_outcome": "The reader understands why universal superiority collapses to DCA and how a controlled relaxation creates safe adaptive freedom.",
+      "placement_rule": "Keep theorem statements, assumptions, proof ideas, the guardrail recursion, and policy algorithm in the body; place adversarial-continuation and equivalence proofs in the proof appendix.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "chapter-performance",
+      "record_type": "chapter",
+      "number": 5,
+      "title": "Exact Performance Boundaries",
+      "manuscript_label": "ch:boundaries",
+      "purpose": "Present the two- and three-purchase classifications, arbitrary-horizon cash-timing identity, qualified cash single-crossing mechanism, and terminal-inventory boundary.",
+      "prerequisites": [
+        "chapter-impossibility-safety",
+        "thesis-ticket-08"
+      ],
+      "intended_reader_outcome": "The reader can separate a model-free floor from ledger-conditioned realized win, tie, and loss regions at every finite horizon.",
+      "placement_rule": "Keep necessary-and-sufficient classifications, decisive witnesses, and economic interpretation in the body; move exhaustive branch cases and exact-rational replay detail to the boundary appendix.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "chapter-methodology",
+      "record_type": "chapter",
+      "number": 6,
+      "title": "Empirical Methodology and Reproducibility",
+      "manuscript_label": "ch:methodology",
+      "purpose": "Describe the frozen protocol, three-policy comparisons, deterministic and stochastic constructions, historical source seam, rolling episodes, dependence-aware inference, cost scopes, and immutable artifact identities.",
+      "prerequisites": [
+        "chapter-literature",
+        "chapter-impossibility-safety",
+        "thesis-ticket-09"
+      ],
+      "intended_reader_outcome": "The reader can identify every inferential unit, reproduce public results, and see why evidence layers and confirmatory versus robustness analyses cannot be pooled.",
+      "placement_rule": "Keep hypotheses, estimands, comparison tiers, source semantics, statistical plan, and reproduction overview in the body; place full protocols, receipts, and validation schemas in the empirical-method appendix.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "chapter-deterministic-stochastic",
+      "record_type": "chapter",
+      "number": 7,
+      "title": "Deterministic and Stochastic Evaluation",
+      "manuscript_label": "ch:synthetic-results",
+      "purpose": "Report exact deterministic/adversarial mechanisms and seeded stochastic sensitivity without treating catalog signs or three-seed summaries as population frequencies.",
+      "prerequisites": [
+        "chapter-performance",
+        "chapter-methodology",
+        "thesis-ticket-10"
+      ],
+      "intended_reader_outcome": "The reader sees concrete favorable and adverse mechanisms, parameter sensitivity, and the distinction among complete-system, signal-only, and architecture-only effects.",
+      "placement_rule": "Keep headline tables, mechanism figures, downside summaries, and bounded interpretation in the body; place complete catalogs, sensitivities, and validation output in supplementary-results appendices.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "chapter-historical",
+      "record_type": "chapter",
+      "number": 8,
+      "title": "Historical Evaluation and Robustness",
+      "manuscript_label": "ch:historical-results",
+      "purpose": "Report the sealed SPY and BTC-USD confirmatory evaluation and the separately registered descriptive robustness extension under their declared inferential limits.",
+      "prerequisites": [
+        "chapter-methodology",
+        "thesis-ticket-11"
+      ],
+      "intended_reader_outcome": "The reader understands the negative primary finding, the absence of confirmed incremental signal value, and why robustness outcomes do not rewrite the preregistration.",
+      "placement_rule": "Keep primary estimates, intervals, multiplicity conclusions, decisive robustness summaries, and limitations in the body; place full cell tables and private-data receipt detail in appendices or the repository package.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "chapter-discussion",
+      "record_type": "chapter",
+      "number": 9,
+      "title": "Safety, Adaptivity, and Limitations",
+      "manuscript_label": "ch:discussion",
+      "purpose": "Integrate analytical and empirical evidence into the central safety-versus-adaptivity finding and state the theorem, cost, data, inference, and generalization limits.",
+      "prerequisites": [
+        "chapter-deterministic-stochastic",
+        "chapter-historical",
+        "thesis-ticket-12"
+      ],
+      "intended_reader_outcome": "The reader can state what is guaranteed, what was observed, what was not confirmed, and which future questions require new registered research.",
+      "placement_rule": "Keep cross-layer synthesis and decision-relevant limitations in the body; do not introduce new analyses or hide unattractive outcomes in appendices.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "chapter-conclusion",
+      "record_type": "chapter",
+      "number": 10,
+      "title": "Conclusions",
+      "manuscript_label": "ch:conclusion",
+      "purpose": "Answer the three research questions in order, summarize contributions and non-claims, and identify a clean future-research frontier.",
+      "prerequisites": [
+        "chapter-discussion",
+        "thesis-ticket-13"
+      ],
+      "intended_reader_outcome": "The reader leaves with a concise, defensible statement of the thesis result rather than a generalized performance promise.",
+      "placement_rule": "Keep only supported answers, contributions, limitations, and future work in the body; exclude new evidence, proofs, or outcome-driven reinterpretation.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "appendix-mathematical-proofs",
+      "record_type": "appendix",
+      "letter": "A",
+      "title": "Mathematical Proofs",
+      "manuscript_label": "app:proofs",
+      "purpose": "Preserve complete proofs for the source classification, corrected-mean properties, impossibility theorem, and safety equivalence.",
+      "prerequisites": [
+        "chapter-model-signal",
+        "chapter-impossibility-safety"
+      ],
+      "intended_reader_outcome": "A specialist can audit every body theorem without the proof machinery displacing the Financial Computing narrative.",
+      "placement_rule": "Include full derivations and boundary cases here; retain concise theorem meaning and proof ideas in the body.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "appendix-performance-cases",
+      "record_type": "appendix",
+      "letter": "B",
+      "title": "Exact Performance Cases and Witnesses",
+      "manuscript_label": "app:performance-cases",
+      "purpose": "Collect exhaustive finite-horizon branches, exact witnesses, cash-crossing counterexamples, and arbitrary-horizon replay detail.",
+      "prerequisites": [
+        "chapter-performance"
+      ],
+      "intended_reader_outcome": "A reviewer can verify sharpness and edge cases without inferring a broader performance law.",
+      "placement_rule": "Place exhaustive cases and long exact calculations here; keep decisive thresholds and representative witnesses in the body.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "appendix-empirical-protocols",
+      "record_type": "appendix",
+      "letter": "C",
+      "title": "Empirical Protocols and Statistical Controls",
+      "manuscript_label": "app:protocols",
+      "purpose": "Record frozen grids, hypotheses, episode mapping, exclusions, block bootstrap, Holm correction, robustness registration, and cost-scope rules.",
+      "prerequisites": [
+        "chapter-methodology"
+      ],
+      "intended_reader_outcome": "A statistical reviewer can audit the design and confirm that outcomes did not silently alter the inferential plan.",
+      "placement_rule": "Include protocol detail and supplementary diagnostics here; keep estimands and decisive inference in the body.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "appendix-reproducibility",
+      "record_type": "appendix",
+      "letter": "D",
+      "title": "Reproducibility and Artifact Provenance",
+      "manuscript_label": "app:reproducibility",
+      "purpose": "Bind software, commands, immutable run identities, source receipts, generated assets, and public/private evidence boundaries.",
+      "prerequisites": [
+        "chapter-methodology",
+        "chapter-historical"
+      ],
+      "intended_reader_outcome": "An archive reader can reproduce public artifacts and verify retained private evidence without hidden conversation context.",
+      "placement_rule": "Put long command listings, manifests, checksums, and receipt tables here; keep the reproducibility claim and minimal route in the body.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "appendix-supplementary-results",
+      "record_type": "appendix",
+      "letter": "E",
+      "title": "Supplementary Tables and Figures",
+      "manuscript_label": "app:supplementary-results",
+      "purpose": "Hold complete generated tables and figures whose size or detail would interrupt the body.",
+      "prerequisites": [
+        "chapter-deterministic-stochastic",
+        "chapter-historical"
+      ],
+      "intended_reader_outcome": "The reader can inspect complete result coverage while the body retains only decision-relevant views.",
+      "placement_rule": "Move tables or figures larger than half a page and exhaustive grids here; every item remains numbered, referenced, attributed, and generated from reviewed evidence.",
+      "mandatory": true,
+      "review_state": "accepted"
+    }
+  ]
+}
