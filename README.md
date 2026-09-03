@@ -74,8 +74,7 @@ and Holm cells. The empirical effort is complete with no publication blocker;
 the [retained private-pass
 receipt](reports/experiments/runs/smartdca-empirical-package-review-v1-6cb6c1cd94b901be90ebd553a022c922e53984afafeb22948747be084b37c14f/review-receipt.json)
 keeps the final review reproducible without publishing provider observations.
-Thesis manuscript ticket 01 is now resolved: the institutional contract and
-canonical build are frozen, and ticket 02 is the next frontier. The [effort
+Thesis manuscript tickets 01 and 02 are now resolved: the institutional contract, canonical build, thesis architecture, and evidence controls are frozen. Tickets 03, 04, and 05 are the next unblocked literature strands. The [effort
 map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md)
 and [project map](.scratch/smartdca/map.md) record the completed state and next
 frontier.
