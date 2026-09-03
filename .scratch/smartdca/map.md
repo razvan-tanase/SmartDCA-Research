@@ -17,7 +17,7 @@ reaches it.
 
 | Effort | State | Checkpoint or frontier |
 |---|---|---|
-| [Thesis manuscript assembly](efforts/thesis-manuscript-assembly/spec.md) | active | The approved 17-ticket route begins with the institutional contract and canonical manuscript build. |
+| [Thesis manuscript assembly](efforts/thesis-manuscript-assembly/spec.md) | active | Ticket 03's reviewed 21-source DCA/adaptive/causal-safety synthesis is complete; tickets 04 and 05 are the remaining unblocked literature strands. |
 | [Arbitrary-horizon guarded SmartDCA performance](efforts/arbitrary-horizon-performance/spec.md) | completed | The [reviewed terminal-inventory boundary](../../research/theorems/arbitrary-horizon-performance-boundary.md) closed all five tickets. |
 | [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) | completed | The [independent empirical-package review](../../research/notes/safety-adaptivity-empirical-package-review.md) cleared the immutable evidence package for manuscript use. |
 
@@ -29,7 +29,7 @@ Financial Computing narrative, the contribution and non-claim discipline, and
 one complete manuscript release as the verification seam. The
 [effort map](efforts/thesis-manuscript-assembly/map.md) records the approved
 17-ticket route. Ticket 01 is resolved: the institutional contract and
-canonical manuscript build are frozen. Ticket 02 is resolved: the thesis architecture, evidence controls, and canonical structural shell are in place. Tickets 03, 04, and 05 are now the next unblocked literature strands; continuous Chapter 1 prose remains deferred until those evidence inputs are assembled.
+canonical manuscript build are frozen. Ticket 02 is resolved: the thesis architecture, evidence controls, and canonical structural shell are in place. Ticket 03 is resolved: the recurring-DCA, adaptive-accumulation, online-decision, and safety-objective literature boundary is reviewed and traceable. Tickets 04 and 05 are the remaining unblocked literature strands; ticket 06 now waits only for ticket 04, and continuous Chapter 1 prose remains deferred until the literature inputs are assembled.
 
 The completed empirical effort's [independent publication
 review](../../research/notes/safety-adaptivity-empirical-package-review.md)

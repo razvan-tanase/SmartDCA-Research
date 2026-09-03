@@ -14,7 +14,7 @@ follow the [work-tracking workflow](../../../../docs/agents/work-tracking.md).
 |---|---|---|---|
 | [01](issues/01-freeze-institutional-contract-establish-manuscript-build.md) | Freeze submission requirements and establish one canonical manuscript-to-PDF seam. | resolved | — |
 | [02](issues/02-establish-thesis-architecture-evidence-controls.md) | Create the chapter route and controls that keep every manuscript claim consistent and traceable. | resolved | 01 |
-| [03](issues/03-synthesize-dca-adaptive-causal-safety-literature.md) | Position the financial problem and safety architecture against authoritative investment literature. | open | 02 |
+| [03](issues/03-synthesize-dca-adaptive-causal-safety-literature.md) | Position the financial problem and safety architecture against authoritative investment literature. | resolved | 02 |
 | [04](issues/04-position-corrected-mean-prior-theory.md) | Establish conservative primary-source positioning for the corrected mean and its proved properties. | open | 02 |
 | [05](issues/05-synthesize-reproducible-computational-finance-statistics-literature.md) | Ground the preregistered, dependence-aware, reproducible empirical design in authoritative methodology. | open | 02 |
 | [06](issues/06-draft-financial-model-corrected-signal-foundations.md) | Write the financial model, fair DCA comparison, source audit, and corrected signal foundations. | open | 03, 04 |
@@ -36,8 +36,10 @@ Ticket [01](issues/01-freeze-institutional-contract-establish-manuscript-build.m
 is resolved. It froze authoritative submission requirements and established the
 canonical manuscript-to-PDF seam before continuous prose begins. Ticket [02](issues/02-establish-thesis-architecture-evidence-controls.md)
 is resolved: the chapter architecture, evidence controls, and canonical structural shell are in place.
+Ticket [03](issues/03-synthesize-dca-adaptive-causal-safety-literature.md) is resolved: its bounded
+21-source synthesis now fixes the recurring-DCA, adaptive-decision, online-comparator, and safety-objective positioning used by Chapter 2.
 
-With ticket 02 resolved, tickets 03, 04, and 05 can develop the three literature strands independently.
+Tickets 04 and 05 remain the two unblocked literature strands. With ticket 03 complete, ticket 06 now waits only for ticket 04.
 Tickets 10 and 11 can likewise draft the synthetic and historical empirical
 layers in parallel after their genuine prerequisites resolve. Ticket 16 is an
 intentional human gate: actual supervisor feedback and approval cannot be

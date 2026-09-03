@@ -11,6 +11,11 @@ import subprocess
 import sys
 from pathlib import Path
 
+if __package__:
+    from .citation_controls import extract_bibtex_keys, extract_latex_citation_keys
+else:
+    from citation_controls import extract_bibtex_keys, extract_latex_citation_keys
+
 
 DEFAULT_RELEASE_READY_STATUSES = {"approved", "verified"}
 DEFAULT_PLACEHOLDER_PATTERNS = (
@@ -28,10 +33,6 @@ def canonical_json_digest(value: object) -> str:
         separators=(",", ":"),
     ).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
-
-
-def strip_latex_comments(source: str) -> str:
-    return re.sub(r"(?<!\\)%.*$", "", source, flags=re.MULTILINE)
 
 
 def main() -> int:
@@ -208,27 +209,17 @@ def main() -> int:
     bibliography_path = release_inputs.get("bibliography")
     if bibliography_path and (root / bibliography_path).is_file():
         bibliography = (root / bibliography_path).read_text(encoding="utf-8")
-        defined_keys = set(
-            re.findall(r"@\w+\s*\{\s*([^,\s]+)\s*,", bibliography)
-        )
+        defined_keys = extract_bibtex_keys(bibliography)
         cited_keys: set[str] = set()
         for relative_path in text_files:
             source_path = root / relative_path
             if not source_path.is_file():
                 continue
-            source = strip_latex_comments(
-                source_path.read_text(encoding="utf-8")
-            )
-            for citation_group in re.findall(
-                r"\\(?:[A-Za-z]*cite[A-Za-z]*)\*?"
-                r"(?:\s*\[[^\]]*\]){0,2}\s*\{([^}]*)\}",
-                source,
-            ):
-                cited_keys.update(
-                    key.strip()
-                    for key in citation_group.split(",")
-                    if key.strip() and key.strip() != "*"
+            cited_keys.update(
+                extract_latex_citation_keys(
+                    source_path.read_text(encoding="utf-8")
                 )
+            )
         undefined_citations = sorted(cited_keys - defined_keys)
         unused_bibliography_entries = sorted(defined_keys - cited_keys)
 

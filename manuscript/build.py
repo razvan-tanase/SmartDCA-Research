@@ -4,11 +4,29 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import shutil
 import subprocess
 import sys
 from pathlib import Path
+
+
+def run_validation(command: list[str], failure_message: str) -> bool:
+    """Run one fail-closed pre-build gate and forward useful diagnostics."""
+
+    result = subprocess.run(
+        command,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode == 0:
+        return True
+    print(result.stdout, end="")
+    print(result.stderr, end="")
+    print(failure_message)
+    return False
 
 
 def main() -> int:
@@ -30,21 +48,37 @@ def main() -> int:
     output_directory = (args.output_dir or root / "build").resolve()
     source = root / "source" / "thesis.tex"
 
-    control_check = subprocess.run(
+    if not run_validation(
         [
             sys.executable,
             str(Path(__file__).resolve().with_name("check_controls.py")),
             "--root",
             str(root),
         ],
-        check=False,
-        capture_output=True,
-        text=True,
-    )
-    if control_check.returncode:
-        print(control_check.stdout, end="")
-        print(control_check.stderr, end="")
-        print("BUILD FAILED: manuscript controls are invalid")
+        "BUILD FAILED: manuscript controls are invalid",
+    ):
+        return 1
+
+    manifest_path = root / "controls" / "control-manifest.json"
+    try:
+        control_profile = json.loads(manifest_path.read_text(encoding="utf-8")).get(
+            "profile"
+        )
+    except (OSError, json.JSONDecodeError):
+        control_profile = None
+    if control_profile == "thesis-architecture-v1" and not run_validation(
+        [
+            sys.executable,
+            str(
+                Path(__file__).resolve().parents[1]
+                / "reproducibility"
+                / "literature_controls.py"
+            ),
+            "--repository-root",
+            str(root.parent),
+        ],
+        "BUILD FAILED: DCA literature synthesis is invalid",
+    ):
         return 1
 
     latexmk = shutil.which("latexmk")
