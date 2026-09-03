@@ -7,6 +7,7 @@ import argparse
 import os
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 
@@ -28,6 +29,23 @@ def main() -> int:
     root = args.root.resolve()
     output_directory = (args.output_dir or root / "build").resolve()
     source = root / "source" / "thesis.tex"
+
+    control_check = subprocess.run(
+        [
+            sys.executable,
+            str(Path(__file__).resolve().with_name("check_controls.py")),
+            "--root",
+            str(root),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if control_check.returncode:
+        print(control_check.stdout, end="")
+        print(control_check.stderr, end="")
+        print("BUILD FAILED: manuscript controls are invalid")
+        return 1
 
     latexmk = shutil.which("latexmk")
     if latexmk is None:

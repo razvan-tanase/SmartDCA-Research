@@ -47,7 +47,7 @@ jobs:
       - uses: actions/checkout@v7
       - name: Build manuscript shell in the declared clean environment
         run: ./manuscript/build-clean.sh
-      - name: Test the public build and release-check seams
+      - name: Test the public control, build, and release-check seams
         run: |
           image_name="$(cat manuscript/environment/image-tag.txt)"
           docker run --rm \
@@ -56,6 +56,7 @@ jobs:
             --entrypoint python3 \
             "$image_name" \
             -m unittest \
+            manuscript.tests.test_controls \
             manuscript.tests.test_release_check \
             manuscript.tests.test_manuscript_build
       - name: Confirm that the draft cannot be mistaken for a submission candidate
@@ -65,6 +66,6 @@ jobs:
           release_status=$?
           set -e
           if [ "$release_status" -ne 1 ]; then
-            echo "Expected the ticket-01 shell to fail closed with status 1."
+            echo "Expected the draft shell to fail closed with status 1."
             exit 1
           fi

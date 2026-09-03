@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "register": "sample",
+  "records": [
+    {
+      "id": "ready-candidate-control",
+      "mandatory": true,
+      "review_state": "accepted"
+    }
+  ]
+}

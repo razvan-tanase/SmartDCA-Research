@@ -74,8 +74,7 @@ and Holm cells. The empirical effort is complete with no publication blocker;
 the [retained private-pass
 receipt](reports/experiments/runs/smartdca-empirical-package-review-v1-6cb6c1cd94b901be90ebd553a022c922e53984afafeb22948747be084b37c14f/review-receipt.json)
 keeps the final review reproducible without publishing provider observations.
-Thesis manuscript ticket 01 is now resolved: the institutional contract and
-canonical build are frozen, and ticket 02 is the next frontier. The [effort
+Thesis manuscript tickets 01 and 02 are now resolved: the institutional contract, canonical build, thesis architecture, and evidence controls are frozen. Tickets 03, 04, and 05 are the next unblocked literature strands. The [effort
 map](.scratch/smartdca/efforts/safety-adaptivity-empirical-evaluation/map.md)
 and [project map](.scratch/smartdca/map.md) record the completed state and next
 frontier.
@@ -137,18 +136,20 @@ python -m unittest reproducibility.checks.check_historical_confirmatory_evaluati
 python -m unittest reproducibility.checks.check_historical_robustness_evaluation
 python -m unittest reproducibility.checks.check_safety_adaptivity_synthesis
 python -m unittest reproducibility.checks.check_empirical_package_publication_review
+python -m unittest manuscript.tests.test_controls
 python -m unittest manuscript.tests.test_release_check
 python -m unittest manuscript.tests.test_manuscript_build
+python manuscript/check_controls.py
 python manuscript/build.py
 ```
 
 GitHub Actions runs the link check, all nineteen scientific checks, the
-manuscript seam tests, and the dated clean-container manuscript build on every
-push and pull request. The current ticket-01 shell is intentionally not a
-submission candidate: `python manuscript/check_release.py` must exit with
-status 1 while the owned institutional and supervisor decisions in the
-[manuscript contract](manuscript/contract/institutional-contract.md) remain
-unresolved.
+manuscript control/build/release tests, and the dated clean-container
+manuscript build on every push and pull request. The structural shell is
+intentionally not a submission candidate: `python manuscript/check_release.py`
+must exit with status 1 while the owned institutional and supervisor decisions
+in the [manuscript contract](manuscript/contract/institutional-contract.md)
+remain unresolved.
 
 Authorized Yahoo Finance acquisition is a separate, pinned input-production
 step rather than a test dependency. Create its CPython 3.12 environment with

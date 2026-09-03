@@ -7,6 +7,8 @@ import argparse
 import hashlib
 import json
 import re
+import subprocess
+import sys
 from pathlib import Path
 
 
@@ -103,6 +105,34 @@ def main() -> int:
         ):
             requirements_without_provenance.append(requirement["id"])
     release_inputs = contract.get("release_inputs", {})
+    control_failure_output = ""
+    if not isinstance(release_inputs, dict):
+        control_failure_output = (
+            "controls_manifest must be declared in release_inputs\n"
+        )
+        release_inputs = {}
+    else:
+        controls_manifest = release_inputs.get("controls_manifest")
+        if not isinstance(controls_manifest, str) or not controls_manifest.strip():
+            control_failure_output = (
+                "controls_manifest must be declared in release_inputs\n"
+            )
+        else:
+            control_check = subprocess.run(
+                [
+                    sys.executable,
+                    str(Path(__file__).resolve().with_name("check_controls.py")),
+                    "--root",
+                    str(root),
+                    "--manifest",
+                    controls_manifest,
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            if control_check.returncode:
+                control_failure_output = control_check.stdout + control_check.stderr
     text_files = release_inputs.get("text_files", [])
     configured_patterns = release_gate.get("placeholder_patterns")
     placeholder_patterns = (
@@ -210,6 +240,7 @@ def main() -> int:
         or mirror_blockers
         or undefined_citations
         or unused_bibliography_entries
+        or control_failure_output
     ):
         print("RELEASE CHECK FAILED")
         for blocker in non_ready_requirements:
@@ -234,6 +265,9 @@ def main() -> int:
             print(f"- {citation_key}: undefined citation")
         for bibliography_key in unused_bibliography_entries:
             print(f"- {bibliography_key}: unused bibliography entry")
+        if control_failure_output:
+            print("- manuscript controls are invalid")
+            print(control_failure_output, end="")
         return 1
 
     print("RELEASE CHECK PASSED")

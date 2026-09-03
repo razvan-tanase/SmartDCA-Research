@@ -91,6 +91,71 @@ class ReleaseCheckTests(unittest.TestCase):
         self.assertIn("program_language", result.stdout)
         self.assertIn("not release-ready", result.stdout)
 
+    def test_submission_candidate_is_rejected_when_mandatory_control_is_unresolved(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            candidate_root = self.copy_ready_candidate(temporary_directory)
+            contract_path = candidate_root / "contract" / "requirements.json"
+            contract = json.loads(contract_path.read_text(encoding="utf-8"))
+            contract["release_inputs"]["controls_manifest"] = (
+                "controls/control-manifest.json"
+            )
+            contract_path.write_text(
+                json.dumps(contract, indent=2) + "\n", encoding="utf-8"
+            )
+            controls = candidate_root / "controls"
+            controls.mkdir(exist_ok=True)
+            (controls / "control-manifest.json").write_text(
+                json.dumps(
+                    {
+                        "schema_version": 1,
+                        "control_set_id": "release-controls-v1",
+                        "registers": [
+                            {"name": "sample", "path": "controls/sample.json"}
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (controls / "sample.json").write_text(
+                json.dumps(
+                    {
+                        "schema_version": 1,
+                        "register": "sample",
+                        "records": [
+                            {
+                                "id": "unresolved-release-control",
+                                "mandatory": True,
+                                "review_state": "pending",
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            result = self.run_checker_at_root(candidate_root)
+
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertIn("unresolved-release-control", result.stdout)
+        self.assertIn("manuscript controls are invalid", result.stdout)
+        self.assertIn("RELEASE CHECK FAILED", result.stdout)
+
+    def test_submission_candidate_is_rejected_when_controls_manifest_is_missing(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            candidate_root = self.copy_ready_candidate(temporary_directory)
+            contract_path = candidate_root / "contract" / "requirements.json"
+            contract = json.loads(contract_path.read_text(encoding="utf-8"))
+            del contract["release_inputs"]["controls_manifest"]
+            contract_path.write_text(
+                json.dumps(contract, indent=2) + "\n", encoding="utf-8"
+            )
+
+            result = self.run_checker_at_root(candidate_root)
+
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertIn("controls_manifest must be declared", result.stdout)
+        self.assertIn("manuscript controls are invalid", result.stdout)
+
     def test_submission_candidate_is_rejected_when_contract_mirror_changes(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             candidate_root = self.copy_ready_candidate(temporary_directory)

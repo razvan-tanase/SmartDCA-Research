@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "register": "supervisor_feedback",
+  "log_state": "no-feedback-received",
+  "required_entry_fields": [
+    "id",
+    "received_on",
+    "source",
+    "concern",
+    "classification",
+    "affected_locations",
+    "decision",
+    "owner",
+    "resolution_evidence",
+    "mandatory",
+    "review_state"
+  ],
+  "records": []
+}
