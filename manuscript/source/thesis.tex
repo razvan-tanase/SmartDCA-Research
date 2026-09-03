@@ -327,6 +327,130 @@ evidence is read: the theorem may support a universal claim within its model,
 whereas deterministic examples and historical estimates report realized or
 probabilistic evidence only within their declared designs.
 
+\section{Generalized Means and the Corrected Construction}
+
+\subsection{The source object remains a functional until verified}
+\label{sec:lit-mean-source-functional}
+Appendix B of the SmartDCA source introduces its out quasi-Gini expression as a
+``mean'' and records two algebraic reductions, but supplies no reflexivity,
+internality, continuity, homogeneity, coordinatewise-monotonicity, or diagonal
+argument \citep{calvet2023smartdca}. The thesis therefore calls the unverified
+object the \emph{out quasi-Gini functional}. With
+$d=\alpha-\beta\ne0$, its constant-input value is
+
+\[
+  Q_{\alpha,\beta}^{f}(c,\ldots,c)
+  =c^{1/d}f(c)^{(d-1)/d}.
+\]
+
+The project classification follows immediately at the necessary reflexivity
+seam and is exact: the source functional is a mean precisely when $d=1$ or
+$f$ is the identity, and it has a finite extension over the whole diagonal
+only in the identity case. Calling this a classification, rather than a proof
+of a result asserted by the source, keeps the attribution explicit.
+
+\subsection{Gini, Lehmer, and function-weighted roots}
+\label{sec:lit-mean-generalized-roots}
+The relevant families are nested specializations, not interchangeable names.
+Gini's two-parameter power-sum quotient supplies the classical $G_{p,q}$
+family \citep{gini1938}. The Lehmer family is the adjacent-parameter slice,
+usually written as a power-weighted arithmetic quotient
+\citep{lehmer1971,chuzhao2015}. Beckenbach's function-weighted mean-value functions are
+the broader arithmetic-generator predecessor \citep{beckenbach1950}; modern
+work uses \emph{Beckenbach--Gini--Lehmer} for this function-weighted
+arithmetic form and studies its mean mappings and homogeneity
+\citep{matkowskiwrobel2020}. Thus ``generalized mean'' is only an umbrella
+description here. It cannot identify the corrected construction or transfer
+properties from one subfamily to another.
+
+\subsection{Exact weighted Bajraktarevi\'c identification}
+\label{sec:lit-mean-family-identification}
+The numerator-preserving correction uses positive external weights and, off
+the diagonal, is
+
+\[
+ \widehat G_{\alpha,\beta}^{f,\mathrm{out}}(x;w)
+ =\left(
+ \frac{\sum_i w_i x_i f(x_i)^{\alpha-1}}
+      {\sum_i w_i x_i^{1-d}f(x_i)^{\alpha-1}}
+ \right)^{1/d}.
+\]
+
+Set $\varphi_d(t)=t^{-d}$ and $R_\alpha(t)=t f(t)^{\alpha-1}$.
+Substitution into the established weighted Bajraktarevi\'c form
+
+\[
+ A_{\varphi,R}(x;w)=\varphi^{-1}\!\left(
+   \frac{\sum_i w_iR(x_i)\varphi(x_i)}{\sum_i w_iR(x_i)}
+ \right)
+\]
+
+gives $\widehat G_{\alpha,\beta}^{f,\mathrm{out}}
+=A_{\varphi_d,R_\alpha}$ exactly. The original function-weighted class and
+its modern weighted formulation are prior theory
+\citep{bajraktarevic1958,paleszakaria2020}. Because $\varphi_d$ is continuous
+and strictly monotone and $R_\alpha$ is positive, established meanhood applies;
+it is not supplied by a new general construction in this thesis.
+
+The identification also fixes the special cases. If $f(t)=t^r$, the result is
+the classical weighted Gini mean $G_{p,q}$ with
+$p=1+r(\alpha-1)$ and $q=p-d$; $f=\mathrm{id}$ gives
+$(p,q)=(\alpha,\beta)$. If $d=1$, it is the weighted
+Beckenbach--Gini--Lehmer form, and a power function weight gives a weighted
+Lehmer mean. On $d=0$, the adopted parameter-continuous value is the
+function-weighted geometric Bajraktarevi\'c mean $A_{\log,R_q}$. Modern
+weighted treatments record the corresponding Gini branches and comparison
+results \citep{lehmer1971,chuzhao2015,matkowskiwrobel2020,
+palespasteczka2018,palespasteczka2024}.
+
+\subsection{Property statements stay on their proved loci}
+\label{sec:lit-mean-property-boundaries}
+Meanhood is not a license to import every familiar property. Continuity in
+the inputs is claimed when $f$ is continuous; positivity or monotonicity of
+$f$ alone does not exclude a jump. Coordinatewise monotonicity is likewise
+not automatic: even the classical weighted Gini family has it exactly on the
+region $pq\leq0$, and that criterion does not transfer to an arbitrary
+function weight \citep{palespasteczka2024}.
+
+Homogeneity has a sharper boundary. Prior work classifies continuous
+homogeneous Bajraktarevi\'c mappings as Gini mappings
+\citep{aczeldaroczy1963,palespasteczka2016}. The project's fixed-weight,
+two-effective-coordinate characterization specializes that theory: off the
+diagonal the corrected mean is degree-one homogeneous exactly when
+$\alpha=1$ or $f/f(1)$ is multiplicative; on the diagonal the corresponding
+exception is $q=1$. Under the project's increasing-transform assumption,
+multiplicativity forces $f(t)=Ct^r$. Consequently, a non-power transform is
+homogeneous only on the transform-independent $\alpha=1$ slice, including the
+diagonal point $(1,1)$, while a power transform makes the whole family a
+reparameterized classical weighted Gini family. Neither locus supports a
+claim of simultaneous scale invariance and transform novelty.
+
+\subsection{Prior theory and project contributions are kept separate}
+\label{sec:lit-mean-contribution-boundary}
+The contribution accounting used throughout the thesis is:
+
+\begin{description}
+  \item[Prior theory.] Gini, Lehmer, Beckenbach--Gini--Lehmer, and
+  Bajraktarevi\'c supply the known families, meanhood framework, and broad
+  comparison and homogeneity results.
+  \item[Correction.] The project replaces the source denominator by the
+  numerator-preserving common-weight normalization and derives its finite
+  diagonal branch.
+  \item[Classification.] The project proves exactly when the unmodified source
+  functional is a mean and when it admits a global finite diagonal extension.
+  \item[Characterization.] The project gives the exact transform condition for
+  homogeneity of this externally weighted, transform-coupled specialization.
+\end{description}
+
+The external boundaries in this accounting are the source text, the weighted
+family definition, and the prior homogeneous-mapping result
+\citep{calvet2023smartdca,paleszakaria2020,aczeldaroczy1963}.
+The corrected construction is not a new general mean class. Its defensible
+role is a conservatively identified weighted Bajraktarevi\'c mean used as a
+signal after a source correction. The bounded primary-source search supporting
+this position does not turn absence of an exact earlier coupling into a
+priority claim.
+
 \chapter{Financial Model and Corrected Signal Foundations}
 \label{ch:model-signal}
 \textbf{Purpose.} Define the same-deposit comparison model, exact

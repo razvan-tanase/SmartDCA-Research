@@ -17,7 +17,7 @@ reaches it.
 
 | Effort | State | Checkpoint or frontier |
 |---|---|---|
-| [Thesis manuscript assembly](efforts/thesis-manuscript-assembly/spec.md) | active | Ticket 03's reviewed 21-source DCA/adaptive/causal-safety synthesis is complete; tickets 04 and 05 are the remaining unblocked literature strands. |
+| [Thesis manuscript assembly](efforts/thesis-manuscript-assembly/spec.md) | active | Ticket 04's corrected-mean prior-theory positioning is reviewed and complete; ticket 05 is the remaining literature frontier, and ticket 06 is unblocked. |
 | [Arbitrary-horizon guarded SmartDCA performance](efforts/arbitrary-horizon-performance/spec.md) | completed | The [reviewed terminal-inventory boundary](../../research/theorems/arbitrary-horizon-performance-boundary.md) closed all five tickets. |
 | [Safety-adaptivity empirical evaluation](efforts/safety-adaptivity-empirical-evaluation/spec.md) | completed | The [independent empirical-package review](../../research/notes/safety-adaptivity-empirical-package-review.md) cleared the immutable evidence package for manuscript use. |
 
@@ -29,7 +29,7 @@ Financial Computing narrative, the contribution and non-claim discipline, and
 one complete manuscript release as the verification seam. The
 [effort map](efforts/thesis-manuscript-assembly/map.md) records the approved
 17-ticket route. Ticket 01 is resolved: the institutional contract and
-canonical manuscript build are frozen. Ticket 02 is resolved: the thesis architecture, evidence controls, and canonical structural shell are in place. Ticket 03 is resolved: the recurring-DCA, adaptive-accumulation, online-decision, and safety-objective literature boundary is reviewed and traceable. Tickets 04 and 05 are the remaining unblocked literature strands; ticket 06 now waits only for ticket 04, and continuous Chapter 1 prose remains deferred until the literature inputs are assembled.
+canonical manuscript build are frozen. Ticket 02 is resolved: the thesis architecture, evidence controls, and canonical structural shell are in place. Ticket 03 is resolved: the recurring-DCA, adaptive-accumulation, online-decision, and safety-objective literature boundary is reviewed and traceable. Ticket 04 is resolved: the corrected-mean prior-theory boundary is reviewed, traceable, and conservative about novelty. Ticket 05 is the remaining unblocked literature strand; ticket 06 is now unblocked, while continuous Chapter 1 prose remains deferred until the literature inputs are assembled.
 
 The completed empirical effort's [independent publication
 review](../../research/notes/safety-adaptivity-empirical-package-review.md)

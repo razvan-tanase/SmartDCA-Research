@@ -77,7 +77,7 @@ def main() -> int:
             "--repository-root",
             str(root.parent),
         ],
-        "BUILD FAILED: DCA literature synthesis is invalid",
+        "BUILD FAILED: literature synthesis is invalid",
     ):
         return 1
 

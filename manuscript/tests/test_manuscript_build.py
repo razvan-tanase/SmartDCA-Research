@@ -137,6 +137,22 @@ class ManuscriptBuildTests(unittest.TestCase):
                 "cash-inclusive terminal wealth values both the asset units and the cash deliberately left uninvested",
                 normalized_text,
             )
+            self.assertIn(
+                "The thesis therefore calls the unverified object the out quasi-Gini functional",
+                normalized_text,
+            )
+            self.assertIn(
+                "The relevant families are nested specializations, not interchangeable names",
+                normalized_text,
+            )
+            self.assertIn(
+                "The corrected construction is not a new general mean class",
+                normalized_text,
+            )
+            self.assertIn(
+                "a non-power transform is homogeneous only on the transform-independent",
+                normalized_text,
+            )
             self.assertIn("Generated-asset placeholder", normalized_text)
             self.assertIn("Appendix", normalized_text)
             self.assertIn("BIBLIOGRAPHY", normalized_text)

@@ -51,3 +51,4 @@ jobs:
           python -m unittest reproducibility.checks.check_safety_adaptivity_synthesis
           python -m unittest reproducibility.checks.check_empirical_package_publication_review
           python -m unittest reproducibility.checks.check_dca_literature_synthesis
+          python -m unittest reproducibility.checks.check_corrected_mean_literature_synthesis

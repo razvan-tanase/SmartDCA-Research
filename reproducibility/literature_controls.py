@@ -1,4 +1,4 @@
-"""Deterministic controls for the DCA literature-synthesis manuscript slice."""
+"""Deterministic controls for the thesis literature-synthesis slices."""
 
 from __future__ import annotations
 
@@ -50,6 +50,36 @@ REQUIRED_MATERIAL_TERMS = (
     "same-deposit",
     "cash-inclusive terminal wealth",
 )
+MEAN_REQUIRED_CLAIMS = {
+    "claim-lit-mean-source-functional": "sec:lit-mean-source-functional",
+    "claim-lit-mean-generalized-roots": "sec:lit-mean-generalized-roots",
+    "claim-lit-mean-family-identification": "sec:lit-mean-family-identification",
+    "claim-lit-mean-property-boundaries": "sec:lit-mean-property-boundaries",
+    "claim-lit-mean-contribution-boundary": "sec:lit-mean-contribution-boundary",
+}
+MEAN_EVIDENCE_NOTE = "research/notes/corrected-mean-prior-theory-literature.md"
+MEAN_REQUIRED_NOTE_HEADINGS = (
+    "## Search protocol and limits",
+    "## Primary-source coverage",
+    "## Property boundaries",
+    "## Claim-to-evidence map",
+    "## Citation and novelty verdict",
+)
+MEAN_REQUIRED_MANUSCRIPT_TERMS = (
+    "out quasi-gini functional",
+    "weighted bajraktarevi",
+    "weighted gini",
+    "beckenbach--gini--lehmer",
+    "weighted lehmer mean",
+    "continuity",
+    "homogeneity",
+    "coordinatewise monotonicity",
+    "transform-independent",
+    "correction",
+    "classification",
+    "characterization",
+    "prior theory",
+)
 
 
 class LiteratureSynthesisError(ValueError):
@@ -77,6 +107,24 @@ def _read_json(path: Path, errors: list[str]) -> dict[str, object]:
         errors.append(f"{path}: expected a JSON object")
         return {}
     return value
+
+
+def _latex_section_after_label(source: str, label: str) -> str:
+    """Return one labelled LaTeX section, stopping at the next heading."""
+
+    marker = f"\\label{{{label}}}"
+    marker_position = source.find(marker)
+    if marker_position < 0:
+        return ""
+    section = source[marker_position + len(marker) :]
+    heading_positions = [
+        position
+        for heading in ("\\subsection{", "\\section{", "\\chapter{")
+        if (position := section.find(heading)) >= 0
+    ]
+    if heading_positions:
+        return section[: min(heading_positions)]
+    return section
 
 
 def audit_dca_literature_synthesis(repository_root: Path) -> dict[str, object]:
@@ -171,7 +219,7 @@ def audit_dca_literature_synthesis(repository_root: Path) -> dict[str, object]:
             f"{EVIDENCE_NOTE}: missing the five-column strategy comparison contract"
         )
 
-    thesis_lower = thesis.lower()
+    thesis_lower = " ".join(thesis.lower().split())
     for term in (*REQUIRED_DISTINCTIONS, *REQUIRED_CLAIM_MODES, *REQUIRED_MATERIAL_TERMS):
         if term not in thesis_lower:
             errors.append(f"manuscript/source/thesis.tex: missing required distinction {term!r}")
@@ -195,6 +243,133 @@ def audit_dca_literature_synthesis(repository_root: Path) -> dict[str, object]:
     }
 
 
+def audit_corrected_mean_literature_synthesis(
+    repository_root: Path,
+) -> dict[str, object]:
+    """Validate the corrected-mean literature slice across its public surfaces."""
+
+    root = repository_root.resolve()
+    errors: list[str] = []
+    note = _read_text(root / MEAN_EVIDENCE_NOTE, errors)
+    thesis = _read_text(root / "manuscript/source/thesis.tex", errors)
+    bibliography = _read_text(
+        root / "manuscript/bibliography/references.bib", errors
+    )
+    claims_document = _read_json(
+        root / "manuscript/controls/claims.json", errors
+    )
+
+    records = claims_document.get("records", [])
+    if not isinstance(records, list):
+        errors.append("manuscript/controls/claims.json: records must be an array")
+        records = []
+    by_identifier = {
+        record.get("id"): record
+        for record in records
+        if isinstance(record, dict) and isinstance(record.get("id"), str)
+    }
+
+    bibliography_keys = extract_bibtex_keys(bibliography)
+    manuscript_citations = extract_latex_citation_keys(thesis)
+    literature_keys: set[str] = set()
+
+    for identifier, section_label in MEAN_REQUIRED_CLAIMS.items():
+        record = by_identifier.get(identifier)
+        if not isinstance(record, dict):
+            errors.append(f"missing literature claim record {identifier!r}")
+            continue
+        if record.get("entry_type") != "literature-positioning":
+            errors.append(
+                f"{identifier}: entry_type must be 'literature-positioning'"
+            )
+        if record.get("mandatory") is not True or record.get("review_state") != "reviewed":
+            errors.append(f"{identifier}: literature claim must be mandatory and reviewed")
+        expected_location = f"ch:literature/{section_label}"
+        if record.get("manuscript_location") != expected_location:
+            errors.append(
+                f"{identifier}: manuscript_location must be {expected_location!r}"
+            )
+        for label in ("ch:literature", section_label):
+            if f"\\label{{{label}}}" not in thesis:
+                errors.append(f"{identifier}: manuscript is missing label {label!r}")
+        section_citations = extract_latex_citation_keys(
+            _latex_section_after_label(thesis, section_label)
+        )
+        authority = record.get("authority", [])
+        authority_paths = (
+            {
+                entry.get("path")
+                for entry in authority
+                if isinstance(entry, dict) and isinstance(entry.get("path"), str)
+            }
+            if isinstance(authority, list)
+            else set()
+        )
+        if MEAN_EVIDENCE_NOTE not in authority_paths:
+            errors.append(f"{identifier}: missing literature evidence-note authority")
+        citation_keys = record.get("citation_keys", [])
+        if not isinstance(citation_keys, list) or not citation_keys or not all(
+            isinstance(key, str) and key for key in citation_keys
+        ):
+            errors.append(f"{identifier}: citation_keys must be a non-empty string array")
+            continue
+        for key in citation_keys:
+            literature_keys.add(key)
+            if key not in bibliography_keys:
+                errors.append(f"{identifier}: undefined bibliography key {key!r}")
+            if key not in manuscript_citations:
+                errors.append(f"{identifier}: key {key!r} is not cited by the manuscript")
+            elif key not in section_citations:
+                errors.append(
+                    f"{identifier}: key {key!r} is not cited in manuscript section "
+                    f"{section_label!r}"
+                )
+            if f"`{key}`" not in note:
+                errors.append(f"{identifier}: evidence note does not name key {key!r}")
+        if identifier not in note:
+            errors.append(
+                f"{MEAN_EVIDENCE_NOTE}: missing claim-to-evidence identifier "
+                f"{identifier!r}"
+            )
+
+    for heading in MEAN_REQUIRED_NOTE_HEADINGS:
+        if heading not in note:
+            errors.append(f"{MEAN_EVIDENCE_NOTE}: missing heading {heading!r}")
+
+    thesis_lower = " ".join(thesis.lower().split())
+    for term in MEAN_REQUIRED_MANUSCRIPT_TERMS:
+        if term not in thesis_lower:
+            errors.append(
+                "manuscript/source/thesis.tex: missing corrected-mean boundary "
+                f"{term!r}"
+            )
+    if "is not a new general mean class" not in thesis_lower:
+        errors.append(
+            "manuscript/source/thesis.tex: missing conservative novelty boundary"
+        )
+
+    note_lower = note.lower()
+    if "not exhaustive" not in note_lower:
+        errors.append(
+            f"{MEAN_EVIDENCE_NOTE}: search boundary must state that it is not exhaustive"
+        )
+    if "does not establish novelty" not in note_lower:
+        errors.append(
+            f"{MEAN_EVIDENCE_NOTE}: novelty verdict is not sufficiently bounded"
+        )
+
+    if errors:
+        raise LiteratureSynthesisError("\n".join(errors))
+
+    return {
+        "status": "passed",
+        "literature_claim_count": len(MEAN_REQUIRED_CLAIMS),
+        "bibliography_key_count": len(literature_keys),
+        "cited_key_count": len(literature_keys & manuscript_citations),
+        "evidence_note": MEAN_EVIDENCE_NOTE,
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -205,16 +380,21 @@ def main() -> int:
     )
     args = parser.parse_args()
     try:
-        receipt = audit_dca_literature_synthesis(args.repository_root)
+        dca_receipt = audit_dca_literature_synthesis(args.repository_root)
+        mean_receipt = audit_corrected_mean_literature_synthesis(
+            args.repository_root
+        )
     except LiteratureSynthesisError as error:
-        print("DCA LITERATURE SYNTHESIS CHECK FAILED")
+        print("LITERATURE SYNTHESIS CHECK FAILED")
         for item in str(error).splitlines():
             print(f"- {item}")
         return 1
     print(
-        "DCA LITERATURE SYNTHESIS CHECK PASSED: "
-        f"{receipt['literature_claim_count']} claims, "
-        f"{receipt['bibliography_key_count']} cited sources"
+        "LITERATURE SYNTHESIS CHECK PASSED: "
+        f"{dca_receipt['literature_claim_count']} DCA claims and "
+        f"{mean_receipt['literature_claim_count']} corrected-mean claims; "
+        f"{dca_receipt['bibliography_key_count']} DCA sources and "
+        f"{mean_receipt['bibliography_key_count']} corrected-mean sources"
     )
     return 0
 

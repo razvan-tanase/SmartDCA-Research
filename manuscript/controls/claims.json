@@ -670,6 +670,117 @@
       "citation_need": "Cite the pointwise no-arbitrage envelope and attribute the DCA-specific accounting and transaction-level identity only to the project evidence.",
       "mandatory": true,
       "review_state": "reviewed"
+    },
+    {
+      "id": "claim-lit-mean-source-functional",
+      "entry_type": "literature-positioning",
+      "wording": "The source paper introduces its out quasi-Gini expression as a mean without establishing the mean axioms; this thesis calls it the out quasi-Gini functional until the project's exact classification applies.",
+      "claim_class": "source-correction-positioning",
+      "scope": "The source paper's out construction in Appendix B, Equation (70), under positive inputs and off-diagonal real parameters; the in construction is outside scope.",
+      "authority": [
+        {"role": "literature-synthesis", "path": "research/notes/corrected-mean-prior-theory-literature.md"},
+        {"role": "source-summary", "path": "references/summaries/smartdca-superiority-source-paper.md"},
+        {"role": "source-audit", "path": "research/notes/source-out-quasi-gini-audit.md"},
+        {"role": "canonical-classification", "path": "research/theorems/source-out-functional-mean-classification.md"}
+      ],
+      "citation_keys": [
+        "calvet2023smartdca"
+      ],
+      "manuscript_location": "ch:literature/sec:lit-mean-source-functional",
+      "citation_need": "Cite the source paper for what it defines and omits; attribute the exact mean and diagonal classification only to project evidence.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-lit-mean-generalized-roots",
+      "entry_type": "literature-positioning",
+      "wording": "Classical Gini means, Lehmer means, and the function-weighted Beckenbach--Gini--Lehmer form are established, related specializations whose names and properties must not be transferred indiscriminately.",
+      "claim_class": "external-literature-positioning",
+      "scope": "The primary and modern mathematical sources cited for the displayed finite positive-input families; generalized mean is used only as an umbrella description.",
+      "authority": [
+        {"role": "literature-synthesis", "path": "research/notes/corrected-mean-prior-theory-literature.md"},
+        {"role": "prior-theory-evidence", "path": "research/notes/prior-theory-corrected-out-quasi-gini.md"}
+      ],
+      "citation_keys": [
+        "gini1938",
+        "lehmer1971",
+        "chuzhao2015",
+        "beckenbach1950",
+        "matkowskiwrobel2020"
+      ],
+      "manuscript_location": "ch:literature/sec:lit-mean-generalized-roots",
+      "citation_need": "Cite the original family sources and the modern Beckenbach--Gini--Lehmer formulation without converting a historical connection into a blanket nomenclature claim.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-lit-mean-family-identification",
+      "entry_type": "literature-positioning",
+      "wording": "The corrected construction is exactly a weighted Bajraktarevic mean; power transforms give weighted Gini means, the parameter-gap-one slice is Beckenbach--Gini--Lehmer, power function weights there give Lehmer means, and the diagonal is function-weighted geometric.",
+      "claim_class": "mathematical-literature-classification",
+      "scope": "Positive finite inputs and external weights, positive finite transform values, real parameters, and the adopted parameter-continuous diagonal branch.",
+      "authority": [
+        {"role": "literature-synthesis", "path": "research/notes/corrected-mean-prior-theory-literature.md"},
+        {"role": "canonical-definition", "path": "research/definitions/corrected-out-quasi-gini-mean.md"},
+        {"role": "prior-theory-evidence", "path": "research/notes/prior-theory-corrected-out-quasi-gini.md"}
+      ],
+      "citation_keys": [
+        "bajraktarevic1958",
+        "paleszakaria2020",
+        "palespasteczka2018",
+        "palespasteczka2024",
+        "matkowskiwrobel2020",
+        "lehmer1971",
+        "chuzhao2015"
+      ],
+      "manuscript_location": "ch:literature/sec:lit-mean-family-identification",
+      "citation_need": "Cite the weighted Bajraktarevic definition beside the exact substitution and cite each classical special case without implying that the project discovered its family.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-lit-mean-property-boundaries",
+      "entry_type": "literature-positioning",
+      "wording": "Continuity, coordinatewise monotonicity, homogeneity, and transform independence are stated only on their supported transform and parameter loci; none follows for the full corrected family merely from meanhood.",
+      "claim_class": "mathematical-scope-positioning",
+      "scope": "Continuity under a continuous transform, the cited classical weighted-Gini monotonicity region, and the exact fixed-weight homogeneity theorem with at least two effective coordinates.",
+      "authority": [
+        {"role": "literature-synthesis", "path": "research/notes/corrected-mean-prior-theory-literature.md"},
+        {"role": "canonical-characterization", "path": "research/theorems/corrected-mean-homogeneity-characterization.md"},
+        {"role": "primary-source-note", "path": "research/notes/ticket-07-homogeneity-primary-sources.md"},
+        {"role": "executable-check", "path": "reproducibility/checks/check_corrected_out_quasi_gini_homogeneity.py"}
+      ],
+      "citation_keys": [
+        "aczeldaroczy1963",
+        "palespasteczka2016",
+        "palespasteczka2024"
+      ],
+      "manuscript_location": "ch:literature/sec:lit-mean-property-boundaries",
+      "citation_need": "Cite prior homogeneity and weighted-Gini property results, then state the project's narrower exact specialization and unresolved general monotonicity boundary separately.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-lit-mean-contribution-boundary",
+      "entry_type": "literature-positioning",
+      "wording": "Prior theory owns the known mean families and broad property theory; this project's bounded contributions are the source correction, source-functional classification, and transform-coupled homogeneity characterization, not a new general mean class.",
+      "claim_class": "integrative-novelty-positioning",
+      "scope": "A targeted, non-exhaustive primary-source review; absence of an exact prior transform coupling is not evidence of priority or novelty.",
+      "authority": [
+        {"role": "literature-synthesis", "path": "research/notes/corrected-mean-prior-theory-literature.md"},
+        {"role": "canonical-definition", "path": "research/definitions/corrected-out-quasi-gini-mean.md"},
+        {"role": "canonical-classification", "path": "research/theorems/source-out-functional-mean-classification.md"},
+        {"role": "canonical-characterization", "path": "research/theorems/corrected-mean-homogeneity-characterization.md"}
+      ],
+      "citation_keys": [
+        "calvet2023smartdca",
+        "paleszakaria2020",
+        "aczeldaroczy1963"
+      ],
+      "manuscript_location": "ch:literature/sec:lit-mean-contribution-boundary",
+      "citation_need": "Cite source and prior-family authorities while naming correction, classification, characterization, and prior theory as distinct categories.",
+      "mandatory": true,
+      "review_state": "reviewed"
     }
   ]
 }
