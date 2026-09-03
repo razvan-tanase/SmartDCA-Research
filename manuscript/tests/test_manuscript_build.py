@@ -125,6 +125,18 @@ class ManuscriptBuildTests(unittest.TestCase):
                 "incremental value from the corrected-mean signal is not confirmed",
                 normalized_text,
             )
+            self.assertIn(
+                "The present comparison instead models recurring investment",
+                normalized_text,
+            )
+            self.assertIn(
+                "A universal pathwise ratio, an expected-utility comparison, a probabilistic shortfall statement, and a realized backtest gap",
+                normalized_text,
+            )
+            self.assertIn(
+                "cash-inclusive terminal wealth values both the asset units and the cash deliberately left uninvested",
+                normalized_text,
+            )
             self.assertIn("Generated-asset placeholder", normalized_text)
             self.assertIn("Appendix", normalized_text)
             self.assertIn("BIBLIOGRAPHY", normalized_text)

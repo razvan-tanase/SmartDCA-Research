@@ -562,6 +562,114 @@
       "citation_need": "Cite the synthesis run and place the theorem-scope disclaimer in the caption.",
       "mandatory": true,
       "review_state": "accepted"
+    },
+    {
+      "id": "claim-lit-dca-scope",
+      "entry_type": "literature-positioning",
+      "wording": "Classical DCA results often stage capital already available and establish minimax, expected-utility, or stochastic-preference conclusions under stated models; the thesis instead studies recurring exogenous deposits and does not answer the lump-sum timing problem.",
+      "claim_class": "external-literature-positioning",
+      "scope": "A bounded comparison of representative DCA theory, not a claim that all DCA literature assumes one initial lump sum and not individualized investment advice.",
+      "authority": [
+        {"role": "literature-synthesis", "path": "research/notes/dca-adaptive-causal-safety-literature.md"},
+        {"role": "prior-novelty-audit", "path": "research/notes/ticket-08-causal-dca-novelty-primary-sources.md"}
+      ],
+      "citation_keys": [
+        "pye1971",
+        "constantinides1979",
+        "brennan2005",
+        "vanduffel2012",
+        "finlayzorn2023",
+        "kirkby2020"
+      ],
+      "manuscript_location": "ch:literature/sec:lit-dca-scope",
+      "citation_need": "Cite each result beside its criterion and assumptions; do not translate model- or preference-specific conclusions into pathwise terminal-wealth claims.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-lit-adaptive-accumulation",
+      "entry_type": "literature-positioning",
+      "wording": "Sequential minimax conversion, value averaging, and source SmartDCA all vary transactions with observed state, but differ in information timing, funding, comparator, performance criterion, and guarantee type.",
+      "claim_class": "external-literature-positioning",
+      "scope": "Representative original methods only; adaptivity does not imply forecasting skill, optimality, a common cash budget, or outperformance.",
+      "authority": [
+        {"role": "literature-synthesis", "path": "research/notes/dca-adaptive-causal-safety-literature.md"},
+        {"role": "source-summary", "path": "references/summaries/smartdca-superiority-source-paper.md"}
+      ],
+      "citation_keys": [
+        "pye1971",
+        "edleson2006",
+        "calvet2023smartdca",
+        "dunhamfriesen2012",
+        "kapalczynskilien2021"
+      ],
+      "manuscript_location": "ch:literature/sec:lit-adaptive-accumulation",
+      "citation_need": "Cite the original method for each row of the comparison and keep its funding and objective visible.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-lit-online-decisions",
+      "entry_type": "literature-positioning",
+      "wording": "Online portfolio and one-way-trading guarantees are causal but use hindsight rebalanced or offline conversion comparators, fixed starting wealth, and regret, growth, or competitive-ratio criteria that differ from same-deposit DCA terminal wealth.",
+      "claim_class": "external-literature-positioning",
+      "scope": "Representative universal-portfolio, multiplicative-update, survey, and one-way-trading sources; no claim of complete online-finance coverage.",
+      "authority": [
+        {"role": "literature-synthesis", "path": "research/notes/dca-adaptive-causal-safety-literature.md"},
+        {"role": "prior-primary-source-positioning", "path": "research/notes/pathwise-dca-dominance-primary-sources.md"}
+      ],
+      "citation_keys": [
+        "cover1991",
+        "helmbold1998",
+        "lihoi2014",
+        "elyaniv2001",
+        "ordentlichcover1998"
+      ],
+      "manuscript_location": "ch:literature/sec:lit-online-decisions",
+      "citation_need": "Cite original algorithms for their precise guarantee and the survey only for field-level organization.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-lit-safety-objectives",
+      "entry_type": "literature-positioning",
+      "wording": "Safety-first, constant-proportion portfolio insurance, and drawdown-constrained investment protect a disaster threshold, an absolute floor, or a fraction of own running wealth; epsilon-DCA safety instead protects a fraction of the same-deposit DCA comparator on every admissible path.",
+      "claim_class": "external-literature-positioning",
+      "scope": "Conceptual comparison under each source's own market assumptions; no equivalence or transfer of guarantees across frameworks.",
+      "authority": [
+        {"role": "literature-synthesis", "path": "research/notes/dca-adaptive-causal-safety-literature.md"},
+        {"role": "project-guardrail-evidence", "path": "research/notes/sharp-epsilon-dca-safety-guardrail.md"}
+      ],
+      "citation_keys": [
+        "roy1952",
+        "blackperold1992",
+        "grossmanzhou1993",
+        "conttankov2009",
+        "wu2016"
+      ],
+      "manuscript_location": "ch:literature/sec:lit-safety-objectives",
+      "citation_need": "Cite each safety framework at its protected object and state that the project's guarantee remains frictionless and DCA-relative.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-lit-project-boundary",
+      "entry_type": "literature-positioning",
+      "wording": "Sequential admissibility, identical exogenous deposits, and cash-inclusive terminal wealth make the comparison implementable and budget-fair; equal-flow cancellation places strict universal improvement within pointwise no-arbitrage while the DCA accounting and equality case remain project-specific.",
+      "claim_class": "integrative-positioning",
+      "scope": "The frictionless finite positive-price model and the bounded sources reviewed; absence of an exact published DCA formulation does not establish novelty.",
+      "authority": [
+        {"role": "literature-synthesis", "path": "research/notes/dca-adaptive-causal-safety-literature.md"},
+        {"role": "canonical-theorem", "path": "research/theorems/causal-dca-dominance-impossibility.md"},
+        {"role": "proof-and-reduction", "path": "research/notes/pathwise-dca-dominance-under-causal-budget.md"}
+      ],
+      "citation_keys": [
+        "burzoni2019"
+      ],
+      "manuscript_location": "ch:literature/sec:lit-project-boundary",
+      "citation_need": "Cite the pointwise no-arbitrage envelope and attribute the DCA-specific accounting and transaction-level identity only to the project evidence.",
+      "mandatory": true,
+      "review_state": "reviewed"
     }
   ]
 }

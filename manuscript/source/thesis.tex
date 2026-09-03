@@ -200,6 +200,133 @@ explicitly rejects.
 claims stay in the body. Exhaustive search logs and extended source tables stay
 in supplementary material.
 
+\section{DCA, Adaptive Accumulation, and Causal Safety}
+
+\subsection{Which dollar-cost-averaging problem is being studied?}
+\label{sec:lit-dca-scope}
+Dollar-cost averaging (DCA) fixes a nominal purchase amount at regular dates,
+but that mechanical description covers economically different questions.
+Classical analyses commonly ask how an investor should stage a sum that is
+already available. Pye studies irreversible conversion of a given initial sum
+under minimax regret, while Constantinides compares DCA with sequential and
+nonsequential policies in a portfolio-choice setting
+\citep{pye1971,constantinides1979}. Later work evaluates DCA under specified
+return dynamics or preferences: Brennan, Li, and Torous study whether mean
+reversion can give the heuristic value, and Vanduffel and coauthors construct
+an option-based alternative under a L\'evy return model
+\citep{brennan2005,vanduffel2012}. Kirkby, Mitra, and Nguyen likewise derive
+moments and risk measures in a stochastic DCA and market-timing framework
+\citep{kirkby2020}. These are expected or distributional claims under declared
+models, not universal terminal-wealth statements.
+
+The present comparison instead models recurring investment: each deposit
+becomes available only on its purchase date, and DCA invests that deposit then.
+Consequently, the thesis does not answer the lump-sum timing question of whether
+cash available at the outset should enter the market immediately or in stages.
+That distinction is also explicit in Vanguard's institutional comparison of
+immediate and staged investment of an available windfall \citep{finlayzorn2023}.
+It also does not study tactical market timing, portfolio rebalancing, or
+retrospectively budget-matched strategies whose funding is chosen after the
+price path is known. These distinctions are part of the estimand rather than
+terminological qualifications. The analysis is research and does not provide
+individualized investment advice.
+
+\subsection{Adaptive accumulation changes more than the purchase formula}
+\label{sec:lit-adaptive-accumulation}
+Several established methods make purchase amounts respond to state. Pye's
+sequential minimax rule conditions irreversible conversion on the current
+price and the running maximum, but it starts from a fixed initial budget and
+optimizes regret within a bounded random-walk problem \citep{pye1971}.
+Edleson's value-averaging method instead specifies a portfolio-value path and
+adjusts the next contribution---or withdrawal---to close the gap to that path
+\citep{edleson2006}. The SmartDCA source varies spending with a reference-to-
+current-price ratio and evaluates average acquisition cost
+\citep{calvet2023smartdca}. Its funding requirement, reference-price timing,
+and unequal-spending comparison therefore have to be supplied before its
+cost-per-unit inequalities can be interpreted as an investable wealth
+comparison.
+
+Other adaptive proposals change the next contribution after a realized return
+or with prevailing macroeconomic conditions and report simulation, historical,
+Sharpe-ratio, or stochastic-dominance comparisons
+\citep{dunhamfriesen2012,kapalczynskilien2021}. These realized or distributional
+findings do not establish a same-deposit guarantee on every positive path.
+
+Calling all three methods ``adaptive DCA'' would hide the relevant differences.
+They use different information timing, start from different funding processes,
+compare against different policies, optimize different performance criteria,
+and offer different guarantee types. In this thesis an adaptive rule must use
+only information available when each decision is made, may spend only deposited
+cash, and is judged against DCA receiving the same deposits. Adaptivity names
+the discretionary purchase response; it does not itself imply forecasting
+skill, optimality, or outperformance.
+
+\subsection{Online portfolio guarantees use different trading technologies}
+\label{sec:lit-online-decisions}
+Online portfolio research provides a mature vocabulary for decisions made
+without future information. Cover's universal portfolio is pathwise
+competitive, in an asymptotic growth sense, with the best constant-rebalanced
+portfolio selected in hindsight; Ordentlich and Cover also characterize the
+finite-horizon worst-case wealth ratio to that comparator. Multiplicative-update
+algorithms similarly control cumulative log-wealth regret
+\citep{cover1991,ordentlichcover1998,helmbold1998}. The online-portfolio literature consequently
+centres on repeated allocation of a compounding wealth account and commonly
+permits sales needed for rebalancing, as the field survey makes explicit
+\citep{lihoi2014}.
+
+One-way trading is closer to buy-only accumulation because conversions are
+irreversible, but its competitive guarantees compare a fixed initial budget
+with an offline best conversion under stated price information
+\citep{elyaniv2001}. None of these guarantees transfers merely by calling a
+recurring-purchase rule ``online'': the information set, funding, comparator,
+trading permissions, horizon, and payoff must match. A universal pathwise
+ratio, an expected-utility comparison, a probabilistic shortfall statement,
+and a realized backtest gap are four different claim types.
+
+\subsection{Safety is defined relative to a specified floor}
+\label{sec:lit-safety-objectives}
+Prior safety frameworks protect different objects. Roy's safety-first criterion
+minimizes a bound on the probability of falling below a disaster level
+\citep{roy1952}. Constant-proportion portfolio insurance links risky exposure
+to wealth above a nonstochastic floor, while drawdown-constrained portfolio
+choice keeps wealth above a fraction of its own running maximum
+\citep{blackperold1992,grossmanzhou1993}. These are respectively probabilistic,
+absolute-floor, and own-history safety concepts, each with its own market and
+trading assumptions; jumps can create gap risk for the portfolio-insurance
+floor \citep{conttankov2009}.
+
+Conservative online learning supplies a further baseline-relative analogy, but
+its safety constraints are expected or high-probability cumulative-reward
+statements rather than financial terminal-wealth inequalities \citep{wu2016}.
+
+Epsilon-DCA safety protects a different benchmark: on every admissible positive
+price path, cash-inclusive terminal wealth must be at least a fixed fraction of
+the same-deposit DCA comparator. It is a universal relative-wealth floor in the
+project's frictionless, long-only, buy-only model; it is not an absolute capital
+guarantee, a drawdown bound, or evidence of superior expected return. The
+guardrail supplies that floor, whereas the corrected-mean score only allocates
+the funded discretionary interval.
+
+\subsection{The thesis's comparison boundary}
+\label{sec:lit-project-boundary}
+Three controls make the comparison economically interpretable. First,
+\emph{sequential admissibility} prevents a rule from using a future price to
+justify a current purchase. Second, the same-deposit comparator cancels common
+external cash flows rather than rewarding a strategy for spending more or for
+receiving money earlier. Third, cash-inclusive terminal wealth values both the
+asset units and the cash deliberately left uninvested; average acquisition cost
+alone cannot do that.
+
+After equal deposits are cancelled, a universal strict improvement would form
+a zero-initial-cost, predictable difference strategy, placing the core
+impossibility inside the pointwise no-arbitrage envelope of Burzoni and
+coauthors \citep{burzoni2019}. The DCA-specific accounting and the
+transaction-level equality case remain project results, not claims that the
+general no-arbitrage principle is new. This positioning also fixes how later
+evidence is read: the theorem may support a universal claim within its model,
+whereas deterministic examples and historical estimates report realized or
+probabilistic evidence only within their declared designs.
+
 \chapter{Financial Model and Corrected Signal Foundations}
 \label{ch:model-signal}
 \textbf{Purpose.} Define the same-deposit comparison model, exact
