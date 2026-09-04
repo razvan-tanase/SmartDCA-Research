@@ -145,7 +145,7 @@
         {"role": "proof-and-sharpness", "path": "research/notes/sharp-epsilon-dca-safety-guardrail.md"},
         {"role": "executable-check", "path": "reproducibility/checks/check_epsilon_dca_safety_guardrail.py"}
       ],
-      "citation_keys": ["blackperold1992", "conttankov2009"],
+      "citation_keys": ["blackperold1992", "grossmanzhou1993", "conttankov2009"],
       "manuscript_location": "ch:safety/thm:epsilon-guardrail",
       "citation_need": "Cite the bounded prior-art review and keep the DCA-specific result distinct from broader portfolio-insurance concepts.",
       "mandatory": true,

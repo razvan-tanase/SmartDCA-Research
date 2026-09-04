@@ -6,6 +6,51 @@ import json
 from pathlib import Path
 
 
+def normalize_whitespace(text: str) -> str:
+    """Case-fold text and collapse whitespace for prose-contract matching."""
+
+    return " ".join(text.casefold().split())
+
+
+def extract_latex_chapter(source: str, title: str) -> str:
+    """Return one chapter body from a report-style LaTeX source."""
+
+    marker = f"\\chapter{{{title}}}"
+    start = source.find(marker)
+    if start < 0:
+        return ""
+    remainder = source[start + len(marker) :]
+    end = remainder.find("\\chapter{")
+    return remainder if end < 0 else remainder[:end]
+
+
+def index_records(document: dict[str, object]) -> dict[str, dict[str, object]]:
+    """Index dictionary records by stable string identifier."""
+
+    records = document.get("records", [])
+    if not isinstance(records, list):
+        return {}
+    return {
+        record["id"]: record
+        for record in records
+        if isinstance(record, dict) and isinstance(record.get("id"), str)
+    }
+
+
+def require_terms(
+    text: str,
+    terms: tuple[str, ...],
+    label: str,
+    errors: list[str],
+) -> None:
+    """Append one diagnostic for each required term absent from normalized text."""
+
+    normalized_text = normalize_whitespace(text)
+    for term in terms:
+        if normalize_whitespace(term) not in normalized_text:
+            errors.append(f"missing {label}: {term!r}")
+
+
 def read_text(path: Path, errors: list[str]) -> str:
     """Read UTF-8 text, appending a diagnostic and returning empty on failure."""
 

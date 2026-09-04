@@ -66,48 +66,33 @@ def main() -> int:
         )
     except (OSError, json.JSONDecodeError):
         control_profile = None
-    if control_profile == "thesis-architecture-v1" and not run_validation(
-        [
-            sys.executable,
-            str(
-                Path(__file__).resolve().parents[1]
-                / "reproducibility"
-                / "literature_controls.py"
+    if control_profile == "thesis-architecture-v1":
+        repository_root = Path(__file__).resolve().parents[1]
+        validation_specs = (
+            (
+                "literature_controls.py",
+                "BUILD FAILED: literature synthesis is invalid",
             ),
-            "--repository-root",
-            str(root.parent),
-        ],
-        "BUILD FAILED: literature synthesis is invalid",
-    ):
-        return 1
-    if control_profile == "thesis-architecture-v1" and not run_validation(
-        [
-            sys.executable,
-            str(
-                Path(__file__).resolve().parents[1]
-                / "reproducibility"
-                / "foundation_controls.py"
+            (
+                "foundation_controls.py",
+                "BUILD FAILED: financial-model foundations are invalid",
             ),
-            "--repository-root",
-            str(root.parent),
-        ],
-        "BUILD FAILED: financial-model foundations are invalid",
-    ):
-        return 1
-    if control_profile == "thesis-architecture-v1" and not run_validation(
-        [
-            sys.executable,
-            str(
-                Path(__file__).resolve().parents[1]
-                / "reproducibility"
-                / "safety_policy_controls.py"
+            (
+                "safety_policy_controls.py",
+                "BUILD FAILED: impossibility-to-safety policy architecture is invalid",
             ),
-            "--repository-root",
-            str(root.parent),
-        ],
-        "BUILD FAILED: impossibility-to-safety policy architecture is invalid",
-    ):
-        return 1
+        )
+        for validator_name, failure_message in validation_specs:
+            if not run_validation(
+                [
+                    sys.executable,
+                    str(repository_root / "reproducibility" / validator_name),
+                    "--repository-root",
+                    str(root.parent),
+                ],
+                failure_message,
+            ):
+                return 1
 
     latexmk = shutil.which("latexmk")
     if latexmk is None:

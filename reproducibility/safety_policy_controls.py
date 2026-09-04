@@ -15,8 +15,11 @@ from manuscript.citation_controls import (  # noqa: E402
     extract_latex_citation_keys,
 )
 from reproducibility.control_support import (  # noqa: E402
+    extract_latex_chapter as _chapter,
+    index_records as _record_map,
     read_json_object,
     read_text,
+    require_terms as _require_terms,
 )
 
 
@@ -41,48 +44,12 @@ REQUIRED_CHAPTER_CITATIONS = {
     "blackperold1992",
     "burzoni2019",
     "conttankov2009",
+    "grossmanzhou1993",
 }
 
 
 class SafetyPolicyControlError(ValueError):
     """Raised when Chapter 4 or its proof appendix drifts from authority."""
-
-
-def _normalized(text: str) -> str:
-    return " ".join(text.casefold().split())
-
-
-def _chapter(source: str, title: str) -> str:
-    marker = f"\\chapter{{{title}}}"
-    start = source.find(marker)
-    if start < 0:
-        return ""
-    remainder = source[start + len(marker) :]
-    end = remainder.find("\\chapter{")
-    return remainder if end < 0 else remainder[:end]
-
-
-def _require_terms(
-    text: str,
-    terms: tuple[str, ...],
-    label: str,
-    errors: list[str],
-) -> None:
-    normalized_text = _normalized(text)
-    for term in terms:
-        if _normalized(term) not in normalized_text:
-            errors.append(f"missing {label}: {term!r}")
-
-
-def _record_map(document: dict[str, object]) -> dict[str, dict[str, object]]:
-    records = document.get("records", [])
-    if not isinstance(records, list):
-        return {}
-    return {
-        record["id"]: record
-        for record in records
-        if isinstance(record, dict) and isinstance(record.get("id"), str)
-    }
 
 
 def _validate_paths(
@@ -182,6 +149,7 @@ def audit_impossibility_safety_policy_architecture(
             r"W_n^S(P)\geq\lambda W_n^D(P)",
             "for every admissible price path and deposit sequence",
             "For $\\varepsilon>0$, this is not dominance: a safe policy may finish below DCA",
+            "economically distinct causal rule that retains a universal DCA-relative floor",
             r"\label{sec:unit-guardrail}",
             r"K_{t-1}^S=Q_{t-1}^S-\lambda Q_{t-1}^D",
             r"B_t^S=C_{t-1}^S+d_t",
