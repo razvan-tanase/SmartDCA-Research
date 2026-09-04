@@ -3,9 +3,10 @@
 This directory is the drafting contract established before continuous thesis
 prose. It fixes the approved three-question narrative, the complete chapter and
 appendix route, contribution boundaries, claim authorities, notation, review
-workflow, and release transitions. The controls describe a structural shell,
-not a submission candidate: unresolved institutional and supervisor-owned
-inputs remain in the separate [institutional contract](../contract/institutional-contract.md).
+workflow, and release transitions. The controls first described the structural
+shell and now govern each accepted manuscript slice; they do not establish a
+submission candidate. Unresolved institutional and supervisor-owned inputs
+remain in the separate [institutional contract](../contract/institutional-contract.md).
 
 ## Registers
 
@@ -25,7 +26,7 @@ Every register record has a globally stable `id`, a `mandatory` flag, and a
 `pending`, `blocked`, and `unresolved`; only `accepted` and `reviewed` satisfy a
 mandatory record. The public validator fails when files or required fields are
 missing, identifiers collide, review-state values are unknown, mandatory
-records remain unresolved, evidence paths do not exist, or the structural shell
+records remain unresolved, evidence paths do not exist, or the manuscript
 drifts from the accepted architecture:
 
 ```bash
@@ -44,7 +45,7 @@ final-release decisions.
 2. Update the affected register entry without strengthening its scope.
 3. Add a new stable ID for a new claim or asset; never silently reuse an old ID
    for a different statement.
-4. Update the notation mapping and structural shell when a chapter-visible
+4. Update the notation mapping and manuscript source when a chapter-visible
    term, symbol, or location changes.
 5. Regenerate or reconcile every affected table and figure.
 6. Run the control check, manuscript tests, canonical build, link check, and

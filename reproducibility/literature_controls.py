@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 from collections.abc import Mapping
 from dataclasses import dataclass
@@ -15,6 +14,10 @@ if not __package__:
 from manuscript.citation_controls import (  # noqa: E402
     extract_bibtex_keys,
     extract_latex_citation_keys,
+)
+from reproducibility.control_support import (  # noqa: E402
+    read_json_object as _read_json,
+    read_text as _read_text,
 )
 
 
@@ -238,29 +241,6 @@ METHODOLOGY_LITERATURE_REQUIREMENTS = LiteratureSliceRequirements(
 
 class LiteratureSynthesisError(ValueError):
     """Raised when the literature slice is incomplete or internally inconsistent."""
-
-
-def _read_text(path: Path, errors: list[str]) -> str:
-    try:
-        return path.read_text(encoding="utf-8")
-    except OSError as error:
-        errors.append(f"{path}: unreadable ({error})")
-        return ""
-
-
-def _read_json(path: Path, errors: list[str]) -> dict[str, object]:
-    text = _read_text(path, errors)
-    if not text:
-        return {}
-    try:
-        value = json.loads(text)
-    except json.JSONDecodeError as error:
-        errors.append(f"{path}: invalid JSON ({error})")
-        return {}
-    if not isinstance(value, dict):
-        errors.append(f"{path}: expected a JSON object")
-        return {}
-    return value
 
 
 def _latex_section_after_label(source: str, label: str) -> str:

@@ -2,8 +2,10 @@
 
 This directory contains the authoritative thesis source, the implemented
 official-template layer, the thesis architecture and evidence controls, and the
-fail-closed submission gate. The current PDF is a complete structural shell,
-not a submission candidate and not continuous chapter prose.
+fail-closed submission gate. The current PDF is a controlled partial draft:
+Chapter 2 supplies the reviewed literature positioning, Chapter 3 and Appendix
+A supply the financial-model and corrected-signal foundations, and later
+chapters remain structural placeholders. It is not a submission candidate.
 
 ## Authority
 
@@ -30,8 +32,8 @@ not a submission candidate and not continuous chapter prose.
 ## Draft build
 
 The direct build and focused tests require Python 3.12, `latexmk`, pdfLaTeX,
-BibTeX, `pdftotext`, `pdfinfo`, and the standard LaTeX packages named in the
-source. The two PDF inspection commands are supplied by Poppler:
+BibTeX, `pdftotext`, `pdftohtml`, `pdfinfo`, and the standard LaTeX packages
+named in the source. The three PDF inspection commands are supplied by Poppler:
 
 ```bash
 python manuscript/build.py
@@ -44,8 +46,9 @@ appendices with their purpose, prerequisites, reader outcome, and placement
 boundary. Before LaTeX starts, the build runs the architecture/evidence control
 check and the DCA/adaptive/causal-safety, corrected-mean prior-theory, and
 reproducible computational-finance/statistical-method literature traceability
-checks, and fails on an invalid package. A successful draft build does not
-imply submission readiness.
+checks, followed by the financial-model and corrected-signal foundations audit,
+and fails on an invalid package. A successful draft build does not imply
+submission readiness.
 
 Run the control check directly with:
 
@@ -88,6 +91,7 @@ institutional decisions and visible placeholders are unresolved.
 python -m unittest manuscript.tests.test_controls
 python -m unittest manuscript.tests.test_release_check
 python -m unittest manuscript.tests.test_manuscript_build
+python -m unittest reproducibility.checks.check_financial_model_corrected_signal_foundations
 python -m unittest reproducibility.checks.check_dca_literature_synthesis
 python -m unittest reproducibility.checks.check_corrected_mean_literature_synthesis
 python -m unittest reproducibility.checks.check_computational_finance_statistics_literature_synthesis

@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import json
-import re
 import subprocess
 import sys
 import tempfile
 import unittest
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 
@@ -153,6 +153,30 @@ class ManuscriptBuildTests(unittest.TestCase):
                 "a non-power transform is homogeneous only on the transform-independent",
                 normalized_text,
             )
+            self.assertIn(
+                "The financial comparison is fixed before the specialized mean theory is used",
+                normalized_text,
+            )
+            self.assertIn(
+                "DCA receives the same deposit sequence and the same evaluation horizon",
+                normalized_text,
+            )
+            self.assertIn(
+                "Average acquisition cost is therefore an accounting quantity, not a budget-equivalent performance criterion",
+                normalized_text,
+            )
+            self.assertIn(
+                "The normalized lagged reference supplies a causal signal, not a safety guarantee",
+                normalized_text,
+            )
+            self.assertIn(
+                "Proof of the Source-Functional Classification",
+                normalized_text,
+            )
+            self.assertIn(
+                "Proof of the Homogeneity Characterization",
+                normalized_text,
+            )
             self.assertIn("Generated-asset placeholder", normalized_text)
             self.assertIn("Appendix", normalized_text)
             self.assertIn("BIBLIOGRAPHY", normalized_text)
@@ -203,47 +227,79 @@ class ManuscriptBuildTests(unittest.TestCase):
                 r"Page size:\s+595(?:\.\d+)? x 84[12](?:\.\d+)? pts \(A4\)",
             )
 
-            bounding_boxes = subprocess.run(
-                ["pdftotext", "-bbox", str(pdf_path), "-"],
+            layout_path = output_directory / "layout.xml"
+            subprocess.run(
+                [
+                    "pdftohtml",
+                    "-xml",
+                    "-hidden",
+                    "-zoom",
+                    "1.5",
+                    str(pdf_path),
+                    str(layout_path),
+                ],
                 check=True,
                 capture_output=True,
                 text=True,
-            ).stdout
-            body_start = re.search(
-                r'<word xMin="([0-9.]+)" yMin="([0-9.]+)" '
-                r'xMax="[0-9.]+" yMax="([0-9.]+)">Continuous</word>',
-                bounding_boxes,
             )
-            self.assertIsNotNone(body_start)
-            self.assertAlmostEqual(float(body_start.group(1)), 72.0, delta=1.0)
-            next_body_line = re.search(
-                r'<word xMin="[0-9.]+" yMin="([0-9.]+)" '
-                r'xMax="[0-9.]+" yMax="[0-9.]+">exercise</word>',
-                bounding_boxes,
+            layout = ET.parse(layout_path).getroot()
+            font_sizes = {
+                font.attrib["id"]: int(font.attrib["size"])
+                for font in layout.iter("fontspec")
+            }
+            introduction_page = next(
+                page
+                for page in layout.iter("page")
+                if any(
+                    "".join(text.itertext()) == "INTRODUCTION"
+                    for text in page.iter("text")
+                )
             )
-            self.assertIsNotNone(next_body_line)
+            heading = next(
+                text
+                for text in introduction_page.iter("text")
+                if "".join(text.itertext()) == "INTRODUCTION"
+            )
+            heading_size = font_sizes[heading.attrib["font"]]
+            body_line = min(
+                (
+                    text
+                    for text in introduction_page.iter("text")
+                    if float(text.attrib["top"]) > float(heading.attrib["top"])
+                    and font_sizes[text.attrib["font"]] < heading_size
+                ),
+                key=lambda text: float(text.attrib["top"]),
+            )
+            next_body_line = min(
+                (
+                    text
+                    for text in introduction_page.iter("text")
+                    if float(text.attrib["top"]) > float(body_line.attrib["top"])
+                    and text.attrib["font"] == body_line.attrib["font"]
+                ),
+                key=lambda text: float(text.attrib["top"]),
+            )
             self.assertAlmostEqual(
-                float(next_body_line.group(1)) - float(body_start.group(2)),
+                float(body_line.attrib["left"]) / 1.5,
+                72.0,
+                delta=1.0,
+            )
+            self.assertAlmostEqual(
+                (float(next_body_line.attrib["top"]) - float(body_line.attrib["top"]))
+                / 1.5,
                 18.0,
                 delta=0.75,
             )
-            heading = re.search(
-                r'<word xMin="[0-9.]+" yMin="([0-9.]+)" '
-                r'xMax="[0-9.]+" yMax="([0-9.]+)">INTRODUCTION</word>',
-                bounding_boxes,
-            )
-            self.assertIsNotNone(heading)
             self.assertGreater(
-                float(heading.group(2)) - float(heading.group(1)),
-                float(body_start.group(3)) - float(body_start.group(2)),
-            )
-            rendered_pages = re.findall(
-                r"<page [^>]+>(.*?)</page>", bounding_boxes, flags=re.DOTALL
+                heading_size,
+                font_sizes[body_line.attrib["font"]],
             )
             self.assertTrue(
                 any(
-                    ">SINOPSIS</word>" in page and ">ABSTRACT</word>" in page
-                    for page in rendered_pages
+                    {"SINOPSIS", "ABSTRACT"}.issubset(
+                        {"".join(text.itertext()) for text in page.iter("text")}
+                    )
+                    for page in layout.iter("page")
                 )
             )
 

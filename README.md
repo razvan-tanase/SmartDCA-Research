@@ -74,7 +74,7 @@ and Holm cells. The empirical effort is complete with no publication blocker;
 the [retained private-pass
 receipt](reports/experiments/runs/smartdca-empirical-package-review-v1-6cb6c1cd94b901be90ebd553a022c922e53984afafeb22948747be084b37c14f/review-receipt.json)
 keeps the final review reproducible without publishing provider observations.
-Thesis manuscript tickets 01--05 are now resolved: the institutional contract, canonical build, thesis architecture, and evidence controls are frozen, and Chapter 2 has a reviewed 21-source DCA/adaptive/causal-safety synthesis, conservative corrected-mean prior-theory positioning, and a reviewed 15-source computational-finance/statistical-method synthesis. Ticket 06 is the next unblocked drafting frontier. The [effort
+Thesis manuscript tickets 01--06 are now resolved: the institutional contract, canonical build, thesis architecture, and evidence controls are frozen; Chapter 2 has reviewed investment, mean-theory, and computational-method synthesis; and Chapter 3 with Appendix A now establishes the fair same-deposit model, exact accounting, source-functional audit, corrected construction, homogeneity boundary, and normalized lagged signal. Ticket 07 is the next unblocked drafting frontier. The [effort
 map](.scratch/smartdca/efforts/thesis-manuscript-assembly/map.md)
 and [project map](.scratch/smartdca/map.md) record the completed state and next
 frontier.
@@ -136,6 +136,7 @@ python -m unittest reproducibility.checks.check_historical_confirmatory_evaluati
 python -m unittest reproducibility.checks.check_historical_robustness_evaluation
 python -m unittest reproducibility.checks.check_safety_adaptivity_synthesis
 python -m unittest reproducibility.checks.check_empirical_package_publication_review
+python -m unittest reproducibility.checks.check_financial_model_corrected_signal_foundations
 python -m unittest reproducibility.checks.check_dca_literature_synthesis
 python -m unittest reproducibility.checks.check_corrected_mean_literature_synthesis
 python -m unittest reproducibility.checks.check_computational_finance_statistics_literature_synthesis
@@ -147,12 +148,12 @@ python manuscript/build.py
 ```
 
 GitHub Actions runs the link check and the manuscript
-control/build/release tests on every push and pull request. The twenty-two
+control/build/release tests on every push and pull request. The twenty-three
 scientific checks remain in the separate [Reproducibility workflow](.github/workflows/reproducibility.yml):
 it runs automatically only when `research/`, `reproducibility/`,
 `experiments/`, or `reports/` changes (or when its workflow file changes) and
 can also be started manually. Manuscript-only changes therefore do not invoke the
-scientific suite. The structural shell is intentionally not a submission
+scientific suite. The controlled partial draft is intentionally not a submission
 candidate: `python manuscript/check_release.py` must exit with status 1 while
 the owned institutional and supervisor decisions in the [manuscript
 contract](manuscript/contract/institutional-contract.md) remain unresolved.

@@ -19,6 +19,58 @@
       "review_state": "reviewed"
     },
     {
+      "id": "claim-model-financial-comparison",
+      "entry_type": "model-definition",
+      "wording": "The comparison model has a finite purchase horizon, finite positive purchase and common evaluation prices, nonnegative exogenous deposits, sequentially admissible long-only buy-only purchases, no leverage, cash carried without interest, and cash-inclusive terminal wealth; DCA receives the same deposits and horizon.",
+      "claim_class": "mathematical-finance-model",
+      "scope": "The canonical frictionless recurring-investment model; no return law, transaction cost, sales, borrowing, future-aware decision, or retrospectively budget-matched comparator.",
+      "authority": [
+        {"role": "canonical-model", "path": "research/theorems/causal-dca-dominance-impossibility.md"},
+        {"role": "accounting-proof", "path": "research/notes/pathwise-dca-dominance-under-causal-budget.md"},
+        {"role": "executable-check", "path": "reproducibility/checks/check_pathwise_dca_dominance.py"}
+      ],
+      "manuscript_location": "ch:model-signal/sec:comparison-model",
+      "citation_need": "Repository-derived model claim; cite external DCA or no-arbitrage literature only where the chapter makes a positioning claim.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-accounting-average-acquisition-cost",
+      "entry_type": "accounting-definition",
+      "wording": "Average acquisition cost is total asset spending divided by acquired units and is an accounting quantity, not a substitute for same-deposit cash-inclusive terminal wealth.",
+      "claim_class": "financial-accounting-boundary",
+      "scope": "Defined only when acquired units are positive; lower acquisition cost alone does not determine a budget-equivalent wealth ordering when spending differs.",
+      "authority": [
+        {"role": "canonical-policy-accounting", "path": "research/definitions/guarded-corrected-mean-smartdca-rule.md"},
+        {"role": "accounting-derivation", "path": "research/notes/guarded-corrected-mean-smartdca.md"},
+        {"role": "executable-check", "path": "reproducibility/checks/check_guarded_corrected_mean_smartdca.py"}
+      ],
+      "citation_keys": ["calvet2023smartdca"],
+      "manuscript_location": "ch:model-signal/sec:accounting-quantities",
+      "citation_need": "Cite the source study for its acquisition-cost comparison and keep the cash-inclusive performance boundary adjacent.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-def-corrected-signal",
+      "entry_type": "definition",
+      "wording": "The corrected-mean signal anchors prices at the first observation, forms an equally weighted lagged dimensionless corrected-mean reference, compares the current normalized price with that reference, and maps the normalized source-style odds to a bounded discretionary score that carries no safety guarantee by itself.",
+      "claim_class": "financial-computing-definition",
+      "scope": "Positive prices, positive finite transform, real corrected-mean parameters, equal lagged weights, first-date neutral warm-up, no current or future price in the reference; current-price countercyclicality only for nondecreasing f and alpha at most one.",
+      "authority": [
+        {"role": "canonical-policy", "path": "research/definitions/guarded-corrected-mean-smartdca-rule.md"},
+        {"role": "design-and-properties", "path": "research/notes/guarded-corrected-mean-smartdca.md"},
+        {"role": "corrected-mean-definition", "path": "research/definitions/corrected-out-quasi-gini-mean.md"},
+        {"role": "homogeneity-boundary", "path": "research/theorems/corrected-mean-homogeneity-characterization.md"},
+        {"role": "executable-check", "path": "reproducibility/checks/check_guarded_corrected_mean_smartdca.py"}
+      ],
+      "citation_keys": ["calvet2023smartdca"],
+      "manuscript_location": "ch:model-signal/sec:corrected-signal",
+      "citation_need": "Cite the source only for inherited score-parameter semantics; attribute currency invariance, lagging, odds calibration, and claim limits to project evidence.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
       "id": "claim-def-guarded-policy",
       "entry_type": "definition",
       "wording": "The guarded corrected-mean SmartDCA rule combines the mandatory epsilon-DCA purchase floor with a bounded causal corrected-mean score applied only to the funded discretionary interval.",

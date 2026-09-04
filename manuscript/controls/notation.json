@@ -53,7 +53,7 @@
       "repository_notation": "x_t",
       "manuscript_notation": "b_t^S",
       "reconciliation": "Rename repository purchase x_t to b_t^S in the manuscript so x or u can denote mean inputs without collision; every imported theorem must state this mapping.",
-      "first_use": "ch:model-signal/sec:portfolio-recursion",
+      "first_use": "ch:model-signal/sec:comparison-model",
       "mandatory": true,
       "review_state": "accepted"
     },
@@ -64,7 +64,7 @@
       "repository_notation": "C_t or C_t^S",
       "manuscript_notation": "C_t^S",
       "reconciliation": "Use the strategy superscript whenever more than one policy appears; omit it only in a single-policy derivation.",
-      "first_use": "ch:model-signal/sec:portfolio-recursion",
+      "first_use": "ch:model-signal/sec:comparison-model",
       "mandatory": true,
       "review_state": "accepted"
     },
@@ -75,7 +75,7 @@
       "repository_notation": "Q_t or Q_t^S",
       "manuscript_notation": "Q_t^S",
       "reconciliation": "Use an explicit strategy superscript in comparisons.",
-      "first_use": "ch:model-signal/sec:portfolio-recursion",
+      "first_use": "ch:model-signal/sec:comparison-model",
       "mandatory": true,
       "review_state": "accepted"
     },
@@ -91,12 +91,23 @@
       "review_state": "accepted"
     },
     {
+      "id": "notation-generic-strategy",
+      "symbol": "S",
+      "meaning": "Generic sequentially admissible candidate strategy.",
+      "repository_notation": "S",
+      "manuscript_notation": "S",
+      "reconciliation": "Retained for the arbitrary strategy before named policies are introduced.",
+      "first_use": "ch:model-signal/sec:comparison-model",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
       "id": "notation-policy-labels",
-      "symbol": "S in {c, 0, D}",
-      "meaning": "Corrected guarded, neutral guarded, and DCA policies.",
+      "symbol": "D; c, 0",
+      "meaning": "DCA, corrected guarded, and neutral guarded policy labels.",
       "repository_notation": "c, 0, DCA, D, or T depending on the result.",
-      "manuscript_notation": "c, 0, D",
-      "reconciliation": "Standardize policy superscripts to c, 0, and D; use T only as a local theorem placeholder explicitly defined as 0 or D.",
+      "manuscript_notation": "D for DCA; c and 0 for guarded selectors",
+      "reconciliation": "D is the first named-policy label in Chapter 3; later chapters standardize guarded-policy superscripts to c and 0 and use T only as a local theorem placeholder explicitly defined as 0 or D.",
       "first_use": "ch:model-signal/sec:comparators",
       "mandatory": true,
       "review_state": "accepted"
@@ -179,6 +190,28 @@
       "review_state": "accepted"
     },
     {
+      "id": "notation-diagonal-parameter",
+      "symbol": "tau",
+      "meaning": "Common corrected-mean parameter on the diagonal alpha = beta = tau.",
+      "repository_notation": "q or tau depending on the canonical evidence note.",
+      "manuscript_notation": "tau",
+      "reconciliation": "Standardize the diagonal parameter on tau so q remains reserved for the later two-purchase price ratio.",
+      "first_use": "ch:literature/sec:lit-mean-family-identification",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-power-transform-specialization",
+      "symbol": "C, r, p, s",
+      "meaning": "Positive transform scale, power exponent, and the two resulting weighted-Gini parameters in f(u) = C u^r.",
+      "repository_notation": "C, r, p, q or s",
+      "manuscript_notation": "C, r, p, s",
+      "reconciliation": "Use s rather than q for the second Gini parameter so q remains the later two-purchase price ratio; C, r, p, and s are local to the power-transform specialization and are distinct from C_t^S, r_t, and p_t.",
+      "first_use": "ch:literature/sec:lit-mean-generalized-roots",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
       "id": "notation-mean-inputs",
       "symbol": "u_i, w_i",
       "meaning": "Positive mean inputs and positive external weights.",
@@ -186,6 +219,28 @@
       "manuscript_notation": "u_i, w_i",
       "reconciliation": "Rename mean input x_i to u_i to avoid collision with repository purchase outlay x_t; retain w_i.",
       "first_use": "ch:literature/sec:lit-mean-family-identification",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-mean-arity",
+      "symbol": "m",
+      "meaning": "Finite arity of the source functional and corrected mean.",
+      "repository_notation": "m or n depending on the evidence note.",
+      "manuscript_notation": "m",
+      "reconciliation": "Use m for mean arity so n remains the financial purchase horizon.",
+      "first_use": "ch:model-signal/sec:source-functional-audit",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-source-functional",
+      "symbol": "Q_{alpha,beta}^f(u)",
+      "meaning": "Unmodified source out quasi-Gini functional before meanhood is established.",
+      "repository_notation": "Q_{alpha,beta}^f(x) or G_{alpha,beta}^{f,out}(x)",
+      "manuscript_notation": "Q_{alpha,beta}^f(u)",
+      "reconciliation": "Use Q to distinguish the audited source functional from the hatted correction and use registered mean inputs u rather than repository-local x.",
+      "first_use": "ch:literature/sec:lit-mean-source-functional",
       "mandatory": true,
       "review_state": "accepted"
     },
@@ -201,13 +256,79 @@
       "review_state": "accepted"
     },
     {
+      "id": "notation-bajraktarevic-generators",
+      "symbol": "phi_Delta, R_alpha, A_{phi,R}",
+      "meaning": "Power generator, positive function weight, and weighted Bajraktarevic mean used for the corrected-family identification.",
+      "repository_notation": "phi_d, R_alpha, A_{phi,R}",
+      "manuscript_notation": "phi_Delta, R_alpha, A_{phi,R}",
+      "reconciliation": "Replace the repository parameter gap d by Delta; distinguish the parameter-indexed function R_alpha from the time-indexed signal reference R_{t-1}.",
+      "first_use": "ch:literature/sec:lit-mean-family-identification",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-source-score-parameter",
+      "symbol": "rho",
+      "meaning": "Source score exponent, retained through the mapping rho = alpha - 1.",
+      "repository_notation": "rho",
+      "manuscript_notation": "rho = alpha - 1",
+      "reconciliation": "Introduce rho only when relating the bounded signal to the source score; alpha remains the governing corrected-mean parameter.",
+      "first_use": "ch:model-signal/sec:corrected-signal",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
       "id": "notation-reference-score",
-      "symbol": "R_{t-1}, r_t, a_t",
-      "meaning": "Lagged dimensionless corrected-mean reference, current relative price, and discretionary score.",
-      "repository_notation": "R_{t-1}, r_t, a_t",
-      "manuscript_notation": "R_{t-1}, r_t, a_t",
-      "reconciliation": "Retained; state the p_1 anchor and first-date neutral warm-up before use.",
-      "first_use": "ch:safety/sec:adaptive-selector",
+      "symbol": "z_i, R_{t-1}, r_t, a_t",
+      "meaning": "Price normalized by the first observation, lagged dimensionless corrected-mean reference, current relative price, and discretionary score.",
+      "repository_notation": "z_i, R_{t-1}, r_t, a_t",
+      "manuscript_notation": "z_i, R_{t-1}, r_t, a_t",
+      "reconciliation": "Retained; state the p_1 anchor and first-date neutral warm-up before use. The foundation chapter now introduces the signal before the safety chapter applies it inside the guardrail.",
+      "first_use": "ch:model-signal/sec:corrected-signal",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-constant-mean-input",
+      "symbol": "c",
+      "meaning": "Common positive value of a constant mean-input vector; in the homogeneity proof it also denotes a positive input-scale factor.",
+      "repository_notation": "c",
+      "manuscript_notation": "c",
+      "reconciliation": "Retained as proof-local scalar notation and never used for the corrected guarded policy superscript c in the same expression.",
+      "first_use": "ch:literature/sec:lit-mean-source-functional",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-source-diagonal-auxiliaries",
+      "symbol": "N_0^{src}, D_0^{src}",
+      "meaning": "Source-functional numerator and denominator limits used in the diagonal-obstruction proof, typeset as calligraphic N_0 and D_0.",
+      "repository_notation": "A_0, B_0",
+      "manuscript_notation": "calligraphic N_0, calligraphic D_0",
+      "reconciliation": "Rename the canonical note's A_0 and B_0 so they cannot be confused with the later Bajraktarevic mean A or available cash B_t^S.",
+      "first_use": "app:proofs/sec:proof-source-classification",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-corrected-diagonal-proof",
+      "symbol": "xi, P_xi, omega_i(Delta), pi_i(Delta)",
+      "meaning": "Proof-local power-mean order, weighted power mean, positive effective weights, and their normalization along a path to the corrected-mean diagonal.",
+      "repository_notation": "P_{-d}, lambda_i^{eff}, and normalized effective weights",
+      "manuscript_notation": "xi, P_xi, omega_i(Delta), pi_i(Delta)",
+      "reconciliation": "Use Delta rather than repository d and omega rather than lambda so the later safety factor lambda remains unambiguous.",
+      "first_use": "app:proofs/sec:proof-corrected-mean",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "notation-homogeneity-proof",
+      "symbol": "M_{Delta,eta}, eta, kappa, mu, ell, u, v",
+      "meaning": "Proof-local weighted-mean mapping, auxiliary weight function, scale multiplier, normalized transform, additive logarithmic representation, and two unequal positive inputs.",
+      "repository_notation": "P_{d,h}, h, K, m, A, x, y",
+      "manuscript_notation": "M_{Delta,eta}, eta, kappa, mu, ell, u, v",
+      "reconciliation": "Avoid h, K, g, and A because the manuscript reserves them for a later price ratio, coverage cushion, empirical gap, and Bajraktarevic mean; retain u as the registered mean-input letter.",
+      "first_use": "app:proofs/sec:proof-corrected-homogeneity",
       "mandatory": true,
       "review_state": "accepted"
     },

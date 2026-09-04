@@ -15,7 +15,7 @@
 \hypersetup{
   pdftitle={\thesistitle},
   pdfauthor={[UNRESOLVED: candidate's official name]},
-  pdfsubject={Financial Computing master's dissertation shell},
+  pdfsubject={Financial Computing master's dissertation draft},
   pdfkeywords={dollar-cost averaging, Financial Computing, reproducibility}
 }
 
@@ -134,7 +134,7 @@ outside the immediate specialty while retaining project-specific detail.
 
 \chapter*{Institutional status}
 \addcontentsline{toc}{chapter}{Institutional status}
-This document is a build-verification shell, not a submission candidate. The
+This document is a controlled partial draft, not a submission candidate. The
 official 2025--2026 finalization regulation requires online hand-in, a public
 presentation and defense, a hand-completed originality declaration that forms
 part of the dissertation, and faculty similarity
@@ -149,15 +149,17 @@ release blockers in the institutional contract.
 
 \chapter{Introduction}
 \label{ch:introduction}
-Continuous thesis drafting has intentionally not begun. This structural shell
-exists only to exercise the authoritative source, chapter architecture,
-cross-reference, bibliography, generated-asset, appendix, and PDF build path.
+Drafting now covers the reviewed literature and financial comparison,
+source-functional correction, and corrected-signal foundations. The remaining
+technical, empirical, and integrative chapters retain explicit structural
+placeholders until their tracked manuscript slices are resolved.
 
 \section*{Manuscript spine}
-The thesis follows one safety-versus-adaptivity argument: a universal-
-superiority ambition is bounded by causal impossibility, relaxed into an exact
-safety architecture, implemented as a guarded adaptive policy, and tested by a
-frozen reproducible evaluation whose negative signal result is retained.
+The thesis follows one safety-versus-adaptivity argument: a
+universal-superiority ambition is bounded by causal impossibility, relaxed
+into an exact safety architecture, implemented as a guarded adaptive policy,
+and tested by a frozen reproducible evaluation whose negative signal result is
+retained.
 
 \section*{Research questions and conservative answers}
 \begin{enumerate}
@@ -239,8 +241,8 @@ price and the running maximum, but it starts from a fixed initial budget and
 optimizes regret within a bounded random-walk problem \citep{pye1971}.
 Edleson's value-averaging method instead specifies a portfolio-value path and
 adjusts the next contribution---or withdrawal---to close the gap to that path
-\citep{edleson2006}. The SmartDCA source varies spending with a reference-to-
-current-price ratio and evaluates average acquisition cost
+\citep{edleson2006}. The SmartDCA source varies spending with a
+reference-to-current-price ratio and evaluates average acquisition cost
 \citep{calvet2023smartdca}. Its funding requirement, reference-price timing,
 and unequal-spending comparison therefore have to be supplied before its
 cost-per-unit inequalities can be interpreted as an investable wealth
@@ -353,7 +355,7 @@ of a result asserted by the source, keeps the attribution explicit.
 \subsection{Gini, Lehmer, and function-weighted roots}
 \label{sec:lit-mean-generalized-roots}
 The relevant families are nested specializations, not interchangeable names.
-Gini's two-parameter power-sum quotient supplies the classical $G_{p,q}$
+Gini's two-parameter power-sum quotient supplies the classical $G_{p,s}$
 family \citep{gini1938}. The Lehmer family is the adjacent-parameter slice,
 usually written as a power-weighted arithmetic quotient
 \citep{lehmer1971,chuzhao2015}. Beckenbach's function-weighted mean-value functions are
@@ -396,12 +398,13 @@ and strictly monotone and $R_\alpha$ is positive, established meanhood applies;
 it is not supplied by a new general construction in this thesis.
 
 The identification also fixes the special cases. If $f(t)=t^r$, the result is
-the classical weighted Gini mean $G_{p,q}$ with
-$p=1+r(\alpha-1)$ and $q=p-\Delta$; $f=\mathrm{id}$ gives
-$(p,q)=(\alpha,\beta)$. If $\Delta=1$, it is the weighted
+the classical weighted Gini mean $G_{p,s}$ with
+$p=1+r(\alpha-1)$ and $s=p-\Delta$; $f=\mathrm{id}$ gives
+$(p,s)=(\alpha,\beta)$. If $\Delta=1$, it is the weighted
 Beckenbach--Gini--Lehmer form, and a power function weight gives a weighted
-Lehmer mean. On $\Delta=0$, the adopted parameter-continuous value is the
-function-weighted geometric Bajraktarevi\'c mean $A_{\log,R_q}$. Modern
+Lehmer mean. On $\Delta=0$, writing $\tau$ for the common parameter, the
+adopted parameter-continuous value is the function-weighted geometric
+Bajraktarevi\'c mean $A_{\log,R_\tau}$. Modern
 weighted treatments record the corresponding Gini branches and comparison
 results \citep{lehmer1971,chuzhao2015,matkowskiwrobel2020,
 palespasteczka2018,palespasteczka2024}.
@@ -412,7 +415,7 @@ Meanhood is not a license to import every familiar property. Continuity in
 the inputs is claimed when $f$ is continuous; positivity or monotonicity of
 $f$ alone does not exclude a jump. Coordinatewise monotonicity is likewise
 not automatic: even the classical weighted Gini family has it exactly on the
-region $pq\leq0$, and that criterion does not transfer to an arbitrary
+region $ps\leq0$, and that criterion does not transfer to an arbitrary
 function weight \citep{palespasteczka2024}.
 
 Homogeneity has a sharper boundary. Prior work classifies continuous
@@ -421,7 +424,7 @@ homogeneous Bajraktarevi\'c mappings as Gini mappings
 two-effective-coordinate characterization specializes that theory: off the
 diagonal the corrected mean is degree-one homogeneous exactly when
 $\alpha=1$ or $f/f(1)$ is multiplicative; on the diagonal the corresponding
-exception is $q=1$. Under the project's increasing-transform assumption,
+exception is $\tau=1$. Under the project's increasing-transform assumption,
 multiplicativity forces $f(t)=Ct^r$. Consequently, a non-power transform is
 homogeneous only on the transform-independent $\alpha=1$ slice, including the
 diagonal point $(1,1)$, while a power transform makes the whole family a
@@ -592,19 +595,354 @@ observed estimates under their own assumptions.
 
 \chapter{Financial Model and Corrected Signal Foundations}
 \label{ch:model-signal}
-\textbf{Purpose.} Define the same-deposit comparison model, exact
-cash-inclusive accounting, the source-functional defect, the corrected mean,
-and the lagged dimensionless signal.
 
-\textbf{Prerequisites.} Chapter \ref{ch:literature} and thesis ticket 06.
+The investment problem comes first. A recurring-investment algorithm observes
+cash deposits and market prices in sequence, decides how much deposited cash to
+convert into an asset, and carries the remainder forward. Comparing such an
+algorithm with DCA is meaningful only after its information, funding, and
+terminal accounting have been fixed. The financial comparison is fixed before
+the specialized mean theory is used. The mean enters later as one possible
+reference-price computation; it neither defines the budget nor determines the
+performance criterion.
 
-\textbf{Reader outcome.} The reader can reconstruct the financial comparison
-and understand why the corrected mean is a known Bajraktarevi\'c construction
-used as a signal rather than a newly claimed mean class.
+\section{Recurring Investment and the Comparison Model}
+\label{sec:comparison-model}
 
-\textbf{Placement.} Definitions, decisive equations, compatibility identities,
-and interpretation stay in the body. Full classification, diagonal-limit, and
-homogeneity proofs move to Appendix \ref{app:proofs}.
+Fix a finite horizon of $n\geq1$ purchase dates indexed by
+$t=1,\ldots,n$. At date $t$, the asset has an observed finite positive price
+$p_t>0$ and a nonnegative exogenous cash deposit $d_t\geq0$ becomes
+available. After the last purchase, every strategy is valued at the same
+finite positive evaluation price $P>0$. This manuscript writes $P$ for the
+quantity indexed as $p_{n+1}$ in the canonical impossibility theorem. The
+price and deposit sequences are otherwise unrestricted: no return law,
+forecast, or favorable path shape is built into the comparison.
+
+A strategy $S$ is \emph{sequentially admissible} when its date-$t$ purchase
+uses only prices, deposits, and portfolio state observed through date $t$.
+The decision occurs after observing $(p_t,d_t)$ and before any future price is
+known. Let $b_t^S$ denote its cash outlay on the asset at that date; this is
+the manuscript symbol for the repository's $x_t$. Let $C_t^S$ and $Q_t^S$
+denote, respectively, cash carried and asset units held immediately after the
+purchase. Starting from $C_0^S=Q_0^S=0$, long-only, buy-only, fully funded
+trading with no leverage is exactly
+
+\begin{equation}
+  0\leq b_t^S\leq C_{t-1}^S+d_t,\qquad
+  C_t^S=C_{t-1}^S+d_t-b_t^S,\qquad
+  Q_t^S=Q_{t-1}^S+\frac{b_t^S}{p_t}.
+  \label{eq:model-recursions}
+\end{equation}
+
+Unused cash carries without interest. Purchases cannot be negative, existing
+units cannot be sold, and the currently available cash is the complete budget.
+In particular, knowing that a lower price will occur later would be an oracle
+assumption rather than sequential admissibility. These restrictions describe
+the Financial Computing problem addressed here: construct a causal allocation
+rule inside an auditable cash ledger, then evaluate it under an economically
+fair comparator.
+
+\section{Exact Accounting and the DCA Comparator}
+
+\subsection{Portfolio recursion and full funding}
+\label{sec:portfolio-recursion}
+
+Iterating (\ref{eq:model-recursions}) yields two identities that every
+admissible strategy must satisfy:
+
+\begin{equation}
+  C_t^S=\sum_{i=1}^{t}(d_i-b_i^S)\geq0,
+  \qquad
+  Q_t^S=\sum_{i=1}^{t}\frac{b_i^S}{p_i}.
+  \label{eq:model-ledger}
+\end{equation}
+
+The first identity is the prefix funding constraint. It does not require
+$b_t^S\leq d_t$ date by date: cash retained earlier may finance a later
+purchase larger than the current deposit. It does require every prefix of the
+cash ledger to remain nonnegative. The second identity records units rather
+than money, so purchases made at different prices remain comparable.
+
+\subsection{Same-deposit DCA}
+\label{sec:comparators}
+
+Use the superscript $D$ for the DCA policy. DCA receives the same deposit
+sequence and the same evaluation horizon as the candidate strategy. It spends
+each new deposit immediately,
+
+\begin{equation}
+  b_t^D=d_t,\qquad C_t^D=0,\qquad
+  Q_t^D=\sum_{i=1}^{t}\frac{d_i}{p_i}.
+  \label{eq:model-dca}
+\end{equation}
+
+Giving DCA different cash flows, making the candidate's total budget depend on
+the realized path, or matching spending only after the fact would define a
+different comparison. Here the deposit sequence and horizon are common inputs,
+so the only difference is how each admissible policy times purchases and
+carries cash.
+
+\subsection{Cash-inclusive terminal wealth}
+\label{sec:terminal-wealth}
+
+Terminal wealth of policy $S$ at the common evaluation price is
+
+\begin{equation}
+  W_n^S(P)=C_n^S+P Q_n^S,
+  \qquad
+  W_n^D(P)=P Q_n^D.
+  \label{eq:model-terminal-wealth}
+\end{equation}
+
+Thus cash is not discarded merely because it was not converted into the
+asset. Combining (\ref{eq:model-ledger})--(\ref{eq:model-terminal-wealth})
+gives the exact realized-path identity
+
+\begin{equation}
+  W_n^S(P)-W_n^D(P)
+  =\sum_{t=1}^{n}(d_t-b_t^S)
+    \left(1-\frac{P}{p_t}\right).
+  \label{eq:model-dca-gap}
+\end{equation}
+
+Equation (\ref{eq:model-dca-gap}) is accounting, not a performance promise.
+It shows why a dollar deliberately held back can help when its purchase-date
+price exceeds $P$ and hurt when that price is below $P$. Chapter
+\ref{ch:safety} will use the unrestricted path quantifier to turn this
+observation into the causal impossibility boundary; at this point it only fixes
+what is being compared.
+
+\subsection{Average acquisition cost is not performance}
+\label{sec:accounting-quantities}
+
+When $Q_t^S>0$, define average acquisition cost by
+
+\begin{equation}
+  AC_t^S=
+  \frac{\sum_{i=1}^{t}b_i^S}{Q_t^S}
+  =\frac{\sum_{i=1}^{t}b_i^S}
+         {\sum_{i=1}^{t}b_i^S/p_i}.
+  \label{eq:model-acquisition-cost}
+\end{equation}
+
+It is undefined when no units have been acquired. Where defined, it is the
+spending-weighted harmonic purchase price. The source study uses acquisition
+cost to compare allocations whose spending can differ
+\citep{calvet2023smartdca}. A lower value of $AC_t^S$ can reflect buying fewer
+units at low prices while retaining more cash; it does not determine either
+$Q_t^S-Q_t^D$ or the cash-inclusive gap in
+(\ref{eq:model-terminal-wealth}). Average acquisition cost is therefore an
+accounting quantity, not a budget-equivalent performance criterion. All
+economic comparisons in this thesis use common deposits and terminal wealth.
+
+\section{Auditing the Source Functional}
+\label{sec:source-functional-audit}
+
+Only after the financial model is fixed does the specialized mean question
+become relevant. The source proposes a transformed reference price and calls
+its two-parameter extension an out quasi-Gini mean
+\citep{calvet2023smartdca}. The source assumes that its transform is positive
+and increasing. The project's classification is stronger: it needs only
+positivity. Accordingly, for a finite positive input vector
+$u=(u_1,\ldots,u_m)$, an arbitrary positive finite transform
+$f:(0,\infty)\mathbin{\to}(0,\infty)$, and real parameters $\alpha,\beta$
+with $\Delta=\alpha-\beta\neq0$, write the unmodified source object as
+
+\begin{equation}
+  Q_{\alpha,\beta}^{f}(u)
+  =\left(
+    \frac{\sum_{i=1}^{m}u_i f(u_i)^{\alpha-1}}
+         {\sum_{i=1}^{m}f(u_i)^{\beta}}
+   \right)^{1/\Delta}.
+  \label{eq:source-functional}
+\end{equation}
+
+It remains the \emph{out quasi-Gini functional} until its mean properties are
+established. A mean must return $c$ on every constant vector. Instead,
+
+\begin{equation}
+  Q_{\alpha,\beta}^{f}(c,\ldots,c)
+  =c^{1/\Delta}f(c)^{(\Delta-1)/\Delta}.
+  \label{eq:source-constant}
+\end{equation}
+
+The defect is structural rather than a missing regularity condition: even a
+positive, continuous, strictly increasing transform can fail reflexivity.
+
+\subsection{Exact source-functional classification}
+\label{thm:source-classification}
+
+For fixed finite arity, positive inputs, arbitrary positive $f$, and
+$\Delta\neq0$, the source functional (\ref{eq:source-functional}) is a mean
+if and only if
+
+\begin{equation}
+  \Delta=1
+  \qquad\hbox{or}\qquad
+  f(u)=u\ \hbox{for every }u>0.
+  \label{eq:source-classification}
+\end{equation}
+
+Moreover, a finite parameter-continuous extension valid on the entire diagonal
+$\alpha=\beta$ exists only for the identity transform. The constant-vector
+calculation supplies necessity; on $\Delta=1$ the expression is a positively
+weighted arithmetic mean, while $f=\mathrm{id}$ gives the classical Gini mean.
+Appendix \ref{sec:proof-source-classification} supplies the complete argument
+and diagonal calculation.
+
+The classification preserves the source's two correct compatibility
+identities. The identity transform yields the classical Gini quotient, and
+$\Delta=1$ yields the source's out quasi-Lehmer form. It does not transfer
+continuity, degree-one homogeneity, or coordinatewise monotonicity to a general
+positive increasing transform. Those properties require separate hypotheses
+or separate characterizations.
+
+\section{The Corrected Out Quasi-Gini Mean}
+
+\subsection{Numerator-preserving normalization}
+\label{def:corrected-mean}
+
+Let the mean inputs $u_i>0$ carry fixed external weights $w_i>0$. The adopted
+correction retains the source numerator but gives numerator and denominator a
+common positive weight structure. Off the diagonal, define
+
+\begin{equation}
+  \widehat G_{\alpha,\beta}^{f,\mathrm{out}}(u;w)
+  =\left(
+    \frac{\sum_i w_i u_i f(u_i)^{\alpha-1}}
+         {\sum_i w_i u_i^{1-\Delta}f(u_i)^{\alpha-1}}
+   \right)^{1/\Delta}.
+  \label{eq:corrected-mean-off-diagonal}
+\end{equation}
+
+On the diagonal, write $\alpha=\beta=\tau$ and define the
+parameter-continuous branch
+
+\begin{equation}
+  \widehat G_{\tau,\tau}^{f,\mathrm{out}}(u;w)
+  =\exp\left(
+    \frac{\sum_i w_i u_i f(u_i)^{\tau-1}\log u_i}
+         {\sum_i w_i u_i f(u_i)^{\tau-1}}
+  \right).
+  \label{eq:corrected-mean-diagonal}
+\end{equation}
+
+The denominator in (\ref{eq:corrected-mean-off-diagonal}) is obtained by
+replacing the source numerator's $u_i$ by $u_i^{1-\Delta}$. Consequently a
+constant input $c$ produces a ratio $c^\Delta$ and the output is exactly $c$.
+This is the numerator-preserving repair selected by the project; it is not
+claimed to be the only imaginable causal normalization.
+
+\subsection{Known family and compatibility identities}
+\label{sec:corrected-family-identification}
+
+Set the Bajraktarevi\'c generator and positive weight function to
+$\varphi_\Delta(u)=u^{-\Delta}$ and
+$R_\alpha(u)=u f(u)^{\alpha-1}$. Direct substitution gives
+
+\begin{equation}
+  \widehat G_{\alpha,\beta}^{f,\mathrm{out}}
+  =A_{\varphi_\Delta,R_\alpha},
+  \label{eq:corrected-bajraktarevic}
+\end{equation}
+
+exactly in the established weighted Bajraktarevi\'c class
+\citep{bajraktarevic1958,paleszakaria2020}. Meanhood follows from this
+identification, or directly from the positive weighted-power representation in
+Appendix \ref{sec:proof-corrected-mean}. The correction is therefore not a new
+general mean class.
+
+Its relevant special cases are exact:
+
+\begin{itemize}
+  \item $f=\mathrm{id}$ gives the classical weighted Gini mean
+  $G_{\alpha,\beta}$;
+  \item $\Delta=1$ gives the weighted Beckenbach--Gini--Lehmer form and
+  preserves the source-aligned out quasi-Lehmer slice;
+  \item a power transform $f(u)=Cu^r$ gives the classical weighted Gini mean
+  $G_{p,s}$ with $p=1+r(\alpha-1)$ and $s=p-\Delta$; and
+  \item (\ref{eq:corrected-mean-diagonal}) is the corresponding
+  function-weighted geometric Bajraktarevi\'c value.
+\end{itemize}
+
+These established family relations and naming boundaries are documented in
+the primary mean literature
+\citep{matkowskiwrobel2020,palespasteczka2018,palespasteczka2024}. The
+project contribution at this seam is the correction and its bounded
+classification and characterization, not the underlying family.
+
+\subsection{Homogeneity has an exact boundary}
+\label{thm:homogeneity}
+
+With fixed positive external weights and at least two effective coordinates,
+the off-diagonal corrected mean is degree-one homogeneous if and only if
+$\alpha=1$ or $f/f(1)$ is multiplicative. On the diagonal, $\tau=1$ is the
+corresponding transform-independent exception; away from it, the same
+normalized-multiplicativity condition is necessary and sufficient. Under any
+of monotonicity, measurability, or continuity, this condition forces
+$f(u)=Cu^r$ for some $C>0$ and real $r$. The continuous homogeneous
+Bajraktarevi\'c mappings are already known to reduce to Gini mappings
+\citep{aczeldaroczy1963,palespasteczka2016}; the project's result is the exact
+condition on this displayed transform coupling.
+
+There is a practical cost to the characterization. A non-power increasing
+transform is homogeneous only on the transform-blind $\alpha=1$ locus, whereas
+a power transform makes the whole family a reparameterized classical Gini
+family. Scale invariance and transform novelty therefore cannot be obtained
+simultaneously from the corrected mean evaluated on raw price levels. The proof
+in Appendix \ref{sec:proof-corrected-homogeneity} also records the fixed-weight
+and two-effective-coordinate qualifications. No general
+coordinatewise-monotonicity conclusion is imported from meanhood.
+
+\section{A Normalized Lagged Corrected-Mean Signal}
+\label{sec:corrected-signal}
+
+The homogeneity boundary makes an unnormalized currency-price reference
+unsuitable for a general transform. The signal instead anchors every observed
+price to the first one. Define the dimensionless price $z_i=p_i/p_1$. For
+$t\geq2$, use equal external weights and only the lagged history:
+
+\begin{equation}
+  R_{t-1}
+  =\widehat G_{\alpha,\beta}^{f,\mathrm{out}}
+    (z_1,\ldots,z_{t-1};1,\ldots,1),
+  \qquad
+  r_t=\frac{z_t}{R_{t-1}}.
+  \label{eq:corrected-reference}
+\end{equation}
+
+The reference $R_{t-1}$ is positive, dimensionless, and unchanged by a common
+currency rescaling of every $p_i$. It excludes the current price, so a change
+in $p_t$ cannot move its own benchmark. At the first date set $r_1=1$; this is
+the only warm-up convention. Equal weights add no recency or horizon
+hyperparameter.
+
+Normalize the source-style score at the neutral relative price and map its
+odds to a bounded discretionary fraction:
+
+\begin{equation}
+  a_t
+  =\frac{1}{1+\left(f(r_t)/f(1)\right)^{1-\alpha}},
+  \qquad 0<a_t<1.
+  \label{eq:corrected-score}
+\end{equation}
+
+Equivalently,
+$a_t/(1-a_t)=(f(r_t)/f(1))^{\alpha-1}$, so
+$\alpha-1=\rho$ retains the source score parameter's meaning
+\citep{calvet2023smartdca}. One-point and constant price histories give
+$r_t=1$ and $a_t=1/2$. Holding the lagged history fixed, if $f$ is
+nondecreasing and $\alpha\leq1$, the score is nonincreasing in the current
+price; strict increase of $f$ and $\alpha<1$ make the response strict. No
+comparative statics in lagged prices are asserted for a general transform.
+
+The normalized lagged reference supplies a causal signal, not a safety
+guarantee. Boundedness of $a_t$ says only that it can select a fraction of some
+specified feasible interval. It does not establish DCA dominance, a
+relative-wealth floor, or empirical forecasting value. Chapter \ref{ch:safety} will
+construct the separately proved unit guardrail, define the funded
+discretionary interval, and use $a_t$ only as a selector inside that interval.
+This separation keeps the financial guarantee attached to the constraint that
+proves it rather than to the corrected mean.
 
 \chapter{Causal Impossibility and Safety Architecture}
 \label{ch:safety}
@@ -618,8 +956,8 @@ policy with the guarantee assigned only to the floor.
 collapses to DCA and how a controlled relaxation creates safe adaptive freedom.
 
 \textbf{Placement.} Theorem statements, assumptions, proof ideas, the
-guardrail recursion, and policy algorithm stay in the body. Adversarial-
-continuation and equivalence proofs move to Appendix \ref{app:proofs}.
+guardrail recursion, and policy algorithm stay in the body.
+Adversarial-continuation and equivalence proofs move to Appendix \ref{app:proofs}.
 
 \chapter{Exact Performance Boundaries}
 \label{ch:boundaries}
@@ -723,9 +1061,240 @@ reinterpretation are excluded.
 \appendix
 \chapter{Mathematical Proofs}
 \label{app:proofs}
-Complete proofs for the source classification, corrected-mean properties,
-causal impossibility, and safety equivalence will be placed here. The body will
-retain the governing assumptions, theorem meaning, and proof ideas.
+
+This appendix carries the mathematical machinery omitted from the Financial
+Computing narrative. The present ticket supplies the source-functional
+classification, corrected-mean meanhood and diagonal limit, and homogeneity
+characterization. The causal-impossibility and safety-equivalence proofs are
+reserved for Chapter \ref{ch:safety}'s drafting ticket.
+
+\section{Proof of the Source-Functional Classification}
+\label{sec:proof-source-classification}
+
+Fix $m\geq1$, $\Delta=\alpha-\beta\neq0$, and a positive transform $f$.
+For the source functional in (\ref{eq:source-functional}), a constant vector
+gives (\ref{eq:source-constant}). If the functional is a mean, reflexivity
+requires
+
+\begin{equation}
+  f(c)^{\Delta-1}=c^{\Delta-1}
+  \qquad\hbox{for every }c>0.
+  \label{eq:appendix-source-reflexivity}
+\end{equation}
+
+When $\Delta\neq1$, positivity and injectivity of a nonzero real power force
+$f(c)=c$ for all $c>0$. Hence $\Delta=1$ or $f=\mathrm{id}$ is necessary,
+without any continuity or monotonicity hypothesis.
+
+Both alternatives are sufficient. If $\Delta=1$, then
+
+\begin{equation}
+  Q_{\beta+1,\beta}^{f}(u)
+  =\frac{\sum_i u_i f(u_i)^\beta}{\sum_i f(u_i)^\beta},
+  \label{eq:appendix-source-gap-one}
+\end{equation}
+
+which is an arithmetic mean with strictly positive, input-dependent weights.
+If $f=\mathrm{id}$, then
+
+\begin{equation}
+  Q_{\alpha,\beta}^{\mathrm{id}}(u)
+  =\left(\frac{\sum_i u_i^\alpha}{\sum_i u_i^\beta}
+   \right)^{1/\Delta}.
+  \label{eq:appendix-source-gini}
+\end{equation}
+
+Inside the parentheses is a positive weighted average of $u_i^\Delta$ with
+weights $u_i^\beta$. For $\Delta>0$, applying the increasing
+$1/\Delta$ power preserves the minimum and maximum bounds. For
+$\Delta<0$, the power and the ordering of $u_i^\Delta$ both reverse, so the
+same internality follows. This proves the if-and-only-if classification.
+
+For completeness, consider the diagonal. Hold $\beta$ fixed and let
+$\Delta\to0$. Put
+
+\begin{equation}
+  \mathcal N_0=\sum_i u_i f(u_i)^{\beta-1},
+  \qquad \mathcal D_0=\sum_i f(u_i)^\beta.
+\end{equation}
+
+Then
+
+\begin{equation}
+  \log Q_{\beta+\Delta,\beta}^{f}(u)
+  =\frac{1}{\Delta}\log\left(
+    \frac{\sum_i u_i f(u_i)^{\beta-1+\Delta}}{\mathcal D_0}
+  \right).
+  \label{eq:appendix-source-diagonal-log}
+\end{equation}
+
+Unless $\mathcal N_0/\mathcal D_0=1$, the logarithm has a nonzero constant term and division by
+$\Delta$ produces opposite zero/infinite one-sided behavior. A finite limit
+for every positive vector must hold in particular at $(c,\ldots,c)$, where
+$\mathcal N_0/\mathcal D_0=c/f(c)$; thus it forces $f=\mathrm{id}$. In that identity case,
+l'Hopital's rule gives the established Gini diagonal
+
+\begin{equation}
+  Q_{\beta,\beta}^{\mathrm{id}}(u)
+  =\exp\left(
+    \frac{\sum_i u_i^\beta\log u_i}{\sum_i u_i^\beta}
+  \right).
+  \label{eq:appendix-source-diagonal}
+\end{equation}
+
+The obstruction cannot be removed by stronger regularity. For example,
+$f(u)=2u$, $(\alpha,\beta)=(2,0)$, and a constant vector of ones give
+$Q_{2,0}^{f}=\sqrt{2}$ rather than one, although $f$ is positive,
+continuous, and strictly increasing. Separate examples in the canonical audit
+also show that continuity, homogeneity, and coordinatewise monotonicity are not
+automatic; none is needed for the exact classification proved above.
+
+\section{The Corrected Mean and Its Diagonal Limit}
+\label{sec:proof-corrected-mean}
+
+For $\xi\neq0$, write the positive weighted power mean as
+
+\begin{equation}
+  P_\xi(u;\omega)
+  =\left(\frac{\sum_i\omega_i u_i^\xi}{\sum_i\omega_i}\right)^{1/\xi}.
+\end{equation}
+
+At fixed off-diagonal parameters, define the positive effective weights
+
+\begin{equation}
+  \omega_i=w_i u_i f(u_i)^{\alpha-1}.
+\end{equation}
+
+Equation (\ref{eq:corrected-mean-off-diagonal}) becomes
+
+\begin{equation}
+  \widehat G_{\alpha,\beta}^{f,\mathrm{out}}(u;w)
+  =P_{-\Delta}(u;\omega).
+  \label{eq:appendix-corrected-power}
+\end{equation}
+
+This is a weighted power mean at the realized input with strictly positive
+weights. The same order-reversal argument used above shows that it lies
+between the smallest and largest $u_i$ for either sign of $\Delta$.
+Positivity, symmetry under simultaneous permutation of inputs and weights, and
+reflexivity follow directly. This proves meanhood without treating the
+input-dependent $\omega_i$ as fixed external weights in comparative
+statements.
+
+For the full diagonal claim, let $\Delta\to0$ along any parameter path with
+$\alpha(\Delta)\to\tau$ and
+$\beta(\Delta)=\alpha(\Delta)-\Delta$. Put
+$\omega_i(\Delta)=w_i u_i f(u_i)^{\alpha(\Delta)-1}$ and normalize these
+weights by
+$\pi_i(\Delta)=\omega_i(\Delta)/\sum_j\omega_j(\Delta)$. Then
+
+\begin{equation}
+  \log\widehat G_{\alpha(\Delta),\beta(\Delta)}^{f,\mathrm{out}}(u;w)
+  =-\frac{1}{\Delta}\log\left(
+    \sum_i\pi_i(\Delta)\exp(-\Delta\log u_i)
+  \right).
+  \label{eq:appendix-corrected-diagonal-path}
+\end{equation}
+
+The finite collection of normalized weights converges to
+
+\begin{equation}
+  \pi_i(0)=
+  \frac{w_i u_i f(u_i)^{\tau-1}}
+       {\sum_j w_j u_j f(u_j)^{\tau-1}}.
+\end{equation}
+
+Expanding the finite sum and then its logarithm at $\Delta=0$ gives
+
+\begin{equation}
+  \lim_{\Delta\to0}
+  \log\widehat G_{\alpha(\Delta),\beta(\Delta)}^{f,\mathrm{out}}(u;w)
+  =\sum_i\pi_i(0)\log u_i.
+  \label{eq:appendix-corrected-diagonal-limit}
+\end{equation}
+
+Exponentiating gives (\ref{eq:corrected-mean-diagonal}). Only the finitely many
+positive values $f(u_i)$ enter this calculation; differentiability of $f$ as
+a function of its input is unnecessary, and the conclusion does not depend on
+the approach direction in the $(\alpha,\beta)$ plane. This cancellation is
+precisely what the source denominator lacks.
+
+The compatibility identities also follow algebraically. Setting
+$f=\mathrm{id}$ reduces the numerator and denominator exponents to
+$\alpha$ and $\beta$. Setting $\Delta=1$ removes $u_i$ from the denominator
+and gives the weighted source out quasi-Lehmer expression. Finally,
+$f(u)=Cu^r$ cancels the common power of $C$ and produces $G_{p,s}$ with
+$p=1+r(\alpha-1)$ and $s=p-\Delta$.
+
+\section{Proof of the Homogeneity Characterization}
+\label{sec:proof-corrected-homogeneity}
+
+For a positive auxiliary function $\eta$ and fixed positive external weights,
+consider
+
+\begin{equation}
+  M_{\Delta,\eta}(u;w)
+  =\left(\frac{\sum_i w_i \eta(u_i)u_i^\Delta}
+                 {\sum_i w_i \eta(u_i)}\right)^{1/\Delta}
+  \quad(\Delta\neq0).
+  \label{eq:appendix-weighted-power-form}
+\end{equation}
+
+Suppose at least two coordinates carry positive weight. If this mapping is
+degree-one homogeneous, compare two unequal inputs $u$ and $v$ before and
+after multiplication by $c>0$; for a larger arity, set every remaining input
+equal to one of these two so that its positive weights combine with that
+group. Cancelling $c^\Delta$ and cross-multiplying the two weighted averages
+yields
+
+\begin{equation}
+  (u^\Delta-v^\Delta)w_1w_2
+  \{\eta(cu)\eta(v)-\eta(u)\eta(cv)\}=0.
+  \label{eq:appendix-homogeneity-ratio}
+\end{equation}
+
+Because $u\neq v$ and $\Delta\neq0$, the first factor is nonzero. Hence
+$\eta(cu)/\eta(u)$ is independent of $u$: write
+$\eta(cu)=\kappa(c)\eta(u)$. Setting $u=1$ gives
+$\kappa(c)=\eta(c)/\eta(1)$, so $\eta/\eta(1)$ is multiplicative.
+Conversely, normalized multiplicativity makes the common scale factor cancel from
+(\ref{eq:appendix-weighted-power-form}), proving sufficiency.
+
+The corrected mean has
+
+\begin{equation}
+  \eta(u)=u^{1-\Delta}f(u)^{\alpha-1}.
+  \label{eq:appendix-corrected-weight}
+\end{equation}
+
+The power $u^{1-\Delta}$ is multiplicative. Thus
+(\ref{eq:appendix-corrected-weight}) is multiplicative automatically when
+$\alpha=1$ and, otherwise, exactly when $f/f(1)$ is multiplicative. This
+proves the off-diagonal criterion, including negative $\Delta$.
+
+On the diagonal, replace the power average by
+
+\begin{equation}
+  M_{0,\eta}(u;w)
+  =\exp\left(
+    \frac{\sum_i w_i \eta(u_i)\log u_i}{\sum_i w_i \eta(u_i)}
+  \right).
+\end{equation}
+
+The same two-point cross-multiplication uses $\log u-\log v$ instead of
+$u^\Delta-v^\Delta$. In (\ref{eq:corrected-mean-diagonal}), the auxiliary
+function is $\eta(u)=u f(u)^{\tau-1}$, yielding the $\tau=1$ exception and otherwise
+the same normalized-multiplicativity condition.
+
+Finally, if $\mu=f/f(1)$ is positive and multiplicative, then
+$\mu(u)=\exp(\ell(\log u))$ for an additive function $\ell$ on the real line.
+Without regularity, non-linear additive functions exist, so multiplicativity
+is the exact statement. Monotonicity, measurability, or continuity makes $\ell$
+linear and gives $f(u)=Cu^r$. Substitution then recovers a classical weighted
+Gini mean. The necessity proof fails for only one effective coordinate, where
+every mean equals that coordinate, and it always holds the external weights
+fixed under input rescaling. These are the qualifications stated in Chapter
+\ref{ch:model-signal}.
 
 \chapter{Exact Performance Cases and Witnesses}
 \label{app:performance-cases}
