@@ -20,6 +20,7 @@ from reproducibility.control_support import (  # noqa: E402
     read_json_object,
     read_text,
     require_terms as _require_terms,
+    validate_repository_file,
 )
 
 
@@ -65,14 +66,7 @@ def _validate_paths(
         if not isinstance(value, str):
             errors.append(f"{identifier}: invalid authority path")
             continue
-        candidate = (root / value).resolve()
-        try:
-            candidate.relative_to(root)
-        except ValueError:
-            errors.append(f"{identifier}: authority path escapes repository")
-            continue
-        if not candidate.is_file():
-            errors.append(f"{identifier}: authority path does not exist: {value}")
+        validate_repository_file(root, identifier, value, errors)
 
 
 def _validate_claim_authority(

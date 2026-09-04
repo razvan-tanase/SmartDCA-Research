@@ -21,6 +21,7 @@ from reproducibility.control_support import (  # noqa: E402
     read_json_object as _read_json,
     read_text as _read_text,
     require_terms as _require_terms,
+    validate_repository_file,
 )
 
 
@@ -116,17 +117,7 @@ def _validate_authority_paths(
         if not isinstance(entry, dict) or not isinstance(entry.get("path"), str):
             errors.append(f"{identifier}: invalid authority entry")
             continue
-        relative_path = Path(entry["path"])
-        candidate = (root / relative_path).resolve()
-        try:
-            candidate.relative_to(root)
-        except ValueError:
-            errors.append(f"{identifier}: authority path escapes repository")
-            continue
-        if not candidate.is_file():
-            errors.append(
-                f"{identifier}: authority path does not exist: {entry['path']}"
-            )
+        validate_repository_file(root, identifier, entry["path"], errors)
 
 
 def audit_financial_model_corrected_signal_foundations(

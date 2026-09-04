@@ -51,6 +51,26 @@ def require_terms(
             errors.append(f"missing {label}: {term!r}")
 
 
+def validate_repository_file(
+    root: Path,
+    identifier: str,
+    relative_path: str,
+    errors: list[str],
+) -> None:
+    """Require one authority path to stay inside the repository and name a file."""
+
+    candidate = (root / relative_path).resolve()
+    try:
+        candidate.relative_to(root)
+    except ValueError:
+        errors.append(f"{identifier}: authority path escapes repository")
+        return
+    if not candidate.is_file():
+        errors.append(
+            f"{identifier}: authority path does not exist: {relative_path}"
+        )
+
+
 def read_text(path: Path, errors: list[str]) -> str:
     """Read UTF-8 text, appending a diagnostic and returning empty on failure."""
 
