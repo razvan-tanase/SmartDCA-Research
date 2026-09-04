@@ -46,6 +46,9 @@ SYNTHETIC_CLAIMS = {
     "claim-empirical-synthetic-mechanisms": (
         "ch:synthetic-results/sec:synthetic-mechanisms"
     ),
+    "claim-empirical-synthetic-lambda-one-collapse": (
+        "ch:synthetic-results/sec:safety-checks"
+    ),
     "claim-empirical-observed-safety-floor": (
         "ch:synthetic-results/sec:safety-checks"
     ),
@@ -104,6 +107,14 @@ ASSET_CLAIMS = {
         "manuscript/generated/synthetic-supplementary.tex",
         "generated-results-table",
     ),
+}
+ASSET_SOURCE_AUTHORITIES = {
+    "claim-table-stochastic-primary": {
+        f"reports/experiments/runs/{STOCHASTIC_RUN_ID}/stochastic-aggregates.json"
+    },
+    "claim-table-stochastic-sensitivity": {
+        f"reports/experiments/runs/{STOCHASTIC_RUN_ID}/stochastic-aggregates.json"
+    },
 }
 REQUIRED_NONCLAIMS = {
     "nonclaim-universal-superiority",
@@ -258,6 +269,7 @@ def audit_deterministic_stochastic_evaluation(
             r"\label{sec:stochastic}",
             r"\input{../generated/stochastic-evaluation.tex}",
             "three paths per family",
+            "minimum-to-maximum seed",
             r"linearly interpolated 5\% downside",
             "positive for mean reversion and jump diffusion",
             "negative for trend, stochastic volatility, and regime switching",
@@ -289,7 +301,7 @@ def audit_deterministic_stochastic_evaluation(
             "-1,143.872",
             "894.404",
             "-782.925",
-            "all 90 stochastic paths",
+            "all 90 generated stochastic paths",
             "finite implementation regression, not a second proof",
             "belongs to the unit guardrail",
             r"Appendix Table~\ref{tab:stochastic-coverage-diagnostics}",
@@ -331,6 +343,9 @@ def audit_deterministic_stochastic_evaluation(
     deterministic_asset = read_text(
         root / "manuscript/generated/deterministic-evaluation.tex", errors
     )
+    stochastic_asset = read_text(
+        root / "manuscript/generated/stochastic-evaluation.tex", errors
+    )
     mechanism_asset = read_text(
         root / "manuscript/generated/stochastic-mechanisms.tex", errors
     )
@@ -350,6 +365,19 @@ def audit_deterministic_stochastic_evaluation(
         errors,
     )
     require_terms(
+        stochastic_asset,
+        (
+            r"Comparison & $N$ & Median & Seed range & 5\% downside & Worst",
+            "C--D is corrected guarded versus DCA",
+            "C--N is corrected guarded versus neutral guarded",
+            "N--D is neutral guarded versus DCA",
+            "Seed range is the minimum-to-maximum interval",
+            "uses its named right-hand policy as denominator",
+        ),
+        "self-contained primary stochastic summary",
+        errors,
+    )
+    require_terms(
         mechanism_asset,
         ("mean signed terminal-wealth difference in dollars",),
         "signed stochastic attribution caption",
@@ -358,6 +386,12 @@ def audit_deterministic_stochastic_evaluation(
     require_terms(
         supplementary_asset,
         (
+            r"Comparison & $N$ & Median & Seed range & 5\% downside & Worst",
+            "C--D is corrected guarded versus DCA",
+            "C--N is corrected guarded versus neutral guarded",
+            "N--D is neutral guarded versus DCA",
+            "Seed range is the minimum-to-maximum interval",
+            "uses its named right-hand policy as denominator",
             "frozen identity corrected mean and frictionless costs",
             "terminal cash divided by total deposits",
             "terminal asset value divided by terminal wealth",
@@ -409,6 +443,7 @@ def audit_deterministic_stochastic_evaluation(
             asset_path,
             "reproducibility/synthetic_evaluation_assets.py",
             EVIDENCE_NOTE,
+            *ASSET_SOURCE_AUTHORITIES.get(identifier, set()),
         }:
             if required_path not in paths:
                 errors.append(f"{identifier}: missing authority {required_path}")

@@ -152,7 +152,7 @@ python manuscript/build.py
 ```
 
 GitHub Actions runs the link check and the manuscript
-control/build/release tests on every push and pull request. The twenty-six
+control/build/release tests on every push and pull request. The twenty-seven
 scientific checks remain in the separate [Reproducibility workflow](.github/workflows/reproducibility.yml):
 it runs automatically only when `research/`, `reproducibility/`,
 `experiments/`, or `reports/` changes (or when its workflow file changes) and

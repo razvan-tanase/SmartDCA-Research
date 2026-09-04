@@ -2368,9 +2368,11 @@ into probabilities.
 Table \ref{tab:stochastic-primary} moves from fixed paths to controlled random
 constructions, but not to a calibrated market population. It reports the
 60-month, frictionless, $\lambda=0.75$ primary slice with three paths per
-family. The median, linearly interpolated 5\% downside, and worst observed
-shortfall describe those three saved values. With only three values, the
-quantile is a compact downside summary rather than a tail estimate.
+family. For every policy comparison, the median, minimum-to-maximum seed
+range, linearly interpolated 5\% downside, and worst observed shortfall
+describe those three saved values. With only three values, the range is a
+descriptive dispersion summary and the quantile is a compact downside summary
+rather than a tail estimate.
 
 \input{../generated/stochastic-evaluation.tex}
 
@@ -2398,8 +2400,8 @@ separate from the primary rows and do not supply a parameter ranking.
 
 The observed safety checks have a narrower role than the theorem. At
 $\lambda=1$, both guarded policies collapse transaction by transaction to DCA
-on all 90 stochastic paths and on every deterministic scenario. In
-frictionless rows, every replayed ledger passes unit coverage and the direct
+on all 90 generated stochastic paths and all 18 generated deterministic
+paths. In frictionless rows, every replayed ledger passes unit coverage and the direct
 cash-plus-units identity. No observed frictionless aggregate cell in the
 reviewed evidence crosses its numerical $\lambda-1$ relative-gap floor. This
 is a finite implementation regression, not a second proof: universal

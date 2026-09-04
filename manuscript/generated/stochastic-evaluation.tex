@@ -8,19 +8,28 @@
   \setlength{\tabcolsep}{2.4pt}
   \renewcommand{\arraystretch}{1.12}
   \resizebox{\textwidth}{!}{%
-  \begin{tabular}{lrrrrrrrr}
+  \begin{tabular}{llrrrrr}
     \hline
-    Family & $N$ & \multicolumn{3}{c}{Corrected--DCA} & \multicolumn{3}{c}{Corrected--neutral} & Neutral--DCA \\
-    & & Median & 5\% downside & Worst & Median & 5\% downside & Worst & Median \\
+    Family & Comparison & $N$ & Median & Seed range & 5\% downside & Worst \\
     \hline
-    Trend & 3 & -0.269\% & -0.273\% & 0.273\% & +0.043\% & +0.037\% & 0.000\% & -0.316\% \\
-    Mean reversion & 3 & +0.111\% & +0.097\% & 0.000\% & +0.071\% & +0.037\% & 0.000\% & +0.040\% \\
-    Stochastic volatility & 3 & -0.491\% & -0.580\% & 0.590\% & +0.022\% & +0.009\% & 0.000\% & -0.498\% \\
-    Regime switching & 3 & -0.773\% & -0.883\% & 0.895\% & -0.029\% & -0.060\% & 0.064\% & -0.745\% \\
-    Jump diffusion & 3 & +0.115\% & -0.103\% & 0.128\% & +0.020\% & +0.017\% & 0.000\% & +0.095\% \\
+    Trend & C--D & 3 & -0.269\% & [-0.273\%, -0.070\%] & -0.273\% & 0.273\% \\
+    Trend & C--N & 3 & +0.043\% & [+0.036\%, +0.047\%] & +0.037\% & 0.000\% \\
+    Trend & N--D & 3 & -0.316\% & [-0.316\%, -0.106\%] & -0.316\% & 0.316\% \\
+    Mean reversion & C--D & 3 & +0.111\% & [+0.095\%, +0.442\%] & +0.097\% & 0.000\% \\
+    Mean reversion & C--N & 3 & +0.071\% & [+0.033\%, +0.084\%] & +0.037\% & 0.000\% \\
+    Mean reversion & N--D & 3 & +0.040\% & [+0.012\%, +0.409\%] & +0.014\% & 0.000\% \\
+    Stochastic volatility & C--D & 3 & -0.491\% & [-0.590\%, +0.348\%] & -0.580\% & 0.590\% \\
+    Stochastic volatility & C--N & 3 & +0.022\% & [+0.007\%, +0.066\%] & +0.009\% & 0.000\% \\
+    Stochastic volatility & N--D & 3 & -0.498\% & [-0.612\%, +0.282\%] & -0.601\% & 0.612\% \\
+    Regime switching & C--D & 3 & -0.773\% & [-0.895\%, +0.169\%] & -0.883\% & 0.895\% \\
+    Regime switching & C--N & 3 & -0.029\% & [-0.064\%, +0.068\%] & -0.060\% & 0.064\% \\
+    Regime switching & N--D & 3 & -0.745\% & [-0.832\%, +0.101\%] & -0.823\% & 0.832\% \\
+    Jump diffusion & C--D & 3 & +0.115\% & [-0.128\%, +0.595\%] & -0.103\% & 0.128\% \\
+    Jump diffusion & C--N & 3 & +0.020\% & [+0.017\%, +0.065\%] & +0.017\% & 0.000\% \\
+    Jump diffusion & N--D & 3 & +0.095\% & [-0.193\%, +0.578\%] & -0.164\% & 0.193\% \\
     \hline
   \end{tabular}%
   }
-  \caption{Primary seeded-stochastic 60-month frictionless slice at $\lambda=0.75$ and the frozen identity corrected mean. Each family has $N=3$ saved paths, one per seed; medians and linearly interpolated 5\% quantiles are descriptive. Worst is the largest observed relative shortfall and is zero when all three gaps are nonnegative. Each percentage uses the named right-hand policy as denominator. The five controlled families are not calibrated market populations and do not support a win probability, expected return, or significance claim.}
+  \caption{Primary seeded-stochastic 60-month frictionless slice at $\lambda=0.75$ and the frozen identity corrected mean. Each family--comparison row has $N=3$ saved paths, one per seed. C--D is corrected guarded versus DCA, C--N is corrected guarded versus neutral guarded, and N--D is neutral guarded versus DCA. Each percentage uses its named right-hand policy as denominator. Seed range is the minimum-to-maximum interval across the same three saved gaps; the linearly interpolated 5\% value is a compact descriptive downside summary rather than a tail estimate. Worst is the largest observed relative shortfall and is zero when all three gaps are nonnegative. The five controlled families are not calibrated market populations and do not support a win probability, expected return, or significance claim.}
   \label{tab:stochastic-primary}
 \end{table}

@@ -285,6 +285,23 @@
       "review_state": "reviewed"
     },
     {
+      "id": "claim-empirical-synthetic-lambda-one-collapse",
+      "entry_type": "empirical-headline",
+      "wording": "At lambda equal to one, both guarded policies collapsed transaction by transaction to DCA on all 90 generated stochastic paths and all 18 generated deterministic paths.",
+      "claim_class": "cross-layer-regression-receipt",
+      "scope": "The two accepted finite synthetic runs only; this is a computational regression receipt for the proved accounting boundary, not another proof, population inference, or market claim.",
+      "authority": [
+        {"role": "stochastic-validation", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/runner/validation.json"},
+        {"role": "deterministic-validation", "path": "reports/experiments/runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/runner/validation.json"},
+        {"role": "unit-guardrail-theorem", "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:synthetic-results/sec:safety-checks",
+      "citation_need": "Bind the two finite execution counts to their validation receipts and keep the theorem as the universal authority.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
       "id": "claim-empirical-synthetic-mechanisms",
       "entry_type": "empirical-headline",
       "wording": "The accepted synthetic ledgers separate terminal cash from evaluation-price-valued unit differences and report corrected-policy cash drag, asset exposure, and clipped-floor activation without treating any one mechanism as a monotone performance law.",
@@ -651,13 +668,13 @@
     {
       "id": "claim-table-stochastic-primary",
       "entry_type": "manuscript-table",
-      "wording": "The generated primary seeded-stochastic table reports medians, linearly interpolated five-percent downside, worst observed shortfall, and all three ordered policy comparisons for five process families.",
+      "wording": "The generated primary seeded-stochastic table reports medians, minimum-to-maximum seed ranges, linearly interpolated five-percent downside, and worst observed shortfall for all three ordered policy comparisons in five process families.",
       "claim_class": "generated-results-table",
-      "scope": "Three saved seeds per primary family at the displayed horizon and coverage; descriptive only.",
+      "scope": "Fifteen comparison-specific aggregate cells: three ordered comparisons for each of five primary families at the displayed horizon and coverage, with three saved seeds per cell; descriptive only.",
       "authority": [
         {"role": "manuscript-asset", "path": "manuscript/generated/stochastic-evaluation.tex"},
         {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
-        {"role": "generated-table-source", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/report-tables.txt"},
+        {"role": "stochastic-aggregates", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/stochastic-aggregates.json"},
         {"role": "reviewed-report", "path": "reports/experiments/seeded-stochastic-families.md"},
         {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
       ],
@@ -756,9 +773,9 @@
     {
       "id": "claim-table-stochastic-sensitivity",
       "entry_type": "manuscript-table",
-      "wording": "The generated stochastic sensitivity table reports the exploratory configuration medians, five-percent downside, worst shortfall, and architecture median without replacing or pooling the primary rows.",
+      "wording": "The generated stochastic sensitivity table reports medians, minimum-to-maximum seed ranges, linearly interpolated five-percent downside, and worst observed shortfall for all three ordered policy comparisons without replacing or pooling the primary rows.",
       "claim_class": "generated-results-table",
-      "scope": "Five exploratory 60-month frictionless lambda-0.75 cells, three saved seeds each; controlled sensitivity only.",
+      "scope": "Fifteen comparison-specific aggregate cells: three ordered comparisons for each of five exploratory 60-month frictionless lambda-0.75 configurations, with three saved seeds per cell; controlled sensitivity only.",
       "authority": [
         {"role": "manuscript-asset", "path": "manuscript/generated/synthetic-supplementary.tex"},
         {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import subprocess
 import sys
 import tempfile
@@ -26,6 +27,45 @@ GENERATED_ASSETS = (
 
 
 class DeterministicStochasticEvaluationTest(unittest.TestCase):
+    def test_stochastic_tables_report_dispersion_and_define_every_comparison(self) -> None:
+        primary = (
+            ROOT / "manuscript/generated/stochastic-evaluation.tex"
+        ).read_text(encoding="utf-8")
+        exploratory = (
+            ROOT / "manuscript/generated/synthetic-supplementary.tex"
+        ).read_text(encoding="utf-8")
+
+        for asset in (primary, exploratory):
+            self.assertIn(
+                r"Comparison & $N$ & Median & Seed range & 5\% downside & Worst",
+                asset,
+            )
+            for definition in (
+                "C--D is corrected guarded versus DCA",
+                "C--N is corrected guarded versus neutral guarded",
+                "N--D is neutral guarded versus DCA",
+                "Seed range is the minimum-to-maximum interval",
+                "uses its named right-hand policy as denominator",
+            ):
+                self.assertIn(definition, asset)
+
+    def test_lambda_one_collapse_has_a_chapter_specific_claim_record(self) -> None:
+        claims = json.loads(
+            (ROOT / "manuscript/controls/claims.json").read_text(encoding="utf-8")
+        )["records"]
+        matching = [
+            record
+            for record in claims
+            if record.get("id")
+            == "claim-empirical-synthetic-lambda-one-collapse"
+        ]
+
+        self.assertEqual(len(matching), 1)
+        self.assertEqual(
+            matching[0]["manuscript_location"],
+            "ch:synthetic-results/sec:safety-checks",
+        )
+
     def test_deterministic_assets_finish_before_following_interpretation(self) -> None:
         source = (ROOT / "manuscript/source/thesis.tex").read_text(encoding="utf-8")
 

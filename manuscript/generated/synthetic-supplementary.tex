@@ -59,20 +59,29 @@
   \setlength{\tabcolsep}{2.4pt}
   \renewcommand{\arraystretch}{1.12}
   \resizebox{\textwidth}{!}{%
-  \begin{tabular}{lrrrrrrrr}
+  \begin{tabular}{llrrrrr}
     \hline
-    Sensitivity & $N$ & \multicolumn{3}{c}{Corrected--DCA} & \multicolumn{3}{c}{Corrected--neutral} & Neutral--DCA \\
-    & & Median & 5\% downside & Worst & Median & 5\% downside & Worst & Median \\
+    Sensitivity & Comparison & $N$ & Median & Seed range & 5\% downside & Worst \\
     \hline
-    Negative trend & 3 & +0.659\% & +0.633\% & 0.000\% & -0.037\% & -0.085\% & 0.090\% & +0.674\% \\
-    Faster mean reversion & 3 & +0.365\% & +0.242\% & 0.000\% & +0.275\% & +0.227\% & 0.000\% & +0.090\% \\
-    Higher volatility & 3 & -0.021\% & -0.159\% & 0.174\% & +0.252\% & -0.065\% & 0.100\% & -0.272\% \\
-    Persistent bear regime & 3 & +0.711\% & -0.348\% & 0.466\% & +0.063\% & -0.030\% & 0.040\% & +0.577\% \\
-    More frequent jumps & 3 & +0.080\% & -0.021\% & 0.033\% & -0.009\% & -0.131\% & 0.145\% & +0.045\% \\
+    Negative trend & C--D & 3 & +0.659\% & [+0.631\%, +0.861\%] & +0.633\% & 0.000\% \\
+    Negative trend & C--N & 3 & -0.037\% & [-0.090\%, -0.015\%] & -0.085\% & 0.090\% \\
+    Negative trend & N--D & 3 & +0.674\% & [+0.668\%, +0.951\%] & +0.668\% & 0.000\% \\
+    Faster mean reversion & C--D & 3 & +0.365\% & [+0.228\%, +0.585\%] & +0.242\% & 0.000\% \\
+    Faster mean reversion & C--N & 3 & +0.275\% & [+0.221\%, +0.319\%] & +0.227\% & 0.000\% \\
+    Faster mean reversion & N--D & 3 & +0.090\% & [-0.091\%, +0.363\%] & -0.073\% & 0.091\% \\
+    Higher volatility & C--D & 3 & -0.021\% & [-0.174\%, +1.469\%] & -0.159\% & 0.174\% \\
+    Higher volatility & C--N & 3 & +0.252\% & [-0.100\%, +0.366\%] & -0.065\% & 0.100\% \\
+    Higher volatility & N--D & 3 & -0.272\% & [-0.538\%, +1.570\%] & -0.512\% & 0.538\% \\
+    Persistent bear regime & C--D & 3 & +0.711\% & [-0.466\%, +0.736\%] & -0.348\% & 0.466\% \\
+    Persistent bear regime & C--N & 3 & +0.063\% & [-0.040\%, +0.158\%] & -0.030\% & 0.040\% \\
+    Persistent bear regime & N--D & 3 & +0.577\% & [-0.528\%, +0.752\%] & -0.418\% & 0.528\% \\
+    More frequent jumps & C--D & 3 & +0.080\% & [-0.033\%, +0.850\%] & -0.021\% & 0.033\% \\
+    More frequent jumps & C--N & 3 & -0.009\% & [-0.145\%, +0.035\%] & -0.131\% & 0.145\% \\
+    More frequent jumps & N--D & 3 & +0.045\% & [-0.024\%, +0.997\%] & -0.017\% & 0.024\% \\
     \hline
   \end{tabular}%
   }
-  \caption{Exploratory stochastic sensitivities at the same 60-month, frictionless, $\lambda=0.75$ slice as Table~\ref{tab:stochastic-primary}. Each row has three saved seeds and remains separate from its primary family; the five rows are controlled process changes, not replacements selected after outcome access and not a pooled inferential sample.}
+  \caption{Exploratory stochastic sensitivities at the 60-month, frictionless, $\lambda=0.75$ slice with the frozen identity corrected mean. Each sensitivity--comparison row has $N=3$ saved paths, one per seed, and remains separate from its primary family. C--D is corrected guarded versus DCA, C--N is corrected guarded versus neutral guarded, and N--D is neutral guarded versus DCA. Each percentage uses its named right-hand policy as denominator. Seed range is the minimum-to-maximum interval across the same three saved gaps; the linearly interpolated 5\% value is a compact descriptive downside summary rather than a tail estimate. Worst is the largest observed relative shortfall and is zero when all three gaps are nonnegative. The five sensitivities are controlled process changes, not replacements selected after outcome access and not a pooled inferential sample.}
   \label{tab:stochastic-sensitivity}
 \end{table}
 

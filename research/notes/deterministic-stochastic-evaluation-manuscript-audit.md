@@ -48,10 +48,13 @@ are fixed in code:
   coverage `0.75`, with one path per row;
 - all eighteen deterministic paths for the three non-unit coverage ranges and
   the three cost scopes;
-- the five primary 60-month stochastic family cells at frictionless coverage
-  `0.75`, with three saved seeds per cell;
-- the five separately labelled exploratory stochastic sensitivity cells at
-  the same horizon and coverage; and
+- the fifteen primary 60-month stochastic comparison cells (three ordered
+  comparisons for each of five families) at frictionless coverage `0.75`,
+  with three saved seeds per cell and comparison-specific median,
+  minimum-to-maximum range, linearly interpolated 5% downside, and worst
+  observed shortfall;
+- the fifteen separately labelled exploratory stochastic comparison cells
+  (three per sensitivity configuration) at the same horizon and coverage; and
 - five-family stochastic mechanism ranges at coverage `0.9`, `0.75`, and
   `0.5`.
 
@@ -60,9 +63,9 @@ The resulting committed presentation assets are:
 | Asset | SHA-256 after reviewer correction | Contents |
 |---|---|---|
 | `manuscript/generated/deterministic-evaluation.tex` | `8c165ac78bc4927667a74e4ba290538a7369b37c8967dfb4c8609278fb92a2cf` | primary deterministic table and layer-sign figure |
-| `manuscript/generated/stochastic-evaluation.tex` | `a05e3b2ff26de5c3242ae6cd828a016e9dedfd33471932ef0ecaddb3925b94d2` | primary stochastic table |
+| `manuscript/generated/stochastic-evaluation.tex` | `f263f557d94950fa074caf433865bdeb4dca1a058c29db8c7f449eb5a45f9590` | primary stochastic table |
 | `manuscript/generated/stochastic-mechanisms.tex` | `39510a88fc732d286d52007e8fbaab57435655008d185f145ada5615d762cb4e` | terminal-attribution figure and mechanism table |
-| `manuscript/generated/synthetic-supplementary.tex` | `b093515eb8fd2744f76db453eedd3ff2fd1b170181f28cf794a37f68fc902e58` | deterministic coverage/cost tables, exploratory stochastic table, coverage diagnostics, and validation inventory |
+| `manuscript/generated/synthetic-supplementary.tex` | `3b56d8ed7a4fc0a47a1c687cc08b04891f0e770dd8fb658cc1948775a7fe6777` | deterministic coverage/cost tables, exploratory stochastic table, coverage diagnostics, and validation inventory |
 
 The public checkpoint regenerates these four files in a temporary directory
 and compares them byte for byte with the manuscript assets. The original
@@ -78,9 +81,10 @@ Numerical spot reconciliation against the machine artifacts gives:
   and `+6.202%`, with a `-0.887%` signal-only gap;
 - hostile-adaptive-timing cash and unit contributions of `-200.736...` and
   `+136.684...` dollars for corrected versus neutral;
-- stochastic primary trend median/downside/worst of `-0.269%`, `-0.273%`, and
-  `0.273%`, and primary mean-reversion median/downside/worst of `+0.111%`,
-  `+0.097%`, and `0.000%`;
+- stochastic primary trend median/range/downside/worst of `-0.269%`,
+  `[-0.273%, -0.070%]`, `-0.273%`, and `0.273%`, and primary mean-reversion
+  median/range/downside/worst of `+0.111%`, `[+0.095%, +0.442%]`, `+0.097%`,
+  and `0.000%`;
 - trend mean cash and unit contributions of `+1015.595...` and `-1143.872...`
   dollars, and mean-reversion contributions of `+894.404...` and
   `-782.925...` dollars; and
@@ -103,17 +107,18 @@ to their machine or theorem authority.
 | `claim-empirical-synthetic-populations` | run identities and separate execution counts | completeness receipt, not pooled inference or independent-data replication |
 | `claim-empirical-deterministic-mixed` | fixed-path signs and deterministic mechanisms | finite catalog, not probabilities or market frequencies |
 | `claim-empirical-stochastic-sensitive` | primary and exploratory three-seed variation | controlled sensitivity, not calibration, expected return, or stochastic optimality |
+| `claim-empirical-synthetic-lambda-one-collapse` | lambda-one collapse on 90 stochastic and 18 deterministic paths | finite execution regression, not another proof or population claim |
 | `claim-empirical-synthetic-mechanisms` | cash/unit attribution, cash drag, exposure, and floor activation | ledger-conditioned descriptive summaries, not a monotone law |
 | `claim-empirical-observed-safety-floor` | finite frictionless regression receipt | implementation agreement, not a second proof |
 | `claim-empirical-synthetic-cost-scope` | proportional- and fixed-fee outputs | net empirical performance outside the current frictionless theorem |
 | `claim-table-deterministic-primary` | fourteen required deterministic families | one fixed path per row; varying dates explicit |
 | `claim-figure-deterministic-layers` | four mechanism-representative path views | different comparator denominators; bars are not additive |
-| `claim-table-stochastic-primary` | primary 60-month effect size and downside | three saved seeds per family; descriptive quantiles |
+| `claim-table-stochastic-primary` | primary 60-month effect size, dispersion, and downside | three saved seeds per family; descriptive ranges and quantiles |
 | `claim-figure-stochastic-attribution` | mean cash and unit contributions in dollars | corrected versus DCA only; mean signed dollar differences |
 | `claim-table-stochastic-mechanisms` | activation, cash drag, exposure, attribution | five primary cells at the displayed slice |
 | `claim-table-deterministic-coverage-ranges` | exact ranges and signs over eighteen fixed paths | catalog counts are not frequencies |
 | `claim-table-deterministic-cost-ranges` | frictionless and two fee routes | fee rows do not inherit the theorem label |
-| `claim-table-stochastic-sensitivity` | five exploratory configurations | no replacement or pooling of primary rows |
+| `claim-table-stochastic-sensitivity` | five exploratory configurations with effect size, dispersion, and downside | no replacement or pooling of primary rows |
 | `claim-table-stochastic-coverage-diagnostics` | ranges across five family summaries | family summaries are not a new inferential sample |
 | `claim-table-synthetic-validation-inventory` | attempts, exclusions, ledgers, and comparisons | layer-specific completeness accounting only |
 
@@ -133,6 +138,9 @@ Status: **passed** by independent review.
   saved paths are summarized.
 - The displayed stochastic 5% value is called a linearly interpolated
   descriptive quantile, not a tail estimate or confidence bound.
+- The displayed seed range is the minimum-to-maximum interval over the same
+  three values and is called descriptive dispersion, not uncertainty about a
+  population parameter.
 - Primary and exploratory stochastic rows remain separate. Neither is pooled
   with deterministic paths or historical episodes.
 - No p-value, significance claim, expected-return claim, causal comparison,
@@ -153,13 +161,16 @@ generated input was then moved after the complete constant-path paragraph so
 that its figure cannot interrupt that sentence, and an explicit float barrier
 keeps both deterministic assets ahead of the following interpretation.
 
-The final canonical build passed as a 95-page A4 PDF. Its log contains no
+The post-review canonical build passed as a 97-page A4 PDF. Its log contains no
 LaTeX, package, overfull/underfull box, unresolved-reference, or multiply
-defined-label warning. Final inspection covered physical PDF pages 55--60 and
-87--89 (printed pages 45--50 and 77--79): the tables, bars, captions, and prose
-are legible and unclipped; no float interrupts a sentence; signed-dollar
-language renders without a broken compound; and Appendix E.3 correctly names
-four generated presentation assets.
+defined-label warning. The original full-slice inspection covered Chapter 7
+and Appendix E. A post-review follow-up inspected physical PDF pages 58, 89,
+and 91 (printed pages 48, 79, and 81), which contain the expanded primary and
+exploratory stochastic tables and the asset-regeneration section. All rows,
+range brackets, signs, headings, captions, and commands are legible and
+unclipped. No float interrupts a sentence, signed-dollar language renders
+without a broken compound, and Appendix E.3 correctly names four generated
+presentation assets.
 
 ## Independent domain review
 
@@ -185,6 +196,21 @@ verdict:
 - three appendix-table references now identify tables rather than appearing to
   name appendix sections, while the deterministic figure source was moved so
   it cannot interrupt the constant-path sentence.
+
+The subsequent two-axis code review found that the stochastic tables did not
+make dispersion explicit, the exploratory caption did not define every
+statistic and comparator, and the Chapter 7 lambda-one count lacked its own
+location-specific claim. The remediation now renders one row per comparison
+with median, minimum-to-maximum seed range, interpolated 5% downside, and worst
+shortfall; binds both table claims directly to the immutable stochastic
+aggregate; and gives the 90-stochastic/18-deterministic collapse its own finite
+regression record. Shared row rendering and a frozen stochastic-cell key also
+remove duplicated formatting and primitive coordinate drift.
+
+Pauli's follow-up independently reconciled all 30 displayed stochastic rows to
+their immutable three-value distributions, checked both lambda-one runner
+receipts, and inspected PDF pages 58, 89, and 91. Domain, statistical-language,
+and visual review all passed with zero remaining blockers.
 
 Final verdict: **domain pass, statistical-language pass, and visual pass**.
 Comparators, populations, units, horizons, coverage, costs, strict-witness

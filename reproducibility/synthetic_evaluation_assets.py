@@ -7,6 +7,7 @@ import argparse
 import csv
 import hashlib
 import json
+from dataclasses import dataclass
 from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 from typing import Iterable
@@ -102,10 +103,32 @@ COMPARISONS = (
     ),
     ("neutral_guarded_vs_dca", "Neutral--DCA", "N--D"),
 )
+STOCHASTIC_SUMMARY_DEFINITIONS = (
+    r"C--D is corrected guarded versus DCA, C--N is corrected guarded versus "
+    r"neutral guarded, and N--D is neutral guarded versus DCA. Each percentage "
+    r"uses its named right-hand policy as denominator. Seed range is the "
+    r"minimum-to-maximum interval across the same three saved gaps; the linearly "
+    r"interpolated 5\% value is a compact descriptive downside summary rather "
+    r"than a tail estimate. Worst is the largest observed relative shortfall and "
+    r"is zero when all three gaps are nonnegative."
+)
 
 
 class SyntheticEvaluationAssetError(ValueError):
     """Raised when accepted evidence cannot produce the manuscript assets."""
+
+
+@dataclass(frozen=True)
+class StochasticCellKey:
+    """Full coordinate of one accepted stochastic aggregate cell."""
+
+    analysis_tier: str
+    family: str
+    generator_config_id: str
+    comparison: str
+    coverage: str = "0.75"
+    cost_scenario: str = "frictionless"
+    horizon_months: int = 60
 
 
 def _sha256(path: Path) -> str:
@@ -220,33 +243,65 @@ def _one_deterministic_row(
 
 def _one_stochastic_group(
     groups: Iterable[dict[str, object]],
-    *,
-    analysis_tier: str,
-    family: str,
-    generator_config_id: str,
-    comparison: str,
-    coverage: str = "0.75",
-    cost_scenario: str = "frictionless",
-    horizon_months: int = 60,
+    key: StochasticCellKey,
 ) -> dict[str, object]:
     matches = [
         group
         for group in groups
-        if group.get("analysis_tier") == analysis_tier
-        and group.get("family") == family
-        and group.get("generator_config_id") == generator_config_id
-        and group.get("comparison") == comparison
-        and group.get("coverage") == coverage
-        and group.get("cost_scenario") == cost_scenario
-        and group.get("horizon_months") == horizon_months
+        if group.get("analysis_tier") == key.analysis_tier
+        and group.get("family") == key.family
+        and group.get("generator_config_id") == key.generator_config_id
+        and group.get("comparison") == key.comparison
+        and group.get("coverage") == key.coverage
+        and group.get("cost_scenario") == key.cost_scenario
+        and group.get("horizon_months") == key.horizon_months
     ]
     if len(matches) != 1:
         raise SyntheticEvaluationAssetError(
             "stochastic slice is not unique for "
-            f"{analysis_tier}/{generator_config_id}/{comparison}/{coverage}/"
-            f"{cost_scenario}/{horizon_months}"
+            f"{key.analysis_tier}/{key.family}/{key.generator_config_id}/"
+            f"{key.comparison}/{key.coverage}/{key.cost_scenario}/"
+            f"{key.horizon_months}"
         )
     return matches[0]
+
+
+def _stochastic_seed_range(group: dict[str, object]) -> str:
+    minimum = _decimal(
+        group.get("minimum_relative_terminal_wealth_gap"), "minimum relative gap"
+    )
+    maximum = _decimal(
+        group.get("maximum_relative_terminal_wealth_gap"), "maximum relative gap"
+    )
+    if minimum > maximum:
+        raise SyntheticEvaluationAssetError(
+            f"stochastic seed range is reversed: {minimum} exceeds {maximum}"
+        )
+    return f"[{_percent(minimum)}, {_percent(maximum)}]"
+
+
+def _stochastic_summary_row(
+    family_label: str,
+    comparison_label: str,
+    group: dict[str, object],
+) -> str:
+    return (
+        "    "
+        + " & ".join(
+            (
+                family_label,
+                comparison_label,
+                str(group["sample_count"]),
+                _percent(group["median_relative_terminal_wealth_gap"]),
+                _stochastic_seed_range(group),
+                _percent(group["downside_quantile_0.05"]),
+                _percent(
+                    group["worst_observed_relative_shortfall"], signed=False
+                ),
+            )
+        )
+        + r" \\"
+    )
 
 
 def _header(run_id: str, source_sha256: str) -> list[str]:
@@ -385,10 +440,12 @@ def _render_stochastic_assets(
         primary[family] = {
             comparison: _one_stochastic_group(
                 groups,
-                analysis_tier="primary",
-                family=family,
-                generator_config_id=config_id,
-                comparison=comparison,
+                StochasticCellKey(
+                    analysis_tier="primary",
+                    family=family,
+                    generator_config_id=config_id,
+                    comparison=comparison,
+                ),
             )
             for comparison, _, _ in COMPARISONS
         }
@@ -402,46 +459,25 @@ def _render_stochastic_assets(
             r"  \setlength{\tabcolsep}{2.4pt}",
             r"  \renewcommand{\arraystretch}{1.12}",
             r"  \resizebox{\textwidth}{!}{%",
-            r"  \begin{tabular}{lrrrrrrrr}",
+            r"  \begin{tabular}{llrrrrr}",
             r"    \hline",
-            r"    Family & $N$ & \multicolumn{3}{c}{Corrected--DCA} & \multicolumn{3}{c}{Corrected--neutral} & Neutral--DCA \\",
-            r"    & & Median & 5\% downside & Worst & Median & 5\% downside & Worst & Median \\",
+            r"    Family & Comparison & $N$ & Median & Seed range & 5\% downside & Worst \\",
             r"    \hline",
         ]
     )
     for family, _, family_label in STOCHASTIC_FAMILIES:
-        complete = primary[family]["corrected_guarded_vs_dca"]
-        signal = primary[family]["corrected_guarded_vs_neutral_guarded"]
-        architecture = primary[family]["neutral_guarded_vs_dca"]
-        lines.append(
-            "    "
-            + " & ".join(
-                (
-                    family_label,
-                    str(complete["sample_count"]),
-                    _percent(complete["median_relative_terminal_wealth_gap"]),
-                    _percent(complete["downside_quantile_0.05"]),
-                    _percent(
-                        complete["worst_observed_relative_shortfall"],
-                        signed=False,
-                    ),
-                    _percent(signal["median_relative_terminal_wealth_gap"]),
-                    _percent(signal["downside_quantile_0.05"]),
-                    _percent(
-                        signal["worst_observed_relative_shortfall"],
-                        signed=False,
-                    ),
-                    _percent(architecture["median_relative_terminal_wealth_gap"]),
+        for comparison, _, comparison_label in COMPARISONS:
+            lines.append(
+                _stochastic_summary_row(
+                    family_label, comparison_label, primary[family][comparison]
                 )
             )
-            + r" \\"
-        )
     lines.extend(
         [
             r"    \hline",
             r"  \end{tabular}%",
             r"  }",
-            r"  \caption{Primary seeded-stochastic 60-month frictionless slice at $\lambda=0.75$ and the frozen identity corrected mean. Each family has $N=3$ saved paths, one per seed; medians and linearly interpolated 5\% quantiles are descriptive. Worst is the largest observed relative shortfall and is zero when all three gaps are nonnegative. Each percentage uses the named right-hand policy as denominator. The five controlled families are not calibrated market populations and do not support a win probability, expected return, or significance claim.}",
+            f"  \\caption{{Primary seeded-stochastic 60-month frictionless slice at $\\lambda=0.75$ and the frozen identity corrected mean. Each family--comparison row has $N=3$ saved paths, one per seed. {STOCHASTIC_SUMMARY_DEFINITIONS} The five controlled families are not calibrated market populations and do not support a win probability, expected return, or significance claim.}}",
             r"  \label{tab:stochastic-primary}",
             r"\end{table}",
             "",
@@ -636,10 +672,9 @@ def _render_supplementary_asset(
             r"  \setlength{\tabcolsep}{2.4pt}",
             r"  \renewcommand{\arraystretch}{1.12}",
             r"  \resizebox{\textwidth}{!}{%",
-            r"  \begin{tabular}{lrrrrrrrr}",
+            r"  \begin{tabular}{llrrrrr}",
             r"    \hline",
-            r"    Sensitivity & $N$ & \multicolumn{3}{c}{Corrected--DCA} & \multicolumn{3}{c}{Corrected--neutral} & Neutral--DCA \\",
-            r"    & & Median & 5\% downside & Worst & Median & 5\% downside & Worst & Median \\",
+            r"    Sensitivity & Comparison & $N$ & Median & Seed range & 5\% downside & Worst \\",
             r"    \hline",
         ]
     )
@@ -647,45 +682,27 @@ def _render_supplementary_asset(
         group_map = {
             comparison: _one_stochastic_group(
                 stochastic_groups,
-                analysis_tier="exploratory",
-                family=family,
-                generator_config_id=config_id,
-                comparison=comparison,
+                StochasticCellKey(
+                    analysis_tier="exploratory",
+                    family=family,
+                    generator_config_id=config_id,
+                    comparison=comparison,
+                ),
             )
             for comparison, _, _ in COMPARISONS
         }
-        complete = group_map["corrected_guarded_vs_dca"]
-        signal = group_map["corrected_guarded_vs_neutral_guarded"]
-        architecture = group_map["neutral_guarded_vs_dca"]
-        lines.append(
-            "    "
-            + " & ".join(
-                (
-                    label,
-                    str(complete["sample_count"]),
-                    _percent(complete["median_relative_terminal_wealth_gap"]),
-                    _percent(complete["downside_quantile_0.05"]),
-                    _percent(
-                        complete["worst_observed_relative_shortfall"],
-                        signed=False,
-                    ),
-                    _percent(signal["median_relative_terminal_wealth_gap"]),
-                    _percent(signal["downside_quantile_0.05"]),
-                    _percent(
-                        signal["worst_observed_relative_shortfall"],
-                        signed=False,
-                    ),
-                    _percent(architecture["median_relative_terminal_wealth_gap"]),
+        for comparison, _, comparison_label in COMPARISONS:
+            lines.append(
+                _stochastic_summary_row(
+                    label, comparison_label, group_map[comparison]
                 )
             )
-            + r" \\"
-        )
     lines.extend(
         [
             r"    \hline",
             r"  \end{tabular}%",
             r"  }",
-            r"  \caption{Exploratory stochastic sensitivities at the same 60-month, frictionless, $\lambda=0.75$ slice as Table~\ref{tab:stochastic-primary}. Each row has three saved seeds and remains separate from its primary family; the five rows are controlled process changes, not replacements selected after outcome access and not a pooled inferential sample.}",
+            f"  \\caption{{Exploratory stochastic sensitivities at the 60-month, frictionless, $\\lambda=0.75$ slice with the frozen identity corrected mean. Each sensitivity--comparison row has $N=3$ saved paths, one per seed, and remains separate from its primary family. {STOCHASTIC_SUMMARY_DEFINITIONS} The five sensitivities are controlled process changes, not replacements selected after outcome access and not a pooled inferential sample.}}",
             r"  \label{tab:stochastic-sensitivity}",
             r"\end{table}",
             "",
@@ -703,11 +720,13 @@ def _render_supplementary_asset(
         groups_at_coverage = [
             _one_stochastic_group(
                 stochastic_groups,
-                analysis_tier="primary",
-                family=family,
-                generator_config_id=config_id,
-                comparison="corrected_guarded_vs_dca",
-                coverage=coverage,
+                StochasticCellKey(
+                    analysis_tier="primary",
+                    family=family,
+                    generator_config_id=config_id,
+                    comparison="corrected_guarded_vs_dca",
+                    coverage=coverage,
+                ),
             )
             for family, config_id, _ in STOCHASTIC_FAMILIES
         ]
