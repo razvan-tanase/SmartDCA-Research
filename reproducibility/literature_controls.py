@@ -31,6 +31,7 @@ class LiteratureSliceRequirements:
     citations_must_be_section_local: bool = False
     conservative_novelty_statement: str | None = None
     section_required_terms: tuple[tuple[str, tuple[str, ...]], ...] = ()
+    claim_required_terms: tuple[tuple[str, str, tuple[str, ...]], ...] = ()
 
 
 DCA_LITERATURE_REQUIREMENTS = LiteratureSliceRequirements(
@@ -118,6 +119,118 @@ CORRECTED_MEAN_LITERATURE_REQUIREMENTS = LiteratureSliceRequirements(
         (
             "sec:lit-mean-family-identification",
             (r"\mathrm{out}}(u;w)", "positive external weights"),
+        ),
+    ),
+)
+
+METHODOLOGY_LITERATURE_REQUIREMENTS = LiteratureSliceRequirements(
+    claim_sections={
+        "claim-lit-method-registration": "sec:lit-method-registration",
+        "claim-lit-method-overlap-resampling": (
+            "sec:lit-method-overlap-resampling"
+        ),
+        "claim-lit-method-multiplicity-reporting": (
+            "sec:lit-method-multiplicity-reporting"
+        ),
+        "claim-lit-method-computational-reproducibility": (
+            "sec:lit-method-computational-reproducibility"
+        ),
+        "claim-lit-method-provenance-release": (
+            "sec:lit-method-provenance-release"
+        ),
+    },
+    evidence_note_path=(
+        "research/notes/"
+        "reproducible-computational-finance-statistical-methodology.md"
+    ),
+    required_note_headings=(
+        "## Search protocol and limits",
+        "## Authoritative source coverage",
+        "## Statistical-method synthesis",
+        "## Reproducibility and provenance synthesis",
+        "## Claim-to-evidence map",
+        "## Citation and statistical-language verdict",
+    ),
+    required_manuscript_terms=(
+        "outcome-blind",
+        "confirmatory",
+        "exploratory",
+        "descriptive robustness",
+        "overlapping episodes",
+        "circular moving-block bootstrap",
+        "dependence-aware uncertainty",
+        "does not create causal identification",
+        "holm",
+        "family-wise error",
+        "inferential unit",
+        "effect sizes",
+        "deterministic regeneration",
+        "independent reconciliation",
+        "provider-data receipt",
+        "public redistribution",
+        "software engineering",
+        "financial evidence",
+    ),
+    missing_manuscript_term_label="methodological boundary",
+    citations_must_be_section_local=True,
+    section_required_terms=(
+        (
+            "sec:lit-method-registration",
+            (
+                "before confirmatory outcome access",
+                "descriptive robustness",
+                "not a preregistration deposited in a third-party registry",
+            ),
+        ),
+        (
+            "sec:lit-method-overlap-resampling",
+            (
+                "ordered monthly episode start",
+                "does not create causal identification",
+            ),
+        ),
+        (
+            "sec:lit-method-multiplicity-reporting",
+            (
+                "family-wise error",
+                "effect sizes",
+                "inferential unit",
+            ),
+        ),
+        (
+            "sec:lit-method-computational-reproducibility",
+            (
+                "deterministic regeneration",
+                "independent reconciliation",
+                "it is not independent-data replication",
+            ),
+        ),
+        (
+            "sec:lit-method-provenance-release",
+            (
+                "provider-data receipt",
+                "public redistribution",
+                "do not by themselves grant public redistribution",
+                "does not establish a financial result",
+            ),
+        ),
+    ),
+    claim_required_terms=(
+        (
+            "claim-lit-method-multiplicity-reporting",
+            "wording",
+            (
+                "treats ordered rolling starts as the sampling units and "
+                "consecutive circular blocks as the resampling units",
+            ),
+        ),
+        (
+            "claim-lit-method-multiplicity-reporting",
+            "scope",
+            (
+                "the family-wise error guarantee is conditional on valid "
+                "cellwise unadjusted p-values",
+            ),
         ),
     ),
 )
@@ -315,6 +428,22 @@ def _audit_literature_slice(
                     f"{requirements.missing_manuscript_term_label} {term!r}"
                 )
 
+    for identifier, field, required_terms in requirements.claim_required_terms:
+        record = by_identifier.get(identifier)
+        if not isinstance(record, dict):
+            continue
+        field_value = record.get(field)
+        normalized_value = (
+            " ".join(field_value.lower().split())
+            if isinstance(field_value, str)
+            else ""
+        )
+        for term in required_terms:
+            if term not in normalized_value:
+                errors.append(
+                    f"{identifier}: {field} is missing required claim term {term!r}"
+                )
+
     if (
         requirements.conservative_novelty_statement is not None
         and requirements.conservative_novelty_statement not in thesis_lower
@@ -369,6 +498,17 @@ def audit_corrected_mean_literature_synthesis(
     )
 
 
+def audit_methodology_literature_synthesis(
+    repository_root: Path,
+) -> dict[str, object]:
+    """Validate the computational-finance methods literature slice."""
+
+    return _audit_literature_slice(
+        repository_root,
+        METHODOLOGY_LITERATURE_REQUIREMENTS,
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -383,6 +523,9 @@ def main() -> int:
         mean_receipt = audit_corrected_mean_literature_synthesis(
             args.repository_root
         )
+        methodology_receipt = audit_methodology_literature_synthesis(
+            args.repository_root
+        )
     except LiteratureSynthesisError as error:
         print("LITERATURE SYNTHESIS CHECK FAILED")
         for item in str(error).splitlines():
@@ -393,7 +536,9 @@ def main() -> int:
         f"{dca_receipt['literature_claim_count']} DCA claims and "
         f"{mean_receipt['literature_claim_count']} corrected-mean claims; "
         f"{dca_receipt['bibliography_key_count']} DCA sources and "
-        f"{mean_receipt['bibliography_key_count']} corrected-mean sources"
+        f"{mean_receipt['bibliography_key_count']} corrected-mean sources; "
+        f"{methodology_receipt['literature_claim_count']} methodology claims and "
+        f"{methodology_receipt['bibliography_key_count']} methodology sources"
     )
     return 0
 

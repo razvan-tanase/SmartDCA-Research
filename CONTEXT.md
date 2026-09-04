@@ -84,7 +84,9 @@ a versioned canonical client export, or a declared hand-authored fixture; the
 receipt must identify the artifact class without conflating one with another.
 **Usage:** Use the receipt to audit the content-derived source identity; do not
 treat a mutable provider URL as an identity, a canonical client export as raw
-provider bytes, or a hand-authored fixture as a provider response.
+provider bytes, or a hand-authored fixture as a provider response. A receipt is
+not the source bytes, a public-redistribution permission, or scientific
+validation of the derived claim.
 
 **Point-in-time rolling episode**[^empirical-protocol]:
 A recurring-investment episode whose nominal deposits and horizon are mapped
@@ -93,6 +95,43 @@ purchase contains no later observation. Each attempted rolling start is
 retained as included or with one machine-readable exclusion reason.
 **Usage:** Distinguish the nominal schedule, mapped purchase dates, exact
 horizon date, mapped evaluation date, and any excluded episode attempt.
+
+**Outcome-blind confirmatory registration**[^empirical-protocol][^methods-literature]:
+A protocol record that fixes the confirmatory hypotheses, estimands, grids,
+uncertainty procedure, and multiplicity family before confirmatory outcome
+access.
+**Usage:** Reserve **confirmatory** for H1 and H2 under their frozen 36-test
+family. Registration preserves the timing of the analysis choices; it is not
+a third-party registry preregistration, external Registered-Report review,
+causal identification, or model validation.
+
+**Descriptive robustness**[^empirical-protocol][^methods-literature]:
+Sensitivity evidence produced on declared robustness axes outside the sealed
+primary inferential family, without a new bootstrap or multiplicity decision.
+**Usage:** Report signed effect summaries within each declared schedule and
+grid. Do not use robustness rows to revise H1 or H2, enlarge the primary test
+family retrospectively, or claim independent replication.
+
+**Historical inferential unit**[^empirical-protocol][^methods-literature]:
+Within one declared asset-horizon cell, the ordered nominal episode start is
+the sampling unit, the median relative terminal-wealth gap is the cell
+estimand, and consecutive blocks of ordered starts are the resampling units.
+**Usage:** Treat overlapping starts as dependent. Do not pool episode counts,
+cell signs, assets, horizons, or evidence layers into an unregistered sample or
+test.
+
+**Deterministic regeneration**[^methods-literature][^empirical-package-review]:
+Rerunning accepted software on the same accepted inputs and declared conditions
+and comparing the resulting files or values with the retained bundle.
+**Usage:** State which artifacts or values regenerate. Do not call a rerun an
+independent-data replication or infer empirical truth from byte agreement.
+
+**Independent reconciliation**[^methods-literature][^empirical-package-review]:
+Recomputing selected joins, aggregates, inferential outputs, or report values
+through a separately implemented route against the same retained evidence.
+**Usage:** Use **independent** for implementation separation, not for a new data
+sample. Reconciliation can expose computational disagreement but is not
+replication under the independent-data definition.
 
 **Economic dominance**[^impossibility]:
 Terminal wealth is at least that of the DCA comparator for every admissible positive price path and deposit sequence, and strictly greater for at least one admissible case.
@@ -248,3 +287,5 @@ terminal wealth—share one theorem because they describe one comparison model.
 [^provider-review]: [Alpha Vantage historical-data provider review](research/notes/alpha-vantage-historical-data-provider-review.md)
 [^yahoo-protocol]: [Yahoo Finance safety-adaptivity replacement protocol](experiments/protocols/safety-adaptivity-yahoo-v2.json)
 [^yahoo-provider-review]: [Yahoo Finance historical-data provider review](research/notes/yahoo-finance-historical-data-provider-review.md)
+[^methods-literature]: [Reproducible computational-finance and statistical methodology](research/notes/reproducible-computational-finance-statistical-methodology.md)
+[^empirical-package-review]: [Independent safety-adaptivity empirical-package review](research/notes/safety-adaptivity-empirical-package-review.md)

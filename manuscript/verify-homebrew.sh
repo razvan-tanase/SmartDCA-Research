@@ -29,6 +29,7 @@ python3.12 -m unittest \
   manuscript.tests.test_release_check \
   manuscript.tests.test_manuscript_build \
   reproducibility.checks.check_dca_literature_synthesis \
-  reproducibility.checks.check_corrected_mean_literature_synthesis
+  reproducibility.checks.check_corrected_mean_literature_synthesis \
+  reproducibility.checks.check_computational_finance_statistics_literature_synthesis
 python3.12 manuscript/check_controls.py
 python3.12 tools/check_markdown_links.py .

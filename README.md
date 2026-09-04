@@ -74,7 +74,7 @@ and Holm cells. The empirical effort is complete with no publication blocker;
 the [retained private-pass
 receipt](reports/experiments/runs/smartdca-empirical-package-review-v1-6cb6c1cd94b901be90ebd553a022c922e53984afafeb22948747be084b37c14f/review-receipt.json)
 keeps the final review reproducible without publishing provider observations.
-Thesis manuscript tickets 01--04 are now resolved: the institutional contract, canonical build, thesis architecture, and evidence controls are frozen, and Chapter 2 has both a reviewed 21-source DCA/adaptive/causal-safety synthesis and conservative corrected-mean prior-theory positioning. Ticket 05 is the remaining unblocked literature strand, and ticket 06 is now unblocked. The [effort
+Thesis manuscript tickets 01--05 are now resolved: the institutional contract, canonical build, thesis architecture, and evidence controls are frozen, and Chapter 2 has a reviewed 21-source DCA/adaptive/causal-safety synthesis, conservative corrected-mean prior-theory positioning, and a reviewed 15-source computational-finance/statistical-method synthesis. Ticket 06 is the next unblocked drafting frontier. The [effort
 map](.scratch/smartdca/efforts/thesis-manuscript-assembly/map.md)
 and [project map](.scratch/smartdca/map.md) record the completed state and next
 frontier.
@@ -138,6 +138,7 @@ python -m unittest reproducibility.checks.check_safety_adaptivity_synthesis
 python -m unittest reproducibility.checks.check_empirical_package_publication_review
 python -m unittest reproducibility.checks.check_dca_literature_synthesis
 python -m unittest reproducibility.checks.check_corrected_mean_literature_synthesis
+python -m unittest reproducibility.checks.check_computational_finance_statistics_literature_synthesis
 python -m unittest manuscript.tests.test_controls
 python -m unittest manuscript.tests.test_release_check
 python -m unittest manuscript.tests.test_manuscript_build
@@ -146,7 +147,7 @@ python manuscript/build.py
 ```
 
 GitHub Actions runs the link check and the manuscript
-control/build/release tests on every push and pull request. The twenty-one
+control/build/release tests on every push and pull request. The twenty-two
 scientific checks remain in the separate [Reproducibility workflow](.github/workflows/reproducibility.yml):
 it runs automatically only when `research/`, `reproducibility/`,
 `experiments/`, or `reports/` changes (or when its workflow file changes) and

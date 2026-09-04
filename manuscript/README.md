@@ -42,9 +42,10 @@ template's bilingual cover/front-matter route, A4/25.4 mm layout, body spacing,
 and heading hierarchy. It renders all ten planned body chapters and five
 appendices with their purpose, prerequisites, reader outcome, and placement
 boundary. Before LaTeX starts, the build runs the architecture/evidence control
-check and the DCA/adaptive/causal-safety and corrected-mean prior-theory
-literature traceability checks, and fails on an invalid package. A successful
-draft build does not imply submission readiness.
+check and the DCA/adaptive/causal-safety, corrected-mean prior-theory, and
+reproducible computational-finance/statistical-method literature traceability
+checks, and fails on an invalid package. A successful draft build does not
+imply submission readiness.
 
 Run the control check directly with:
 
@@ -89,6 +90,7 @@ python -m unittest manuscript.tests.test_release_check
 python -m unittest manuscript.tests.test_manuscript_build
 python -m unittest reproducibility.checks.check_dca_literature_synthesis
 python -m unittest reproducibility.checks.check_corrected_mean_literature_synthesis
+python -m unittest reproducibility.checks.check_computational_finance_statistics_literature_synthesis
 python manuscript/check_controls.py
 python tools/check_markdown_links.py .
 ```

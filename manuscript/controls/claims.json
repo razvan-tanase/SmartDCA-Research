@@ -781,6 +781,115 @@
       "citation_need": "Cite source and prior-family authorities while naming correction, classification, characterization, and prior theory as distinct categories.",
       "mandatory": true,
       "review_state": "reviewed"
+    },
+    {
+      "id": "claim-lit-method-registration",
+      "entry_type": "literature-positioning",
+      "wording": "An outcome-blind protocol fixed the primary hypotheses, estimands, grid, dependence-aware uncertainty procedure, and multiplicity family before confirmatory outcome access; later robustness axes remain separately registered descriptive evidence rather than revisions to H1 or H2.",
+      "claim_class": "statistical-design-positioning",
+      "scope": "The repository's documented protocol lock and outcome-access record; this is not a preregistration deposited in a third-party registry or an externally reviewed Registered Report and does not prove freedom from all prior knowledge or design bias.",
+      "authority": [
+        {"role": "literature-synthesis", "path": "research/notes/reproducible-computational-finance-statistical-methodology.md"},
+        {"role": "frozen-protocol", "path": "experiments/protocols/safety-adaptivity-v1.json"},
+        {"role": "accepted-provider-protocol", "path": "experiments/protocols/safety-adaptivity-yahoo-v2.json"},
+        {"role": "reviewed-report", "path": "reports/experiments/confirmatory-historical-evaluation.md"}
+      ],
+      "citation_keys": [
+        "nosek2018preregistration",
+        "white2000datasnooping"
+      ],
+      "manuscript_location": "ch:literature/sec:lit-method-registration",
+      "citation_need": "Cite preregistration and financial data-snooping sources beside the outcome-blind design boundary; label post-confirmatory robustness as descriptive and do not claim that registration validates the model.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-lit-method-overlap-resampling",
+      "entry_type": "literature-positioning",
+      "wording": "Rolling episodes reuse market observations and are dependent; the registered circular moving-block bootstrap resamples the ordered episode-start sequence within each asset-horizon cell to obtain dependence-aware uncertainty, but neither overlap handling nor resampling creates causal identification.",
+      "claim_class": "statistical-dependence-positioning",
+      "scope": "The registered cellwise historical estimand and fixed horizon-length block rule; no claim that the chosen block length is generally optimal, that episodes become independent, or that bootstrap validity holds outside its stated time-series conditions.",
+      "authority": [
+        {"role": "literature-synthesis", "path": "research/notes/reproducible-computational-finance-statistical-methodology.md"},
+        {"role": "frozen-protocol", "path": "experiments/protocols/safety-adaptivity-v1.json"},
+        {"role": "historical-audit", "path": "research/notes/confirmatory-historical-evaluation-audit.md"},
+        {"role": "reviewed-report", "path": "reports/experiments/confirmatory-historical-evaluation.md"}
+      ],
+      "citation_keys": [
+        "richardsonsmith1991overlap",
+        "kunsch1989blockbootstrap",
+        "politisromano1992circular",
+        "hernanrobins2020"
+      ],
+      "manuscript_location": "ch:literature/sec:lit-method-overlap-resampling",
+      "citation_need": "Cite the original overlapping-finance and block-bootstrap methods and a causal-inference authority; describe the project rule as registered rather than statistically optimal by citation.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-lit-method-multiplicity-reporting",
+      "entry_type": "literature-positioning",
+      "wording": "The sealed 36-test H1/H2 family uses the Holm step-down procedure for family-wise error control; interpretation retains cellwise relative median gaps and percentile intervals, treats ordered rolling starts as the sampling units and consecutive circular blocks as the resampling units within each cell, and does not pool cells or promote descriptive robustness to confirmatory evidence.",
+      "claim_class": "statistical-reporting-positioning",
+      "scope": "The registered two-sided primary family; the family-wise error guarantee is conditional on valid cellwise unadjusted p-values. Holm does not repair a misspecified resampling model, measure effect magnitude, or make cross-cell summaries independent.",
+      "authority": [
+        {"role": "literature-synthesis", "path": "research/notes/reproducible-computational-finance-statistical-methodology.md"},
+        {"role": "frozen-protocol", "path": "experiments/protocols/safety-adaptivity-v1.json"},
+        {"role": "registered-uncertainty", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/uncertainty.json"},
+        {"role": "reviewed-report", "path": "reports/experiments/confirmatory-historical-evaluation.md"}
+      ],
+      "citation_keys": [
+        "holm1979",
+        "wassersteinlazar2016",
+        "gardneraltman1986",
+        "harveyliuzhu2016"
+      ],
+      "manuscript_location": "ch:literature/sec:lit-method-multiplicity-reporting",
+      "citation_need": "Cite Holm for family-wise error control, statistical guidance for effect-size and interval reporting, and finance literature for the multiple-testing context; keep estimates distinct from adjusted decisions.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-lit-method-computational-reproducibility",
+      "entry_type": "literature-positioning",
+      "wording": "Deterministic regeneration reruns accepted code on the same inputs and compares derived artifacts, while independent reconciliation recomputes selected joins, aggregates, and inferential outputs by a separate route; both strengthen computational auditability, but reconciliation on retained data is not independent-data replication.",
+      "claim_class": "reproducibility-positioning",
+      "scope": "The reviewed SmartDCA software and accepted evidence identities; no claim of byte identity across undeclared environments, independent market-data replication, or empirical truth from reproducibility alone.",
+      "authority": [
+        {"role": "literature-synthesis", "path": "research/notes/reproducible-computational-finance-statistical-methodology.md"},
+        {"role": "independent-package-review", "path": "research/notes/safety-adaptivity-empirical-package-review.md"},
+        {"role": "review-check", "path": "reproducibility/checks/check_empirical_package_publication_review.py"}
+      ],
+      "citation_keys": [
+        "peng2011reproducible",
+        "nasem2019reproducibility"
+      ],
+      "manuscript_location": "ch:literature/sec:lit-method-computational-reproducibility",
+      "citation_need": "Cite computational reproducibility definitions and reserve replication for a study using its own data; state exactly which project artifacts regenerate and which are independently reconciled.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-lit-method-provenance-release",
+      "entry_type": "literature-positioning",
+      "wording": "Versioned protocols, content-derived run identities, manifests, and provider-data receipts bind claims to declared bytes and derivations; a receipt is evidence of identity rather than a substitute for restricted source bytes, and reproducible provenance does not itself grant public redistribution or validate a financial conclusion.",
+      "claim_class": "artifact-provenance-positioning",
+      "scope": "The repository's SHA-256-bound artifact and receipt design under the reviewed provider boundary; hashes make byte changes detectable under the named digest, while no-overwrite behavior is a project protocol rather than physical immutability.",
+      "authority": [
+        {"role": "literature-synthesis", "path": "research/notes/reproducible-computational-finance-statistical-methodology.md"},
+        {"role": "artifact-layer-decision", "path": "docs/adr/0008-place-empirical-protocol-input-run-layers.md"},
+        {"role": "independent-package-review", "path": "research/notes/safety-adaptivity-empirical-package-review.md"},
+        {"role": "provider-boundary", "path": "research/notes/yahoo-finance-historical-data-provider-review.md"}
+      ],
+      "citation_keys": [
+        "moreaumissier2013prov",
+        "farrell2013rfc6920",
+        "wilkinson2016fair"
+      ],
+      "manuscript_location": "ch:literature/sec:lit-method-provenance-release",
+      "citation_need": "Cite provenance, hash-based naming, and FAIR access principles; distinguish authenticated access and licensing from redistribution, and keep engineering evidence separate from financial evidence.",
+      "mandatory": true,
+      "review_state": "reviewed"
     }
   ]
 }

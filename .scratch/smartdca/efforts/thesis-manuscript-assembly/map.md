@@ -16,7 +16,7 @@ follow the [work-tracking workflow](../../../../docs/agents/work-tracking.md).
 | [02](issues/02-establish-thesis-architecture-evidence-controls.md) | Create the chapter route and controls that keep every manuscript claim consistent and traceable. | resolved | 01 |
 | [03](issues/03-synthesize-dca-adaptive-causal-safety-literature.md) | Position the financial problem and safety architecture against authoritative investment literature. | resolved | 02 |
 | [04](issues/04-position-corrected-mean-prior-theory.md) | Establish conservative primary-source positioning for the corrected mean and its proved properties. | resolved | 02 |
-| [05](issues/05-synthesize-reproducible-computational-finance-statistics-literature.md) | Ground the preregistered, dependence-aware, reproducible empirical design in authoritative methodology. | open | 02 |
+| [05](issues/05-synthesize-reproducible-computational-finance-statistics-literature.md) | Ground the preregistered, dependence-aware, reproducible empirical design in authoritative methodology. | resolved | 02 |
 | [06](issues/06-draft-financial-model-corrected-signal-foundations.md) | Write the financial model, fair DCA comparison, source audit, and corrected signal foundations. | open | 03, 04 |
 | [07](issues/07-draft-impossibility-safety-policy-architecture.md) | Write the causal impossibility result, attainable safety relaxation, and guarded adaptive policy. | open | 03, 06 |
 | [08](issues/08-draft-finite-arbitrary-horizon-boundaries.md) | Write the exact realized-path performance classifications from two purchases through arbitrary horizons. | open | 07 |
@@ -39,7 +39,7 @@ is resolved: the chapter architecture, evidence controls, and canonical structur
 Ticket [03](issues/03-synthesize-dca-adaptive-causal-safety-literature.md) is resolved: its bounded
 21-source synthesis now fixes the recurring-DCA, adaptive-decision, online-comparator, and safety-objective positioning used by Chapter 2.
 
-Ticket [04](issues/04-position-corrected-mean-prior-theory.md) is resolved: its reviewed primary-source synthesis identifies the corrected construction as a known weighted Bajraktarević mean and separates prior theory from the project's correction, classification, and characterization. Ticket 05 is the remaining unblocked literature strand, and ticket 06 is now unblocked.
+Ticket [04](issues/04-position-corrected-mean-prior-theory.md) is resolved: its reviewed primary-source synthesis identifies the corrected construction as a known weighted Bajraktarević mean and separates prior theory from the project's correction, classification, and characterization. Ticket [05](issues/05-synthesize-reproducible-computational-finance-statistics-literature.md) is resolved: its reviewed 15-source synthesis fixes the registration, dependence, multiplicity, reporting, reproducibility, provenance, and release-language boundaries used by Chapter 2. Ticket 06 is the next unblocked drafting frontier.
 Tickets 10 and 11 can likewise draft the synthetic and historical empirical
 layers in parallel after their genuine prerequisites resolve. Ticket 16 is an
 intentional human gate: actual supervisor feedback and approval cannot be

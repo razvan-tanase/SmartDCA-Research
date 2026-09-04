@@ -454,6 +454,142 @@ signal after a source correction. The bounded primary-source search supporting
 this position does not turn absence of an exact earlier coupling into a
 priority claim.
 
+\section{Computational Reproducibility and Statistical Controls}
+
+\subsection{Outcome-blind registration separates evidence tiers}
+\label{sec:lit-method-registration}
+Repeated evaluation of financial rules against the same history creates a
+data-snooping problem: the reported winner can reflect the search rather than
+stable predictive content. White's reality-check framework makes the searched
+model universe part of the inferential problem rather than evaluating only the
+selected rule \citep{white2000datasnooping}. Preregistration addresses a
+different but complementary risk. By recording hypotheses and analysis choices
+before their outcomes are known, it permits a reader to distinguish tests of
+advance claims from analyses suggested by the results
+\citep{nosek2018preregistration}. Neither practice certifies that the model is
+well specified or that a financial effect is causal.
+
+For this thesis, an outcome-blind protocol fixed H1 and H2, their estimand,
+primary grid, circular moving-block bootstrap, and 36-test Holm family before
+confirmatory outcome access. The corresponding historical results are the
+registered inference. Secondary mechanism summaries are labelled secondary;
+the declared but post-confirmatory robustness execution is descriptive
+robustness; and any outcome-suggested diagnostic remains exploratory. These
+labels preserve the time at which each claim became testable. They do not turn
+the repository protocol into model validation. This repository-frozen
+outcome-blind registration is not a preregistration deposited in a third-party
+registry, and it is not a peer-reviewed Registered Report
+\citep{nosek2018preregistration}. Robustness results do not revise the primary
+family or rewrite H1 and H2.
+
+\subsection{Overlapping episodes require dependence-aware uncertainty}
+\label{sec:lit-method-overlap-resampling}
+Rolling investment episodes reuse many of the same market observations. Their
+gaps are therefore not independent merely because each nominal start has a
+different date. Financial tests based on overlapping observations must account
+for the dependence induced by that construction
+\citep{richardsonsmith1991overlap}. Block resampling was developed for ordered
+stationary observations precisely to retain local dependence that an
+independent-observation bootstrap would break; circular block resampling removes
+the arbitrary boundary between the first and last candidate block starts
+\citep{kunsch1989blockbootstrap,politisromano1992circular}.
+
+The registered procedure works within one asset--horizon cell. It sorts the
+episode estimands by ordered monthly episode start, draws fixed-length blocks
+with circular wrapping, truncates to the original cell size, and recomputes the
+median relative terminal-wealth gap. Block length equals the episode horizon in
+rolling-stride units. This circular moving-block bootstrap supplies the
+project's dependence-aware uncertainty; the horizon-length choice is a frozen
+design choice, not a literature-backed claim of generally optimal block
+length or exact finite-sample coverage, especially in sparse long-horizon
+cells. Episodes remain overlapping episodes, and the method's interpretation
+depends on the declared time-series resampling conditions.
+
+Most importantly, changing the uncertainty calculation does not change the
+study design or treatment assignment. Causal identification requires its own
+identifying assumptions and design; resampling an observational historical
+sequence does not create causal identification \citep{hernanrobins2020}. The
+result is uncertainty for realized historical association under the registered
+procedure, not a universal, causal, or optimality claim.
+
+\subsection{Multiplicity decisions do not replace effect-size reporting}
+\label{sec:lit-method-multiplicity-reporting}
+The confirmatory family contains 36 cell-level H1/H2 tests. Holm's sequentially
+rejective procedure orders their unadjusted $p$-values and, conditional on
+their validity, controls the family-wise error rate through step-down thresholds
+\citep{holm1979}. This is material in empirical finance, where testing many
+candidate effects against one historical record can produce an inflated
+discovery set \citep{harveyliuzhu2016}. Holm adjustment does not repair an
+invalid cellwise resampling model, alter a point estimate, or make the tests
+independent.
+
+The registered inferential unit must therefore stay visible. Within a declared
+asset--horizon cell, $N$ counts ordered rolling episode starts and consecutive
+blocks of those starts are resampled; the median relative terminal-wealth gap
+is the cell estimand. The 36 hypothesis tests form the multiplicity family, but
+counts of cells, assets, horizons, or cross-layer signs are not a second sample
+that may be pooled into a new test.
+
+A $p$-value does not measure the magnitude or economic importance of an effect
+\citep{wassersteinlazar2016}. The thesis consequently reports signed relative
+median gaps as effect sizes, percentile intervals as uncertainty summaries,
+unadjusted and Holm-adjusted $p$-values as inferential diagnostics, and the
+number of episodes in each cell; interval reporting keeps estimation visible
+beside testing \citep{gardneraltman1986}. Robustness rows retain signed effect
+summaries within their own schedule and grid, but no unregistered interval or
+multiplicity decision is inferred from them.
+
+\subsection{Regeneration, reconciliation, and replication are different}
+\label{sec:lit-method-computational-reproducibility}
+Computational research is reviewable only when the calculation is linked to
+the code and inputs that produced it \citep{peng2011reproducible}. The National
+Academies use \emph{reproducibility} for obtaining consistent computational
+results from the same data, code, methods, and conditions, while
+\emph{replicability} concerns a new study obtaining its own data
+\citep{nasem2019reproducibility}. That vocabulary prevents one successful
+rerun from being described as independent empirical confirmation.
+
+The release therefore makes two narrower claims. \emph{Deterministic
+regeneration} reruns accepted software on the same accepted inputs and compares
+the resulting files or declared values with the retained bundle.
+\emph{Independent reconciliation} uses a separately implemented route to
+recompute selected episode joins, aggregates, bootstrap streams, Holm values,
+and report summaries against the retained evidence. Reconciliation can expose
+a shared-runner or transcription defect, but because it uses the same provider
+observations it is not independent-data replication. A public reproduction
+route can regenerate the unrestricted deterministic and synthesis layers;
+access-controlled historical checks retain a more limited, receipt-bound
+claim.
+
+\subsection{Provenance binds artifacts without validating finance claims}
+\label{sec:lit-method-provenance-release}
+Provenance records relate entities, generating activities, and responsible
+agents; they describe how an artifact came to exist rather than whether its
+scientific interpretation is true \citep{moreaumissier2013prov}. Hash-based
+names can bind an identifier to digital content
+\citep{farrell2013rfc6920}. The repository applies those ideas through
+versioned protocols and inputs, content-derived run identities, manifests, and
+SHA-256 fingerprints. The binding is only as authoritative as the trusted
+starting identifier and does not validate source authority. Here
+\emph{immutable} means that an accepted identity is not overwritten and changed
+bytes require a new identity. A digest makes that change detectable under the
+named algorithm; it does not make storage physically immutable.
+
+A provider-data receipt records source semantics, provenance metadata, a
+fingerprint, schema, coverage, parser identity, and the release decision. It is
+evidence about retained bytes, not a substitute for those bytes. FAIR's access
+principles explicitly permit authentication and authorization where necessary
+and separately call for a clear usage licence
+\citep{wilkinson2016fair}. Reproducible identification and authorized private
+rechecking therefore do not by themselves grant public redistribution.
+
+These controls make the computation auditable: public artifacts can be
+regenerated, while an authorized reviewer can reconcile restricted provider
+observations against sanitized receipts and derived outputs. Software
+engineering and provenance evidence does not establish a financial result;
+financial evidence still comes from the model, proofs, empirical design, and
+observed estimates under their own assumptions.
+
 \chapter{Financial Model and Corrected Signal Foundations}
 \label{ch:model-signal}
 \textbf{Purpose.} Define the same-deposit comparison model, exact

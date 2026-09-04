@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 import json
-import shutil
 import tempfile
 import unittest
 from pathlib import Path
 
+from reproducibility.checks.literature_test_support import copy_literature_surface
 from reproducibility.literature_controls import (
     LiteratureSynthesisError,
     audit_corrected_mean_literature_synthesis,
@@ -15,20 +15,7 @@ from reproducibility.literature_controls import (
 
 
 ROOT = Path(__file__).resolve().parents[2]
-
-
-def _copy_literature_surface(destination: Path) -> Path:
-    for relative_path in (
-        "manuscript/bibliography/references.bib",
-        "manuscript/controls/claims.json",
-        "manuscript/source/thesis.tex",
-        "research/notes/corrected-mean-prior-theory-literature.md",
-    ):
-        source = ROOT / relative_path
-        target = destination / relative_path
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source, target)
-    return destination
+EVIDENCE_NOTE_PATH = "research/notes/corrected-mean-prior-theory-literature.md"
 
 
 class CorrectedMeanLiteratureSynthesisTest(unittest.TestCase):
@@ -44,7 +31,9 @@ class CorrectedMeanLiteratureSynthesisTest(unittest.TestCase):
 
     def test_undefined_primary_source_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
-            root = _copy_literature_surface(Path(temporary_directory) / "repository")
+            root = copy_literature_surface(
+                Path(temporary_directory) / "repository", EVIDENCE_NOTE_PATH
+            )
             claims_path = root / "manuscript/controls/claims.json"
             claims = json.loads(claims_path.read_text(encoding="utf-8"))
             family_claim = next(
@@ -64,7 +53,9 @@ class CorrectedMeanLiteratureSynthesisTest(unittest.TestCase):
 
     def test_uncited_primary_source_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
-            root = _copy_literature_surface(Path(temporary_directory) / "repository")
+            root = copy_literature_surface(
+                Path(temporary_directory) / "repository", EVIDENCE_NOTE_PATH
+            )
             source_path = root / "manuscript/source/thesis.tex"
             source = source_path.read_text(encoding="utf-8")
             source_path.write_text(
@@ -79,7 +70,9 @@ class CorrectedMeanLiteratureSynthesisTest(unittest.TestCase):
 
     def test_missing_claim_to_evidence_mapping_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
-            root = _copy_literature_surface(Path(temporary_directory) / "repository")
+            root = copy_literature_surface(
+                Path(temporary_directory) / "repository", EVIDENCE_NOTE_PATH
+            )
             note_path = (
                 root / "research/notes/corrected-mean-prior-theory-literature.md"
             )
@@ -100,7 +93,9 @@ class CorrectedMeanLiteratureSynthesisTest(unittest.TestCase):
 
     def test_claim_citations_must_appear_in_the_claim_section(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
-            root = _copy_literature_surface(Path(temporary_directory) / "repository")
+            root = copy_literature_surface(
+                Path(temporary_directory) / "repository", EVIDENCE_NOTE_PATH
+            )
             source_path = root / "manuscript/source/thesis.tex"
             source = source_path.read_text(encoding="utf-8")
             source_path.write_text(
@@ -119,7 +114,9 @@ class CorrectedMeanLiteratureSynthesisTest(unittest.TestCase):
 
     def test_parameter_gap_uses_registered_manuscript_notation(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
-            root = _copy_literature_surface(Path(temporary_directory) / "repository")
+            root = copy_literature_surface(
+                Path(temporary_directory) / "repository", EVIDENCE_NOTE_PATH
+            )
             source_path = root / "manuscript/source/thesis.tex"
             source = source_path.read_text(encoding="utf-8")
             source_path.write_text(
@@ -138,7 +135,9 @@ class CorrectedMeanLiteratureSynthesisTest(unittest.TestCase):
 
     def test_mean_inputs_use_registered_manuscript_notation(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
-            root = _copy_literature_surface(Path(temporary_directory) / "repository")
+            root = copy_literature_surface(
+                Path(temporary_directory) / "repository", EVIDENCE_NOTE_PATH
+            )
             source_path = root / "manuscript/source/thesis.tex"
             source = source_path.read_text(encoding="utf-8")
             source_path.write_text(
@@ -157,7 +156,9 @@ class CorrectedMeanLiteratureSynthesisTest(unittest.TestCase):
 
     def test_transform_domain_is_stated_at_first_use(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
-            root = _copy_literature_surface(Path(temporary_directory) / "repository")
+            root = copy_literature_surface(
+                Path(temporary_directory) / "repository", EVIDENCE_NOTE_PATH
+            )
             source_path = root / "manuscript/source/thesis.tex"
             source = source_path.read_text(encoding="utf-8")
             source_path.write_text(
@@ -172,7 +173,9 @@ class CorrectedMeanLiteratureSynthesisTest(unittest.TestCase):
 
     def test_unsafe_new_mean_class_claim_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
-            root = _copy_literature_surface(Path(temporary_directory) / "repository")
+            root = copy_literature_surface(
+                Path(temporary_directory) / "repository", EVIDENCE_NOTE_PATH
+            )
             source_path = root / "manuscript/source/thesis.tex"
             source = source_path.read_text(encoding="utf-8")
             source_path.write_text(
