@@ -5,9 +5,10 @@ official-template layer, the thesis architecture and evidence controls, and the
 fail-closed submission gate. The current PDF is a controlled partial draft:
 Chapter 2 supplies the reviewed literature positioning; Chapter 3 supplies the
 financial-model and corrected-signal foundations; Chapter 4 supplies the
-impossibility-to-safety policy architecture; and Appendix A retains their
-detailed proofs. Later chapters remain structural placeholders. It is not a
-submission candidate.
+impossibility-to-safety policy architecture; Chapter 5 supplies the finite- and
+arbitrary-horizon realized performance boundaries; and Appendices A--B retain
+their detailed proofs, cases, and witnesses. Later chapters remain structural
+placeholders. It is not a submission candidate.
 
 ## Authority
 
@@ -50,7 +51,9 @@ check and the DCA/adaptive/causal-safety, corrected-mean prior-theory, and
 reproducible computational-finance/statistical-method literature traceability
 checks, followed by the financial-model/corrected-signal and
 impossibility-to-safety policy audits, and fails on an invalid package. A
-successful draft build does not imply submission readiness.
+successful draft build does not imply submission readiness. The build also
+runs the finite/arbitrary-horizon boundary audit before LaTeX so scope,
+notation, evidence mappings, and Appendix B cannot drift independently.
 
 Run the control check directly with:
 
@@ -95,12 +98,20 @@ python -m unittest manuscript.tests.test_release_check
 python -m unittest manuscript.tests.test_manuscript_build
 python -m unittest reproducibility.checks.check_financial_model_corrected_signal_foundations
 python -m unittest reproducibility.checks.check_impossibility_safety_policy_architecture
+python -m unittest reproducibility.checks.check_finite_arbitrary_horizon_boundaries
 python -m unittest reproducibility.checks.check_dca_literature_synthesis
 python -m unittest reproducibility.checks.check_corrected_mean_literature_synthesis
 python -m unittest reproducibility.checks.check_computational_finance_statistics_literature_synthesis
 python reproducibility/checks/check_pathwise_dca_dominance.py
 python reproducibility/checks/check_epsilon_dca_safety_guardrail.py
 python reproducibility/checks/check_guarded_corrected_mean_smartdca.py
+python reproducibility/checks/check_two_purchase_dca_win_loss_boundary.py
+python reproducibility/checks/check_three_purchase_corrected_mean_effect.py
+python -m reproducibility.checks.check_arbitrary_horizon_accounting_verification
+python -m reproducibility.checks.check_weak_single_valley_falsification
+python -m reproducibility.checks.check_cash_single_crossing_mechanism
+python -m reproducibility.checks.check_arbitrary_horizon_performance_boundary
+python reproducibility/checks/check_arbitrary_horizon_publication_review.py
 python manuscript/check_controls.py
 python tools/check_markdown_links.py .
 ```

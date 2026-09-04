@@ -424,13 +424,14 @@
     },
     {
       "id": "claim-table-theorem-scope",
-      "entry_type": "planned-table",
-      "wording": "Theorem map listing assumptions, guarantee or classification, sharpness, and explicit non-conclusions.",
+      "entry_type": "manuscript-summary-table",
+      "wording": "Scope map distinguishing finite witnesses, deterministic falsification, model-general accounting, conditional cash crossing, realized-ledger classification, and later stochastic questions.",
       "claim_class": "mathematical-summary-table",
-      "scope": "Concise restatement only; canonical theorem pages govern exact wording.",
+      "scope": "Concise restatement only; canonical theorem pages and exact-search reports govern each row, and no row changes its evidence layer.",
       "authority": [
-        {"role": "theorem-directory", "path": "research/theorems"},
-        {"role": "claim-register", "path": "manuscript/controls/claims.json"}
+        {"role": "claim-register", "path": "manuscript/controls/claims.json"},
+        {"role": "valley-search-report", "path": "reports/experiments/weak-single-valley-falsification.md"},
+        {"role": "cash-crossing-search-report", "path": "reports/experiments/cash-single-crossing-search.md"}
       ],
       "manuscript_location": "ch:boundaries/tab:theorem-scope",
       "citation_need": "Cite each canonical theorem or its manuscript label from the corresponding row.",

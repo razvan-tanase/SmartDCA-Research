@@ -4,6 +4,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{amsmath}
+\usepackage{array}
 \usepackage[a4paper,margin=25.4mm]{geometry}
 \usepackage{graphicx}
 \usepackage{natbib}
@@ -12,6 +13,7 @@
 \usepackage[hidelinks]{hyperref}
 
 \newcommand{\thesistitle}{Safe Adaptivity in Dollar-Cost Averaging: From an Impossibility Boundary to a Reproducible Empirical Evaluation}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 \hypersetup{
   pdftitle={\thesistitle},
@@ -1295,19 +1297,494 @@ scoring is described as outperformance.
 
 \chapter{Exact Performance Boundaries}
 \label{ch:boundaries}
-\textbf{Purpose.} Present the two- and three-purchase classifications, the
-arbitrary-horizon cash-timing identity, the qualified cash single-crossing
-mechanism, and the terminal-inventory boundary.
 
-\textbf{Prerequisites.} Chapter \ref{ch:safety} and thesis ticket 08.
+Chapter \ref{ch:safety} establishes what the guardrail guarantees on every
+admissible path. This chapter asks the different question of when its guarded
+corrected-mean policy actually wins, ties, or loses after a path has been
+realized. Realized performance starts only after the causal purchase ledgers
+are fixed: the floor protects a fraction of DCA wealth, while the remaining
+cash and units determine which policy has greater terminal wealth at a common
+evaluation price.
 
-\textbf{Reader outcome.} The reader can separate a model-free floor from
-ledger-conditioned realized win, tie, and loss regions at every finite horizon.
+Finite witnesses, deterministic search, arbitrary-horizon accounting, and
+stochastic evaluation answer different questions. A two- or three-purchase
+witness can prove that a region or parameter effect exists. An exhaustive
+finite grid can falsify a universal conjecture when it contains an exact
+counterexample, but its outcome counts are not probabilities. The accounting
+identities below hold at every finite horizon, while the stochastic and
+historical frequency questions are deferred to Chapters
+\ref{ch:synthetic-results} and \ref{ch:historical-results}. Appendix
+\ref{app:performance-cases} retains the longer case splits, proofs, and exact
+replays so that the body can emphasize the financial meaning and decisive
+equations.
 
-\textbf{Placement.} Necessary-and-sufficient classifications, decisive
-witnesses, and economic interpretation stay in the body. Exhaustive branches
-and exact-rational replay detail move to Appendix
-\ref{app:performance-cases}.
+\section{Two Purchases: an Evaluation-Price Boundary}
+\label{sec:two-purchase}
+
+The shortest nontrivial ledger already separates the safety guarantee from a
+realized win. Apply the guarded corrected-mean rule $c$ at exactly two purchase
+dates, compare it with DCA $D$, and assume positive prices $p_1,p_2,P$,
+nonnegative deposits $d_1,d_2$, and $0<\lambda\leq1$. Write
+
+\begin{equation}
+  q=\frac{p_2}{p_1},\qquad
+  y=\frac{P}{p_2},\qquad
+  \delta=\frac{1-\lambda}{2},
+  \label{eq:two-purchase-ratios}
+\end{equation}
+
+and let $a=a_2$ be the date-two score. The remaining funded interval after
+the clipped floor and the two quantities governing the comparison are
+
+\begin{equation}
+  H=\delta d_1+d_2-
+    \left[\lambda d_2-\delta d_1q\right]_+,
+  \qquad
+  c=(1-a)H,
+  \qquad
+  g=\delta d_1(1-q).
+  \label{eq:two-purchase-components}
+\end{equation}
+
+Here $c=C_2^c$ is terminal carried cash. The quantity $g$ records the unit
+effect of retaining part of the first deposit rather than investing it at
+$p_1$; it is not an empirical relative-gap statistic.
+
+\subsection{Exact classification}
+\label{thm:two-purchase}
+
+Direct cash-inclusive accounting gives the affine identity
+
+\begin{equation}
+  \boxed{W_2^c(P)-W_2^D(P)=c-y(c-g).}
+  \label{eq:two-purchase-boundary}
+\end{equation}
+
+For $0<\lambda<1$ and $d_1+d_2>0$, one has $c>0$. If $c-g>0$, the
+corrected rule wins exactly for
+
+\begin{equation}
+  0<y<\frac{c}{c-g},
+  \label{eq:two-purchase-win-region}
+\end{equation}
+
+ties at equality, and loses above the threshold. If $c-g\leq0$, every finite
+$y>0$ is a strict win on that fixed ledger slice. If both deposits vanish,
+both policies have zero wealth; at $\lambda=1$, every discretionary interval
+collapses and all cases tie DCA. Thus the result is necessary and sufficient
+within its stated two-date scope, while both strict global regions remain
+nonempty whenever the tolerance is positive.
+
+The parameter $\beta$ is absent at two purchases. The lagged normalized input
+at date two is the singleton $(1)$, so reflexivity fixes its corrected-mean
+reference at one; only $f$, $\alpha$, and the current ratio $q$ can enter
+$a_2$. Consequently this boundary tests the score calibration and guardrail,
+not a nontrivial multi-input corrected reference. It does not state a win
+probability or an arbitrary-horizon law.
+
+For comparison, the neutral guarded selector uses the same first-date state
+and the same date-two floor but replaces $a$ by $1/2$. Its terminal cash is
+$H/2$, and the exact score-only change in the DCA gap is
+
+\begin{equation}
+  \bigl(W_2^c-W_2^D\bigr)-\bigl(W_2^0-W_2^D\bigr)
+  =H\left(\frac12-a\right)(1-y).
+  \label{eq:two-purchase-neutral-difference}
+\end{equation}
+
+In the countercyclical region ($f$ nondecreasing and $\alpha\leq1$), the
+corrected threshold is no smaller than the neutral threshold. This is a sharp
+two-date DCA-sign comparison, not dominance of the corrected selector over the
+neutral policy. Appendix \ref{sec:appendix-two-purchase} records every branch
+and an exact classification-flip witness.
+
+\section{Three Purchases: the First Beta-Sensitive Boundary}
+\label{sec:three-purchase}
+
+At date three the lagged reference first receives two inputs, $(1,q)$. Let
+$h=p_3/p_2$, $y=P/p_3$, retain the definitions of $q$ and $\delta$ from
+(\ref{eq:two-purchase-ratios}), and write $b_\beta=a_3$. The date-two score,
+cash $C_2^c$, and the date-three discretionary interval $H_3$ are independent
+of $\beta$. Define
+
+\begin{equation}
+  c_\beta=(1-b_\beta)H_3,
+  \qquad
+  g=\delta d_1\frac{p_3}{p_2}
+       \left(1-\frac{p_2}{p_1}\right)
+    +C_2^c\left(1-\frac{p_3}{p_2}\right).
+  \label{eq:three-purchase-components}
+\end{equation}
+
+The first quantity is terminal cash after the beta-sensitive third split; the
+second is fixed entirely by the common ledger through date two.
+
+\subsection{Exact classification and beta effect}
+\label{thm:three-purchase}
+
+The three-date wealth gap has the same affine form,
+
+\begin{equation}
+  \boxed{W_3^c(P)-W_3^D(P)=c_\beta-y(c_\beta-g).}
+  \label{eq:three-purchase-boundary}
+\end{equation}
+
+For $0<\lambda<1$ and at least one positive deposit, $c_\beta>0$. When
+$c_\beta-g>0$, its finite threshold is
+
+\begin{equation}
+  T_\beta=\frac{c_\beta}{c_\beta-g};
+  \label{eq:three-purchase-threshold}
+\end{equation}
+
+the rule wins below $T_\beta$, ties there, and loses above it. When
+$c_\beta-g\leq0$, set $T_\beta=+\infty$ and the fixed slice is all-win.
+At $\lambda=1$, or with three zero deposits, all comparisons tie.
+
+Changing only $\beta$ leaves both earlier purchases and all state entering
+date three fixed, but it can change the two-input reference, $b_\beta$, and
+therefore $T_\beta$. The exact countercyclical witness uses
+
+\begin{equation}
+  \lambda=\frac12,\quad(d_1,d_2,d_3)=(1,1,1),\quad
+  (p_1,p_2,p_3,P)=\left(1,4,2,\frac73\right),\quad
+  f(u)=u,\quad\alpha=0.
+  \label{eq:three-purchase-witness-inputs}
+\end{equation}
+
+The first two purchases are $3/4$ and $1/4$ under both variants. With
+$\beta=-1$ the gap is $-\frac{1}{36}$, whereas with $\beta=1$ it is
+$\frac{1}{144}$. This strict loss-to-win flip proves that the first
+multi-input corrected reference can alter a realized DCA classification. It
+is an existence result, not a ranking of beta values, a tuning recommendation,
+or evidence that increasing $\beta$ generally improves performance. Appendix
+\ref{sec:appendix-three-purchase} gives the exact references, scores,
+thresholds, purchases, and endpoint ties.
+
+\section{Cash Timing at an Arbitrary Finite Horizon}
+\label{sec:cash-timing}
+
+The finite formulas suggest a more general accounting question: how does
+carrying cash between purchases alter terminal wealth? Fix any finite horizon
+$n\geq1$, positive purchase prices $p_1,\ldots,p_n$, nonnegative common
+deposits, and $P>0$. For any two fully funded strategies $S$ and $T$ on those
+inputs, set
+
+\begin{equation}
+  \Delta C_t^{S,T}=C_t^S-C_t^T.
+  \label{eq:cash-path-difference}
+\end{equation}
+
+\subsection{Exact cash-timing identity}
+\label{thm:cash-timing}
+
+The terminal-wealth difference is
+
+\begin{equation}
+  \boxed{
+  W_n^S(P)-W_n^T(P)
+  =\Delta C_n^{S,T}\left(1-\frac{P}{p_n}\right)
+  +P\sum_{t=1}^{n-1}\Delta C_t^{S,T}
+       \left(\frac1{p_{t+1}}-\frac1{p_t}\right).}
+  \label{eq:cash-timing-identity}
+\end{equation}
+
+This is a model-general accounting identity: it applies to any two fully
+funded strategies using the same deposits and does not depend on the corrected
+mean, the guardrail, or a particular score. The cash recursion implies
+$b_t^S-d_t=C_{t-1}^S-C_t^S$; substituting this expression in direct terminal
+wealth and telescoping gives (\ref{eq:cash-timing-identity}). Appendix
+\ref{sec:appendix-cash-timing} retains the full derivation.
+
+The coefficients give a financial interpretation without predetermining the
+answer. Relative cash carried across a price fall has a positive coefficient;
+relative cash carried across a rise has a negative one; a flat step contributes
+zero. Terminal relative cash helps compared with buying at $p_n$ when $P<p_n$
+and hurts when $P>p_n$. Because the identity combines signed amounts and
+timing, it does not assign a favorable sign, prove SmartDCA outperformance, or
+make a stochastic attribution.
+
+For the remainder of the chapter, $T\in\{D,0\}$ denotes DCA or the neutral
+guarded selector, and
+$\Delta C_t^{c,T}=C_t^c-C_t^T$ is the corrected-minus-comparator cash
+difference. This notation keeps the DCA superscript $D$ distinct from the
+deposit symbol $d_t$.
+
+\section{Why a Single Valley Is Not a Performance Law}
+\label{sec:single-valley-limit}
+
+A weak single-valley purchase path has a first trough $k$ satisfying
+
+\begin{equation}
+  p_1\geq\cdots\geq p_k\leq\cdots\leq p_n.
+  \label{eq:weak-single-valley}
+\end{equation}
+
+This geometry fixes the signs of the reciprocal-price increments in
+(\ref{eq:cash-timing-identity}), but it does not fix the sizes or signs of the
+cash differences multiplying them. A deterministic exact-rational search
+therefore tested, rather than assumed, the proposed advantage. Its declared
+domain used horizons four through eight; $p_1=1$ and purchase-price levels
+$\{1/2,2/3,1,3/2,2\}$; unit deposits; safety factors
+$\lambda\in\{1/2,1/4,3/4\}$; parameter pairs
+$(\alpha,\beta)\in\{(0,-1),(0,1),(-1,0)\}$ with $f(u)=u$; and evaluation
+multipliers $P/p_n\in\{1,1/2,2\}$. The Cartesian grid comprised 61,398 exact
+scenarios on 2,274 independently validated weak-single-valley paths.
+
+One valid exact loss is enough to falsify each universal weak-advantage
+conjecture. With four unit deposits,
+
+\begin{equation}
+  p=\left(1,\frac12,\frac23,1\right),\quad
+  P=1,\quad\lambda=\frac12,\quad(\alpha,\beta)=(0,-1),
+  \label{eq:valley-dca-loss-inputs}
+\end{equation}
+
+the strict decline--recovery cycle gives
+$W_4^c-W_4^D=-\frac7{32}$. Against the neutral guarded selector, the strict
+cycle
+
+\begin{equation}
+  p=\left(1,\frac23,1,2\right),\quad
+  P=2,\quad\lambda=\frac34,\quad(\alpha,\beta)=(0,-1)
+  \label{eq:valley-neutral-loss-inputs}
+\end{equation}
+
+gives $W_4^c-W_4^0=-\frac{109}{8640}$. Disabling both floors while preserving
+the scores changes the latter gap to $49/360$, so policy-specific floor
+feedback reverses its sign.
+
+The exhaustive counts are finite-grid computational evidence, not
+probabilities, expected returns, or an arbitrary-domain theorem. The exact
+witnesses disprove the two stated universal conjectures, while the remaining
+counts describe only the declared grid. Appendix
+\ref{sec:appendix-valley-falsification} records the cash paths, the search
+boundary, and the floor-disabled diagnostic. A stochastic question requires a
+sampling model and remains separate from this deterministic falsification.
+
+\section{Score Crossing versus Guarded Cash Crossing}
+\label{sec:guardrail-feedback}
+
+The valley counterexamples expose two separate mechanisms. First, the
+corrected reference controls the score. For equal reference weights, the
+identity transform, $\alpha<1$, and $\alpha\beta\leq0$, appending one price
+keeps the updated Gini reference between its old value and that price. On a
+weak single-valley path, the comparison of current price with the lagged
+reference can therefore change direction at most once. Equivalently, there is
+a boundary $j$ such that $1/2-a_t$ is nonpositive for $t\leq j$ and
+nonnegative afterward.
+
+That score result does not automatically pass through the guardrail. The
+corrected and neutral policies generally arrive with different unit cushions,
+so their clipped floors can differ even when both floors are active. Define
+
+\begin{equation}
+  H_t^0=C_{t-1}^0+d_t-m_t^0,
+  \qquad
+  \Delta m_t=m_t^c-m_t^0.
+  \label{eq:cash-crossing-components}
+\end{equation}
+
+Subtracting the two guarded cash recursions gives
+
+\begin{equation}
+  \boxed{
+  \Delta C_t^{c,0}
+  =(1-a_t)\Delta C_{t-1}^{c,0}
+   +\left(\frac12-a_t\right)H_t^0
+   -(1-a_t)\Delta m_t,}
+  \qquad \Delta C_0^{c,0}=0.
+  \label{eq:guarded-cash-recurrence}
+\end{equation}
+
+The middle term is score forcing on the neutral post-floor base; the last term
+is policy-specific clipped-floor feedback. An activation flag cannot replace
+the amount $\Delta m_t$.
+
+\subsection{A sufficient reference-aligned condition}
+\label{thm:cash-single-crossing}
+
+Suppose equal positive deposits are used and, at the same score boundary $j$,
+
+\begin{equation}
+  \Delta m_t\geq0\quad(t\leq j),
+  \qquad
+  \Delta m_t\leq0\quad(t>j).
+  \label{eq:reference-aligned-feedback}
+\end{equation}
+
+This is \emph{reference-aligned guardrail feedback}. Before the boundary, the
+score and floor components in (\ref{eq:guarded-cash-recurrence}) are both
+nonpositive; afterward, both are nonnegative. Induction then shows that, after
+zeros are deleted, the sign word of
+$(\Delta C_1^{c,0},\ldots,\Delta C_n^{c,0})$ is a block of minus signs followed
+by a block of plus signs, with either block possibly empty. Equal clipped
+floors are one nonempty special case, including repeated activation.
+
+Condition (\ref{eq:reference-aligned-feedback}) is sufficient, not necessary.
+The exact recurrence only requires its combined one-step forcing to have the
+stated sign pattern. On
+$p=(1,2/3,1/2,2/3)$ with unit deposits, $\lambda=3/4$, and
+$(\alpha,\beta)=(0,-1)$, the date-three floor difference is misaligned, but
+the same-period score term outweighs it and cash still has signs $-,-,+$.
+Thus a component-wise alignment rule cannot be promoted to a necessary
+condition.
+
+Conversely, policy-specific clipped floors can create a second cash reversal.
+On the strict four-date valley
+$p=(1,1/16,1,8)$, with unit deposits, $\lambda=63/64$, and
+$(\alpha,\beta)=(-1,0)$, the corrected score crosses only once, but guarded
+corrected-minus-neutral cash has signs $-,+,-$ after the common first-date
+tie. Disabling both floors while preserving the scores changes the signs to
+$-,+,+$. The exact witness, full floor paths, and recurrence terms are in
+Appendix \ref{sec:appendix-guardrail-feedback}.
+
+The expanded search that found this witness contained 11,739 exact four-date
+cash scenarios. Its 27 multiple reversals are finite-grid observations rather
+than market frequencies. The witness alone falsifies the unconditional
+single-crossing conjecture; the positive statement above follows from the
+recurrence, not from a zero failure count. Most importantly, cash single
+crossing does not order terminal wealth: the cash-timing sum still depends on
+the timing and magnitude of every cash difference.
+
+\section{Terminal Cash and Units Give the Exact Ledger Boundary}
+\label{sec:terminal-inventory}
+
+Cash timing can be compressed only after both causal purchase ledgers are
+known. For $T\in\{D,0\}$, define the corrected-minus-comparator terminal
+differences
+
+\begin{equation}
+  H_T=C_n^c-C_n^T,
+  \qquad
+  U_T=Q_n^c-Q_n^T.
+  \label{eq:terminal-inventory-components}
+\end{equation}
+
+The purchases do not depend on the later common evaluation price, so $H_T$
+and $U_T$ are fixed before $P$ is chosen.
+
+\subsection{Necessary-and-sufficient realized classification}
+\label{thm:terminal-inventory}
+
+Direct cash-plus-units accounting gives
+
+\begin{equation}
+  \boxed{W_n^c(P)-W_n^T(P)=H_T+P U_T.}
+  \label{eq:terminal-inventory-boundary}
+\end{equation}
+
+The same unit difference is reconstructed independently from the complete
+cash path:
+
+\begin{equation}
+  U_T=
+  \sum_{t=1}^{n-1}\Delta C_t^{c,T}
+       \left(\frac1{p_{t+1}}-\frac1{p_t}\right)
+  -\frac{\Delta C_n^{c,T}}{p_n}.
+  \label{eq:unit-gap-from-cash}
+\end{equation}
+
+Equations (\ref{eq:terminal-inventory-boundary})--
+(\ref{eq:unit-gap-from-cash}) yield the complete affine trichotomy on $P>0$.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.18}
+  \begin{tabular}{p{0.25\textwidth}p{0.20\textwidth}p{0.43\textwidth}}
+    \hline
+    Terminal signs & Positive root & Exact order as $P$ increases \\
+    \hline
+    $H_T>0,\ U_T\geq0$ & none & corrected wins for every $P>0$ \\
+    $H_T>0,\ U_T<0$ & $\frac{H_T}{-U_T}$ & win below, tie at, and loss above the root \\
+    $H_T=0,\ U_T>0$ & none & corrected wins for every $P>0$ \\
+    $H_T=0,\ U_T=0$ & none & tie for every $P>0$ \\
+    $H_T=0,\ U_T<0$ & none & corrected loses for every $P>0$ \\
+    $H_T<0,\ U_T>0$ & $\frac{-H_T}{U_T}$ & loss below, tie at, and win above the root \\
+    $H_T<0,\ U_T\leq0$ & none & corrected loses for every $P>0$ \\
+    \hline
+  \end{tabular}
+  \caption{Complete positive-evaluation-price classification after the two
+  causal ledgers are fixed.}
+  \label{tab:terminal-inventory-classification}
+\end{table}
+
+This is the exact necessary-and-sufficient realized-ledger classification at
+every finite horizon. The corrected rule beats both comparators exactly on the
+intersection of their two strict-win regions. The inputs to that statement are
+the purchase ledgers, not prices alone: no price-only characterization of
+$(H_T,U_T)$ has been established.
+
+On a weak single-valley path with first trough $k$ and $P=p_n$, define
+
+\begin{equation}
+  A_T=\sum_{t<k}\Delta C_t^{c,T}
+      \left(\frac1{p_{t+1}}-\frac1{p_t}\right),
+  \qquad
+  B_T=\sum_{t\geq k}\Delta C_t^{c,T}
+      \left(\frac1{p_t}-\frac1{p_{t+1}}\right).
+  \label{eq:valley-exposures}
+\end{equation}
+
+Then terminal cash cancels and
+
+\begin{equation}
+  W_n^c(p_n)-W_n^T(p_n)=p_n(A_T-B_T).
+  \label{eq:valley-terminal-boundary}
+\end{equation}
+
+The rule therefore wins, ties, or loses exactly as decline exposure $A_T$ is
+greater than, equal to, or less than recovery exposure $B_T$. Reference-aligned
+cash crossing orders signs but not these weighted magnitudes, so it remains
+insufficient to sign terminal wealth. Appendix
+\ref{sec:appendix-affine-boundary} records the affine proof, all zero cases,
+strict aligned wins and losses, and the $\lambda=1$ collapse.
+
+Both guarded selectors still satisfy
+
+\begin{equation}
+  W_n^S(P)\geq\lambda W_n^D(P),\qquad S\in\{c,0\},
+  \label{eq:boundary-safety-reminder}
+\end{equation}
+
+on every admissible frictionless path. That guarantee belongs to the guardrail
+floor. It is neither supplied by the corrected score nor contradicted by a
+negative region of (\ref{eq:terminal-inventory-boundary}). At $\lambda=1$
+both selectors collapse to DCA, $H_T=U_T=0$, and all comparisons tie.
+
+\section{Evidence Roles and Explicit Non-Conclusions}
+\label{sec:boundary-evidence-roles}
+
+Table \ref{tab:theorem-scope} summarizes why the chapter's layers cannot be
+substituted for one another.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.16}
+  \begin{tabular}{L{0.22\textwidth}L{0.30\textwidth}L{0.38\textwidth}}
+    \hline
+    Evidence role & What it establishes & What it does not establish \\
+    \hline
+    Finite witness & Nonempty two- or three-date region; possible beta-sensitive flip & Parameter ranking, frequency, or longer-horizon law \\
+    Finite deterministic search & Exact counterexample to a universal valley conjecture inside a declared grid & Probability, expected return, or exhaustive continuous-domain ranking \\
+    Model-general identity & Cash-timing equality for any fully funded common-deposit strategies & A favorable sign or score attribution \\
+    Conditional mechanism theorem & Cash single crossing under sufficient reference-aligned floor feedback & Necessity or terminal-wealth order \\
+    Realized-ledger theorem & Exact $H_T+P U_T$ classification at every finite horizon & Price-only, universal, or expected-performance conclusion \\
+    Stochastic questions & Later distributional sensitivity under a declared sampling design & Retrospective reinterpretation of deterministic theorems \\
+    \hline
+  \end{tabular}
+  \caption{Scope map for the finite and arbitrary-horizon evidence.}
+  \label{tab:theorem-scope}
+\end{table}
+
+The analytical endpoint is therefore deliberately conditional. The unit floor
+is model-free within the frictionless comparison model; adaptive performance is
+path- and ledger-dependent. Finite examples demonstrate possibility and
+sharpness, exact searches can falsify universal conjectures, and the affine
+boundary classifies any realized ledger. None of those statements supplies a
+universal or stochastic superiority claim for the corrected-mean signal.
 
 \chapter{Empirical Methodology and Reproducibility}
 \label{ch:methodology}
@@ -1832,8 +2309,337 @@ vacuously safe; it supplies no substantive DCA-relative protection.
 
 \chapter{Exact Performance Cases and Witnesses}
 \label{app:performance-cases}
-Exhaustive finite-horizon branches, exact witnesses, cash-crossing
-counterexamples, and arbitrary-horizon replay detail will be placed here.
+
+This appendix retains the exact cases, witnesses, and derivations supporting
+Chapter \ref{ch:boundaries}. Their role is sharpness and auditability: none of
+the finite examples or finite-grid counts is promoted to a stochastic or
+universal performance law.
+
+\section{Complete Two-Purchase Reduction}
+\label{sec:appendix-two-purchase}
+
+The warm-up score is $a_1=1/2$. With
+$\delta=(1-\lambda)/2$, the first purchase, cash, and unit cushion are
+
+\begin{equation}
+  b_1^c=(1-\delta)d_1,
+  \qquad C_1^c=\delta d_1,
+  \qquad K_1^c=\frac{\delta d_1}{p_1}.
+  \label{eq:appendix-two-first-state}
+\end{equation}
+
+At date two the clipped floor and funded interval are
+
+\begin{equation}
+  m_2^c=\left[\lambda d_2-\delta d_1q\right]_+,
+  \qquad H=\delta d_1+d_2-m_2^c,
+  \label{eq:appendix-two-floor}
+\end{equation}
+
+so $b_2^c=m_2^c+aH$ and $C_2^c=(1-a)H=c$. Total-spending
+accounting gives $b_2^c-d_2=\delta d_1-c$, while
+$b_1^c-d_1=-\delta d_1$. Therefore
+
+\begin{align}
+  W_2^c-W_2^D
+  &=c+P\left(-\frac{\delta d_1}{p_1}
+       +\frac{\delta d_1-c}{p_2}\right) \\
+  &=c(1-y)+\delta d_1y(1-q)
+   =c-y(c-g).
+  \label{eq:appendix-two-gap}
+\end{align}
+
+When $0<\lambda<1$ and the deposit pair is nonzero,
+$H\geq\delta d_1+(1-\lambda)d_2>0$, hence $c>0$. A positive-slope
+coefficient $c-g$ produces the unique threshold $c/(c-g)$; a nonpositive
+coefficient leaves $c-y(c-g)>0$ for every finite $y>0$. At $q=1$, the
+threshold is one, proving that strict global win and loss regions are both
+nonempty. Zero deposits give an identity tie, while $\lambda=1$ makes
+$\delta=H=c=g=0$ and forces transaction-level DCA.
+
+For a selector $s\in\{a,1/2\}$, put $c_s=(1-s)H$ and
+
+\begin{equation}
+  T_s=\begin{cases}
+    c_s/(c_s-g),&c_s-g>0,\\
+    +\infty,&c_s-g\leq0.
+  \end{cases}
+  \label{eq:appendix-two-extended-threshold}
+\end{equation}
+
+The two DCA classifications differ exactly between unequal extended
+thresholds. For
+$\lambda=1/2$, $d_1=d_2=1$, $(p_1,p_2,P)=(1,2,3/2)$,
+$f(u)=u$, and $\alpha=0$, one obtains
+$T_a=10/13$, $T_{1/2}=5/7$, and
+
+\begin{equation}
+  \Delta_a=\frac1{48}>0,
+  \qquad
+  \Delta_{1/2}=-\frac1{32}<0.
+  \label{eq:appendix-two-flip}
+\end{equation}
+
+This is an exact two-date classification witness, not a probability statement.
+
+\section{Three-Purchase Beta-Sensitive Witness}
+\label{sec:appendix-three-purchase}
+
+The equally weighted two-input reference at date three is, off the diagonal,
+
+\begin{equation}
+  R_2(\beta)=
+  \left(
+  \frac{f(1)^{\alpha-1}+qf(q)^{\alpha-1}}
+       {f(1)^{\alpha-1}+q^{1-\alpha+\beta}f(q)^{\alpha-1}}
+  \right)^{1/(\alpha-\beta)},
+  \label{eq:appendix-three-reference}
+\end{equation}
+
+with the canonical function-weighted geometric extension when
+$\alpha=\beta$. The third score is
+
+\begin{equation}
+  b_\beta=\left[1+
+  \left(\frac{f(p_3/(p_1R_2(\beta)))}{f(1)}\right)^{1-\alpha}
+  \right]^{-1}.
+  \label{eq:appendix-three-score}
+\end{equation}
+
+For the witness in (\ref{eq:three-purchase-witness-inputs}), $q=4$,
+$p_3/p_2=1/2$, and $y=7/6$. The common state is
+
+\begin{equation}
+  \begin{aligned}
+    b_1^c&=\frac34, & m_2^c&=0, & H_2&=\frac54,
+      & b_2^c&=\frac14,\\
+    C_2^c&=1, & m_3^c&=\frac18, & H_3&=\frac{15}{8},
+      & g&=\frac18.
+  \end{aligned}
+  \label{eq:appendix-three-common-state}
+\end{equation}
+
+Changing only beta gives $R_2(-1)=\frac85$ and
+$R_2(1)=\frac52$, with the complete exact comparison
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{c c c c c c c}
+    \hline
+    $\beta$ & $R_2$ & $b_\beta$ & $b_3^c$ & $c_\beta$ & $T_\beta$ & $W_3^c-W_3^D$ \\
+    \hline
+    $-1$ & $8/5$ & $4/9$ & $23/24$ & $25/24$ & $25/22$ & $-1/36$ \\
+    $1$ & $5/2$ & $5/9$ & $7/6$ & $5/6$ & $20/17$ & $1/144$ \\
+    \hline
+  \end{tabular}
+  \caption{Exact beta-sensitive three-purchase witness.}
+  \label{tab:appendix-three-beta-witness}
+\end{table}
+
+Since $25/22<7/6<20/17$, the first variant loses and the second wins.
+At the two threshold endpoints one variant ties while the other remains strict.
+The witness proves possible sensitivity of the first multi-input reference; it
+does not impose a monotone order on $\beta$ outside this ledger.
+
+\section{Proof of the Cash-Timing Identity}
+\label{sec:appendix-cash-timing}
+
+For any fully funded strategy $S$ using the common deposits,
+
+\begin{equation}
+  C_t^S=C_{t-1}^S+d_t-b_t^S
+  \quad\Longrightarrow\quad
+  b_t^S-d_t=C_{t-1}^S-C_t^S.
+  \label{eq:appendix-cash-recursion}
+\end{equation}
+
+Subtracting DCA wealth and substituting this equality gives
+
+\begin{align}
+  W_n^S(P)-W_n^D(P)
+  &=C_n^S+P\sum_{t=1}^{n}\frac{b_t^S-d_t}{p_t}\\
+  &=C_n^S+P\sum_{t=1}^{n}\frac{C_{t-1}^S-C_t^S}{p_t}.
+  \label{eq:appendix-cash-substitution}
+\end{align}
+
+Because $C_0^S=0$, shifting one index yields
+
+\begin{equation}
+  \sum_{t=1}^{n}\frac{C_{t-1}^S-C_t^S}{p_t}
+  =\sum_{t=1}^{n-1}C_t^S
+       \left(\frac1{p_{t+1}}-\frac1{p_t}\right)
+   -\frac{C_n^S}{p_n}.
+  \label{eq:appendix-cash-telescope}
+\end{equation}
+
+Combining the last two displays proves the one-strategy identity. Applying it
+to $S$ and $T$ and subtracting the common DCA term proves
+(\ref{eq:cash-timing-identity}). No score-specific property enters this proof.
+
+\section{Weak-Single-Valley Falsification Cases}
+\label{sec:appendix-valley-falsification}
+
+For the DCA-loss witness (\ref{eq:valley-dca-loss-inputs}), the corrected cash
+path is
+
+\begin{equation}
+  C^c=\left(\frac14,\frac7{24},\frac{31}{48},\frac{79}{80}\right).
+  \label{eq:appendix-valley-dca-cash}
+\end{equation}
+
+At $P=p_4=1$, terminal cash has zero coefficient, and exact cash timing gives
+
+\begin{equation}
+  W_4^c-W_4^D
+  =\frac14(2-1)
+   +\frac7{24}\left(\frac32-2\right)
+   +\frac{31}{48}\left(1-\frac32\right)
+  =-\frac7{32}.
+  \label{eq:appendix-valley-dca-loss}
+\end{equation}
+
+For the neutral-loss witness (\ref{eq:valley-neutral-loss-inputs}), the cash
+paths through the three nonterminal coefficients imply
+
+\begin{equation}
+  \Delta C^{c,0}=\left(0,-\frac{11}{240},\frac{101}{1728}\right).
+  \label{eq:appendix-valley-neutral-cash}
+\end{equation}
+
+Thus
+
+\begin{equation}
+  W_4^c-W_4^0
+  =2\left[-\frac{11}{240}\left(1-\frac32\right)
+          +\frac{101}{1728}\left(\frac12-1\right)\right]
+  =-\frac{109}{8640}.
+  \label{eq:appendix-valley-neutral-loss}
+\end{equation}
+
+With both floors disabled, the exact gap is $49/360$, so the floor
+contribution is $-257/1728$ and changes the sign. These four-date witnesses
+lie inside the declared 61,398-scenario search. The aggregate win/tie/loss
+counts describe that finite Cartesian grid only; the displayed negative
+fractions, rather than their frequency, falsify the universal conjectures.
+
+\section{Guardrail-Feedback Sharpness Cases}
+\label{sec:appendix-guardrail-feedback}
+
+Alignment is not necessary. With unit deposits,
+$p=(1,2/3,1/2,2/3)$, $\lambda=3/4$, and
+$(\alpha,\beta)=(0,-1)$, the date-three floor difference violates the
+pre-boundary sign in (\ref{eq:reference-aligned-feedback}). The score and floor
+components are respectively $-125/1664$ and $11/832$, while
+
+\begin{equation}
+  \Delta C^{c,0}
+  =\left(0,-\frac{11}{240},-\frac{397}{4992},
+                 \frac{841}{149760}\right).
+  \label{eq:appendix-alignment-not-necessary}
+\end{equation}
+
+Their combined forcing remains negative at date three, and the cash path still
+single-crosses.
+
+The horizon-minimal double reversal uses the strict valley
+$p=(1,1/16,1,8)$, $\lambda=63/64$, and
+$(\alpha,\beta)=(-1,0)$. The corrected scores cross once, but the guarded cash
+difference is
+
+\begin{equation}
+  \Delta C^{c,0}=\left(
+  0,-\frac{12495}{1052672},
+  \frac{174032415}{616865792},
+  -\frac{142575068237}{2843751301120}
+  \right),
+  \label{eq:appendix-double-reversal}
+\end{equation}
+
+with signs $-,+,-$ after the warm-up tie. Disabling both floors but retaining
+the same score sequence gives
+
+\begin{equation}
+  \Delta C^{\circ}=\left(
+  0,-\frac{765}{1028},
+  \frac{70545}{602408},
+  \frac{585268881}{555420176}
+  \right),
+  \label{eq:appendix-no-floor-crossing}
+\end{equation}
+
+whose signs are $-,+,+$. The warm-up forces the first cash difference to zero;
+two later reversals require three subsequent nonzero entries, so four dates are
+horizon-minimal. This is a statement about the cash mechanism, not about the
+minimum horizon of the affine wealth theorem.
+
+\section{Affine Boundary Proof and Strict Cases}
+\label{sec:appendix-affine-boundary}
+
+Taking $S=c$ in (\ref{eq:cash-timing-identity}) and using
+$\Delta C_n^{c,T}=H_T$ gives
+
+\begin{equation}
+  W_n^c(P)-W_n^T(P)=H_T+P
+  \left[
+  \sum_{t=1}^{n-1}\Delta C_t^{c,T}
+       \left(\frac1{p_{t+1}}-\frac1{p_t}\right)
+  -\frac{H_T}{p_n}
+  \right].
+  \label{eq:appendix-affine-cash-route}
+\end{equation}
+
+Direct portfolio accounting independently gives
+$W_n^c(P)-W_n^T(P)=H_T+P(Q_n^c-Q_n^T)$. Comparing coefficients proves both
+$U_T=Q_n^c-Q_n^T$ and
+$W_n^c(P)-W_n^T(P)=H_T+P U_T$. An affine function on $P>0$ has one positive
+root exactly when its intercept and slope have opposite signs; like signs and
+zero coefficients give the remaining rows of Table
+\ref{tab:terminal-inventory-classification}. This proves necessity,
+sufficiency, and exhaustiveness without finite enumeration.
+
+The sufficient reference-aligned class contains both wealth signs. With four
+unit deposits, $p=(1,1/4,1/2,1)$, $\lambda=7/8$, and
+$(\alpha,\beta)=(0,-1)$, all floors are active and post-boundary floor
+differences are strictly aligned. The ledger pairs are
+
+\begin{equation}
+  (H_D,U_D)=\left(\frac{16807}{28800},-\frac{7199}{9600}\right),
+  \qquad
+  (H_0,U_0)=\left(\frac{22903}{115200},-\frac{5171}{38400}\right).
+  \label{eq:appendix-aligned-win-ledger}
+\end{equation}
+
+At $P=1/2$, the two gaps are positive:
+
+\begin{equation}
+  W_4^c-W_4^D=\frac{12017}{57600},
+  \qquad
+  W_4^c-W_4^0=\frac{30293}{230400}.
+\end{equation}
+
+At $P=2$ on the same purchase ledgers, they are instead negative:
+
+\begin{equation}
+  W_4^c-W_4^D=-\frac{26387}{28800},
+  \qquad
+  W_4^c-W_4^0=-\frac{8123}{115200}.
+\end{equation}
+
+The score, floors, purchases, cash, and units are unchanged; only the
+evaluation price crosses their affine boundaries.
+
+The strict aligned path $p=(1,2/3,1,2)$ with $\lambda=3/4$ supplies a second
+obstruction at $P=p_4=2$: despite a completed aligned cash crossing, its DCA
+and neutral gaps are $-1141/2160$ and $-109/8640$. Hence neither completed
+cash crossing nor terminal-purchase-price evaluation replaces the signed
+exposure comparison.
+
+Finally, at $\lambda=1$ the guardrail forces both selectors to buy each deposit
+as DCA, so $H_D=U_D=H_0=U_0=0$ at every finite horizon. All evaluation prices
+then give an identity tie. Every negative case above remains compatible with
+the separate $\lambda$-DCA safety floor.
 
 \chapter{Empirical Protocols and Statistical Controls}
 \label{app:protocols}

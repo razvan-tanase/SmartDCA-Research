@@ -32,6 +32,7 @@
       "affected_locations": [
         "ch:introduction",
         "ch:safety",
+        "ch:boundaries",
         "ch:discussion",
         "ch:conclusion"
       ],

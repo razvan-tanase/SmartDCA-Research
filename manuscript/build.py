@@ -81,6 +81,10 @@ def main() -> int:
                 "safety_policy_controls.py",
                 "BUILD FAILED: impossibility-to-safety policy architecture is invalid",
             ),
+            (
+                "boundary_controls.py",
+                "BUILD FAILED: finite/arbitrary-horizon boundaries are invalid",
+            ),
         )
         for validator_name, failure_message in validation_specs:
             if not run_validation(

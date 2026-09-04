@@ -182,6 +182,28 @@ class ManuscriptBuildTests(unittest.TestCase):
                 normalized_text,
             )
             self.assertIn(
+                "Realized performance starts only after the causal purchase ledgers are fixed",
+                normalized_text,
+            )
+            self.assertIn(
+                "existence result, not a ranking of beta values",
+                normalized_text,
+            )
+            self.assertIn(
+                "model-general accounting identity",
+                normalized_text,
+            )
+            self.assertIn(
+                "reference-aligned guardrail feedback",
+                normalized_text,
+            )
+            self.assertIn(
+                "necessary-and-sufficient realized-ledger classification",
+                normalized_text,
+            )
+            self.assertIn("Finite deterministic search", normalized_text)
+            self.assertIn("Proof of the Cash-Timing Identity", normalized_text)
+            self.assertIn(
                 "Proof of the Source-Functional Classification",
                 normalized_text,
             )
