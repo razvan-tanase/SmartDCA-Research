@@ -313,6 +313,134 @@
       "review_state": "reviewed"
     },
     {
+      "id": "claim-method-policy-comparisons",
+      "entry_type": "methodology-definition",
+      "wording": "DCA, the neutral guarded selector, and the corrected guarded rule receive identical episode timing, deposits, horizons, evaluation prices, safety factors, and cost rules; complete-system, signal-only, and architecture-only comparisons are distinct ordered contrasts.",
+      "claim_class": "empirical-design",
+      "scope": "The frozen runner contract and declared policy grid; relative gaps use the named right-hand comparator and the three comparisons are not arithmetically additive or a causal decomposition.",
+      "authority": [
+        {"role": "manuscript-methodology-audit", "path": "research/notes/empirical-methodology-reproducibility-manuscript-audit.md"},
+        {"role": "frozen-protocol", "path": "experiments/protocols/safety-adaptivity-yahoo-v2.json"},
+        {"role": "canonical-policy", "path": "research/definitions/guarded-corrected-mean-smartdca-rule.md"},
+        {"role": "shared-runner", "path": "reproducibility/empirical.py"}
+      ],
+      "manuscript_location": "ch:methodology/sec:method-policy-comparisons",
+      "citation_need": "Repository-derived design claim; cite the policy and protocol authorities and keep causal attribution out of the architecture contrast.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-method-evidence-layers",
+      "entry_type": "methodology-definition",
+      "wording": "Deterministic paths, seeded stochastic families, primary rolling history, and registered robustness have separate mechanism, controlled-sensitivity, confirmatory, and post-confirmatory descriptive roles and cannot be pooled as one inferential sample.",
+      "claim_class": "evidence-design",
+      "scope": "The accepted empirical package only; deterministic signs are not frequencies, three-seed summaries are not population estimates, overlapping historical starts are dependent, and robustness does not revise H1 or H2.",
+      "authority": [
+        {"role": "manuscript-methodology-audit", "path": "research/notes/empirical-methodology-reproducibility-manuscript-audit.md"},
+        {"role": "deterministic-report", "path": "reports/experiments/deterministic-adversarial-paths.md"},
+        {"role": "stochastic-report", "path": "reports/experiments/seeded-stochastic-families.md"},
+        {"role": "historical-report", "path": "reports/experiments/confirmatory-historical-evaluation.md"},
+        {"role": "package-review", "path": "research/notes/safety-adaptivity-empirical-package-review.md"}
+      ],
+      "manuscript_location": "ch:methodology/sec:method-evidence-layers",
+      "citation_need": "Use each accepted report for its declared layer and the methodology literature for non-pooling and confirmatory-language limits.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-method-historical-source",
+      "entry_type": "methodology-definition",
+      "wording": "The accepted historical seam distinguishes Yahoo Finance from the pinned yfinance client, fixes SPY adjusted-close and BTC-USD close proxy semantics and point-in-time mapping, fingerprints retained source and prepared-input bytes, and publishes receipts without redistributing restricted observations.",
+      "claim_class": "data-provenance-design",
+      "scope": "The accepted Yahoo source set through the 2025-12-31 cutoff; BTC-USD venue and aggregation remain unverified, a receipt is not source data or a licence, and private observations and price-bearing ledgers stay outside Git.",
+      "authority": [
+        {"role": "manuscript-methodology-audit", "path": "research/notes/empirical-methodology-reproducibility-manuscript-audit.md"},
+        {"role": "accepted-provider-protocol", "path": "experiments/protocols/safety-adaptivity-yahoo-v2.json"},
+        {"role": "provider-review", "path": "research/notes/yahoo-finance-historical-data-provider-review.md"},
+        {"role": "source-receipt", "path": "experiments/inputs/historical-yahoo-receipts-v2.json"},
+        {"role": "preparation-manifest", "path": "experiments/inputs/historical-yahoo-preparation-manifest-v5.json"}
+      ],
+      "citation_keys": ["yfinance2026history", "yahoo2026adjustedclose", "yahoo2026terms", "yahoo2026providers"],
+      "manuscript_location": "ch:methodology/sec:method-historical-source",
+      "citation_need": "Cite the pinned client implementation, Yahoo adjustment semantics, and Yahoo terms/data-provider sources at their respective external claims.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-method-frozen-grid",
+      "entry_type": "methodology-definition",
+      "wording": "The frozen design fixes USD 1000 monthly deposits, exact calendar horizons and evaluation mapping, primary and robustness safety factors, the identity alpha-zero beta-zero equal-weight corrected mean, three cost routes, typed exclusions, and separately registered quarterly robustness schedules.",
+      "claim_class": "registered-empirical-design",
+      "scope": "The accepted protocols and robustness execution plan; alternate corrected-mean robustness configurations remain declared but unexecuted, and only the primary frictionless non-unit grid enters H1 and H2.",
+      "authority": [
+        {"role": "manuscript-methodology-audit", "path": "research/notes/empirical-methodology-reproducibility-manuscript-audit.md"},
+        {"role": "outcome-blind-protocol", "path": "experiments/protocols/safety-adaptivity-v1.json"},
+        {"role": "accepted-provider-protocol", "path": "experiments/protocols/safety-adaptivity-yahoo-v2.json"},
+        {"role": "robustness-plan", "path": "experiments/inputs/historical-yahoo-registered-robustness-v1.json"},
+        {"role": "historical-seam", "path": "reports/experiments/historical-data-episode-seam.md"}
+      ],
+      "manuscript_location": "ch:methodology/sec:method-frozen-grid",
+      "citation_need": "Treat the exact protocol and execution-plan bytes as design authority; do not infer unexecuted parameter behavior.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-method-estimands-inference",
+      "entry_type": "methodology-definition",
+      "wording": "The primary historical estimand is the median comparator-relative terminal-wealth gap; secondary downside and mechanism summaries remain descriptive, while the 10,000-replicate circular block bootstrap, centered finite-run p-value, and full 36-cell Holm adjustment follow the frozen formulas exactly.",
+      "claim_class": "statistical-design",
+      "scope": "H1 and H2 for two assets, three horizons, three non-unit primary coverage values, the primary corrected mean, and frictionless accounting; percentile intervals are cellwise and the resampling procedure neither creates causal identification nor establishes optimal block length.",
+      "authority": [
+        {"role": "manuscript-methodology-audit", "path": "research/notes/empirical-methodology-reproducibility-manuscript-audit.md"},
+        {"role": "frozen-protocol", "path": "experiments/protocols/safety-adaptivity-yahoo-v2.json"},
+        {"role": "statistical-methodology", "path": "research/notes/reproducible-computational-finance-statistical-methodology.md"},
+        {"role": "registered-uncertainty", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/uncertainty.json"},
+        {"role": "independent-reconciliation", "path": "research/notes/safety-adaptivity-empirical-package-review.md"}
+      ],
+      "citation_keys": ["holm1979", "richardsonsmith1991overlap", "kunsch1989blockbootstrap", "politisromano1992circular", "hernanrobins2020"],
+      "manuscript_location": "ch:methodology/sec:method-inference",
+      "citation_need": "Cite the original dependence and multiplicity methods for external positioning, and the protocol for the project-specific formulas and frozen block choice.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-method-analysis-scope",
+      "entry_type": "methodology-boundary",
+      "wording": "Confirmatory hypotheses, secondary mechanisms, registered robustness, and exploratory interpretation retain distinct labels; the frictionless epsilon-DCA theorem does not cover proportional or fixed-fee empirical calculations.",
+      "claim_class": "inferential-scope-boundary",
+      "scope": "The frozen empirical design and current theorem only; no robustness row changes the sealed family and no net-of-cost observation proves or refutes a frictional guarantee.",
+      "authority": [
+        {"role": "manuscript-methodology-audit", "path": "research/notes/empirical-methodology-reproducibility-manuscript-audit.md"},
+        {"role": "frozen-protocol", "path": "experiments/protocols/safety-adaptivity-yahoo-v2.json"},
+        {"role": "robustness-plan", "path": "experiments/inputs/historical-yahoo-registered-robustness-v1.json"},
+        {"role": "safety-theorem", "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"},
+        {"role": "historical-report", "path": "reports/experiments/confirmatory-historical-evaluation.md"}
+      ],
+      "manuscript_location": "ch:methodology/sec:method-analysis-tiers",
+      "citation_need": "Keep external statistical-method citations with the label boundary and repository theorem/report authorities with gross-versus-net scope.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-method-reproducibility",
+      "entry_type": "methodology-definition",
+      "wording": "Accepted CPython 3.12 software, locked protocols and inputs, seven content-bound publication runs, a sanitized private-pass review receipt, public regeneration, authorized private reconciliation, and a clean LaTeX build provide reproduction routes without publishing restricted provider observations.",
+      "claim_class": "reproducibility-design",
+      "scope": "The accepted package identities and declared environments; deterministic regeneration and same-data independent reconciliation are not independent-data replication, and a successful build does not validate a financial claim or imply submission readiness.",
+      "authority": [
+        {"role": "manuscript-methodology-audit", "path": "research/notes/empirical-methodology-reproducibility-manuscript-audit.md"},
+        {"role": "artifact-layer-decision", "path": "docs/adr/0008-place-empirical-protocol-input-run-layers.md"},
+        {"role": "package-review", "path": "research/notes/safety-adaptivity-empirical-package-review.md"},
+        {"role": "review-receipt", "path": "reports/experiments/runs/smartdca-empirical-package-review-v1-6cb6c1cd94b901be90ebd553a022c922e53984afafeb22948747be084b37c14f/review-receipt.json"},
+        {"role": "clean-manuscript-route", "path": "manuscript/build-clean.sh"}
+      ],
+      "citation_keys": ["peng2011reproducible", "nasem2019reproducibility", "moreaumissier2013prov", "farrell2013rfc6920", "wilkinson2016fair"],
+      "manuscript_location": "ch:methodology/sec:method-reproducibility",
+      "citation_need": "Cite reproducibility, replication, provenance, content identity, and restricted-access authorities while identifying project artifacts by exact repository path and digest.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
       "id": "claim-empirical-lambda-one-collapse",
       "entry_type": "empirical-headline",
       "wording": "At lambda equal to one, both guarded policies collapsed transaction by transaction to DCA throughout the reviewed deterministic, stochastic, and historical evidence.",
@@ -323,7 +451,7 @@
         {"role": "synthesis-claim-receipts", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/claim-receipts.json"},
         {"role": "theorem", "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"}
       ],
-      "manuscript_location": "ch:methodology/sec:accounting-regressions",
+      "manuscript_location": "ch:methodology/sec:method-policy-comparisons",
       "citation_need": "Cite the theorem as authority and the synthesis receipt as implementation evidence.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -523,19 +651,37 @@
       "review_state": "accepted"
     },
     {
+      "id": "claim-table-protocol-grid",
+      "entry_type": "manuscript-table",
+      "wording": "The protocol-grid table defines the frozen primary execution axes and identifies the registered coverage, corrected-mean, schedule, horizon, cost, and comparison extensions outside the confirmatory family.",
+      "claim_class": "registered-design-table",
+      "scope": "Protocol-declared axes only; H1 and H2 use the primary frictionless non-unit grid, while the lambda-one and architecture comparisons are secondary and all registered extension rows are descriptive.",
+      "authority": [
+        {"role": "outcome-blind-protocol", "path": "experiments/protocols/safety-adaptivity-v1.json"},
+        {"role": "accepted-provider-protocol", "path": "experiments/protocols/safety-adaptivity-yahoo-v2.json"},
+        {"role": "robustness-plan", "path": "experiments/inputs/historical-yahoo-registered-robustness-v1.json"},
+        {"role": "manuscript-methodology-audit", "path": "research/notes/empirical-methodology-reproducibility-manuscript-audit.md"}
+      ],
+      "manuscript_location": "app:protocols/tab:protocol-grid",
+      "citation_need": "Treat the exact protocol and execution-plan bytes as authority; the table is a readable projection, not a replacement registration.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
       "id": "claim-table-reproducibility",
-      "entry_type": "planned-table",
-      "wording": "Reproducibility inventory binding protocols, inputs, run identities, public artifacts, private receipts, checks, and manuscript assets.",
+      "entry_type": "manuscript-table",
+      "wording": "The reproducibility inventory distinguishes four versioned artifact layers—accepted protocols, inputs or receipts, run bundles, and narrative reports—by repository authority and by their different identity, overwrite, and revision rules.",
       "claim_class": "provenance-table",
-      "scope": "Accepted artifact identities only; private provider observations remain undistributed.",
+      "scope": "Accepted protocols and inputs or receipts receive new identities or versions when bytes change, run bundles are collision-protected, narrative reports may be revised while preserving accurate artifact links and publication state, and private provider observations remain undistributed.",
       "authority": [
         {"role": "artifact-layer-decision", "path": "docs/adr/0008-place-empirical-protocol-input-run-layers.md"},
-        {"role": "package-review", "path": "research/notes/safety-adaptivity-empirical-package-review.md"}
+        {"role": "package-review", "path": "research/notes/safety-adaptivity-empirical-package-review.md"},
+        {"role": "manuscript-methodology-audit", "path": "research/notes/empirical-methodology-reproducibility-manuscript-audit.md"}
       ],
       "manuscript_location": "app:reproducibility/tab:artifact-inventory",
       "citation_need": "Cite external providers and software where introduced; internal identities remain exact repository references.",
       "mandatory": true,
-      "review_state": "accepted"
+      "review_state": "reviewed"
     },
     {
       "id": "claim-figure-thesis-logic",

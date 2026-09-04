@@ -26,6 +26,11 @@
 \setlength{\parskip}{8pt}
 
 \makeatletter
+\g@addto@macro\UrlBreaks{%
+  \do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9%
+  \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j%
+  \do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t%
+  \do\u\do\v\do\w\do\x\do\y\do\z}
 \def\@makechapterhead#1{%
   \vspace*{0pt}%
   {\parindent \z@ \raggedright \normalfont
@@ -153,10 +158,11 @@ release blockers in the institutional contract.
 \chapter{Introduction}
 \label{ch:introduction}
 Drafting now covers the reviewed literature, financial comparison,
-source-functional correction, corrected-signal foundations, and the causal
-impossibility-to-safety policy architecture. The remaining performance,
-empirical, and integrative chapters retain explicit structural placeholders
-until their tracked manuscript slices are resolved.
+source-functional correction, corrected-signal foundations, the causal
+impossibility-to-safety policy architecture, and the frozen empirical
+methodology and reproducibility controls. The results and integrative chapters
+retain explicit structural placeholders until their tracked manuscript slices
+are resolved.
 
 \section*{Manuscript spine}
 The thesis follows one safety-versus-adaptivity argument: a
@@ -1789,21 +1795,466 @@ universal or stochastic superiority claim for the corrected-mean signal.
 
 \chapter{Empirical Methodology and Reproducibility}
 \label{ch:methodology}
-\textbf{Purpose.} Describe the frozen protocol, three-policy comparisons,
-deterministic and stochastic constructions, historical source seam, rolling
-episodes, dependence-aware inference, cost scopes, and immutable identities.
 
-\textbf{Prerequisites.} Chapters \ref{ch:literature} and \ref{ch:safety}, and
-thesis ticket 09.
+This chapter fixes the empirical question before Chapters
+\ref{ch:synthetic-results} and \ref{ch:historical-results} report an outcome.
+The design begins with the same-deposit financial model of Chapter
+\ref{ch:model-signal}, applies the complete guarded policies of Chapter
+\ref{ch:safety}, and asks whether their realized cash-inclusive terminal wealth
+differs under declared path, parameter, and cost conditions. The outcome-blind
+protocol first recorded this design as
+\path{experiments/protocols/safety-adaptivity-v1.json}. When the selected
+Alpha Vantage endpoint proved unavailable without a premium credential, the
+Yahoo replacement protocol
+\path{experiments/protocols/safety-adaptivity-yahoo-v2.json} changed the
+provider-, client-, acquisition-, and provenance-facing fields together with
+protocol identity, registration, disclosure, runtime, and supersession
+metadata before any in-sample historical observation or policy outcome was
+retrieved. The outcome-relevant hypotheses, estimands, schedules, parameter
+grids, uncertainty procedure, multiplicity family, and runner contract
+remained unchanged.
 
-\textbf{Reader outcome.} The reader can identify every inferential unit,
-reproduce public results, and see why evidence layers and confirmatory versus
-robustness analyses cannot be pooled.
+The protocol is a repository-frozen outcome-blind registration, not a filing
+in a third-party registry or a peer-reviewed Registered Report. Registration
+preserves when the analysis choices became fixed; it does not validate the
+policies, eliminate all prior market knowledge, or create causal
+identification. The detailed protocol fields and statistical algorithm appear
+in Appendix \ref{app:protocols}; Appendix \ref{app:reproducibility} binds those
+choices to accepted software, inputs, receipts, and immutable run identities.
 
-\textbf{Placement.} Hypotheses, estimands, comparison tiers, source semantics,
-statistical plan, and the reproduction overview stay in the body. Full
-protocols, receipts, and validation schemas move to Appendices
-\ref{app:protocols} and \ref{app:reproducibility}.
+\section{Policies and Fair Comparison Tiers}
+\label{sec:method-policy-comparisons}
+
+Every episode executes three policies. DCA, denoted by $D$, selects all
+currently available cash $B_t^D$ as its fee-inclusive target budget
+$\widetilde b_t^D=B_t^D$. In the frictionless route this buys the full deposit
+plus any carried cash; under a fee route the actual asset notional is smaller.
+The neutral guarded policy, denoted by $0$, uses the unit-coverage floor
+expression from (\ref{eq:guardrail-floor}) and selects the midpoint target
+budget
+
+\begin{equation}
+  \widetilde b_t^0=\min\!\left\{B_t^0,
+    \max\!\left\{0,m_t^0(\lambda)
+      +\frac12\left(B_t^0-m_t^0(\lambda)\right)\right\}\right\}.
+  \label{eq:method-neutral-policy}
+\end{equation}
+
+The corrected guarded policy, denoted by $c$, uses the same floor expression
+and replaces the neutral one-half selector by the lagged corrected-mean score
+$a_t$:
+
+\begin{equation}
+  \widetilde b_t^c=\min\!\left\{B_t^c,
+    \max\!\left\{0,m_t^c(\lambda)
+      +a_t\left(B_t^c-m_t^c(\lambda)\right)\right\}\right\}.
+  \label{eq:method-corrected-policy}
+\end{equation}
+
+The minimum and maximum make the selected budget executable even when a fee-
+adjusted unit history puts the untrimmed expression outside $[0,B_t^S]$. The
+two guarded target rules otherwise differ only through the discretionary
+selector. Their floor expressions are computed policy by policy from the same
+recursion, so a different cash or unit history can make their later values
+differ without changing the rule. On a fee route, that expression uses the
+DCA unit history produced by the same cost route, not the frictionless DCA
+history.
+
+Let $F_0\geq0$ be the fixed fee and $\varpi\geq0$ the proportional rate. For
+every policy $S$, the runner maps selected budget $\widetilde b_t^S$ to actual
+asset notional $b_t^S$ and fee $F_t^S$ by
+
+\begin{equation}
+  \begin{aligned}
+    (b_t^S,F_t^S)
+    &=\begin{cases}
+      (0,0), & \widetilde b_t^S\leq F_0,\\
+      \left(\dfrac{\widetilde b_t^S-F_0}{1+\varpi},
+        F_0+\varpi\dfrac{\widetilde b_t^S-F_0}{1+\varpi}\right),
+        & \widetilde b_t^S>F_0,
+    \end{cases}\\
+    C_t^S&=B_t^S-b_t^S-F_t^S,
+    &Q_t^S&=Q_{t-1}^S+\frac{b_t^S}{p_t}.
+  \end{aligned}
+  \label{eq:method-cost-execution}
+\end{equation}
+
+The implementation evaluates this map in 60-digit \texttt{Decimal}
+arithmetic and rounds the asset-notional division downward before recording
+the fee and cash. The three routes set $(F_0,\varpi)$ to $(0,0)$, $(0,0.001)$,
+and $(1,0)$, respectively. Only when $F_0=\varpi=0$ does
+$\widetilde b_t^S=b_t^S$, so only that route inherits the sharp purchase-floor
+interpretation and theorem. With fees, actual notional can fall below the
+displayed floor expression. The serialized
+\texttt{target\_purchase\_budget} is a diagnostic: guarded rows
+retain the untrimmed expression inside the displayed projection, whereas DCA
+rows retain post-rounding notional plus fee. At $\lambda=1$ the runner
+therefore validates equality of actual purchase, fee, cash, and units at every
+transaction, not equality of that diagnostic field. It treats the ledger
+equality as an accounting regression rather than a hypothesis test.
+
+Within a comparison, the policies receive the identical realized price path,
+deposit schedule, nominal and mapped purchase dates, horizon date, evaluation
+price, safety factor, and cost scenario. They begin from zero cash and units,
+observe no price after the current purchase date, and are valued at the same
+evaluation date. A proportional or fixed fee is charged by the same accounting
+rule to every named policy; changing a comparator never changes the episode or
+funding supplied to it.
+
+Three ordered comparisons answer different questions:
+
+\begin{enumerate}
+  \item \emph{complete system}, $c$ versus $D$, measures the guarded
+  corrected-mean policy as a whole against same-deposit DCA;
+  \item \emph{signal only}, $c$ versus $0$, holds the safety architecture and
+  neutral benchmark fixed to isolate the realized effect of replacing the
+  one-half selector by the corrected-mean score; and
+  \item \emph{architecture only}, $0$ versus $D$, describes the configured
+  neutral guardrail against DCA without attributing the difference to the
+  corrected-mean signal.
+\end{enumerate}
+
+These relative comparisons have different denominators and are not
+arithmetically additive. Nor is the architecture-only comparison a causal
+decomposition: it is a realized contrast between two fully specified policies
+on a common episode. Keeping all three visible prevents complete-system
+performance from being credited automatically to the score or the proved
+safety floor from being mistaken for observed outperformance.
+
+\section{Four Evidence Layers, Four Inferential Roles}
+\label{sec:method-evidence-layers}
+
+The evaluation separates four evidence layers. No layer lends its inferential
+unit to another, and the cross-layer synthesis may compare patterns without
+pooling their rows into a new test.
+
+\paragraph{Deterministic paths.}
+The saved deterministic design contains interpretable constant, trend,
+valley, recovery, crash, rebound, drawdown, flat segment, carried cash, and
+adaptive timing paths, together with exact boundary regressions and typed
+invalid attempts. It also retains an exhaustive search over one declared
+finite hostile-path grid. These paths expose accounting, guardrail, and
+terminal cash and unit mechanisms and can falsify a universal conjecture by an
+exact counterexample. They have no random seed or population sampling law;
+their signs and win counts are not probabilities.
+
+\paragraph{Seeded stochastic families.}
+Five controlled constructions---trend, mean reversion, stochastic volatility,
+regime switching, and jump diffusion---use the common saved seeds
+$104729$, $130363$, and $155921$ at 12-, 36-, and 60-month horizons. Each
+family has one primary configuration and one explicitly exploratory
+sensitivity. The parameters are stress controls rather than estimates fitted
+to a historical asset. Three paths per configuration reveal reproducible
+sensitivity, not a population win rate, calibrated market probability, or
+expected-return estimate.
+
+\paragraph{Primary rolling history.}
+The only confirmatory layer uses every eligible monthly first-of-month start
+for the frozen SPY and BTC-USD series and the 12-, 36-, and 60-month horizons.
+It evaluates the registered complete-system hypothesis H1 and signal-only
+hypothesis H2 with a dependence-aware circular moving-block bootstrap and one
+36-test Holm family. Overlap means that the episode rows are ordered dependent
+starts, not independent market histories.
+
+\paragraph{Registered robustness.}
+After primary outcomes had been accessed, a separate locked execution plan
+identified how to run the already declared additional coverage and quarterly
+horizon axes before those extension outcomes were computed. Those rows are
+post-confirmatory descriptive robustness: they carry signed estimates and
+validation receipts, but no new bootstrap, $p$-value, confidence interval, or
+multiplicity decision. They cannot revise H1 or H2. Outcome-suggested regime
+labels, calendar splits, extra parameters, or diagnostics would be exploratory
+and require that label.
+
+The canonical synthetic run and historical fixture validation are supporting
+infrastructure rather than fifth performance layers. They exercise the common
+runner and historical handoff without supplying a confirmatory market result.
+
+\section{Historical Source and Point-in-Time Episodes}
+\label{sec:method-historical-source}
+
+The historical source service is Yahoo Finance; \texttt{yfinance==1.7.0} is
+the pinned acquisition client, not the provider. The client call
+uses \texttt{Ticker.history} with explicit closed date ranges,
+\path{interval=1d}, \path{auto_adjust=false},
+\path{actions=true}, \path{repair=false}, \path{keepna=true}, and no
+optional rounding or pre/post-market data. This distinction matters because
+the client parses and transforms Yahoo responses before emitting the canonical
+CSV export \citep{yfinance2026history}.
+
+The SPY series is the returned adjusted close, retained alongside raw close
+and action columns for audit and interpreted as an investable S\&P 500 ETF
+proxy. Yahoo describes adjusted close as incorporating applicable split and
+dividend-distribution adjustments \citep{yahoo2026adjustedclose}; dividends
+are therefore not added again to the policy ledger. The BTC-USD series uses
+the unadjusted returned USD \texttt{Close}. It is a Bitcoin/USD quotation
+proxy; its exact venue and aggregation semantics are not independently
+established. The frozen normalization timezones are
+\texttt{America/New\_York} for SPY and UTC for BTC-USD, and acquisition rejects
+runtime metadata inconsistent with those declarations. The inclusive eligible
+starts are 1993-02-01 and 2015-01-01 respectively, with a common data cutoff of
+2025-12-31.
+
+For a nominal monthly start $s$ and horizon $H$, exactly $H$ deposits of USD
+1000 occur at $s,s+1,\ldots,s+H-1$ calendar months; the exact date $s+H$
+receives no deposit. Each nominal deposit maps to the first eligible
+observation on or after its date. The common evaluation price is the last
+eligible observation on or before the exact horizon date. SPY mappings may
+move by at most seven calendar days and BTC-USD mappings by at most one;
+otherwise the attempt is excluded. There is no interpolation or price carry,
+and two nominal purchases may not map to the same observation. The primary
+start grid advances by one month and includes every start whose exact horizon
+date does not exceed the cutoff.
+
+At each mapped purchase the runner exposes only observations available through
+that date. Each attempted start is retained either as an included point-in-time
+rolling episode or with one typed exclusion reason. The accepted preparation
+then fingerprints the exact normalized series, full attempted schedules, and
+runner input before any policy executes. The manifest records
+\texttt{policy\_execution=not-run}, separating data preparation from outcome
+creation.
+
+The source boundary is deliberately asymmetric. Sanitized acquisition and
+normalization receipts publish provider, client, request flags, timezones,
+currencies, row and date coverage, schemas, byte lengths, parser identities,
+and SHA-256 fingerprints. Canonical client exports, normalized observations,
+episode schedules, price-bearing ledgers, and row-level historical outcomes
+remain access-controlled outside Git. Yahoo's published terms and Finance data
+guide did not supply an affirmative redistribution grant for these observations
+\citep{yahoo2026terms,yahoo2026providers}; a content fingerprint or private
+review receipt does not change that boundary. The receipt identifies retained
+bytes but is not a substitute for them, a licence, or validation of a financial
+claim.
+
+\section{Frozen Policies, Horizons, and Costs}
+\label{sec:method-frozen-grid}
+
+The primary safety grid is
+$\lambda\in\{1,0.9,0.75,0.5\}$, where
+$\lambda=1-\varepsilon$. Unit coverage is the transaction-level DCA collapse
+boundary and is excluded from H1/H2. The primary corrected-mean configuration
+is \texttt{identity-a0-b0}: identity transform, $\alpha=0$, $\beta=0$, and
+equal weights. It was selected as the theoretically admissible
+countercyclical diagonal baseline without historical outcome access. No
+historical outcome is used to tune this configuration.
+
+All deterministic and stochastic episodes cross that primary safety and
+corrected-mean grid with the same three costs. Historical confirmatory tests
+use only the non-unit primary coverage values, the primary corrected mean, and
+frictionless accounting. The three cost routes are:
+
+\begin{enumerate}
+  \item \emph{frictionless}: selected cash budget equals asset notional;
+  \item \emph{proportional 10 bps}: the fee is 10 basis points of asset
+  notional and notional plus fee cannot exceed the selected budget; and
+  \item \emph{fixed USD 1}: a one-dollar fee is paid only when the selected
+  budget exceeds one dollar, otherwise no purchase or fee occurs.
+\end{enumerate}
+
+The declared robustness coverage values are
+$\{0.99,0.95,0.8,0.6,0.25\}$. The registered extension reuses the sealed
+monthly episodes for those values and separately constructs quarterly
+first-eligible schedules with a three-month rolling stride at 6-, 24-, and
+120-month horizons. A quarterly horizon $H$ has deposits at offsets
+$0,3,\ldots,H-3$, hence 2, 8, or 40 deposits; the horizon date again receives
+none. Four alternate corrected-mean configurations were declared but remain
+unexecuted. They are not silently selected from observed outcomes.
+
+The runner rejects invalid schemas or parameters, provider error payloads,
+fingerprint or series-semantic mismatches, nonpositive observations,
+unavailable purchase or evaluation mappings, duplicate mapped purchases,
+out-of-range episodes, nonpositive comparator wealth, numerical or accounting
+failures, and run-identity collisions. Included ledgers must pass causal-prefix,
+full-funding, nonnegative-cash, buy-only, direct-wealth, cash/unit attribution,
+frictionless unit-coverage, common-floor, independent-DCA, $\lambda=1$, and
+theorem-scope validations. Appendix \ref{app:protocols} records the exact
+machine-readable values.
+
+\section{Estimands, Downside, and Mechanisms}
+\label{sec:estimands}
+
+For an included episode start $s$, ordered policies $S$ and $T$, and common
+evaluation price, define the relative terminal-wealth gap
+
+\begin{equation}
+  g_s^{S,T}=\frac{W_s^S-W_s^T}{W_s^T},
+  \qquad W_s^T>0.
+  \label{eq:method-relative-gap}
+\end{equation}
+
+The named comparator $T$ supplies the denominator. A nonpositive comparator
+wealth is excluded with reason
+\texttt{comparator\_terminal\_wealth\_nonpositive}. The wealth ratio is
+$1+g_s^{S,T}$. The primary cell estimand is the median of the included
+$g_s^{S,T}$ values; the terminal-wealth-ratio distribution remains a second
+primary descriptive object.
+
+Secondary summaries retain the mean relative gap, linearly interpolated 5th,
+10th, and 25th percentiles, minimum and maximum gaps, worst relative
+shortfall, and win/tie/loss counts. A worst shortfall reports the magnitude of
+the most negative included gap, or zero when none is negative; it is not a
+value-at-risk model. Interpolated quantiles use sorted values and zero-based
+position $(N-1)p$.
+
+For each policy ledger, terminal cash drag is terminal cash divided by total
+deposits. Terminal asset exposure is terminal asset value divided by terminal
+wealth when that wealth is positive. Guardrail activation frequency is the
+fraction of purchase steps whose clipped floor is active; mean guardrail floor
+is the arithmetic mean of the per-step floor. The runner also records positive
+purchase count and total fees. For each ordered comparison it stores terminal
+cash difference, terminal unit difference, and their contributions
+
+\begin{equation}
+  W_s^S-W_s^T
+  =\left(C_s^S-C_s^T\right)
+   +P_s\left(Q_s^S-Q_s^T\right).
+  \label{eq:method-terminal-attribution}
+\end{equation}
+
+This mechanism equality is exact ledger accounting. It does not assign a
+causal reason to a realized gap or turn cash drag, activation, exposure, or
+average acquisition cost into a performance criterion.
+
+\section{Registered Historical Inference}
+\label{sec:method-inference}
+
+H1 tests the complete-system median gap $c$ versus $D$; H2 tests the
+signal-only median gap $c$ versus $0$. Both alternatives are two-sided. Each
+is evaluated separately for two assets, three primary horizons, and the three
+non-unit primary coverage values under \texttt{identity-a0-b0} and
+frictionless accounting. This gives one sealed family of
+$2\times3\times3\times2=36$ hypotheses. The architecture-only distribution
+$0$ versus $D$ is prespecified secondary evidence, labelled S1, and is not a
+37th test.
+
+Within one asset--horizon cell, the historical sampling unit is one ordered
+nominal monthly episode start. The starts overlap and remain dependent
+\citep{richardsonsmith1991overlap}. For a cell with $N$ included gaps, let
+$\widehat{\theta}$ be their median and let the circular block length $L$ equal
+the episode horizon in one-month stride units. For each of $B=10{,}000$
+replicates, the registered procedure draws block starts
+independently and uniformly from $\{0,\ldots,N-1\}$, appends $L$ consecutive
+ordered gaps with circular wraparound, truncates the last block to obtain
+exactly $N$ values, and recomputes the median $\widehat{\theta}_b$
+\citep{kunsch1989blockbootstrap,politisromano1992circular}. Thus the episode
+start is the sampling unit, a consecutive circular block of starts is the
+resampling unit, and an asset--horizon--coverage--comparison cell is the
+multiplicity unit. These roles must not be pooled or renamed.
+
+The base seed is $20260825$. Each cell receives an order-independent integer
+seed from the first 16 hexadecimal digits of SHA-256 applied to the UTF-8 text
+
+\begin{equation}
+  \texttt{seed|dataset|horizon|coverage|comparison|mean|cost}.
+  \label{eq:method-cell-seed}
+\end{equation}
+
+The two-sided 95\% percentile interval is the 2.5th and 97.5th percentile of
+the uncentered $\widehat{\theta}_b$ values, using linear interpolation at
+zero-based position $(B-1)p$. It is a cellwise interval, not a simultaneous or
+Holm-adjusted one. For the null value zero, the centered two-sided finite-run
+$p$-value is
+
+\begin{equation}
+  p_{\mathrm{raw}}
+  =\frac{1+\sum_{b=1}^{B}
+    \mathbf{1}\{|\widehat{\theta}_b-\widehat{\theta}|
+      \geq |\widehat{\theta}|\}}{B+1}.
+  \label{eq:method-finite-p}
+\end{equation}
+
+Raw values are sorted by $p$ and then, for exact ties, by dataset, horizon,
+numeric coverage, H1 before H2, corrected-mean configuration, and cost. If
+$p_{(1)}\leq\cdots\leq p_{(36)}$, the reported Holm-adjusted value at rank $i$
+is
+
+\begin{equation}
+  \widetilde p_{(i)}=
+  \min\left\{1,\max_{1\leq j\leq i}(36-j+1)p_{(j)}\right\}.
+  \label{eq:method-holm}
+\end{equation}
+
+Holm's procedure controls family-wise error conditional on valid cellwise
+$p$-values and does not alter the point estimates \citep{holm1979}. The
+registered family-wise alpha is $0.05$; the accepted reporting rule labels a
+cell rejected exactly when its Holm-adjusted value is strictly below $0.05$.
+The registered block construction preserves local order in the gaps, but its
+validity remains conditional on the adequacy of the ordered
+stationary/dependence approximation. It does not make overlapping episodes
+independent or establish that the frozen horizon-length block is optimal. Nor
+does resampling create causal identification \citep{hernanrobins2020}. Signed
+medians, intervals, episode counts, and adjusted decisions are therefore
+reported together rather than reducing a cell to a significance label.
+
+\section{Analysis Tiers and Theorem Scope}
+\label{sec:method-analysis-tiers}
+
+Confirmatory language is reserved for H1 and H2 under the primary historical
+grid and the sealed 36-test family. Prespecified secondary analyses cover the
+$\lambda=1$ accounting collapse, architecture-only comparison, and mechanism,
+downside, exposure, cash, unit, activation, purchase, and fee summaries.
+Registered robustness covers only its named coverage, cost, schedule, horizon,
+and deferred parameter axes and is descriptive because no extension uncertainty
+procedure was registered. Exploratory interpretation is limited to transparent
+hypothesis generation after outcome access; it cannot be relabelled as primary
+evidence.
+
+The frictionless theorem and the empirical cost routes are also separate
+before any result is read. Only a frictionless ledger is tagged
+\texttt{epsilon-dca}; the 10-basis-point and one-dollar routes are tagged
+\path{outside-current-safety-theorem}. The theorem proves a model-free
+relative-wealth floor under its gross unit-accounting model. Net-of-cost rows
+are finite empirical calculations and neither inherit that guarantee nor
+invalidate it. Likewise, deterministic catalogs, three-seed constructions,
+and realized historical associations establish no universal, expected,
+causal, or market-wide policy ordering.
+
+\section{Reproducibility Statement}
+\label{sec:method-reproducibility}
+
+The accepted evaluation runtime is CPython 3.12. Policy execution, synthetic
+generation, historical preparation after acquisition, aggregation,
+bootstrap, Holm adjustment, synthesis, and independent package review use the
+standard library. Authorized acquisition is a separate CPython 3.12
+environment pinned by \path{requirements-historical.txt} to
+\texttt{yfinance==1.7.0} and its complete dependency set. Live acquisition is
+not a test dependency and must not be repeated merely to reproduce accepted
+outcomes.
+
+The artifact model has four versioned layers: immutable protocols, versioned
+inputs or sanitized receipts, content-derived run bundles, and revisable
+narrative reports. These provenance links record entities and derivations
+without validating a finance interpretation \citep{moreaumissier2013prov}.
+For identity-bearing protocols, inputs or receipts, and run bundles, accepted
+bytes are not overwritten; changed bytes receive a new identity. Narrative
+reports may be revised, but their artifact links and publication state must
+remain accurate. Run identity binds the engine version, runner source SHA-256,
+canonical protocol SHA-256, and versioned-input SHA-256; the hash provides a
+content-integrity binding rather than physical immutability or semantic validation
+\citep{farrell2013rfc6920}. Existing output directories are collision targets,
+not update targets.
+
+Public reproduction regenerates the canonical, deterministic, stochastic, and
+cross-layer synthesis artifacts and verifies the retained sanitized private
+review receipt. Authenticated private access and persistent public metadata
+remain distinct, and neither supplies a usage licence
+\citep{wilkinson2016fair}. An authorized reviewer with the receipt-bound
+private directories can additionally reconstruct all historical dates, replay
+a registered slice, reconcile all primary aggregates, reproduce all 36
+bootstrap streams and Holm values, and regroup the robustness rows through an
+implementation that does not import the producer's numerical recurrence.
+This is independent reconciliation on the same retained observations, not
+independent-data replication \citep{peng2011reproducible,nasem2019reproducibility}.
+
+Appendix \ref{app:reproducibility} records the two protocol digests, source and
+preparation receipts, seven accepted publication run identities, independent
+review identity, exact public and private review routes, focused checkpoints,
+and the clean manuscript build. The canonical thesis source is this LaTeX
+file; \path{manuscript/build.py} validates controls and scientific seams before
+rendering, while \path{manuscript/build-clean.sh} supplies the dated
+Debian/TeX route. A successful partial-draft build demonstrates a reproducible
+manuscript artifact, not submission readiness and not the truth of a financial
+claim.
 
 \chapter{Deterministic and Stochastic Evaluation}
 \label{ch:synthetic-results}
@@ -2644,13 +3095,380 @@ the separate $\lambda$-DCA safety floor.
 
 \chapter{Empirical Protocols and Statistical Controls}
 \label{app:protocols}
-Frozen grids, hypotheses, episode mapping, exclusions, block bootstrap, Holm
-correction, robustness registration, and cost-scope rules will be placed here.
+
+This appendix is the audit-oriented companion to Chapter
+\ref{ch:methodology}. The machine-readable authority remains the accepted JSON
+and the retained run manifests; the appendix makes their frozen values readable
+without replacing them.
+
+\section{Protocol Identities and Inheritance}
+\label{sec:appendix-protocol-identities}
+
+\begin{sloppypar}
+The original outcome-blind protocol is
+\path{experiments/protocols/safety-adaptivity-v1.json}, SHA-256
+\path{a508b4f064dcb3930f137e7754180ca0ec43749680278acb5b42fe2345c8d6e4}.
+The accepted provider-replacement protocol is
+\path{experiments/protocols/safety-adaptivity-yahoo-v2.json}, SHA-256
+\path{a5194248f7b55073e60b357c01c4993c1e50ed20c9c9672daf4780db1127f2be}.
+Both are locked. The second supersedes the first for provider, client,
+series, source-export, provenance, disclosure, and acquisition-dependency
+behavior; it also carries a new protocol identity and updated registration,
+runtime, and supersession metadata. Parsed review confirmed equality of the
+outcome-relevant objects
+\path{episode_design}, \path{coverage}, \path{corrected_mean},
+\path{cost_scenarios}, \path{hypotheses}, \path{estimands},
+\path{multiplicity}, \path{uncertainty}, \path{analysis_tiers},
+\path{exclusions}, \path{robustness_design}, \path{canonical_run},
+and \path{runner_contract}. Its registration-time
+\path{confirmatory_outcomes_accessed=false} field records the lock boundary;
+the historical audit separately records the later outcome opening.
+\end{sloppypar}
+
+\section{Execution Grid}
+\label{sec:appendix-execution-grid}
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.14}
+  \begin{tabular}{L{0.20\textwidth}L{0.32\textwidth}L{0.37\textwidth}}
+    \hline
+    Axis & Primary & Outside the confirmatory family \\
+    \hline
+    Policies & DCA, neutral guarded, corrected guarded & Same policies; no outcome-selected replacement \\
+    Coverage & $1,0.9,0.75,0.5$ & $0.99,0.95,0.8,0.6,0.25$ robustness \\
+    Corrected mean & identity, $\alpha=0$, $\beta=0$, equal weights & Four declared alternate configurations, currently unexecuted \\
+    Historical horizons & Monthly 12, 36, 60 months & Quarterly 6, 24, 120 months \\
+    Costs & Frictionless for H1/H2 & Proportional 10 bps and fixed USD 1 \\
+    Comparisons & $c$ versus $D$; $c$ versus $0$ & $0$ versus $D$ is secondary; all extension rows descriptive \\
+    \hline
+  \end{tabular}
+  \caption{Frozen empirical execution axes and their inferential boundary.}
+  \label{tab:protocol-grid}
+\end{table}
+
+The deterministic catalog crosses 18 valid saved paths with four primary
+coverage values, one primary mean configuration, three costs, and three
+policies; three invalid design attempts remain as typed exclusions. The seeded
+study crosses five families, primary and exploratory configurations, three
+seeds, three horizons, and the same policy grid, for 90 generated paths. These
+synthetic studies also use USD 1000 deposits, but their timing follows the
+saved path definitions rather than the historical observation-date mapping.
+Deterministic horizons and evaluation dates are part of each saved case; the
+seeded study makes $H$ monthly deposits and evaluates one month after the last
+deposit. Neither synthetic layer has a confirmatory resampling claim.
+
+The primary historical grid uses two datasets, monthly starts, 12-, 36-, and
+60-month horizons, USD 1000 at every monthly purchase opportunity, one-month
+rolling stride, four coverage values, three cost routes, and three policies.
+Only frictionless $\lambda\in\{0.9,0.75,0.5\}$ for $c$ versus $D$ and $c$
+versus $0$ enters inference. Quarterly robustness uses a three-month deposit
+interval and stride; comparisons are always within one schedule because raw
+wealth is not comparable across different deposit counts.
+
+\section{Episode Mapping and Exclusions}
+\label{sec:appendix-episode-mapping}
+
+For every dataset and horizon, nominal starts are generated before observation
+mapping. A start is eligible only when its exact calendar horizon is no later
+than 2025-12-31. Purchase dates map forward to the first eligible observation;
+the evaluation date maps backward from the exact horizon. The SPY tolerance is
+seven calendar days in either direction and the BTC-USD tolerance is one. No
+interpolation or carry fills a missing price. The complete nominal schedule,
+mapped rows, exact horizon, mapped evaluation date, and exclusion evidence are
+serialized for every attempt.
+
+The exhaustive protocol exclusion vocabulary is:
+
+\begin{itemize}
+  \item invalid schema or parameter, provider error payload, content
+  fingerprint mismatch, or series-semantics mismatch;
+  \item a nonpositive observation, unavailable mapped purchase date,
+  unavailable mapped evaluation date, duplicate mapped purchase date, or
+  episode outside the frozen date range;
+  \item nonpositive comparator terminal wealth, numerical failure, accounting
+  invariant failure, or run-identity collision.
+\end{itemize}
+
+An exclusion remains in the attempt ledger and does not enter an estimand. The
+accepted primary preparation contains 1,365 included rolling episodes and zero
+exclusions; those observed counts are provenance and completeness facts, not
+evidence that the mapping rule could never exclude another source edition.
+
+\section{Hypotheses, Estimands, and Summaries}
+\label{sec:appendix-hypotheses-estimands}
+
+H1 is the two-sided test of the median relative terminal-wealth gap for
+corrected guarded versus DCA. H2 is the corresponding two-sided test for
+corrected guarded versus neutral guarded. Both are cellwise tests under the
+primary corrected mean, non-unit primary coverage, and frictionless
+accounting. S1 is the descriptive distribution of neutral guarded versus DCA.
+The exact relative gap is (\ref{eq:method-relative-gap}); the denominator is
+always the named right-hand comparator.
+
+The retained aggregate schema includes attempted, included, and excluded
+counts; arithmetic mean and median relative gaps; wealth ratios; 5th, 10th,
+and 25th percentile gaps; minimum and maximum gaps; win/tie/loss counts;
+terminal cash, unit, and wealth differences; policy cash drag and asset
+exposure; floor activation and mean floor; positive purchase counts; and fees.
+Every cash/unit attribution must have zero identity residual at the accepted
+precision. The average acquisition cost remains a separate accounting quantity
+and is not used as an H1 or H2 performance estimand.
+
+\section{Circular Block Bootstrap and Holm Family}
+\label{sec:appendix-bootstrap-holm}
+
+For each of the 36 primary cells, sort included episode gaps by nominal monthly
+start. Let $N$ be that cell's number of starts and $L\in\{12,36,60\}$ its
+horizon. The cell seed is derived from base seed $20260825$ by the SHA-256 rule
+in (\ref{eq:method-cell-seed}); this makes the stream independent of execution
+order. CPython 3.12 \texttt{random.Random} uses MT19937, and each block start
+is drawn with \texttt{randrange(N)}.
+
+Each of 10,000 replicates concatenates circular length-$L$ blocks until at
+least $N$ values have been collected, truncates to $N$, and recomputes the
+median. Percentiles linearly interpolate the ordered uncentered statistics at
+$(B-1)p$. Equation (\ref{eq:method-finite-p}) gives the finite-run centered
+two-sided tail value, including the plus-one numerator and denominator.
+
+The exact Holm tie order is unadjusted $p$-value, dataset identifier, horizon,
+numeric coverage, comparison with H1 before H2, corrected-mean identifier, and
+cost identifier. Cumulative maxima in (\ref{eq:method-holm}) are capped at one.
+The family contains all and only the 36 declared H1/H2 cells. The reported 95\%
+percentile intervals remain cellwise; neither Holm adjustment nor the block
+procedure makes them simultaneous intervals. The registered family-wise alpha
+is $0.05$, and the accepted report counts a rejection only when the
+Holm-adjusted value is strictly below $0.05$. Validity remains conditional on
+the adequacy of the ordered stationary/dependence approximation; the frozen
+block length is reproducible but is not asserted to be optimal.
+
+\section{Tier and Scope Controls}
+\label{sec:appendix-tier-scope}
+
+\begin{sloppypar}
+The primary run alone may emit \texttt{confirmatory} H1/H2 rows. The
+architecture comparison, $\lambda=1$ collapse, and mechanism summaries are
+secondary. The plan
+\path{experiments/inputs/historical-yahoo-registered-robustness-v1.json}
+was locked after primary outcome access and before its own outcomes; it emits
+only robustness rows and records uncertainty as
+\texttt{descriptive-only; no confirmatory bootstrap or multiplicity test}.
+The four alternate mean configurations remain declared but unexecuted.
+\end{sloppypar}
+
+Every cost row carries a theorem-scope field. Frictionless rows may be checked
+against the epsilon-DCA unit guarantee; proportional and fixed-fee rows must
+say \path{outside-current-safety-theorem}. A finite observed gap that happens
+to respect the numerical floor under fees is not promoted to a theorem.
 
 \chapter{Reproducibility and Artifact Provenance}
 \label{app:reproducibility}
-Software, commands, immutable run identities, source receipts, generated
-assets, and public/private evidence boundaries will be placed here.
+
+\section{Accepted Software and Environments}
+\label{sec:appendix-software-environments}
+
+The empirical runner and all accepted public replays use CPython 3.12 and the
+Python standard library. The final private package review recorded CPython
+3.12.14 on macOS arm64; run identities intentionally bind the registered
+major/minor runtime rather than a patch-only string. Acquisition alone uses
+\texttt{yfinance==1.7.0}, commit
+\path{3d9d2f0cacb662bff689874cd6113bae3a30a885}, with all 23 dependencies
+pinned in \path{requirements-historical.txt}. Its SHA-256 is
+\path{3a53181ceea7b7b79a80f3005c3b2bd0dbdefab25152ff07826ee1a2ab438a76}.
+
+The manuscript control and rendering scripts require a compatible Python 3,
+\texttt{latexmk}, pdfLaTeX, BibTeX, and the declared LaTeX packages; Poppler
+supplies \texttt{pdftotext}, \texttt{pdftohtml}, and \texttt{pdfinfo} for
+rendered inspection. The supported local helper selects CPython 3.12. The
+clean route instead builds from \texttt{debian:bookworm-20260824-slim} using
+that image's distribution \texttt{python3} and
+\path{manuscript/environment/Dockerfile}; it validates the retained empirical
+identities but does not regenerate them. The PDF is derived output; the
+authoritative bytes are \path{manuscript/source/thesis.tex}, the bibliography,
+controls, and generated assets.
+
+\section{Artifact Layers and Historical Input Identity}
+\label{sec:appendix-artifact-layers}
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.13}
+  \begin{tabular}{L{0.19\textwidth}L{0.31\textwidth}L{0.39\textwidth}}
+    \hline
+    Layer & Repository authority & Identity and retention rule \\
+    \hline
+    Protocol & \path{experiments/protocols} & Accepted bytes never change; a revision receives a new protocol identity. \\
+    Input or receipt & \path{experiments/inputs} & Runner inputs are versioned; restricted source bytes publish only sanitized fingerprints and metadata. \\
+    Run bundle & \path{reports/experiments/runs} & Content-derived identity binds code, protocol, and input; collision prevents overwrite. \\
+    Narrative report & \path{reports/experiments} & Revisable; keeps artifact links and publication state accurate without replacing machine artifacts. \\
+    \hline
+  \end{tabular}
+  \caption{Four versioned artifact layers and their distinct identity and retention rules.}
+  \label{tab:artifact-inventory}
+\end{table}
+
+\begin{sloppypar}
+The accepted sanitized Yahoo source set is
+\path{yahoo-finance-historical-8b6758e9ad215699e21cd8907e233e00407a70c1b13b13b5490e1578921e260b}.
+Its committed receipt
+\path{experiments/inputs/historical-yahoo-receipts-v2.json} has SHA-256
+\path{346676eb699d4e64cee7f687a04f207d6ab4daff92abae780719368d259f97f4}.
+The receipt binds the SPY canonical export to
+\path{eaf69d50bef6d77ff68fb6a52e0cc162c12eded8d8f00ef48d79922d0784458d}
+and the BTC-USD export to
+\path{add11cc84321e32785034c07eced636fc01be8c7202867926b9e2ee77e23b3ee}.
+\end{sloppypar}
+
+\begin{sloppypar}
+The accepted preparation identity is
+\path{smartdca-historical-input-v1-4da2c9a1982b48cc821969e802118270d7a95e44cc03107e8d2846729df0e14f}.
+Manifest version 5 has SHA-256
+\path{f86691e21acb8f1f70d9d9124c020f126014aae5aa631c90a0f82165814e5894}
+and binds runner input SHA-256
+\path{d49a5a6e0304a7da213082698990d46bec7f7cac2399533990f84a40183bec88}.
+The source and preparation receipts contain no provider price or policy
+outcome. The separate package-review receipt contains aggregate claim-audit
+counts and pass/fail evidence, but no row-level or private outcome value.
+\end{sloppypar}
+
+\section{Accepted Publication Runs and Independent Review}
+\label{sec:appendix-run-identities}
+
+The independent package review accepts exactly these seven publication run
+identities:
+
+\begin{sloppypar}
+\begin{enumerate}
+  \item \path{smartdca-run-v1-b029028a9a8e5104359c4999b26e42f1dc81207eb4eb29b1dfba9fcae83473e0};
+  \item \path{smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db};
+  \item \path{smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25};
+  \item \path{smartdca-historical-validation-v1-d376ff1411774e40978ea1aa4c0dcf4e18603d93fbfcb017cbfa18538ea7b499};
+  \item \path{smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221};
+  \item \path{smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184}; and
+  \item \path{smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26}.
+\end{enumerate}
+\end{sloppypar}
+
+\begin{sloppypar}
+The independent review itself is
+\path{smartdca-empirical-package-review-v1-6cb6c1cd94b901be90ebd553a022c922e53984afafeb22948747be084b37c14f}.
+Its sanitized \texttt{review-receipt.json}, SHA-256
+\path{9ad1daa4c43e81232fdfbabb295c37a67b87422f11b8de7abf8c2c9b38df1e9b},
+contains identities, hashes, counts, and pass/fail evidence only. The adjacent
+manifest binds the separate review module, checkpoint, all seven accepted run
+manifests, and an empty failure ledger. A public-only review verifies this
+retained private-pass receipt; it does not pretend to reread inaccessible
+observations.
+\end{sloppypar}
+
+\section{Public Regeneration Routes}
+\label{sec:appendix-public-reproduction}
+
+Use new output directories; an accepted identity already present at the target
+is an intentional collision failure. The canonical runner bundle regenerates
+with:
+
+\begin{verbatim}
+python3.12 -m reproducibility.empirical \
+  --config experiments/protocols/safety-adaptivity-v1.json \
+  --input experiments/inputs/canonical-synthetic-v1.json \
+  --output-root /tmp/smartdca-canonical-replay
+\end{verbatim}
+
+The deterministic and stochastic bundles regenerate with:
+
+\begin{verbatim}
+python3.12 -m reproducibility.deterministic_study \
+  --config experiments/protocols/safety-adaptivity-v1.json \
+  --study experiments/inputs/deterministic-adversarial-v1.json \
+  --output-root /tmp/smartdca-deterministic-replay
+
+python3.12 -m reproducibility.stochastic_study \
+  --config experiments/protocols/safety-adaptivity-v1.json \
+  --study experiments/inputs/seeded-stochastic-families-v1.json \
+  --output-root /tmp/smartdca-stochastic-replay
+\end{verbatim}
+
+The cross-layer synthesis and the public side of the final review use:
+
+\begin{verbatim}
+python3.12 -m reproducibility.safety_adaptivity_synthesis \
+  --manifest experiments/inputs/safety-adaptivity-synthesis-v1.json \
+  --output-root /tmp/smartdca-synthesis-replay
+
+python3.12 -m reproducibility.empirical_package_review \
+  --output-root /tmp/smartdca-publication-review
+\end{verbatim}
+
+The corresponding public checkpoints are:
+
+\begin{verbatim}
+python3.12 -m unittest \
+  reproducibility.checks.check_empirical_protocol_canonical_run \
+  reproducibility.checks.check_deterministic_adversarial_study \
+  reproducibility.checks.check_stochastic_family_study \
+  reproducibility.checks.check_historical_data_episode_seam \
+  reproducibility.checks.check_historical_confirmatory_evaluation \
+  reproducibility.checks.check_historical_robustness_evaluation \
+  reproducibility.checks.check_safety_adaptivity_synthesis \
+  reproducibility.checks.check_empirical_package_publication_review
+\end{verbatim}
+
+The historical confirmatory and robustness public checks validate committed
+aggregates, uncertainty, manifests, and private-artifact receipts. Live
+row-level replay additionally requires the retained private inputs.
+
+\section{Authorized Private Reconciliation}
+\label{sec:appendix-private-reconciliation}
+
+An authorized reviewer supplies three receipt-bound directories to the same
+review command: the accepted preparation identity, the primary historical run
+identity, and the robustness run identity listed above. In a shell, set
+task-specific variables to those exact retained directories, then run:
+
+\begin{verbatim}
+python3.12 -m reproducibility.empirical_package_review \
+  --output-root /tmp/smartdca-private-review \
+  --private-preparation-directory "$SMARTDCA_PREPARATION_DIR" \
+  --private-historical-run-directory "$SMARTDCA_PRIMARY_RUN_DIR" \
+  --private-robustness-run-directory "$SMARTDCA_ROBUSTNESS_RUN_DIR"
+\end{verbatim}
+
+The output root must be new. The route regenerates the public deterministic
+and synthesis evidence, joins the retained source exports to all dates in a
+registered SPY slice, applies a separate Decimal ledger recurrence, reconstructs
+all primary cells and 10,000-replicate bootstrap streams, reapplies Holm, and
+regroups every robustness row. A missing or mismatched private artifact records
+a typed failure and cannot be presented as a clearing review.
+
+Authorized source acquisition is a distinct, non-reproduction operation. It
+requires a CPython 3.12 virtual environment installed from
+\path{requirements-historical.txt}, an explicit authorization attestation, and
+a new source root. Reacquisition can return changed provider bytes and would
+therefore create a new input identity; it must not replace the accepted thesis
+input.
+
+\section{Clean Manuscript Route}
+\label{sec:appendix-clean-manuscript}
+
+From the repository root, the local controlled build is:
+
+\begin{verbatim}
+python -m unittest \
+  reproducibility.checks.check_empirical_methodology_reproducibility
+python manuscript/check_controls.py
+python tools/check_markdown_links.py .
+python manuscript/build.py
+\end{verbatim}
+
+With Docker available, \path{./manuscript/build-clean.sh} builds the declared
+dated image and renders the PDF without a locally installed TeX distribution.
+The build writes only derived files below \path{manuscript/build}. The
+submission checker remains expected to fail while institutional and
+supervisor-owned placeholders are unresolved; reproducibility of this
+controlled partial draft is not a release-state transition.
 
 \chapter{Supplementary Tables and Figures}
 \label{app:supplementary-results}

@@ -74,7 +74,7 @@ and Holm cells. The empirical effort is complete with no publication blocker;
 the [retained private-pass
 receipt](reports/experiments/runs/smartdca-empirical-package-review-v1-6cb6c1cd94b901be90ebd553a022c922e53984afafeb22948747be084b37c14f/review-receipt.json)
 keeps the final review reproducible without publishing provider observations.
-Thesis manuscript tickets 01--08 are now resolved: the institutional contract, canonical build, thesis architecture, and evidence controls are frozen; Chapter 2 has reviewed investment, mean-theory, and computational-method synthesis; Chapter 3 establishes the fair same-deposit model and corrected-signal foundations; Chapter 4 with Appendix A carries the reviewed causal impossibility theorem, sharp epsilon-DCA guardrail, and complete guarded policy; and Chapter 5 with Appendix B now gives the reviewed finite witnesses, arbitrary-horizon accounting, qualified cash-crossing mechanism, and exact realized-ledger boundary. Ticket 09 is the next unblocked drafting frontier. The [effort
+Thesis manuscript tickets 01--09 are now resolved: the institutional contract, canonical build, thesis architecture, and evidence controls are frozen; Chapter 2 has reviewed investment, mean-theory, and computational-method synthesis; Chapter 3 establishes the fair same-deposit model and corrected-signal foundations; Chapter 4 with Appendix A carries the reviewed causal impossibility theorem, sharp epsilon-DCA guardrail, and complete guarded policy; Chapter 5 with Appendix B gives the reviewed finite witnesses, arbitrary-horizon accounting, qualified cash-crossing mechanism, and exact realized-ledger boundary; and Chapter 6 with Appendices C--D now defines the frozen empirical design, inference limits, provenance model, versioned artifact lifecycle, and reproduction routes. Tickets 10 and 11 are the parallel unblocked drafting frontiers. The [effort
 map](.scratch/smartdca/efforts/thesis-manuscript-assembly/map.md)
 and [project map](.scratch/smartdca/map.md) record the completed state and next
 frontier.
@@ -139,6 +139,7 @@ python -m unittest reproducibility.checks.check_empirical_package_publication_re
 python -m unittest reproducibility.checks.check_financial_model_corrected_signal_foundations
 python -m unittest reproducibility.checks.check_impossibility_safety_policy_architecture
 python -m unittest reproducibility.checks.check_finite_arbitrary_horizon_boundaries
+python -m unittest reproducibility.checks.check_empirical_methodology_reproducibility
 python -m unittest reproducibility.checks.check_dca_literature_synthesis
 python -m unittest reproducibility.checks.check_corrected_mean_literature_synthesis
 python -m unittest reproducibility.checks.check_computational_finance_statistics_literature_synthesis
@@ -150,7 +151,7 @@ python manuscript/build.py
 ```
 
 GitHub Actions runs the link check and the manuscript
-control/build/release tests on every push and pull request. The twenty-five
+control/build/release tests on every push and pull request. The twenty-six
 scientific checks remain in the separate [Reproducibility workflow](.github/workflows/reproducibility.yml):
 it runs automatically only when `research/`, `reproducibility/`,
 `experiments/`, or `reports/` changes (or when its workflow file changes) and

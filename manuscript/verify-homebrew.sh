@@ -34,6 +34,7 @@ python3.12 -m unittest \
   reproducibility.checks.check_financial_model_corrected_signal_foundations \
   reproducibility.checks.check_impossibility_safety_policy_architecture \
   reproducibility.checks.check_finite_arbitrary_horizon_boundaries \
+  reproducibility.checks.check_empirical_methodology_reproducibility \
   reproducibility.checks.check_dca_literature_synthesis \
   reproducibility.checks.check_corrected_mean_literature_synthesis \
   reproducibility.checks.check_computational_finance_statistics_literature_synthesis

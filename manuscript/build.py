@@ -85,6 +85,10 @@ def main() -> int:
                 "boundary_controls.py",
                 "BUILD FAILED: finite/arbitrary-horizon boundaries are invalid",
             ),
+            (
+                "methodology_controls.py",
+                "BUILD FAILED: empirical methodology is invalid",
+            ),
         )
         for validator_name, failure_message in validation_specs:
             if not run_validation(

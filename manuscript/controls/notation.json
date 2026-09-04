@@ -389,14 +389,36 @@
     },
     {
       "id": "notation-relative-gap",
-      "symbol": "g^{S,T}",
-      "meaning": "Relative terminal-wealth gap (W^S-W^T)/W^T in empirical tables.",
+      "symbol": "g_s^{S,T}",
+      "meaning": "Episode-s relative terminal-wealth gap (W_s^S-W_s^T)/W_s^T in empirical tables.",
       "repository_notation": "relative_wealth_gap and several local gap symbols",
-      "manuscript_notation": "g^{S,T}",
-      "reconciliation": "Reserve g for empirical relative gaps outside the finite-horizon theorem sections, where local g has a different exact definition and must be explicitly scoped.",
+      "manuscript_notation": "g_s^{S,T}",
+      "reconciliation": "Add s for the rolling episode start and reserve g for empirical relative gaps outside the finite-horizon theorem sections, where local g has a different exact definition and must be explicitly scoped.",
       "first_use": "ch:methodology/sec:estimands",
       "mandatory": true,
-      "review_state": "accepted"
+      "review_state": "reviewed"
+    },
+    {
+      "id": "notation-historical-bootstrap",
+      "symbol": "N, L, B, \\widehat{\\theta}, \\widehat{\\theta}_b",
+      "meaning": "Historical cell size, circular block length, replicate count, observed median, and replicate median.",
+      "repository_notation": "sample_count, block_length, replicates, observed_statistic, replicate_statistics",
+      "manuscript_notation": "N, L, B, \\widehat{\\theta}, \\widehat{\\theta}_b",
+      "reconciliation": "Use theta-hat for the observed statistic so T remains available for the right-hand policy comparator in the same chapter; this local notation does not replace finite-horizon terminal symbols.",
+      "first_use": "ch:methodology/sec:method-inference",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "notation-empirical-cost-execution",
+      "symbol": "\\widetilde b_t^S, b_t^S, F_0, F_t^S, \\varpi",
+      "meaning": "Selected fee-inclusive cash budget, actual asset notional, fixed fee, realized transaction fee, and proportional fee rate for policy S at empirical purchase date t.",
+      "repository_notation": "target_purchase_budget, purchase, fee",
+      "manuscript_notation": "\\widetilde b_t^S, b_t^S, F_0, F_t^S, \\varpi",
+      "reconciliation": "Retain b_t^S as the Chapter 3 asset outlay; distinguish the clamped fee-inclusive target with a tilde, the fixed component as F_0, the realized fee as F_t^S, and the proportional rate as varpi. Tau, phi, z, and rho retain their corrected-mean, generator, normalized-price, and score-exponent meanings.",
+      "first_use": "ch:methodology/sec:method-policy-comparisons",
+      "mandatory": true,
+      "review_state": "reviewed"
     },
     {
       "id": "notation-average-acquisition-cost",

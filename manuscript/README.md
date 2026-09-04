@@ -6,9 +6,11 @@ fail-closed submission gate. The current PDF is a controlled partial draft:
 Chapter 2 supplies the reviewed literature positioning; Chapter 3 supplies the
 financial-model and corrected-signal foundations; Chapter 4 supplies the
 impossibility-to-safety policy architecture; Chapter 5 supplies the finite- and
-arbitrary-horizon realized performance boundaries; and Appendices A--B retain
-their detailed proofs, cases, and witnesses. Later chapters remain structural
-placeholders. It is not a submission candidate.
+arbitrary-horizon realized performance boundaries; Chapter 6 fixes the frozen
+empirical design, inferential limits, and reproduction route; and Appendices
+A--D retain detailed proofs, cases, protocols, artifact identities, and clean
+commands. The results and integrative chapters remain structural placeholders.
+It is not a submission candidate.
 
 ## Authority
 
@@ -34,9 +36,13 @@ placeholders. It is not a submission candidate.
 
 ## Draft build
 
-The direct build and focused tests require Python 3.12, `latexmk`, pdfLaTeX,
-BibTeX, `pdftotext`, `pdftohtml`, `pdfinfo`, and the standard LaTeX packages
-named in the source. The three PDF inspection commands are supplied by Poppler:
+Identity-bound empirical regeneration and the supported focused suite require
+CPython 3.12. The manuscript control and rendering scripts themselves require
+a compatible Python 3, `latexmk`, pdfLaTeX, BibTeX, `pdftotext`, `pdftohtml`,
+`pdfinfo`, and the standard LaTeX packages named in the source. The dated
+Docker route uses Debian Bookworm's distribution `python3` only for manuscript
+validation and rendering; it does not regenerate empirical identities. The
+three PDF inspection commands are supplied by Poppler:
 
 ```bash
 python manuscript/build.py
@@ -52,8 +58,9 @@ reproducible computational-finance/statistical-method literature traceability
 checks, followed by the financial-model/corrected-signal and
 impossibility-to-safety policy audits, and fails on an invalid package. A
 successful draft build does not imply submission readiness. The build also
-runs the finite/arbitrary-horizon boundary audit before LaTeX so scope,
-notation, evidence mappings, and Appendix B cannot drift independently.
+runs the finite/arbitrary-horizon boundary and empirical-methodology audits
+before LaTeX so scope, notation, evidence mappings, Appendices B--D, frozen
+protocol identities, and private/public boundaries cannot drift independently.
 
 Run the control check directly with:
 
@@ -99,6 +106,7 @@ python -m unittest manuscript.tests.test_manuscript_build
 python -m unittest reproducibility.checks.check_financial_model_corrected_signal_foundations
 python -m unittest reproducibility.checks.check_impossibility_safety_policy_architecture
 python -m unittest reproducibility.checks.check_finite_arbitrary_horizon_boundaries
+python -m unittest reproducibility.checks.check_empirical_methodology_reproducibility
 python -m unittest reproducibility.checks.check_dca_literature_synthesis
 python -m unittest reproducibility.checks.check_corrected_mean_literature_synthesis
 python -m unittest reproducibility.checks.check_computational_finance_statistics_literature_synthesis
@@ -129,8 +137,9 @@ and the focused manuscript checks in one approved process:
 
 The helper installs Homebrew's CPython 3.12, TeX Live, and Poppler, then runs
 the link, manuscript control/build/release, literature, foundation,
-impossibility-to-safety, directly intersecting scientific, and rendered-PDF
-checks listed above. In these sandboxes, only the first process tree after
+impossibility-to-safety, performance-boundary, empirical-methodology, directly
+intersecting scientific, and rendered-PDF checks listed above. In these
+sandboxes, only the first process tree after
 installation can still see the tools, so `--build` performs the canonical build
 as a separate single-process invocation. Both modes require approval because
 Homebrew writes outside the repository. Run additional scientific programs
