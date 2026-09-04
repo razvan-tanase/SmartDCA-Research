@@ -445,7 +445,7 @@
       "manuscript_location": "ch:boundaries/tab:theorem-scope",
       "citation_need": "Cite each canonical theorem or its manuscript label from the corresponding row.",
       "mandatory": true,
-      "review_state": "accepted"
+      "review_state": "reviewed"
     },
     {
       "id": "claim-table-deterministic-primary",

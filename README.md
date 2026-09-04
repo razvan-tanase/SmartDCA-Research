@@ -74,7 +74,7 @@ and Holm cells. The empirical effort is complete with no publication blocker;
 the [retained private-pass
 receipt](reports/experiments/runs/smartdca-empirical-package-review-v1-6cb6c1cd94b901be90ebd553a022c922e53984afafeb22948747be084b37c14f/review-receipt.json)
 keeps the final review reproducible without publishing provider observations.
-Thesis manuscript tickets 01--07 are now resolved: the institutional contract, canonical build, thesis architecture, and evidence controls are frozen; Chapter 2 has reviewed investment, mean-theory, and computational-method synthesis; Chapter 3 establishes the fair same-deposit model and corrected-signal foundations; and Chapter 4 with Appendix A now carries the reviewed causal impossibility theorem, sharp epsilon-DCA guardrail, and complete guarded policy. Ticket 08 is the next unblocked drafting frontier. The [effort
+Thesis manuscript tickets 01--08 are now resolved: the institutional contract, canonical build, thesis architecture, and evidence controls are frozen; Chapter 2 has reviewed investment, mean-theory, and computational-method synthesis; Chapter 3 establishes the fair same-deposit model and corrected-signal foundations; Chapter 4 with Appendix A carries the reviewed causal impossibility theorem, sharp epsilon-DCA guardrail, and complete guarded policy; and Chapter 5 with Appendix B now gives the reviewed finite witnesses, arbitrary-horizon accounting, qualified cash-crossing mechanism, and exact realized-ledger boundary. Ticket 09 is the next unblocked drafting frontier. The [effort
 map](.scratch/smartdca/efforts/thesis-manuscript-assembly/map.md)
 and [project map](.scratch/smartdca/map.md) record the completed state and next
 frontier.
