@@ -24,6 +24,18 @@ def extract_latex_chapter(source: str, title: str) -> str:
     return remainder if end < 0 else remainder[:end]
 
 
+def extract_latex_section(source: str, title: str) -> str:
+    """Return one numbered section body from a LaTeX chapter or document."""
+
+    marker = f"\\section{{{title}}}"
+    start = source.find(marker)
+    if start < 0:
+        return ""
+    remainder = source[start + len(marker) :]
+    end = remainder.find("\\section{")
+    return remainder if end < 0 else remainder[:end]
+
+
 def index_records(document: dict[str, object]) -> dict[str, dict[str, object]]:
     """Index dictionary records by stable string identifier."""
 

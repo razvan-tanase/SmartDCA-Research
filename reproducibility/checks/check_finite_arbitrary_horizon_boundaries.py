@@ -142,6 +142,34 @@ class FiniteArbitraryHorizonBoundariesTest(unittest.TestCase):
             "two-purchase boundary",
         )
 
+    def test_two_purchase_win_direction_is_audited(self) -> None:
+        self.assert_source_mutation_rejected(
+            "corrected rule wins exactly for",
+            "corrected rule loses exactly for",
+            "two-purchase boundary",
+        )
+
+    def test_three_purchase_win_direction_is_audited(self) -> None:
+        self.assert_source_mutation_rejected(
+            "the rule wins below $T_\\beta$, ties there, and loses above it",
+            "the rule loses below $T_\\beta$, ties there, and wins above it",
+            "three-purchase boundary",
+        )
+
+    def test_cash_crossing_direction_is_audited(self) -> None:
+        self.assert_source_mutation_rejected(
+            "is a block of minus signs followed\nby a block of plus signs",
+            "is a block of plus signs followed by a block of minus signs",
+            "qualified cash single crossing",
+        )
+
+    def test_cash_crossing_weak_valley_scope_is_section_local(self) -> None:
+        self.assert_source_mutation_rejected(
+            "On a\nweak single-valley path, the comparison of current price",
+            "On every positive path, the comparison of current price",
+            "qualified cash single crossing",
+        )
+
     def test_scope_table_requires_canonical_and_detailed_authorities(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory) / "repository"

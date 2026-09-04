@@ -12,6 +12,7 @@ if not __package__:
 
 from reproducibility.control_support import (  # noqa: E402
     extract_latex_chapter,
+    extract_latex_section,
     index_records,
     read_json_object,
     read_text,
@@ -84,6 +85,27 @@ def audit_finite_arbitrary_horizon_boundaries(
     )
     chapter = extract_latex_chapter(thesis, "Exact Performance Boundaries")
     appendix = extract_latex_chapter(thesis, "Exact Performance Cases and Witnesses")
+    two_purchase = extract_latex_section(
+        chapter, "Two Purchases: an Evaluation-Price Boundary"
+    )
+    three_purchase = extract_latex_section(
+        chapter, "Three Purchases: the First Beta-Sensitive Boundary"
+    )
+    cash_timing = extract_latex_section(
+        chapter, "Cash Timing at an Arbitrary Finite Horizon"
+    )
+    valley_falsification = extract_latex_section(
+        chapter, "Why a Single Valley Is Not a Performance Law"
+    )
+    guardrail_feedback = extract_latex_section(
+        chapter, "Score Crossing versus Guarded Cash Crossing"
+    )
+    terminal_inventory = extract_latex_section(
+        chapter, "Terminal Cash and Units Give the Exact Ledger Boundary"
+    )
+    evidence_roles = extract_latex_section(
+        chapter, "Evidence Roles and Explicit Non-Conclusions"
+    )
 
     if not chapter:
         errors.append("missing Chapter 5 exact performance boundaries")
@@ -101,7 +123,7 @@ def audit_finite_arbitrary_horizon_boundaries(
         errors,
     )
     require_terms(
-        chapter,
+        two_purchase,
         (
             r"\label{sec:two-purchase}",
             r"\label{thm:two-purchase}",
@@ -112,6 +134,7 @@ def audit_finite_arbitrary_horizon_boundaries(
             r"W_2^c(P)-W_2^D(P)=c_a-y(c_a-g)",
             r"For $0<\lambda<1$ and $d_1+d_2>0$, one has $c_a>0$",
             r"0<y<\frac{c_a}{c_a-g}",
+            "corrected rule wins exactly for",
             "ties at equality, and loses above the threshold",
             r"If $c_a-g\leq0$, every finite $y>0$ is a strict win",
             "If both deposits vanish, both policies have zero wealth",
@@ -123,7 +146,7 @@ def audit_finite_arbitrary_horizon_boundaries(
         errors,
     )
     require_terms(
-        chapter,
+        three_purchase,
         (
             r"\label{sec:three-purchase}",
             r"\label{thm:three-purchase}",
@@ -133,6 +156,7 @@ def audit_finite_arbitrary_horizon_boundaries(
             r"g=\delta d_1h(1-q)+C_2^c(1-h)",
             r"W_3^c(P)-W_3^D(P)=c_\beta-y(c_\beta-g)",
             r"T_\beta=\frac{c_\beta}{c_\beta-g}",
+            r"the rule wins below $T_\beta$, ties there, and loses above it",
             r"When $c_\beta-g\leq0$, set $T_\beta=+\infty$ and the fixed slice is all-win",
             r"At $\lambda=1$, or with three zero deposits, all comparisons tie",
             "second is beta-independent",
@@ -147,7 +171,7 @@ def audit_finite_arbitrary_horizon_boundaries(
         errors,
     )
     require_terms(
-        chapter,
+        cash_timing,
         (
             r"\label{sec:cash-timing}",
             r"\label{thm:cash-timing}",
@@ -156,13 +180,15 @@ def audit_finite_arbitrary_horizon_boundaries(
             r"\Delta C_n^{S,T}\left(1-\frac{P}{p_n}\right)",
             r"\sum_{t=1}^{n-1}\Delta C_t^{S,T}",
             "model-general accounting identity",
+            "Relative cash carried across a price fall has a positive coefficient",
+            "relative cash carried across a rise has a negative one",
             "does not assign a favorable sign",
         ),
         "cash-timing identity",
         errors,
     )
     require_terms(
-        chapter,
+        valley_falsification,
         (
             r"\label{sec:single-valley-limit}",
             r"p_1\geq\cdots\geq p_k\leq\cdots\leq p_n",
@@ -178,7 +204,7 @@ def audit_finite_arbitrary_horizon_boundaries(
         errors,
     )
     require_terms(
-        chapter,
+        guardrail_feedback,
         (
             r"\label{sec:guardrail-feedback}",
             r"\label{thm:cash-single-crossing}",
@@ -192,6 +218,7 @@ def audit_finite_arbitrary_horizon_boundaries(
             r"\Delta m_t\geq0\quad(t\leq j)",
             r"\Delta m_t\leq0\quad(t>j)",
             "reference-aligned guardrail feedback",
+            "is a block of minus signs followed by a block of plus signs",
             "sufficient, not necessary",
             "policy-specific clipped floors can create a second cash reversal",
             "cash single crossing does not order terminal wealth",
@@ -200,7 +227,7 @@ def audit_finite_arbitrary_horizon_boundaries(
         errors,
     )
     require_terms(
-        chapter,
+        terminal_inventory,
         (
             r"\label{sec:terminal-inventory}",
             r"\label{thm:terminal-inventory}",
@@ -225,7 +252,7 @@ def audit_finite_arbitrary_horizon_boundaries(
         errors,
     )
     require_terms(
-        chapter,
+        evidence_roles,
         (
             r"\label{tab:theorem-scope}",
             r"Finite witness (Sections \ref{thm:two-purchase} and \ref{thm:three-purchase})",
