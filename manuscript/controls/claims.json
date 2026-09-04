@@ -233,6 +233,24 @@
       "review_state": "reviewed"
     },
     {
+      "id": "claim-empirical-synthetic-populations",
+      "entry_type": "empirical-headline",
+      "wording": "The accepted deterministic layer retains 21 attempts, 18 generated paths, three typed pre-policy exclusions, and 648 ledgers/comparisons; the seeded-stochastic layer retains 90 generated paths, no exclusion, 3,240 ledgers/comparisons, and 1,080 separate aggregate cells.",
+      "claim_class": "computational-provenance-receipt",
+      "scope": "The two accepted immutable synthetic runs only; population and artifact counts establish execution completeness, not a pooled sample, replication, or performance frequency.",
+      "authority": [
+        {"role": "deterministic-manifest", "path": "reports/experiments/runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/manifest.json"},
+        {"role": "deterministic-validation", "path": "reports/experiments/runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/runner/validation.json"},
+        {"role": "stochastic-manifest", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/manifest.json"},
+        {"role": "stochastic-validation", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/runner/validation.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:synthetic-results/sec:synthetic-evidence",
+      "citation_need": "Bind every count to the accepted manifests and validation receipts; do not call same-input regeneration independent-data replication.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
       "id": "claim-empirical-deterministic-mixed",
       "entry_type": "empirical-headline",
       "wording": "The fixed deterministic catalog contains both favorable and adverse complete-system and signal-only outcomes, with mechanisms that separate carried cash, unit exposure, and guardrail effects.",
@@ -241,7 +259,8 @@
       "authority": [
         {"role": "reviewed-report", "path": "reports/experiments/deterministic-adversarial-paths.md"},
         {"role": "immutable-run", "path": "reports/experiments/runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/manifest.json"},
-        {"role": "executable-check", "path": "reproducibility/checks/check_deterministic_adversarial_study.py"}
+        {"role": "executable-check", "path": "reproducibility/checks/check_deterministic_adversarial_study.py"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:synthetic-results/sec:deterministic",
       "citation_need": "Cite the immutable run and reviewed report; no external prevalence citation.",
@@ -257,12 +276,47 @@
       "authority": [
         {"role": "reviewed-report", "path": "reports/experiments/seeded-stochastic-families.md"},
         {"role": "immutable-run", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/manifest.json"},
-        {"role": "independent-audit", "path": "research/notes/seeded-stochastic-family-evaluation-audit.md"}
+        {"role": "independent-audit", "path": "research/notes/seeded-stochastic-family-evaluation-audit.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:synthetic-results/sec:stochastic",
       "citation_need": "Cite the generator design, immutable run, and report; cite external process literature when the models are introduced.",
       "mandatory": true,
       "review_state": "reviewed"
+    },
+    {
+      "id": "claim-empirical-synthetic-mechanisms",
+      "entry_type": "empirical-headline",
+      "wording": "The accepted synthetic ledgers separate terminal cash from evaluation-price-valued unit differences and report corrected-policy cash drag, asset exposure, and clipped-floor activation without treating any one mechanism as a monotone performance law.",
+      "claim_class": "descriptive-mechanism-attribution",
+      "scope": "Accepted deterministic rows and five primary three-seed stochastic cells at the displayed frictionless 60-month lambda-0.75 slice; attribution is ledger-conditioned and descriptive.",
+      "authority": [
+        {"role": "deterministic-attribution", "path": "reports/experiments/runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/mechanism-attribution.csv"},
+        {"role": "stochastic-aggregates", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/stochastic-aggregates.json"},
+        {"role": "terminal-inventory-theorem", "path": "research/theorems/arbitrary-horizon-performance-boundary.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:synthetic-results/sec:synthetic-mechanisms",
+      "citation_need": "Tie cash/unit attribution to the terminal-inventory theorem and label activation, cash drag, and exposure as finite empirical summaries.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-empirical-synthetic-cost-scope",
+      "entry_type": "empirical-headline",
+      "wording": "Synthetic proportional- and fixed-fee outcomes are net empirical calculations outside the current epsilon-DCA theorem, while only frictionless guarded rows carry the theorem scope.",
+      "claim_class": "empirical-scope-boundary",
+      "scope": "The accepted deterministic and seeded-stochastic cost grids; no frictional safety floor, confirmatory cost hypothesis, or cost-adjusted population inference.",
+      "authority": [
+        {"role": "deterministic-report", "path": "reports/experiments/deterministic-adversarial-paths.md"},
+        {"role": "stochastic-report", "path": "reports/experiments/seeded-stochastic-families.md"},
+        {"role": "safety-theorem", "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:synthetic-results/sec:synthetic-cost-scope",
+      "citation_need": "Keep the frictionless theorem and fee-adjusted empirical scope adjacent in prose and captions.",
+      "mandatory": true,
+      "review_state": "accepted"
     },
     {
       "id": "claim-empirical-historical-complete-system",
@@ -465,7 +519,8 @@
       "authority": [
         {"role": "synthesis-report", "path": "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"},
         {"role": "synthesis-validation", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/source-validation.json"},
-        {"role": "theorem", "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"}
+        {"role": "theorem", "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:synthetic-results/sec:safety-checks",
       "citation_need": "Cite both the theorem and finite synthesis receipt, with their distinct evidentiary roles.",
@@ -577,13 +632,16 @@
     },
     {
       "id": "claim-table-deterministic-primary",
-      "entry_type": "planned-table",
-      "wording": "Primary deterministic comparison table separating complete-system, signal-only, and safety-architecture gaps with mechanism fields.",
+      "entry_type": "manuscript-table",
+      "wording": "The generated primary deterministic table reports all fourteen required families at the frictionless lambda-0.75 identity-mean slice, with purchase dates, all three ordered relative gaps, corrected cash drag, asset exposure, and floor activation.",
       "claim_class": "generated-results-table",
-      "scope": "Fixed deterministic catalog at the selected displayed slice; signs are not frequencies.",
+      "scope": "One fixed episode per required primary family; varying path horizons are explicit and signs are finite catalog outcomes, not frequencies.",
       "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/deterministic-evaluation.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
         {"role": "generated-table-source", "path": "reports/experiments/runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/report-tables.txt"},
-        {"role": "reviewed-report", "path": "reports/experiments/deterministic-adversarial-paths.md"}
+        {"role": "reviewed-report", "path": "reports/experiments/deterministic-adversarial-paths.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:synthetic-results/tab:deterministic-primary",
       "citation_need": "Cite the immutable run and report in the caption or adjacent prose.",
@@ -592,16 +650,158 @@
     },
     {
       "id": "claim-table-stochastic-primary",
-      "entry_type": "planned-table",
-      "wording": "Primary seeded-stochastic table reporting medians, downside, worst shortfall, and all three policy comparisons by process family.",
+      "entry_type": "manuscript-table",
+      "wording": "The generated primary seeded-stochastic table reports medians, linearly interpolated five-percent downside, worst observed shortfall, and all three ordered policy comparisons for five process families.",
       "claim_class": "generated-results-table",
       "scope": "Three saved seeds per primary family at the displayed horizon and coverage; descriptive only.",
       "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/stochastic-evaluation.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
         {"role": "generated-table-source", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/report-tables.txt"},
-        {"role": "reviewed-report", "path": "reports/experiments/seeded-stochastic-families.md"}
+        {"role": "reviewed-report", "path": "reports/experiments/seeded-stochastic-families.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:synthetic-results/tab:stochastic-primary",
       "citation_need": "Cite the immutable run and generation design.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-figure-deterministic-layers",
+      "entry_type": "manuscript-figure",
+      "wording": "The generated deterministic layer figure shows complete-system, signal-only, and architecture-only gap signs on four mechanism-representative fixed paths using a common zero axis without treating the contrasts as additive.",
+      "claim_class": "generated-results-figure",
+      "scope": "Four explicitly selected rows from the fourteen-family frictionless lambda-0.75 table; exposition only, with no selection-based inference.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/deterministic-evaluation.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "deterministic-attribution", "path": "reports/experiments/runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/mechanism-attribution.csv"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:synthetic-results/fig:deterministic-layers",
+      "citation_need": "Caption must define C--D, C--N, N--D scope and state that different denominators prevent an additive interpretation.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-figure-stochastic-attribution",
+      "entry_type": "manuscript-figure",
+      "wording": "The generated stochastic attribution figure separates mean terminal cash and evaluation-price-valued unit-gap contributions for corrected guarded versus DCA in each primary process family.",
+      "claim_class": "generated-results-figure",
+      "scope": "Five primary 60-month frictionless lambda-0.75 cells, three saved seeds per cell; dollar components explain realized ledgers and are not process estimates.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/stochastic-mechanisms.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "stochastic-aggregates", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/stochastic-aggregates.json"},
+        {"role": "terminal-inventory-theorem", "path": "research/theorems/arbitrary-horizon-performance-boundary.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:synthetic-results/fig:stochastic-attribution",
+      "citation_need": "Caption must identify dollar units, comparison, horizon, coverage, seed count, and ledger-conditioned scope.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-stochastic-mechanisms",
+      "entry_type": "manuscript-table",
+      "wording": "The generated stochastic mechanism table reports mean corrected-policy floor activation, cash drag, asset exposure, and terminal cash/unit contributions for the primary displayed cells.",
+      "claim_class": "generated-results-table",
+      "scope": "Five primary 60-month frictionless lambda-0.75 cells with three saved seeds each; descriptive mechanism diagnostics only.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/stochastic-mechanisms.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "stochastic-aggregates", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/stochastic-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:synthetic-results/tab:stochastic-mechanisms",
+      "citation_need": "Caption must state metric denominators, dollar attribution, path count, horizon, coverage, and frictionless scope.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-deterministic-coverage-ranges",
+      "entry_type": "manuscript-table",
+      "wording": "The generated deterministic coverage table reports exact minima, maxima, and loss/tie/win counts for all three comparisons across all eighteen fixed paths at each non-unit primary safety factor.",
+      "claim_class": "generated-results-table",
+      "scope": "Eighteen accepted deterministic paths at frictionless lambda 0.9, 0.75, and 0.5; catalog counts are not frequencies.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/synthetic-supplementary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "deterministic-attribution", "path": "reports/experiments/runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/mechanism-attribution.csv"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "app:supplementary-results/tab:deterministic-coverage-ranges",
+      "citation_need": "Keep finite-catalog and non-frequency wording in the caption.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-deterministic-cost-ranges",
+      "entry_type": "manuscript-table",
+      "wording": "The generated deterministic cost table reports exact ranges and sign counts for frictionless, proportional-ten-basis-point, and fixed-one-dollar calculations at lambda 0.75.",
+      "claim_class": "generated-results-table",
+      "scope": "Eighteen accepted deterministic paths; fee rows are net empirical calculations outside the current safety theorem.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/synthetic-supplementary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "deterministic-attribution", "path": "reports/experiments/runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/mechanism-attribution.csv"},
+        {"role": "safety-theorem", "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "app:supplementary-results/tab:deterministic-cost-ranges",
+      "citation_need": "Caption must distinguish gross theorem-compatible validation from net fee calculations.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-stochastic-sensitivity",
+      "entry_type": "manuscript-table",
+      "wording": "The generated stochastic sensitivity table reports the exploratory configuration medians, five-percent downside, worst shortfall, and architecture median without replacing or pooling the primary rows.",
+      "claim_class": "generated-results-table",
+      "scope": "Five exploratory 60-month frictionless lambda-0.75 cells, three saved seeds each; controlled sensitivity only.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/synthetic-supplementary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "stochastic-aggregates", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/stochastic-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "app:supplementary-results/tab:stochastic-sensitivity",
+      "citation_need": "Caption must label the rows exploratory, three-seed, descriptive, and separate from primary.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-stochastic-coverage-diagnostics",
+      "entry_type": "manuscript-table",
+      "wording": "The generated stochastic coverage table reports family-summary ranges for floor activation, cash drag, asset exposure, and corrected-versus-DCA median gaps at each non-unit primary safety factor.",
+      "claim_class": "generated-results-table",
+      "scope": "Five primary 60-month frictionless family cells per safety factor, three saved seeds per cell; ranges are not pooled inference.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/synthetic-supplementary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "stochastic-aggregates", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/stochastic-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "app:supplementary-results/tab:stochastic-coverage-diagnostics",
+      "citation_need": "Caption must name the summary grain and reject a pooled monotonicity inference.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-synthetic-validation-inventory",
+      "entry_type": "manuscript-table",
+      "wording": "The generated validation inventory reports attempted, generated, excluded, ledger, and comparison counts separately for deterministic and seeded-stochastic evidence.",
+      "claim_class": "generated-results-table",
+      "scope": "Accepted immutable manifests and nested validation receipts; completeness accounting only, without cross-layer pooling.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/synthetic-supplementary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "deterministic-validation", "path": "reports/experiments/runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/runner/validation.json"},
+        {"role": "stochastic-validation", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/runner/validation.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "app:supplementary-results/tab:synthetic-validation-inventory",
+      "citation_need": "Keep evidence layers and their declared roles separate in the caption.",
       "mandatory": true,
       "review_state": "accepted"
     },

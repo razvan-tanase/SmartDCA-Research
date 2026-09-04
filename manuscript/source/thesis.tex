@@ -8,6 +8,7 @@
 \usepackage[a4paper,margin=25.4mm]{geometry}
 \usepackage{graphicx}
 \usepackage{natbib}
+\usepackage{placeins}
 \usepackage{setspace}
 \usepackage{xcolor}
 \usepackage[hidelinks]{hyperref}
@@ -159,10 +160,10 @@ release blockers in the institutional contract.
 \label{ch:introduction}
 Drafting now covers the reviewed literature, financial comparison,
 source-functional correction, corrected-signal foundations, the causal
-impossibility-to-safety policy architecture, and the frozen empirical
-methodology and reproducibility controls. The results and integrative chapters
-retain explicit structural placeholders until their tracked manuscript slices
-are resolved.
+impossibility-to-safety policy architecture, exact performance boundaries,
+the frozen empirical methodology, and the deterministic and seeded-stochastic
+evaluation. The historical and integrative chapters retain explicit
+structural placeholders until their tracked manuscript slices are resolved.
 
 \section*{Manuscript spine}
 The thesis follows one safety-versus-adaptivity argument: a
@@ -190,11 +191,9 @@ retained.
 \section*{Structural boundary}
 The body will retain motivation, questions, conservative answers,
 contributions, non-claims, and the chapter route. Proof detail and
-supplementary validation belong in the controlled appendices. Figure
-\ref{fig:generated-asset-placeholder} currently proves the numbered,
-centered, referenced generated-asset seam.
-
-\input{../generated/asset-placeholder.tex}
+supplementary validation belong in the controlled appendices. Quantitative
+tables and figures enter the manuscript through generated assets whose bytes
+are checked against accepted run bundles before the canonical build.
 
 \chapter{Literature and Research Positioning}
 \label{ch:literature}
@@ -2258,20 +2257,204 @@ claim.
 
 \chapter{Deterministic and Stochastic Evaluation}
 \label{ch:synthetic-results}
-\textbf{Purpose.} Report exact deterministic and adversarial mechanisms and
-seeded stochastic sensitivity without treating catalog signs or three-seed
-summaries as population frequencies.
 
-\textbf{Prerequisites.} Chapters \ref{ch:boundaries} and
-\ref{ch:methodology}, and thesis ticket 10.
+This chapter reports the two public synthetic layers fixed in Chapter
+\ref{ch:methodology}. Deterministic signs, stochastic seed summaries, and
+exact theorems retain different inferential units. The deterministic catalog
+exposes mechanisms and finite counterexamples; the seeded constructions expose
+controlled variation under reproducible processes; the theorems alone carry
+their universal quantifiers. No deterministic count is combined with a
+stochastic replication, and simulation does not replace the pathwise theorem.
 
-\textbf{Reader outcome.} The reader sees favorable and adverse mechanisms,
-parameter sensitivity, and the distinction among complete-system,
-signal-only, and architecture-only effects.
+The reporting order keeps the three policy comparisons separate. The complete
+system compares the corrected guarded policy with DCA, the signal-only layer
+compares corrected with the neutral guarded selector, and the
+safety-architecture layer compares neutral guarded with DCA. Relative gaps use
+the named comparator as denominator, so the three percentages are not an
+additive decomposition. Cash and evaluation-price-valued unit differences,
+by contrast, do form the exact terminal-wealth decomposition from Chapter
+\ref{ch:boundaries}.
 
-\textbf{Placement.} Headline tables, mechanism figures, downside summaries,
-and bounded interpretation stay in the body. Complete catalogs, sensitivities,
-and validation output move to Appendix \ref{app:supplementary-results}.
+\section{Accepted Runs and Evidential Boundary}
+\label{sec:synthetic-evidence}
+
+The deterministic authority is the immutable run
+{\footnotesize\path{smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db}}.
+Its 21 attempted deterministic configurations produced 18 generated paths and
+three typed pre-policy exclusions. Four coverage values, three cost scopes,
+one frozen corrected-mean configuration, and three policies then produced 648
+policy ledgers and 648 ordered comparison rows. Fourteen paths are the required
+primary families, three reconnect the implementation to exact boundary
+checks, and one retains an earlier adversarial-design iteration rather than
+silently discarding an inconvenient sign.
+
+The stochastic authority is
+{\footnotesize\path{smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25}}.
+Five primary process constructions and five separately labelled exploratory
+sensitivities, three saved seeds, and the 12-, 36-, and 60-month horizons give
+90 attempted and generated stochastic paths with no exclusion. The common
+execution grid produced 3,240 policy ledgers and 3,240 comparison rows,
+summarized in 1,080 aggregate cells. An aggregate cell contains three paths
+only when its tier, family configuration, horizon, coverage, corrected mean,
+cost, and comparison all agree.
+
+The figures and tables below are generated from those accepted machine
+artifacts. The public generator checks the manifests and source-artifact
+fingerprints before rendering, while the corresponding deterministic and
+stochastic checkpoints replay the accepted studies. Regeneration establishes
+computational agreement with retained inputs; it is not independent-data
+replication \citep{nasem2019reproducibility}. Neither the 18-path catalog nor a
+three-seed cell is treated as one inferential unit for a new statistical test.
+
+\section{Deterministic and Adversarial Paths}
+\label{sec:deterministic}
+
+Table \ref{tab:deterministic-primary} reports every required primary family at
+the prespecified frictionless $\lambda=0.75$ slice. The complete corrected
+system has positive, zero, and negative gaps; so do the two constituent
+comparisons when the catalog is viewed as designed examples. These are exact
+signs for fixed paths, not observed market frequencies. Figure
+\ref{fig:deterministic-layers} retains all three comparisons on four paths
+chosen to expose contrasting mechanisms rather than to estimate prevalence.
+
+The constant path is the simplest inventory warning. Corrected versus DCA
+ends with 500 dollars of additional cash and five fewer units. At the common
+evaluation price of 100 dollars, $W^c-W^D=500+100(-5)=0$. Equal terminal
+wealth therefore need not mean equal purchase or inventory paths, and the
+identity $W^c-W^T=H_T+P U_T$ remains the correct performance accounting.
+
+\input{../generated/deterministic-evaluation.tex}
+\FloatBarrier
+
+On the monotone rise, the complete system loses $4.712\%$ and the neutral
+architecture already loses $4.271\%$: carried cash misses appreciation. On the
+monotone decline, neutral exceeds DCA by $6.202\%$, but corrected is
+$0.887\%$ below neutral, leaving the complete system $5.260\%$ above DCA. The
+direction of the architecture effect changes with the realized path, and a
+favourable complete-system sign need not be evidence for the signal.
+
+The same separation is visible around valleys. Corrected is $1.520\%$ above
+neutral on multiple valleys while neutral is $1.421\%$ below DCA; their
+different denominators leave a small $0.077\%$ complete-system gain. On the
+sudden rebound, a $1.299\%$ signal-only gain does not offset a $2.154\%$
+architecture loss. The hostile carried-cash path is adverse to both layers.
+Conversely, hostile adaptive timing leaves neutral $29.873\%$ above DCA and
+the corrected complete system $26.105\%$ above DCA even though corrected is
+$2.901\%$ below neutral. In that signal-only ledger, corrected carries
+200.736 dollars less cash and its additional units contribute only 136.684
+dollars at the evaluation price. The exact affine boundary in Theorem
+\ref{thm:terminal-inventory}, rather than the path label, signs the result.
+
+The accepted regression receipt also ties the synthetic runner back to the
+analytical witnesses. At $\lambda=0.5$, its two-purchase path records a strict
+corrected-versus-DCA gain of $20.833\ldots$ dollars and a strict
+neutral-versus-DCA loss of $31.25$ dollars, cases classified by Theorem
+\ref{thm:two-purchase}. The three-purchase identity-mean regression records a
+strict corrected-versus-DCA loss of $10.416\ldots$ dollars and reconnects the
+runner to Theorem \ref{thm:three-purchase}. The receipt deliberately labels
+these links \path{finite-regression-not-proof}: they guard implementation
+drift but do not extend either theorem to the 18-path catalog.
+
+Across all 18 fixed paths, lowering coverage from $0.9$ to $0.5$ expands both
+favourable and adverse observed extremes in at least one comparison; it does
+not define a monotone expected-performance relation.
+Appendix Table~\ref{tab:deterministic-coverage-ranges}
+reports every range and exact sign count without turning those catalog counts
+into probabilities.
+
+\section{Seeded Stochastic Families}
+\label{sec:stochastic}
+
+Table \ref{tab:stochastic-primary} moves from fixed paths to controlled random
+constructions, but not to a calibrated market population. It reports the
+60-month, frictionless, $\lambda=0.75$ primary slice with three paths per
+family. The median, linearly interpolated 5\% downside, and worst observed
+shortfall describe those three saved values. With only three values, the
+quantile is a compact downside summary rather than a tail estimate.
+
+\input{../generated/stochastic-evaluation.tex}
+
+Complete-system medians are positive for mean reversion and jump diffusion,
+and negative for trend, stochastic volatility, and regime switching. The
+signal-only comparison is not uniformly favourable either: the
+regime-switching signal-only median is negative, with a negative displayed
+downside and a nonzero worst shortfall. Jump diffusion has a positive median
+but a negative downside value, illustrating why a median sign alone does not
+summarize the three realized paths.
+
+These values show dependence on the controlled process and saved realization;
+the study does not estimate a population win rate, expected return, or
+stochastic optimum. Appendix~\ref{sec:supp-stochastic} keeps the exploratory
+sensitivities separate. Negative drift reverses the primary trend's complete
+median sign while making its signal-only median negative; faster mean
+reversion remains positive in both corrected comparisons; and higher
+volatility, persistent-bear, and more-frequent-jump settings change medians and
+downside in different directions. The exploratory sensitivities remain
+separate from the primary rows and do not supply a parameter ranking.
+
+\section{Safety Diagnostics and Terminal Attribution}
+\label{sec:synthetic-mechanisms}
+\label{sec:safety-checks}
+
+The observed safety checks have a narrower role than the theorem. At
+$\lambda=1$, both guarded policies collapse transaction by transaction to DCA
+on all 90 stochastic paths and on every deterministic scenario. In
+frictionless rows, every replayed ledger passes unit coverage and the direct
+cash-plus-units identity. No observed frictionless aggregate cell in the
+reviewed evidence crosses its numerical $\lambda-1$ relative-gap floor. This
+is a finite implementation regression, not a second proof: universal
+epsilon-DCA safety belongs to the unit guardrail established in Theorem
+\ref{thm:epsilon-guardrail}, not to simulation and not to the corrected score.
+
+\input{../generated/stochastic-mechanisms.tex}
+
+Activation measures how often the clipped mandatory floor binds, not how often
+the policy is safe. Across the five primary 60-month family cells, mean
+corrected-policy activation is $30.0$--$31.7\%$ at $\lambda=0.9$,
+$10.6$--$11.1\%$ at $\lambda=0.75$, and $3.9\%$ at $\lambda=0.5$.
+At $\lambda=0.75$, cash drag ranges from $1.5$--$1.9\%$ of deposits and
+asset exposure from $98.3$--$98.4\%$ of wealth. Table
+\ref{tab:stochastic-mechanisms} gives the family-level diagnostics, while
+Appendix Table~\ref{tab:stochastic-coverage-diagnostics} retains the coverage
+ranges. Lower activation as coverage falls describes this grid; the concurrent
+performance medians are not uniformly monotone.
+
+Figure \ref{fig:stochastic-attribution} applies the exact terminal-inventory
+identity to mean signed corrected-minus-DCA differences in dollars. In the
+trend cell, mean
+terminal cash contributes $1,015.595$ dollars and the evaluation-price-valued
+unit gap contributes $-1,143.872$ dollars, giving a
+negative mean terminal-wealth difference. In mean reversion, the corresponding
+contributions are $894.404$ and $-782.925$ dollars, giving a
+positive mean terminal-wealth difference. These component means
+explain their realized ledgers. They are distinct from the table's median
+relative gaps and do not establish that either process describes a future
+market.
+
+\section{Frictionless Validation, Net Costs, and Non-Inference}
+\label{sec:synthetic-cost-scope}
+
+The current epsilon-DCA theorem applies only to frictionless guarded rows.
+Appendix Table~\ref{tab:deterministic-cost-ranges} reports the deterministic fee
+calculations beside the gross rows. Separately, the stochastic bundle contains
+2,160 stochastic fee-adjusted ledgers. Every fee-adjusted row has the
+machine-readable scope
+\begin{center}
+  \path{outside-current-safety-theorem}.
+\end{center}
+They are net empirical performance calculations under the declared fee
+recursions, not evidence that the gross frictionless theorem extends to
+transaction costs.
+
+No significance test is defined for the deterministic catalog or the three
+saved stochastic seeds. Loss/tie/win counts, family median signs, and
+exploratory sensitivities therefore remain descriptive within their own
+layers. They cannot be pooled into a p-value, a probability of success, or an
+expected outperformance claim. The synthetic study establishes useful
+implementation stress, downside visibility, and cash/unit mechanism
+attribution; it does not establish causal superiority, historical relevance,
+market calibration, or an optimal safety factor. The historical question is
+answered separately in Chapter \ref{ch:historical-results}.
 
 \chapter{Historical Evaluation and Robustness}
 \label{ch:historical-results}
@@ -3341,6 +3524,7 @@ identities:
 
 \begin{sloppypar}
 \begin{enumerate}
+  \raggedright
   \item \path{smartdca-run-v1-b029028a9a8e5104359c4999b26e42f1dc81207eb4eb29b1dfba9fcae83473e0};
   \item \path{smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db};
   \item \path{smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25};
@@ -3472,9 +3656,39 @@ controlled partial draft is not a release-state transition.
 
 \chapter{Supplementary Tables and Figures}
 \label{app:supplementary-results}
-Complete generated tables and figures whose size or detail would interrupt the
-body will be placed here. Every item remains numbered, referenced, attributed,
-and generated from reviewed evidence.
+
+This appendix retains the complete coverage and cost ranges, exploratory
+stochastic slice, coverage diagnostics, and validation populations behind
+Chapter \ref{ch:synthetic-results}. Every displayed value is generated from
+the accepted bundles rather than transcribed from narrative prose. The table
+notes preserve population, horizon, coverage, comparison, units, and theorem
+scope so that the appendix remains interpretable without a private data source.
+
+\input{../generated/synthetic-supplementary.tex}
+
+\section{Asset Regeneration and Reconciliation}
+\label{sec:supp-asset-regeneration}
+
+With CPython 3.12, regenerate the four presentation assets into a fresh
+directory and compare them byte for byte with the committed manuscript inputs:
+
+\begin{verbatim}
+python3.12 -m reproducibility.synthetic_evaluation_assets \
+  --repository-root . \
+  --output-directory /tmp/smartdca-thesis-synthetic-assets
+python3.12 -m unittest \
+  reproducibility.checks.check_deterministic_stochastic_evaluation
+\end{verbatim}
+
+The generator verifies both content-derived study identities, the outer
+manifest fingerprints, every machine artifact it reads, population counts,
+the stochastic seed list and aggregate-cell count, the deterministic boundary
+receipt, and both nested runner-validation receipts before writing LaTeX. The
+test repeats generation in an isolated directory, compares all four output
+files with the canonical manuscript assets, and runs the independent chapter
+and evidence-map audit. The underlying deterministic and stochastic study
+checks separately regenerate their accepted run outputs; no retained protocol,
+input, or run-bundle byte is changed by manuscript assembly.
 
 \clearpage
 \renewcommand{\bibname}{Bibliography}

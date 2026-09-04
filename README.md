@@ -140,6 +140,7 @@ python -m unittest reproducibility.checks.check_financial_model_corrected_signal
 python -m unittest reproducibility.checks.check_impossibility_safety_policy_architecture
 python -m unittest reproducibility.checks.check_finite_arbitrary_horizon_boundaries
 python -m unittest reproducibility.checks.check_empirical_methodology_reproducibility
+python -m unittest reproducibility.checks.check_deterministic_stochastic_evaluation
 python -m unittest reproducibility.checks.check_dca_literature_synthesis
 python -m unittest reproducibility.checks.check_corrected_mean_literature_synthesis
 python -m unittest reproducibility.checks.check_computational_finance_statistics_literature_synthesis

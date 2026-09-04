@@ -89,6 +89,10 @@ def main() -> int:
                 "methodology_controls.py",
                 "BUILD FAILED: empirical methodology is invalid",
             ),
+            (
+                "synthetic_evaluation_controls.py",
+                "BUILD FAILED: deterministic/stochastic evaluation is invalid",
+            ),
         )
         for validator_name, failure_message in validation_specs:
             if not run_validation(

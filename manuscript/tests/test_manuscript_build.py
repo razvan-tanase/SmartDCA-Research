@@ -220,7 +220,18 @@ class ManuscriptBuildTests(unittest.TestCase):
                 normalized_text,
             )
             self.assertIn("Mandatory safety branch", normalized_text)
-            self.assertIn("Generated-asset placeholder", normalized_text)
+            self.assertIn(
+                "Primary deterministic catalog at frictionless",
+                normalized_text,
+            )
+            self.assertIn(
+                "Terminal cash–unit attribution for corrected guarded versus DCA",
+                normalized_text,
+            )
+            self.assertIn(
+                "regenerate the four presentation assets",
+                normalized_text,
+            )
             self.assertIn("Appendix", normalized_text)
             self.assertIn("BIBLIOGRAPHY", normalized_text)
             self.assertIn("Originality declaration placeholder", normalized_text)
@@ -235,8 +246,9 @@ class ManuscriptBuildTests(unittest.TestCase):
             self.assertIn("public presentation and defense", normalized_text)
             self.assertIn("online hand-in", normalized_text)
             self.assertIn("similarity review", normalized_text)
-            self.assertGreaterEqual(normalized_text.count("Figure 1.1"), 2)
             self.assertGreaterEqual(normalized_text.count("Figure 4.1"), 2)
+            self.assertGreaterEqual(normalized_text.count("Figure 7.1"), 2)
+            self.assertGreaterEqual(normalized_text.count("Figure 7.2"), 2)
 
             contract = json.loads(
                 (MANUSCRIPT_ROOT / "contract" / "requirements.json").read_text(

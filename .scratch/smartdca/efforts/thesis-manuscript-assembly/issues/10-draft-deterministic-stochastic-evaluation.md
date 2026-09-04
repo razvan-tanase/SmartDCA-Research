@@ -1,7 +1,7 @@
 # 10 — Draft the deterministic and stochastic evaluation
 
 Type: task
-Status: open
+Status: claimed
 Triage: ready-for-agent
 Blocked by: 08, 09
 Parent: [Thesis manuscript assembly](../spec.md)
@@ -30,3 +30,4 @@ A reader can inspect regenerated tables and figures for synthetic paths, underst
 
 - Created from the user-approved 17-ticket decomposition on 2026-09-01.
 - This ticket is a vertical manuscript slice: its prose, citations, evidence mappings, generated assets where applicable, and canonical build must agree before resolution.
+- Claimed for implementation on 2026-09-04 after confirming tickets 08 and 09 are resolved; the accepted manuscript and numerical-reconciliation seams will be used for test-first execution.
