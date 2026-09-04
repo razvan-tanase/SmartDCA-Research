@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
+\usepackage{amsmath}
 \usepackage[a4paper,margin=25.4mm]{geometry}
 \usepackage{graphicx}
 \usepackage{natbib}
@@ -149,10 +150,11 @@ release blockers in the institutional contract.
 
 \chapter{Introduction}
 \label{ch:introduction}
-Drafting now covers the reviewed literature and financial comparison,
-source-functional correction, and corrected-signal foundations. The remaining
-technical, empirical, and integrative chapters retain explicit structural
-placeholders until their tracked manuscript slices are resolved.
+Drafting now covers the reviewed literature, financial comparison,
+source-functional correction, corrected-signal foundations, and the causal
+impossibility-to-safety policy architecture. The remaining performance,
+empirical, and integrative chapters retain explicit structural placeholders
+until their tracked manuscript slices are resolved.
 
 \section*{Manuscript spine}
 The thesis follows one safety-versus-adaptivity argument: a
@@ -946,18 +948,350 @@ proves it rather than to the corrected mean.
 
 \chapter{Causal Impossibility and Safety Architecture}
 \label{ch:safety}
-\textbf{Purpose.} Establish the universal DCA impossibility boundary, derive
-the sharp epsilon-DCA unit guardrail, and define the guarded corrected-mean
-policy with the guarantee assigned only to the floor.
 
-\textbf{Prerequisites.} Chapter \ref{ch:model-signal} and thesis ticket 07.
+Chapter \ref{ch:model-signal} separated the financial comparison from the
+corrected-mean signal. This chapter asks what guarantee a distinct causal
+allocation can retain. The answer is a connected design argument. Requiring
+the full DCA payoff on every admissible path leaves no room to adapt; allowing
+a declared relative shortfall instead yields an exact purchase constraint and
+a funded interval in which a causal signal can act. The relaxation is therefore
+motivated by the impossibility result rather than introduced as an unrelated
+policy.
 
-\textbf{Reader outcome.} The reader understands why universal superiority
-collapses to DCA and how a controlled relaxation creates safe adaptive freedom.
+\section{Universal Dominance Collapses to DCA}
+\label{sec:dca-impossibility}
 
-\textbf{Placement.} Theorem statements, assumptions, proof ideas, the
-guardrail recursion, and policy algorithm stay in the body.
-Adversarial-continuation and equivalence proofs move to Appendix \ref{app:proofs}.
+The quantifiers and the cash ledger do the work. Fix a known finite horizon
+$n\geq1$, purchase dates $t=1,\ldots,n$, and a common evaluation price $P>0$.
+Every purchase price is finite and positive. At each date a nonnegative
+exogenous deposit $d_t$ arrives, and a causal strategy $S$ chooses $b_t^S$
+after observing the history through $(p_t,d_t)$ but before observing any future
+price. It is long-only, buy-only, fully funded: it starts from
+$C_0^S=Q_0^S=0$ and obeys the recursions
+(\ref{eq:model-recursions}). There is no borrowing or leverage, no short sale,
+and no sale of an existing unit; cash carries without interest. DCA receives the same
+deposits and horizon and spends $d_t$ immediately. At the common evaluation
+price, terminal wealth includes unused cash,
+
+\begin{equation}
+  W_n^S(P)=C_n^S+P Q_n^S,
+  \qquad
+  W_n^D(P)=P\sum_{t=1}^{n}\frac{d_t}{p_t}.
+  \label{eq:impossibility-wealth}
+\end{equation}
+
+No stochastic return law, price bound, or favorable path shape restricts this
+model.
+
+\subsection{Causal DCA impossibility}
+\label{thm:dca-impossibility}
+
+\textbf{Theorem.} Under the model above, suppose $S$ satisfies
+
+\begin{equation}
+  W_n^S(P)\geq W_n^D(P)
+  \label{eq:universal-dca-dominance}
+\end{equation}
+
+for every finite positive price path $(p_1,\ldots,p_n,P)$ and every
+nonnegative exogenous deposit sequence $(d_1,\ldots,d_n)$. Then after every
+reachable history
+
+\begin{equation}
+  b_t^S=d_t,\qquad C_t^S=0,\qquad
+  Q_t^S=Q_t^D=\sum_{i=1}^{t}\frac{d_i}{p_i}.
+  \label{eq:impossibility-collapse}
+\end{equation}
+
+Thus $S$ is DCA transaction by transaction and equality holds on every path.
+No economically distinct policy can be weakly better everywhere and strictly
+better somewhere under these assumptions.
+
+The proof is an induction with an adverse but admissible continuation. At the
+first date, funding gives $b_1^S\leq d_1$. If the policy retains a positive
+residual $r=d_1-b_1^S$, choose every later purchase price and the evaluation
+price to be one finite value $M>p_1$. Every dollar available after the first
+decision then finishes with one dollar of value whether it remains cash or is
+invested at $M$. DCA's earlier purchase, however, turns the residual into
+$r/p_1$ units worth $Mr/p_1$, so the terminal gap contributed by the deviation
+is
+
+\begin{equation}
+  r\left(1-\frac{M}{p_1}\right)<0.
+  \label{eq:impossibility-adverse-gap}
+\end{equation}
+
+Later deposits or later trades cannot offset this gap on the constant
+continuation. Hence the first purchase must equal DCA's. If the policies agree
+through date $t-1$, they enter an arbitrary date-$t$ history with the same units
+and zero carried cash. Repeating the same argument with
+$r=d_t-b_t^S$ and $M>p_t$ forces equality at date $t$. Appendix
+\ref{sec:proof-dca-impossibility} gives the complete accounting identity and
+induction.
+
+This theorem is not a claim that DCA is optimal on each realized path. On a
+fixed path, the exact identity (\ref{eq:model-dca-gap}) may be positive,
+negative, or zero; at constant prices every funded spending schedule ties.
+The universal statement instead rules out one causal policy whose payoff is
+never below DCA and sometimes above it on the unrestricted path space. After
+common deposits are cancelled, this is a DCA-specific instance of the
+pointwise no-arbitrage boundary studied in model-free finance
+\citep{burzoni2019}; the prefix funding and transaction-by-transaction
+identification remain specific to the present comparison.
+
+The consequence for policy design is precise. A distinct implementable rule
+must give up at least one member of the assumption package. This project keeps
+causality, every finite positive path, fair same-deposit funding, and
+cash-inclusive wealth. It weakens only the payoff target, replacing the factor
+one in (\ref{eq:universal-dca-dominance}) by a declared factor below one.
+
+\section{From Impossible Superiority to Epsilon-DCA Safety}
+\label{sec:safety-relaxation}
+
+Fix a tolerated relative shortfall $\varepsilon\in[0,1)$ and write
+$\lambda=1-\varepsilon\in(0,1]$ for the protected fraction. A causal fully
+funded strategy is \emph{epsilon-DCA safe} when
+
+\begin{equation}
+  W_n^S(P)\geq\lambda W_n^D(P)
+  \label{eq:epsilon-dca-safety}
+\end{equation}
+
+for every admissible price path and deposit sequence in the same frictionless
+model. For $\varepsilon>0$, this is not dominance: a safe policy may finish below DCA
+while never falling below the declared fraction of DCA wealth. The relaxation
+does not assert that losses relative to DCA are small in currency units, nor
+that the policy is nearly superior. It changes one exact threshold from one to
+$\lambda$ while retaining the unrestricted path quantifier and the fair
+financial ledger.
+
+This choice connects directly to the impossibility theorem. At
+$\varepsilon=0$, equivalently $\lambda=1$, condition
+(\ref{eq:epsilon-dca-safety}) is the universal weak-dominance premise and must
+collapse to DCA. A positive tolerance is therefore necessary for an
+economically distinct causal rule under the retained assumptions. The next
+result shows that it is also sufficient to create a transparent discretionary
+interface.
+
+\section{The Sharp Unit-Coverage Guardrail}
+\label{sec:unit-guardrail}
+
+Write DCA's prefix units as
+$Q_t^D=\sum_{i=1}^{t}d_i/p_i$. After a covered history, define the strategy's
+unit-coverage cushion and available cash by
+
+\begin{equation}
+  K_{t-1}^S=Q_{t-1}^S-\lambda Q_{t-1}^D\geq0,
+  \qquad
+  B_t^S=C_{t-1}^S+d_t.
+  \label{eq:guardrail-state}
+\end{equation}
+
+The cushion measures units already held above the protected fraction of DCA;
+it is not a currency reserve. A high current price makes a given unit cushion
+more valuable for meeting the next unit target.
+
+\subsection{Exact safety characterization}
+\label{thm:epsilon-guardrail}
+
+\textbf{Theorem.} For a causal fully funded strategy in the model of Section
+\ref{sec:dca-impossibility}, the following statements are equivalent:
+
+\begin{enumerate}
+  \item the terminal relative-wealth floor
+  (\ref{eq:epsilon-dca-safety}) holds on every admissible path and deposit
+  sequence;
+  \item after every reachable history and every purchase date,
+  $Q_t^S\geq\lambda Q_t^D$; and
+  \item after every history the current purchase satisfies the sharp floor
+  \begin{equation}
+    b_t^S\geq m_t^S(\lambda),\qquad
+    m_t^S(\lambda)=\left[\lambda d_t-p_tK_{t-1}^S\right]_+,
+    \label{eq:guardrail-floor}
+  \end{equation}
+  where $[u]_+=\max\{u,0\}$.
+\end{enumerate}
+
+The minimum is always feasible:
+
+\begin{equation}
+  0\leq m_t^S(\lambda)\leq\lambda d_t\leq d_t\leq B_t^S.
+  \label{eq:guardrail-feasibility}
+\end{equation}
+
+Consequently every safe purchase, and only a safe purchase, has the form
+
+\begin{equation}
+  b_t^S=m_t^S(\lambda)+a_t\left(B_t^S-m_t^S(\lambda)\right),
+  \qquad 0\leq a_t\leq1,
+  \label{eq:guardrail-interface}
+\end{equation}
+
+for some causal selector $a_t$. The first term is mandatory. The second is a
+funded discretionary allocation: $B_t^S-m_t^S(\lambda)$ is cash remaining in
+the feasible interval after reserving the sharp purchase floor, and $a_t$
+selects a fraction of it. No property of a corrected mean is used to establish
+this interval.
+
+The sufficiency direction is immediate enough to see in the body. Prefix unit
+coverage at the terminal purchase and nonnegative cash give
+
+\begin{equation}
+  W_n^S(P)=C_n^S+P Q_n^S
+  \geq P\lambda Q_n^D=\lambda W_n^D(P).
+  \label{eq:guardrail-sufficiency}
+\end{equation}
+
+Necessity uses a stronger adverse continuation than the impossibility proof.
+If a reachable prefix has a unit deficit
+$\delta=\lambda Q_t^D-Q_t^S>0$, set remaining purchase prices to $L^2$ and the
+evaluation price to $L$. Later cash can then acquire only vanishingly many
+units, whereas the existing deficit is valued at order $L$. A sufficiently
+large but finite $L$ violates (\ref{eq:epsilon-dca-safety}). Hence every prefix
+must be covered. Substitution of the two unit recursions then gives
+(\ref{eq:guardrail-floor}); nonnegative cushion gives
+(\ref{eq:guardrail-feasibility}). Appendix
+\ref{sec:proof-epsilon-guardrail} proves both directions, the local
+equivalence, and sharpness.
+
+The representation also separates responsibilities. The unit floor is
+necessary and sufficient for the uniform guarantee. The causal value of
+$a_t$ may affect realized cash, units, and wealth, but it cannot strengthen the
+proved guarantee merely by being called adaptive. Portfolio-insurance and
+drawdown-constrained methods likewise formulate explicit safety objects, but
+their floors, comparators, and trading models differ
+\citep{blackperold1992,conttankov2009}; their guarantees do not transfer to
+this DCA-relative theorem.
+
+\section{The Complete Guarded Corrected-Mean Policy}
+\label{def:guarded-policy}
+
+The guardrail becomes a policy only after a selector is supplied. Use the
+normalized lagged reference $R_{t-1}$ and relative price $r_t$ from
+(\ref{eq:corrected-reference}), including $r_1=1$, and set
+
+\begin{equation}
+  a_t=\frac{1}{1+\left(f(r_t)/f(1)\right)^{1-\alpha}},
+  \qquad 0<a_t<1.
+  \label{eq:guarded-policy-score}
+\end{equation}
+
+For the corrected guarded policy, denoted by superscript $c$, compute
+
+\begin{equation}
+  \begin{split}
+  K_{t-1}^c&=Q_{t-1}^c-\lambda Q_{t-1}^D,\\
+  B_t^c&=C_{t-1}^c+d_t,\\
+  m_t^c(\lambda)&=\left[\lambda d_t-p_tK_{t-1}^c\right]_+,\\
+  b_t^c&=m_t^c(\lambda)
+    +a_t\left(B_t^c-m_t^c(\lambda)\right).
+  \end{split}
+  \label{eq:complete-guarded-policy}
+\end{equation}
+
+The date-$t$ execution order is observable and finite: read the current price
+and deposit, calculate the cushion and available cash from the prior ledger,
+form the corrected-mean reference from normalized prices only through
+$t-1$, evaluate the bounded score at the current relative price, make the
+funded purchase, and update cash, policy units, and DCA units using
+(\ref{eq:model-recursions}) and (\ref{eq:model-dca}). No full-sample minimum,
+future price, ex-post budget normalization, or external borrowing enters the
+calculation.
+
+The corrected-mean score is only the discretionary selector in
+(\ref{eq:complete-guarded-policy}). Replacing it by any other causal
+$a_t\in[0,1]$ would preserve the guardrail theorem. Conversely, its
+corrected-mean origin does not supply a guarantee beyond that theorem. Figure
+\ref{fig:policy-architecture} makes this separation visible.
+
+\subsection{Admissibility and exact accounting}
+\label{sec:guarded-policy-properties}
+
+The complete rule is causal, fully funded, long-only, and buy-only. Causality
+follows because the floor reads only the current state, price, and deposit,
+while the reference is lagged and the score reads no price after $p_t$.
+Feasibility of the floor and $0<a_t<1$ give
+
+\begin{equation}
+  0\leq m_t^c(\lambda)\leq b_t^c\leq B_t^c,
+  \qquad
+  C_t^c=(1-a_t)\left(B_t^c-m_t^c(\lambda)\right)\geq0.
+  \label{eq:guarded-policy-funding}
+\end{equation}
+
+Thus the policy spends only deposited or previously carried cash. Every
+$b_t^c$ is nonnegative, and the unit update adds
+$b_t^c/p_t\geq0$ without selling an existing unit. This proves full funding,
+long-only holdings, and buy-only trading directly rather than inferring them
+from the score's boundedness alone.
+
+The coverage recursion is
+
+\begin{equation}
+  \begin{split}
+  K_t^c
+  &=K_{t-1}^c+\frac{b_t^c-\lambda d_t}{p_t}\\
+  &=\left[K_{t-1}^c-\frac{\lambda d_t}{p_t}\right]_+
+    +\frac{a_t\left(B_t^c-m_t^c(\lambda)\right)}{p_t}
+    \geq0.
+  \end{split}
+  \label{eq:guarded-cushion-recursion}
+\end{equation}
+
+Starting from $K_0^c=0$, induction therefore maintains prefix coverage. At any
+positive evaluation price $P$, the guarantee is the exact ledger identity
+
+\begin{equation}
+  W_t^c(P)-\lambda W_t^D(P)=C_t^c+P K_t^c\geq0.
+  \label{eq:guarded-policy-safety}
+\end{equation}
+
+The right-hand side identifies the source of safety: carried cash is
+nonnegative and the guardrail keeps the unit cushion nonnegative. It contains
+no claim that the selector forecasts returns or improves the DCA payoff.
+
+\input{../generated/policy-architecture.tex}
+
+\subsection{The unit-safety boundary and an economically distinct policy}
+\label{sec:lambda-boundary}
+
+At $\lambda=1$ the discretionary interval collapses. Initially
+$m_1^c(1)=d_1=B_1^c$, so $b_1^c=d_1$, $C_1^c=0$, and $K_1^c=0$.
+Repeating this argument after each history gives $b_t^c=d_t$ at every date,
+regardless of the corrected-mean score. The complete policy is exactly DCA,
+which is the impossibility theorem reappearing at the safety boundary.
+
+For $0<\lambda<1$, the first positive deposit encountered with zero prior
+cash and cushion has $m_t^c=\lambda d_t<B_t^c=d_t$. Because the score is
+strictly inside $(0,1)$, the policy purchases strictly between the floor and
+DCA's purchase. Positive tolerance therefore creates genuine funded freedom;
+whether using that freedom helps on any realized path remains a separate
+performance question for Chapter \ref{ch:boundaries} and the empirical study.
+
+\subsection{Frictionless guarantee versus net-of-cost evidence}
+\label{sec:frictionless-safety-boundary}
+
+The safety theorem is frictionless. It assumes that spending $b_t$ buys
+exactly $b_t/p_t$ units and that carried cash and terminal units enter wealth
+without transaction costs, taxes, slippage, interest, or market impact. A fee
+changes both the cash recursion and the unit increment, and policies with
+different purchase schedules incur different costs. Equations
+(\ref{eq:guarded-cushion-recursion}) and
+(\ref{eq:guarded-policy-safety}) therefore do not establish a cost-adjusted
+floor.
+
+Net-of-cost results are finite empirical robustness evidence outside the current safety theorem.
+They test the declared proportional- and fixed-fee calculations on retained
+paths; they are neither proof of a frictional floor nor a failure of the gross
+frictionless result when a net observation crosses a numerical threshold. A
+cost-aware guarantee would change the financial model and require a separately
+stated and reviewed theorem.
+
+The chapter has therefore assigned each claim to the mechanism that supports
+it: unrestricted dominance collapses to DCA; the unit floor supplies exact
+epsilon-DCA safety; and the corrected-mean score supplies only a causal choice
+inside the funded residual interval. Neither positive tolerance nor adaptive
+scoring is described as outperformance.
 
 \chapter{Exact Performance Boundaries}
 \label{ch:boundaries}
@@ -1063,10 +1397,10 @@ reinterpretation are excluded.
 \label{app:proofs}
 
 This appendix carries the mathematical machinery omitted from the Financial
-Computing narrative. The present ticket supplies the source-functional
-classification, corrected-mean meanhood and diagonal limit, and homogeneity
-characterization. The causal-impossibility and safety-equivalence proofs are
-reserved for Chapter \ref{ch:safety}'s drafting ticket.
+Computing narrative. It supplies the source-functional classification,
+corrected-mean meanhood and diagonal limit, homogeneity characterization,
+causal-impossibility induction, and epsilon-DCA safety equivalence used in
+Chapters \ref{ch:model-signal} and \ref{ch:safety}.
 
 \section{Proof of the Source-Functional Classification}
 \label{sec:proof-source-classification}
@@ -1295,6 +1629,206 @@ Gini mean. The necessity proof fails for only one effective coordinate, where
 every mean equals that coordinate, and it always holds the external weights
 fixed under input rescaling. These are the qualifications stated in Chapter
 \ref{ch:model-signal}.
+
+\section{Proof of the Causal DCA Impossibility}
+\label{sec:proof-dca-impossibility}
+
+First derive the accounting identity used by the continuation argument. From
+the zero initial portfolio and the funded recursions,
+
+\begin{equation}
+  C_n^S=\sum_{t=1}^{n}(d_t-b_t^S),
+  \qquad
+  Q_n^S=\sum_{t=1}^{n}\frac{b_t^S}{p_t}.
+\end{equation}
+
+Substitution into terminal wealth and cancellation of DCA's common deposits
+gives
+
+\begin{equation}
+  W_n^S(P)-W_n^D(P)
+  =\sum_{t=1}^{n}(d_t-b_t^S)
+    \left(1-\frac{P}{p_t}\right).
+  \label{eq:appendix-dca-gap}
+\end{equation}
+
+Individual terms $d_t-b_t^S$ need not be nonnegative because cash carried from
+an earlier date can fund a later purchase. Full funding imposes the prefix
+conditions
+
+\begin{equation}
+  \sum_{i=1}^{t}(d_i-b_i^S)=C_t^S\geq0,
+  \qquad t=1,\ldots,n.
+  \label{eq:appendix-prefix-funding}
+\end{equation}
+
+We now prove transaction-level uniqueness. At date one,
+$0\leq b_1^S\leq d_1$. Suppose
+$r=d_1-b_1^S>0$. Complete the price path by choosing one finite
+$M>p_1$ and setting every remaining purchase price and $P$ equal to $M$.
+At that continuation price, a later dollar has terminal value one whether it
+is kept as cash or exchanged for $1/M$ units. Future deposits are common to
+both policies, so their allocation cannot change the gap. Relative to DCA, the
+retained date-one amount contributes
+
+\begin{equation}
+  r-M\frac{r}{p_1}
+  =r\left(1-\frac{M}{p_1}\right)<0,
+\end{equation}
+
+contradicting universal weak dominance. Hence $b_1^S=d_1$, and the cash and
+unit states equal DCA's after date one.
+
+For the induction step, assume the states agree after every history through
+date $t-1$. At an arbitrary date-$t$ history, the strategy therefore enters
+with $C_{t-1}^S=0$ and DCA's units, so funding gives
+$b_t^S\leq d_t$. If $r=d_t-b_t^S>0$, set all subsequent purchase prices and
+$P$ to a finite $M>p_t$. Exactly the same calculation yields
+
+\begin{equation}
+  r\left(1-\frac{M}{p_t}\right)<0.
+  \label{eq:appendix-impossibility-induction-gap}
+\end{equation}
+
+Thus $b_t^S=d_t$ and the states agree through date $t$. The induction applies
+after every external history, not merely histories generated by one chosen
+price path, because the prefix was arbitrary and the strategy is causal.
+Therefore (\ref{eq:impossibility-collapse}) holds at every node.
+
+If the strategy uses internal randomization and the guarantee is required for
+every realized seed, the same proof applies seed by seed. If only expected
+weak dominance is required, the gap contains
+$\mathrm{E}[r](1-M/p_t)$; since $r\geq0$, it forces $r=0$ almost surely. Finally,
+(\ref{eq:appendix-dca-gap}) explains why equality on a single path is weaker:
+different schedules can make the displayed sum zero, while equality under all
+continuations identifies DCA transaction by transaction.
+
+\section{Proof of the Epsilon-DCA Guardrail}
+\label{sec:proof-epsilon-guardrail}
+
+Fix $\lambda\in(0,1]$. All histories below are reachable under the strategy,
+and all continuations retain finite positive prices and nonnegative deposits.
+
+\subsection*{Prefix coverage is sufficient}
+
+Suppose $Q_t^S\geq\lambda Q_t^D$ after every history. At the terminal purchase,
+full funding gives $C_n^S\geq0$, and therefore
+
+\begin{equation}
+  W_n^S(P)-\lambda W_n^D(P)
+  =C_n^S+P\left(Q_n^S-\lambda Q_n^D\right)\geq0.
+  \label{eq:appendix-coverage-sufficient}
+\end{equation}
+
+This proves the universal relative-wealth floor without discarding carried
+cash.
+
+\subsection*{Prefix coverage is necessary}
+
+Assume the universal terminal floor but suppose that after some history at
+date $t$ there is a unit deficit
+
+\begin{equation}
+  \delta=\lambda Q_t^D-Q_t^S>0.
+\end{equation}
+
+Let $B=C_t^S$ and fix any finite future deposit schedule whose total is $F$.
+Set every remaining purchase price to $L^2$ and the evaluation price to $L$.
+The candidate can spend at most $B+F$ after the selected prefix, so
+
+\begin{equation}
+  Q_n^S\leq Q_t^S+\frac{B+F}{L^2},
+  \qquad C_n^S\leq B+F,
+\end{equation}
+
+while DCA receives $F/L^2$ future units. Consequently
+
+\begin{align}
+  W_n^S(L)-\lambda W_n^D(L)
+  &\leq B+F-L\delta+\frac{B+(1-\lambda)F}{L}\\
+  &\leq B+F-L\delta+\frac{B+F}{L}.
+  \label{eq:appendix-prefix-deficit-bound}
+\end{align}
+
+Choose a finite $L\geq1$ such that $L\delta>2(B+F)$; if $B+F=0$, any
+sufficiently large positive $L$ works. The last bound is negative, a
+contradiction. When $t=n$, take $F=0$ and vary only the evaluation price. Thus
+the terminal guarantee forces unit coverage after every reachable prefix.
+
+\subsection*{Local floor equivalence and feasibility}
+
+Assume coverage through date $t-1$ and write
+$K_{t-1}^S=Q_{t-1}^S-\lambda Q_{t-1}^D\geq0$. The two unit recursions give
+
+\begin{equation}
+  Q_t^S-\lambda Q_t^D
+  =K_{t-1}^S+\frac{b_t^S-\lambda d_t}{p_t}.
+  \label{eq:appendix-coverage-update}
+\end{equation}
+
+The right-hand side is nonnegative exactly when
+$b_t^S\geq\lambda d_t-p_tK_{t-1}^S$. Combining this inequality with
+$b_t^S\geq0$ yields
+
+\begin{equation}
+  b_t^S\geq\left[\lambda d_t-p_tK_{t-1}^S\right]_+
+  =m_t^S(\lambda).
+\end{equation}
+
+Because the prior cushion is nonnegative,
+$0\leq m_t^S\leq\lambda d_t\leq d_t\leq B_t^S$. The floor is therefore
+feasible at every covered history. Induction from $K_0^S=0$ proves that any
+causal purchase at or above it preserves coverage.
+
+Every feasible purchase $b_t^S\in[m_t^S,B_t^S]$ has the discretionary
+representation (\ref{eq:guardrail-interface}). When $B_t^S>m_t^S$, take
+
+\begin{equation}
+  a_t=\frac{b_t^S-m_t^S}{B_t^S-m_t^S}\in[0,1].
+\end{equation}
+
+When the interval is a singleton, set $a_t=0$ by convention; the resulting
+purchase is independent of that choice. Conversely, every causal
+$a_t\in[0,1]$ selects a funded purchase in this complete interval. This proves
+all three directions of the theorem.
+
+\subsection*{Exact worst-case factor and endpoints}
+
+For paths with at least one positive deposit, define
+
+\begin{equation}
+  \Gamma(S)=\inf_{\text{admissible full paths}}
+  \frac{W_n^S}{W_n^D}.
+\end{equation}
+
+Nonnegative cash implies that every completed path has wealth ratio at least
+$Q_n^S/Q_n^D$. Conversely, apply the $L^2$-purchase, $L$-evaluation
+continuation above to any reachable prefix with $Q_t^D>0$. As $L$ tends to
+infinity, later units and terminal cash become negligible relative to the
+prefix units, and the terminal ratio approaches $Q_t^S/Q_t^D$. Hence
+
+\begin{equation}
+  \Gamma(S)=
+  \inf_{\substack{\text{reachable histories }h_t\\Q_t^D(h_t)>0}}
+  \frac{Q_t^S(h_t)}{Q_t^D(h_t)}.
+  \label{eq:appendix-exact-safety-factor}
+\end{equation}
+
+The unit requirement is therefore sharp, not merely sufficient. At
+$\lambda=1$, the date-one floor and funding upper bound both equal $d_1$;
+induction forces DCA at every date. For each $0<\lambda<1$, the fixed reserve rule
+$b_t^S=\lambda d_t$ is causal, fully funded, and non-DCA whenever a deposit is
+positive. It has $Q_t^S=\lambda Q_t^D$ and
+$C_t^S=(1-\lambda)\sum_{i\leq t}d_i$. With one purchase at price one and
+evaluation price $P$,
+
+\begin{equation}
+  \frac{W^S}{W^D}=\lambda+\frac{1-\lambda}{P}\downarrow\lambda,
+\end{equation}
+
+so that construction admits no larger uniform factor. The excluded limit
+$\lambda=0$ leaves only nonnegative wealth and makes every fully funded policy
+vacuously safe; it supplies no substantive DCA-relative protection.
 
 \chapter{Exact Performance Cases and Witnesses}
 \label{app:performance-cases}

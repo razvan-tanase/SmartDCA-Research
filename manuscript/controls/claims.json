@@ -128,6 +128,7 @@
         {"role": "proof", "path": "research/notes/pathwise-dca-dominance-under-causal-budget.md"},
         {"role": "executable-check", "path": "reproducibility/checks/check_pathwise_dca_dominance.py"}
       ],
+      "citation_keys": ["burzoni2019"],
       "manuscript_location": "ch:safety/thm:dca-impossibility",
       "citation_need": "Cite the bounded novelty review and relevant robust-portfolio literature without claiming exhaustive novelty.",
       "mandatory": true,
@@ -144,6 +145,7 @@
         {"role": "proof-and-sharpness", "path": "research/notes/sharp-epsilon-dca-safety-guardrail.md"},
         {"role": "executable-check", "path": "reproducibility/checks/check_epsilon_dca_safety_guardrail.py"}
       ],
+      "citation_keys": ["blackperold1992", "conttankov2009"],
       "manuscript_location": "ch:safety/thm:epsilon-guardrail",
       "citation_need": "Cite the bounded prior-art review and keep the DCA-specific result distinct from broader portfolio-insurance concepts.",
       "mandatory": true,
@@ -542,11 +544,12 @@
     },
     {
       "id": "claim-figure-policy-architecture",
-      "entry_type": "planned-figure",
+      "entry_type": "conceptual-figure",
       "wording": "Guarded policy flow separating the mandatory unit-coverage floor from the corrected-mean selector and funded discretionary allocation.",
       "claim_class": "candidate-created-conceptual-figure",
       "scope": "Algorithm structure in the canonical causal model; the guarantee attaches only to the floor branch.",
       "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/policy-architecture.tex"},
         {"role": "canonical-policy", "path": "research/definitions/guarded-corrected-mean-smartdca-rule.md"},
         {"role": "guardrail-theorem", "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"}
       ],

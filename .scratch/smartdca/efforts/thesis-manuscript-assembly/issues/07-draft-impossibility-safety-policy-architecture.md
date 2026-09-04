@@ -1,7 +1,7 @@
 # 07 — Draft the impossibility-to-safety policy architecture
 
 Type: task
-Status: open
+Status: claimed
 Triage: ready-for-agent
 Blocked by: 03, 06
 Parent: [Thesis manuscript assembly](../spec.md)
@@ -30,3 +30,4 @@ A committee reader can follow the pivot from an impossible universal-superiority
 
 - Created from the user-approved 17-ticket decomposition on 2026-09-01.
 - This ticket is a vertical manuscript slice: its prose, citations, evidence mappings, generated assets where applicable, and canonical build must agree before resolution.
+- Claimed for implementation on 2026-09-04 after tickets 03 and 06 were verified resolved.

@@ -170,6 +170,18 @@ class ManuscriptBuildTests(unittest.TestCase):
                 normalized_text,
             )
             self.assertIn(
+                "No economically distinct policy can be weakly better everywhere and strictly better somewhere",
+                normalized_text,
+            )
+            self.assertIn(
+                "The corrected-mean score is only the discretionary selector",
+                normalized_text,
+            )
+            self.assertIn(
+                "Net-of-cost results are finite empirical robustness evidence outside the current safety theorem",
+                normalized_text,
+            )
+            self.assertIn(
                 "Proof of the Source-Functional Classification",
                 normalized_text,
             )
@@ -177,6 +189,15 @@ class ManuscriptBuildTests(unittest.TestCase):
                 "Proof of the Homogeneity Characterization",
                 normalized_text,
             )
+            self.assertIn(
+                "Proof of the Causal DCA Impossibility",
+                normalized_text,
+            )
+            self.assertIn(
+                "Proof of the Epsilon-DCA Guardrail",
+                normalized_text,
+            )
+            self.assertIn("Mandatory safety branch", normalized_text)
             self.assertIn("Generated-asset placeholder", normalized_text)
             self.assertIn("Appendix", normalized_text)
             self.assertIn("BIBLIOGRAPHY", normalized_text)
@@ -193,6 +214,7 @@ class ManuscriptBuildTests(unittest.TestCase):
             self.assertIn("online hand-in", normalized_text)
             self.assertIn("similarity review", normalized_text)
             self.assertGreaterEqual(normalized_text.count("Figure 1.1"), 2)
+            self.assertGreaterEqual(normalized_text.count("Figure 4.1"), 2)
 
             contract = json.loads(
                 (MANUSCRIPT_ROOT / "contract" / "requirements.json").read_text(

@@ -94,6 +94,20 @@ def main() -> int:
         "BUILD FAILED: financial-model foundations are invalid",
     ):
         return 1
+    if control_profile == "thesis-architecture-v1" and not run_validation(
+        [
+            sys.executable,
+            str(
+                Path(__file__).resolve().parents[1]
+                / "reproducibility"
+                / "safety_policy_controls.py"
+            ),
+            "--repository-root",
+            str(root.parent),
+        ],
+        "BUILD FAILED: impossibility-to-safety policy architecture is invalid",
+    ):
+        return 1
 
     latexmk = shutil.which("latexmk")
     if latexmk is None:

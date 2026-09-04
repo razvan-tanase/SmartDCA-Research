@@ -3,9 +3,11 @@
 This directory contains the authoritative thesis source, the implemented
 official-template layer, the thesis architecture and evidence controls, and the
 fail-closed submission gate. The current PDF is a controlled partial draft:
-Chapter 2 supplies the reviewed literature positioning, Chapter 3 and Appendix
-A supply the financial-model and corrected-signal foundations, and later
-chapters remain structural placeholders. It is not a submission candidate.
+Chapter 2 supplies the reviewed literature positioning; Chapter 3 supplies the
+financial-model and corrected-signal foundations; Chapter 4 supplies the
+impossibility-to-safety policy architecture; and Appendix A retains their
+detailed proofs. Later chapters remain structural placeholders. It is not a
+submission candidate.
 
 ## Authority
 
@@ -46,9 +48,9 @@ appendices with their purpose, prerequisites, reader outcome, and placement
 boundary. Before LaTeX starts, the build runs the architecture/evidence control
 check and the DCA/adaptive/causal-safety, corrected-mean prior-theory, and
 reproducible computational-finance/statistical-method literature traceability
-checks, followed by the financial-model and corrected-signal foundations audit,
-and fails on an invalid package. A successful draft build does not imply
-submission readiness.
+checks, followed by the financial-model/corrected-signal and
+impossibility-to-safety policy audits, and fails on an invalid package. A
+successful draft build does not imply submission readiness.
 
 Run the control check directly with:
 
@@ -92,9 +94,13 @@ python -m unittest manuscript.tests.test_controls
 python -m unittest manuscript.tests.test_release_check
 python -m unittest manuscript.tests.test_manuscript_build
 python -m unittest reproducibility.checks.check_financial_model_corrected_signal_foundations
+python -m unittest reproducibility.checks.check_impossibility_safety_policy_architecture
 python -m unittest reproducibility.checks.check_dca_literature_synthesis
 python -m unittest reproducibility.checks.check_corrected_mean_literature_synthesis
 python -m unittest reproducibility.checks.check_computational_finance_statistics_literature_synthesis
+python reproducibility/checks/check_pathwise_dca_dominance.py
+python reproducibility/checks/check_epsilon_dca_safety_guardrail.py
+python reproducibility/checks/check_guarded_corrected_mean_smartdca.py
 python manuscript/check_controls.py
 python tools/check_markdown_links.py .
 ```
@@ -111,7 +117,8 @@ and the focused manuscript checks in one approved process:
 ```
 
 The helper installs Homebrew's CPython 3.12, TeX Live, and Poppler, then runs
-the link, manuscript control/build/release, literature-audit, and rendered-PDF
+the link, manuscript control/build/release, literature, foundation,
+impossibility-to-safety, directly intersecting scientific, and rendered-PDF
 checks listed above. In these sandboxes, only the first process tree after
 installation can still see the tools, so `--build` performs the canonical build
 as a separate single-process invocation. Both modes require approval because

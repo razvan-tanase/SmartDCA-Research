@@ -1,0 +1,56 @@
+% Stable claim/asset ID: claim-figure-policy-architecture
+% Candidate-created conceptual diagram; this is not quantitative evidence.
+% Governing authorities: research/theorems/epsilon-dca-safety-unit-guardrail.md
+% and research/definitions/guarded-corrected-mean-smartdca-rule.md.
+\begin{figure}[htbp]
+  \centering
+  \fbox{%
+    \begin{minipage}{0.91\textwidth}
+      \small
+      \centering
+      \textbf{Observed causal prefix}\par
+      $p_1,\ldots,p_t$; $d_1,\ldots,d_t$;
+      $C_{t-1}^c,Q_{t-1}^c,Q_{t-1}^D$
+
+      \vspace{4pt}
+      $\Downarrow$
+      \vspace{4pt}
+
+      \begin{minipage}[t]{0.47\textwidth}
+        \raggedright
+        \textbf{Mandatory safety branch}\par
+        Coverage cushion
+        $K_{t-1}^c=Q_{t-1}^c-\lambda Q_{t-1}^D$ and sharp floor
+        \[
+          m_t^c=[\lambda d_t-p_tK_{t-1}^c]_+.
+        \]
+        This branch supplies the frictionless relative-wealth guarantee.
+      \end{minipage}
+      \hfill
+      \begin{minipage}[t]{0.47\textwidth}
+        \raggedright
+        \textbf{Discretionary signal branch}\par
+        The lagged normalized corrected-mean reference gives $r_t$ and the
+        bounded selector
+        \[
+          a_t=\frac{1}{1+(f(r_t)/f(1))^{1-\alpha}}.
+        \]
+        This branch chooses an allocation; it supplies no safety or
+        outperformance result.
+      \end{minipage}
+
+      \vspace{4pt}
+      $\Downarrow$
+      \vspace{2pt}
+
+      \textbf{Funded purchase}\par
+      $b_t^c=m_t^c+a_t(B_t^c-m_t^c)$,\quad
+      $B_t^c=C_{t-1}^c+d_t$,\quad $0\leq b_t^c\leq B_t^c$.
+    \end{minipage}%
+  }
+  \caption{Guarded policy architecture. This candidate-created conceptual
+  diagram separates the theorem-backed mandatory unit floor from the
+  corrected-mean selector acting only on the remaining funded interval. It is
+  an algorithm map, not an empirical figure or a causal graph.}
+  \label{fig:policy-architecture}
+\end{figure}
