@@ -12,6 +12,7 @@ RUN apt-get update \
         python3 \
         texlive-fonts-recommended \
         texlive-latex-base \
+        texlive-latex-extra \
         texlive-latex-recommended \
     && rm -rf /var/lib/apt/lists/*
 
