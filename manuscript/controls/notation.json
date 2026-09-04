@@ -377,6 +377,17 @@
       "review_state": "accepted"
     },
     {
+      "id": "notation-two-purchase-components",
+      "symbol": "H, c_a, g",
+      "meaning": "Two-purchase funded interval, terminal cash under score a, and the first-date unit-shift term.",
+      "repository_notation": "H, c or c_a, g",
+      "manuscript_notation": "H, c_a, g",
+      "reconciliation": "Use c_a rather than the canonical theorem page's scalar c so terminal cash cannot be confused with the corrected-policy superscript c in the same expression; H and g remain theorem-local.",
+      "first_use": "ch:boundaries/sec:two-purchase",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
       "id": "notation-relative-gap",
       "symbol": "g^{S,T}",
       "meaning": "Relative terminal-wealth gap (W^S-W^T)/W^T in empirical tables.",

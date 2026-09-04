@@ -275,7 +275,7 @@ def validate_thesis_profile(
         )
 
     claims = register_documents.get("claims", {}).get("records", [])
-    claim_authority_paths: set[str] = set()
+    canonical_claim_authority_paths: set[str] = set()
     entry_types: set[object] = set()
     if isinstance(claims, list):
         for record in claims:
@@ -296,9 +296,10 @@ def validate_thesis_profile(
                 errors,
             )
             entry_types.add(record.get("entry_type"))
-            for path in authority_paths(record):
-                if isinstance(path, str):
-                    claim_authority_paths.add(path)
+            if record.get("entry_type") in {"definition", "theorem"}:
+                for path in authority_paths(record):
+                    if isinstance(path, str):
+                        canonical_claim_authority_paths.add(path)
     for entry_type in (
         "definition",
         "theorem",
@@ -330,7 +331,7 @@ def validate_thesis_profile(
                 continue
             for path in sorted(repository_root.glob(pattern)):
                 relative_path = path.relative_to(repository_root).as_posix()
-                if relative_path not in claim_authority_paths:
+                if relative_path not in canonical_claim_authority_paths:
                     errors.append(
                         "controls/claims.json: canonical authority is not registered: "
                         f"{relative_path}"

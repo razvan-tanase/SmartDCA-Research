@@ -1340,13 +1340,13 @@ the clipped floor and the two quantities governing the comparison are
   H=\delta d_1+d_2-
     \left[\lambda d_2-\delta d_1q\right]_+,
   \qquad
-  c=(1-a)H,
+  c_a=(1-a)H,
   \qquad
   g=\delta d_1(1-q).
   \label{eq:two-purchase-components}
 \end{equation}
 
-Here $c=C_2^c$ is terminal carried cash. The quantity $g$ records the unit
+Here $c_a=C_2^c$ is terminal carried cash. The quantity $g$ records the unit
 effect of retaining part of the first deposit rather than investing it at
 $p_1$; it is not an empirical relative-gap statistic.
 
@@ -1356,19 +1356,19 @@ $p_1$; it is not an empirical relative-gap statistic.
 Direct cash-inclusive accounting gives the affine identity
 
 \begin{equation}
-  \boxed{W_2^c(P)-W_2^D(P)=c-y(c-g).}
+  \boxed{W_2^c(P)-W_2^D(P)=c_a-y(c_a-g).}
   \label{eq:two-purchase-boundary}
 \end{equation}
 
-For $0<\lambda<1$ and $d_1+d_2>0$, one has $c>0$. If $c-g>0$, the
+For $0<\lambda<1$ and $d_1+d_2>0$, one has $c_a>0$. If $c_a-g>0$, the
 corrected rule wins exactly for
 
 \begin{equation}
-  0<y<\frac{c}{c-g},
+  0<y<\frac{c_a}{c_a-g},
   \label{eq:two-purchase-win-region}
 \end{equation}
 
-ties at equality, and loses above the threshold. If $c-g\leq0$, every finite
+ties at equality, and loses above the threshold. If $c_a-g\leq0$, every finite
 $y>0$ is a strict win on that fixed ledger slice. If both deposits vanish,
 both policies have zero wealth; at $\lambda=1$, every discretionary interval
 collapses and all cases tie DCA. Thus the result is necessary and sufficient
@@ -1401,23 +1401,24 @@ and an exact classification-flip witness.
 \section{Three Purchases: the First Beta-Sensitive Boundary}
 \label{sec:three-purchase}
 
-At date three the lagged reference first receives two inputs, $(1,q)$. Let
-$h=p_3/p_2$, $y=P/p_3$, retain the definitions of $q$ and $\delta$ from
-(\ref{eq:two-purchase-ratios}), and write $b_\beta=a_3$. The date-two score,
+At date three the lagged reference first receives two inputs, $(1,q)$. Continue
+to assume positive purchase and evaluation prices, nonnegative deposits, and
+$0<\lambda\leq1$. Let $h=p_3/p_2$, $y=P/p_3$, retain the definitions of $q$
+and $\delta$ from (\ref{eq:two-purchase-ratios}), and write $b_\beta=a_3$.
+The date-two score,
 cash $C_2^c$, and the date-three discretionary interval $H_3$ are independent
 of $\beta$. Define
 
 \begin{equation}
   c_\beta=(1-b_\beta)H_3,
   \qquad
-  g=\delta d_1\frac{p_3}{p_2}
-       \left(1-\frac{p_2}{p_1}\right)
-    +C_2^c\left(1-\frac{p_3}{p_2}\right).
+  g=\delta d_1h(1-q)+C_2^c(1-h).
   \label{eq:three-purchase-components}
 \end{equation}
 
-The first quantity is terminal cash after the beta-sensitive third split; the
-second is fixed entirely by the common ledger through date two.
+The first quantity is terminal cash after the beta-sensitive third split. The
+second is beta-independent: it is fixed by the common state through date two
+and the observed date-three price.
 
 \subsection{Exact classification and beta effect}
 \label{thm:three-purchase}
@@ -1767,12 +1768,12 @@ substituted for one another.
     \hline
     Evidence role & What it establishes & What it does not establish \\
     \hline
-    Finite witness & Nonempty two- or three-date region; possible beta-sensitive flip & Parameter ranking, frequency, or longer-horizon law \\
-    Finite deterministic search & Exact counterexample to a universal valley conjecture inside a declared grid & Probability, expected return, or exhaustive continuous-domain ranking \\
-    Model-general identity & Cash-timing equality for any fully funded common-deposit strategies & A favorable sign or score attribution \\
-    Conditional mechanism theorem & Cash single crossing under sufficient reference-aligned floor feedback & Necessity or terminal-wealth order \\
-    Realized-ledger theorem & Exact $H_T+P U_T$ classification at every finite horizon & Price-only, universal, or expected-performance conclusion \\
-    Stochastic questions & Later distributional sensitivity under a declared sampling design & Retrospective reinterpretation of deterministic theorems \\
+    Finite witness (Sections \ref{thm:two-purchase} and \ref{thm:three-purchase}) & Nonempty two- or three-date region; possible beta-sensitive flip & Parameter ranking, frequency, or longer-horizon law \\
+    Finite deterministic search (Section \ref{sec:single-valley-limit}) & Exact counterexample to a universal valley conjecture inside a declared grid & Probability, expected return, or exhaustive continuous-domain ranking \\
+    Model-general identity (Section \ref{thm:cash-timing}) & Cash-timing equality for any fully funded common-deposit strategies & A favorable sign or score attribution \\
+    Conditional mechanism theorem (Section \ref{thm:cash-single-crossing}) & Cash single crossing under sufficient reference-aligned floor feedback & Necessity or terminal-wealth order \\
+    Realized-ledger theorem (Section \ref{thm:terminal-inventory}) & Exact $H_T+P U_T$ classification at every finite horizon & Price-only, universal, or expected-performance conclusion \\
+    Stochastic questions (Chapters \ref{ch:synthetic-results}--\ref{ch:historical-results}) & Later distributional sensitivity under a declared sampling design & Retrospective reinterpretation of deterministic theorems \\
     \hline
   \end{tabular}
   \caption{Scope map for the finite and arbitrary-horizon evidence.}
@@ -2336,26 +2337,26 @@ At date two the clipped floor and funded interval are
   \label{eq:appendix-two-floor}
 \end{equation}
 
-so $b_2^c=m_2^c+aH$ and $C_2^c=(1-a)H=c$. Total-spending
-accounting gives $b_2^c-d_2=\delta d_1-c$, while
+so $b_2^c=m_2^c+aH$ and $C_2^c=(1-a)H=c_a$. Total-spending
+accounting gives $b_2^c-d_2=\delta d_1-c_a$, while
 $b_1^c-d_1=-\delta d_1$. Therefore
 
 \begin{align}
   W_2^c-W_2^D
-  &=c+P\left(-\frac{\delta d_1}{p_1}
-       +\frac{\delta d_1-c}{p_2}\right) \\
-  &=c(1-y)+\delta d_1y(1-q)
-   =c-y(c-g).
+  &=c_a+P\left(-\frac{\delta d_1}{p_1}
+       +\frac{\delta d_1-c_a}{p_2}\right) \\
+  &=c_a(1-y)+\delta d_1y(1-q)
+   =c_a-y(c_a-g).
   \label{eq:appendix-two-gap}
 \end{align}
 
 When $0<\lambda<1$ and the deposit pair is nonzero,
-$H\geq\delta d_1+(1-\lambda)d_2>0$, hence $c>0$. A positive-slope
-coefficient $c-g$ produces the unique threshold $c/(c-g)$; a nonpositive
-coefficient leaves $c-y(c-g)>0$ for every finite $y>0$. At $q=1$, the
+$H\geq\delta d_1+(1-\lambda)d_2>0$, hence $c_a>0$. When $c_a-g>0$,
+the affine gap has negative slope and the unique threshold $c_a/(c_a-g)$;
+when $c_a-g\leq0$, it remains positive for every finite $y>0$. At $q=1$, the
 threshold is one, proving that strict global win and loss regions are both
 nonempty. Zero deposits give an identity tie, while $\lambda=1$ makes
-$\delta=H=c=g=0$ and forces transaction-level DCA.
+$\delta=H=c_a=g=0$ and forces transaction-level DCA.
 
 For a selector $s\in\{a,1/2\}$, put $c_s=(1-s)H$ and
 

@@ -172,7 +172,7 @@
       "entry_type": "theorem",
       "wording": "At three purchases, the first multi-input corrected reference yields an exact beta-sensitive evaluation-price boundary, and an exact countercyclical witness flips from a strict DCA loss to a strict win when only beta changes.",
       "claim_class": "mathematical-finance-theorem",
-      "scope": "Exactly three purchases; the witness proves possibility, not monotone benefit from increasing beta or a parameter ranking.",
+      "scope": "Exactly three purchase dates with positive purchase and evaluation prices, nonnegative deposits, and lambda in (0,1]; the witness proves possibility, not monotone benefit from increasing beta or a parameter ranking.",
       "authority": [
         {"role": "canonical-theorem", "path": "research/theorems/three-purchase-corrected-mean-effect.md"},
         {"role": "proof-and-witness", "path": "research/notes/three-purchase-corrected-mean-effect.md"},
@@ -429,7 +429,16 @@
       "claim_class": "mathematical-summary-table",
       "scope": "Concise restatement only; canonical theorem pages and exact-search reports govern each row, and no row changes its evidence layer.",
       "authority": [
-        {"role": "claim-register", "path": "manuscript/controls/claims.json"},
+        {"role": "two-purchase-theorem", "path": "research/theorems/two-purchase-guarded-smartdca-boundary.md"},
+        {"role": "two-purchase-evidence", "path": "research/notes/two-purchase-dca-win-loss-boundary.md"},
+        {"role": "three-purchase-theorem", "path": "research/theorems/three-purchase-corrected-mean-effect.md"},
+        {"role": "three-purchase-evidence", "path": "research/notes/three-purchase-corrected-mean-effect.md"},
+        {"role": "cash-timing-theorem", "path": "research/theorems/arbitrary-horizon-cash-timing-identity.md"},
+        {"role": "cash-timing-evidence", "path": "research/notes/arbitrary-horizon-accounting-verification-seam.md"},
+        {"role": "cash-crossing-theorem", "path": "research/theorems/reference-aligned-guardrail-cash-single-crossing.md"},
+        {"role": "cash-crossing-evidence", "path": "research/notes/cash-single-crossing-mechanism.md"},
+        {"role": "terminal-inventory-theorem", "path": "research/theorems/arbitrary-horizon-performance-boundary.md"},
+        {"role": "terminal-inventory-evidence", "path": "research/notes/arbitrary-horizon-performance-boundary.md"},
         {"role": "valley-search-report", "path": "reports/experiments/weak-single-valley-falsification.md"},
         {"role": "cash-crossing-search-report", "path": "reports/experiments/cash-single-crossing-search.md"}
       ],

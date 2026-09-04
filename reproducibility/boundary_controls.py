@@ -41,9 +41,24 @@ BOUNDARY_NOTATION = {
     "notation-terminal-differences": "ch:boundaries/sec:terminal-inventory",
     "notation-cash-path-difference": "ch:boundaries/sec:cash-timing",
     "notation-two-purchase-ratios": "ch:boundaries/sec:two-purchase",
+    "notation-two-purchase-components": "ch:boundaries/sec:two-purchase",
     "notation-three-purchase-ratio": "ch:boundaries/sec:three-purchase",
 }
 BOUNDARY_NONCLAIMS = {"nonclaim-universal-superiority"}
+THEOREM_SCOPE_AUTHORITIES = {
+    "research/theorems/two-purchase-guarded-smartdca-boundary.md",
+    "research/notes/two-purchase-dca-win-loss-boundary.md",
+    "research/theorems/three-purchase-corrected-mean-effect.md",
+    "research/notes/three-purchase-corrected-mean-effect.md",
+    "research/theorems/arbitrary-horizon-cash-timing-identity.md",
+    "research/notes/arbitrary-horizon-accounting-verification-seam.md",
+    "research/theorems/reference-aligned-guardrail-cash-single-crossing.md",
+    "research/notes/cash-single-crossing-mechanism.md",
+    "research/theorems/arbitrary-horizon-performance-boundary.md",
+    "research/notes/arbitrary-horizon-performance-boundary.md",
+    "reports/experiments/weak-single-valley-falsification.md",
+    "reports/experiments/cash-single-crossing-search.md",
+}
 
 
 class BoundaryControlError(ValueError):
@@ -93,8 +108,14 @@ def audit_finite_arbitrary_horizon_boundaries(
             r"q=\frac{p_2}{p_1}",
             r"y=\frac{P}{p_2}",
             r"\delta=\frac{1-\lambda}{2}",
-            r"W_2^c(P)-W_2^D(P)=c-y(c-g)",
-            r"0<y<\frac{c}{c-g}",
+            r"c_a=(1-a)H",
+            r"W_2^c(P)-W_2^D(P)=c_a-y(c_a-g)",
+            r"For $0<\lambda<1$ and $d_1+d_2>0$, one has $c_a>0$",
+            r"0<y<\frac{c_a}{c_a-g}",
+            "ties at equality, and loses above the threshold",
+            r"If $c_a-g\leq0$, every finite $y>0$ is a strict win",
+            "If both deposits vanish, both policies have zero wealth",
+            r"at $\lambda=1$, every discretionary interval collapses and all cases tie DCA",
             "The parameter $\\beta$ is absent at two purchases",
             "does not state a win probability or an arbitrary-horizon law",
         ),
@@ -106,8 +127,16 @@ def audit_finite_arbitrary_horizon_boundaries(
         (
             r"\label{sec:three-purchase}",
             r"\label{thm:three-purchase}",
+            "positive purchase and evaluation prices, nonnegative deposits",
+            r"0<\lambda\leq1",
+            r"h=p_3/p_2",
+            r"g=\delta d_1h(1-q)+C_2^c(1-h)",
             r"W_3^c(P)-W_3^D(P)=c_\beta-y(c_\beta-g)",
             r"T_\beta=\frac{c_\beta}{c_\beta-g}",
+            r"When $c_\beta-g\leq0$, set $T_\beta=+\infty$ and the fixed slice is all-win",
+            r"At $\lambda=1$, or with three zero deposits, all comparisons tie",
+            "second is beta-independent",
+            "observed date-three price",
             r"\beta=-1",
             r"-\frac{1}{36}",
             r"\beta=1",
@@ -153,8 +182,11 @@ def audit_finite_arbitrary_horizon_boundaries(
         (
             r"\label{sec:guardrail-feedback}",
             r"\label{thm:cash-single-crossing}",
+            "For equal reference weights, the identity transform",
             r"\alpha<1",
             r"\alpha\beta\leq0",
+            "On a weak single-valley path",
+            "Suppose equal positive deposits are used",
             r"\Delta C_t^{c,0}",
             r"\Delta m_t=m_t^c-m_t^0",
             r"\Delta m_t\geq0\quad(t\leq j)",
@@ -177,6 +209,13 @@ def audit_finite_arbitrary_horizon_boundaries(
             r"W_n^c(P)-W_n^T(P)=H_T+P U_T",
             r"\frac{H_T}{-U_T}",
             r"\frac{-H_T}{U_T}",
+            r"$H_T>0,\ U_T\geq0$ & none & corrected wins for every $P>0$",
+            r"$H_T>0,\ U_T<0$ & $\frac{H_T}{-U_T}$ & win below, tie at, and loss above the root",
+            r"$H_T=0,\ U_T>0$ & none & corrected wins for every $P>0$",
+            r"$H_T=0,\ U_T=0$ & none & tie for every $P>0$",
+            r"$H_T=0,\ U_T<0$ & none & corrected loses for every $P>0$",
+            r"$H_T<0,\ U_T>0$ & $\frac{-H_T}{U_T}$ & loss below, tie at, and win above the root",
+            r"$H_T<0,\ U_T\leq0$ & none & corrected loses for every $P>0$",
             "necessary-and-sufficient realized-ledger classification",
             "purchase ledgers, not prices alone",
             r"W_n^S(P)\geq\lambda W_n^D(P)",
@@ -189,6 +228,10 @@ def audit_finite_arbitrary_horizon_boundaries(
         chapter,
         (
             r"\label{tab:theorem-scope}",
+            r"Finite witness (Sections \ref{thm:two-purchase} and \ref{thm:three-purchase})",
+            r"Model-general identity (Section \ref{thm:cash-timing})",
+            r"Conditional mechanism theorem (Section \ref{thm:cash-single-crossing})",
+            r"Realized-ledger theorem (Section \ref{thm:terminal-inventory})",
             "Finite witness",
             "Finite deterministic search",
             "Model-general identity",
@@ -261,6 +304,35 @@ def audit_finite_arbitrary_horizon_boundaries(
             "claim-table-theorem-scope: entry_type must identify the realized "
             "manuscript-summary-table"
         )
+    table_authority = table_record.get("authority", [])
+    if not isinstance(table_authority, list):
+        table_authority = []
+    table_authority_paths = {
+        entry.get("path")
+        for entry in table_authority
+        if isinstance(entry, dict) and isinstance(entry.get("path"), str)
+    }
+    for missing_path in sorted(THEOREM_SCOPE_AUTHORITIES - table_authority_paths):
+        errors.append(
+            "claim-table-theorem-scope: missing required authority "
+            f"{missing_path!r}"
+        )
+
+    three_purchase_scope = claims.get("claim-thm-three-purchase-boundary", {}).get(
+        "scope", ""
+    )
+    require_terms(
+        three_purchase_scope if isinstance(three_purchase_scope, str) else "",
+        (
+            "Exactly three purchase dates",
+            "positive purchase and evaluation prices",
+            "nonnegative deposits",
+            "lambda in (0,1]",
+            "not monotone benefit from increasing beta or a parameter ranking",
+        ),
+        "three-purchase claim scope",
+        errors,
+    )
 
     for identifier, expected_first_use in BOUNDARY_NOTATION.items():
         record = notation.get(identifier)
@@ -281,6 +353,20 @@ def audit_finite_arbitrary_horizon_boundaries(
                 f"{identifier}: manuscript is missing first-use label "
                 f"{first_use_label!r}"
             )
+
+    component_notation = notation.get("notation-two-purchase-components", {})
+    if component_notation.get("manuscript_notation") != "H, c_a, g":
+        errors.append(
+            "notation-two-purchase-components: manuscript_notation must avoid "
+            "the corrected-policy superscript collision"
+        )
+    reconciliation = component_notation.get("reconciliation", "")
+    require_terms(
+        reconciliation if isinstance(reconciliation, str) else "",
+        ("Use c_a", "corrected-policy superscript c"),
+        "two-purchase notation reconciliation",
+        errors,
+    )
 
     for identifier in BOUNDARY_NONCLAIMS:
         record = nonclaims.get(identifier)
