@@ -141,6 +141,7 @@ python -m unittest reproducibility.checks.check_impossibility_safety_policy_arch
 python -m unittest reproducibility.checks.check_finite_arbitrary_horizon_boundaries
 python -m unittest reproducibility.checks.check_empirical_methodology_reproducibility
 python -m unittest reproducibility.checks.check_deterministic_stochastic_evaluation
+python -m unittest reproducibility.checks.check_historical_robustness_manuscript
 python -m unittest reproducibility.checks.check_dca_literature_synthesis
 python -m unittest reproducibility.checks.check_corrected_mean_literature_synthesis
 python -m unittest reproducibility.checks.check_computational_finance_statistics_literature_synthesis
@@ -152,7 +153,7 @@ python manuscript/build.py
 ```
 
 GitHub Actions runs the link check and the manuscript
-control/build/release tests on every push and pull request. The twenty-seven
+control/build/release tests on every push and pull request. The twenty-eight
 scientific checks remain in the separate [Reproducibility workflow](.github/workflows/reproducibility.yml):
 it runs automatically only when `research/`, `reproducibility/`,
 `experiments/`, or `reports/` changes (or when its workflow file changes) and

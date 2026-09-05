@@ -344,12 +344,13 @@
       "authority": [
         {"role": "publication-ready-report", "path": "reports/experiments/confirmatory-historical-evaluation.md"},
         {"role": "immutable-run", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/manifest.json"},
-        {"role": "independent-audit", "path": "research/notes/confirmatory-historical-evaluation-audit.md"}
+        {"role": "independent-audit", "path": "research/notes/confirmatory-historical-evaluation-audit.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:historical-results/sec:primary-complete-system",
       "citation_need": "Cite the protocol, provider semantics, immutable run, report, and audit beside the numerical statement.",
       "mandatory": true,
-      "review_state": "reviewed"
+      "review_state": "accepted"
     },
     {
       "id": "claim-empirical-historical-signal",
@@ -360,12 +361,13 @@
       "authority": [
         {"role": "publication-ready-report", "path": "reports/experiments/confirmatory-historical-evaluation.md"},
         {"role": "registered-uncertainty", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/uncertainty.json"},
-        {"role": "independent-audit", "path": "research/notes/confirmatory-historical-evaluation-audit.md"}
+        {"role": "independent-audit", "path": "research/notes/confirmatory-historical-evaluation-audit.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:historical-results/sec:primary-signal",
       "citation_need": "Cite the protocol, run, report, and audit; retain the non-equivalence qualification.",
       "mandatory": true,
-      "review_state": "reviewed"
+      "review_state": "accepted"
     },
     {
       "id": "claim-empirical-robustness",
@@ -376,12 +378,63 @@
       "authority": [
         {"role": "reviewed-report", "path": "reports/experiments/confirmatory-historical-evaluation.md"},
         {"role": "immutable-robustness-run", "path": "reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/manifest.json"},
-        {"role": "generated-aggregates", "path": "reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/robustness-aggregates.json"}
+        {"role": "generated-aggregates", "path": "reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/robustness-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:historical-results/sec:registered-robustness",
       "citation_need": "Cite the separate registration, run identity, and report; label every row post-confirmatory and descriptive.",
       "mandatory": true,
-      "review_state": "reviewed"
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-empirical-historical-populations",
+      "entry_type": "empirical-headline",
+      "wording": "The sealed primary run included all 1,365 attempted monthly episodes and produced 49,140 ledgers and comparison rows across 216 aggregate cells; the separate robustness run included 1,365 monthly and 428 quarterly attempts and produced 108,378 ledgers and comparison rows across 810 cells, with no exclusion, deviation, or protocol violation.",
+      "claim_class": "empirical-completeness",
+      "scope": "The accepted public validation receipts and immutable manifests; counts establish execution completeness, not independent samples or financial validity.",
+      "authority": [
+        {"role": "primary-validation", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/study-validation.json"},
+        {"role": "robustness-validation", "path": "reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/study-validation.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:historical-results/sec:historical-evidence",
+      "citation_need": "Identify both run identities and keep schedule-specific episode counts separate from cell and ledger counts.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-empirical-historical-architecture-mechanisms",
+      "entry_type": "empirical-headline",
+      "wording": "All 18 non-unit primary architecture-only medians were negative; in the 18 H1 cells corrected-policy cash drag, exposure, and activation retained their reviewed ranges, while mean cash contributions were positive and mean evaluation-price unit contributions negative in every cell.",
+      "claim_class": "descriptive-empirical",
+      "scope": "The primary frictionless identity-mean grid; architecture-only is neutral guarded versus DCA, mechanism fields describe policy ledgers, and cash/unit attribution is ledger-conditioned rather than causal.",
+      "authority": [
+        {"role": "primary-aggregates", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/historical-aggregates.json"},
+        {"role": "historical-report", "path": "reports/experiments/confirmatory-historical-evaluation.md"},
+        {"role": "terminal-inventory-theorem", "path": "research/theorems/arbitrary-horizon-performance-boundary.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:historical-results/sec:historical-mechanisms",
+      "citation_need": "Name the comparator for every result and keep mechanism description separate from causal attribution and performance criteria.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-empirical-historical-safety-regressions",
+      "entry_type": "empirical-headline",
+      "wording": "All 54 primary lambda-one aggregate rows were exact ties and no observed non-unit primary frictionless gap crossed its numerical lambda-minus-one floor; these are finite implementation regressions for the proved frictionless guardrail, not another proof or DCA-dominance result.",
+      "claim_class": "cross-layer-regression-receipt",
+      "scope": "The accepted primary historical episode and cost grid; theorem authority remains the exact unit-coverage result.",
+      "authority": [
+        {"role": "primary-aggregates", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/historical-aggregates.json"},
+        {"role": "primary-validation", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/study-validation.json"},
+        {"role": "safety-theorem", "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:historical-results/sec:historical-mechanisms",
+      "citation_need": "Cite both the finite validation receipt and theorem while preserving their different roles.",
+      "mandatory": true,
+      "review_state": "accepted"
     },
     {
       "id": "claim-method-policy-comparisons",
@@ -552,12 +605,15 @@
       "scope": "The declared proportional and fixed-fee routes in the reviewed runs; no frictional safety theorem or confirmatory cost hypothesis.",
       "authority": [
         {"role": "synthesis-report", "path": "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"},
-        {"role": "cost-summary", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/cost-scope-summary.csv"}
+        {"role": "cost-summary", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/cost-scope-summary.csv"},
+        {"role": "primary-aggregates", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/historical-aggregates.json"},
+        {"role": "robustness-aggregates", "path": "reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/robustness-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:historical-results/sec:cost-robustness",
       "citation_need": "Cite the generated cost summary and keep the theorem-scope disclaimer adjacent.",
       "mandatory": true,
-      "review_state": "reviewed"
+      "review_state": "accepted"
     },
     {
       "id": "claim-empirical-central-synthesis",
@@ -824,16 +880,229 @@
     },
     {
       "id": "claim-table-historical-primary",
-      "entry_type": "planned-table",
-      "wording": "Primary historical H1/H2 table reporting medians, block-bootstrap intervals, adjusted decisions, episode counts, and comparison tier.",
+      "entry_type": "manuscript-table",
+      "wording": "Primary historical H1/H2 table reporting dataset-horizon median ranges, Holm-rejected coverage values, episode counts, and comparison tiers; the complete cellwise intervals and adjusted decisions remain in the supplementary tables.",
       "claim_class": "generated-confirmatory-table",
       "scope": "Sealed primary cells only; preserve overlapping-window units and the full 36-cell Holm family.",
       "authority": [
-        {"role": "generated-table-source", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/report-tables.md"},
-        {"role": "registered-uncertainty", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/uncertainty.json"}
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-primary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "primary-aggregates", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/historical-aggregates.json"},
+        {"role": "registered-uncertainty", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/uncertainty.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:historical-results/tab:historical-primary",
       "citation_need": "Cite protocol, source seam, run, and audit in caption or adjacent prose.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-figure-historical-primary-effects",
+      "entry_type": "manuscript-figure",
+      "wording": "Zero-centred bars report all 18 primary H1 median corrected-versus-DCA relative terminal-wealth gaps at a common scale.",
+      "claim_class": "generated-results-figure",
+      "scope": "Sealed non-unit primary frictionless cells; point estimates over dependent overlapping starts, not intervals or independent market frequencies.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-primary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "primary-aggregates", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/historical-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:historical-results/fig:historical-primary-effects",
+      "citation_need": "Caption must define the denominator, cell grain, common scale, and non-causal interpretation.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-historical-comparison-tiers",
+      "entry_type": "manuscript-table",
+      "wording": "The generated comparison table keeps complete-system H1, signal-only H2, and architecture-only S1 cell signs, ranges, denominators, and inferential roles separate.",
+      "claim_class": "generated-results-table",
+      "scope": "Eighteen non-unit primary frictionless cells per comparison; only H1/H2 enter the sealed family and S1 is descriptive.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-mechanisms.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "primary-aggregates", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/historical-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:historical-results/tab:historical-comparison-tiers",
+      "citation_need": "Caption must name every right-hand comparator and prevent significance transfer between tiers.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-historical-policy-mechanisms",
+      "entry_type": "manuscript-table",
+      "wording": "The generated mechanism table reports cash-drag, terminal-exposure, and guardrail-activation ranges separately for corrected and neutral guarded policies.",
+      "claim_class": "generated-results-table",
+      "scope": "Eighteen non-unit primary frictionless cells per policy; mechanism summaries are not performance criteria.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-mechanisms.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "primary-aggregates", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/historical-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:historical-results/tab:historical-policy-mechanisms",
+      "citation_need": "Caption must define every denominator and reject a monotone performance interpretation.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-historical-risk-attribution",
+      "entry_type": "manuscript-table",
+      "wording": "The generated downside and attribution table reports the largest primary shortfall, lowest 5 percent cell quantile, and the 18-positive-cash/18-negative-valued-unit sign pattern for corrected versus DCA.",
+      "claim_class": "generated-results-table",
+      "scope": "Primary non-unit frictionless H1 cells; terminal components are ledger-conditioned accounting rather than causal effects.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-mechanisms.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "primary-aggregates", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/historical-aggregates.json"},
+        {"role": "terminal-inventory-theorem", "path": "research/theorems/arbitrary-horizon-performance-boundary.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:historical-results/tab:historical-risk-attribution",
+      "citation_need": "Caption must define downside and both signed components and preserve the non-causal boundary.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-registered-robustness",
+      "entry_type": "manuscript-table",
+      "wording": "The generated robustness table reports monthly and quarterly complete-system and signal-only cell counts, signs, median ranges, and descriptive uncertainty status without pooling schedules.",
+      "claim_class": "generated-descriptive-table",
+      "scope": "The separately registered robustness run; monthly additional coverage and quarterly horizons remain distinct and do not revise H1/H2.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-robustness.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "robustness-aggregates", "path": "reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/robustness-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:historical-results/tab:registered-robustness",
+      "citation_need": "Caption must label rows post-confirmatory descriptive and prohibit cross-cadence raw-wealth comparison.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-historical-cost-robustness",
+      "entry_type": "manuscript-table",
+      "wording": "The generated historical cost table reports primary, monthly additional-coverage, and quarterly complete-system median ranges and largest observed shortfalls for both declared fee routes.",
+      "claim_class": "generated-descriptive-table",
+      "scope": "Cost-adjusted historical cells only; all are descriptive and outside the current frictionless safety theorem.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-robustness.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "primary-aggregates", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/historical-aggregates.json"},
+        {"role": "robustness-aggregates", "path": "reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/robustness-aggregates.json"},
+        {"role": "safety-theorem", "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:historical-results/tab:historical-cost-robustness",
+      "citation_need": "Caption must keep net outcomes outside theorem scope and outside confirmatory inference.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-historical-h1-cells",
+      "entry_type": "manuscript-table",
+      "wording": "The generated supplementary H1 table reports all 18 medians, cellwise block-bootstrap intervals, episode counts, Holm-adjusted values, and signed decisions.",
+      "claim_class": "generated-confirmatory-table",
+      "scope": "Complete-system cells in the sealed primary frictionless family; intervals are cellwise and Holm decisions use all 36 H1/H2 tests.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-supplementary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "registered-uncertainty", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/uncertainty.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "app:supplementary-results/tab:historical-h1-cells",
+      "citation_need": "Caption must distinguish cellwise intervals from the adjusted family decision.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-historical-h2-cells",
+      "entry_type": "manuscript-table",
+      "wording": "The generated supplementary H2 table reports all 18 medians, cellwise block-bootstrap intervals, episode counts, Holm-adjusted values, and decisions without claiming equivalence.",
+      "claim_class": "generated-confirmatory-table",
+      "scope": "Signal-only cells in the sealed primary frictionless family; no H2 cell is Holm-significant and non-rejection is not equivalence.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-supplementary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "registered-uncertainty", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/uncertainty.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "app:supplementary-results/tab:historical-h2-cells",
+      "citation_need": "Caption must distinguish intervals from multiplicity decisions and retain the non-equivalence qualification.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-historical-architecture-cells",
+      "entry_type": "manuscript-table",
+      "wording": "The generated supplementary S1 table reports all 18 architecture-only medians, downside quantiles, worst shortfalls, and episode counts.",
+      "claim_class": "generated-descriptive-table",
+      "scope": "Neutral guarded versus DCA on the non-unit primary frictionless grid; prespecified secondary evidence with no significance decision.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-supplementary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "primary-aggregates", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/historical-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "app:supplementary-results/tab:historical-architecture-cells",
+      "citation_need": "Caption must name DCA as denominator and reject causal decomposition.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-historical-monthly-robustness-ranges",
+      "entry_type": "manuscript-table",
+      "wording": "The generated supplementary monthly robustness table reports each dataset-horizon-comparison median range across the five additional coverage values.",
+      "claim_class": "generated-descriptive-table",
+      "scope": "Sealed monthly episodes and separately registered additional coverage; descriptive only with no H1/H2 revision.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-supplementary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "robustness-aggregates", "path": "reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/robustness-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "app:supplementary-results/tab:historical-monthly-robustness-ranges",
+      "citation_need": "Caption must state the five-cell coverage grain and descriptive uncertainty status.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-historical-quarterly-robustness-ranges",
+      "entry_type": "manuscript-table",
+      "wording": "The generated supplementary quarterly robustness table reports each dataset-horizon-comparison median range across eight non-unit coverage values and its schedule-specific episode count.",
+      "claim_class": "generated-descriptive-table",
+      "scope": "Quarterly 6-, 24-, and 120-month robustness; descriptive only and not comparable in raw wealth with the monthly cadence.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-supplementary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "robustness-aggregates", "path": "reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/robustness-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "app:supplementary-results/tab:historical-quarterly-robustness-ranges",
+      "citation_need": "Caption must state the eight-cell coverage grain, schedule-specific N, and cross-cadence prohibition.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-historical-evidence-inventory",
+      "entry_type": "manuscript-table",
+      "wording": "The generated historical inventory reconciles attempted, included, excluded, ledger, comparison, aggregate-cell, and uncertainty counts separately for primary monthly, robustness monthly, and robustness quarterly slices.",
+      "claim_class": "generated-validation-table",
+      "scope": "Accepted public manifests and validation receipts; private observations and row-level results remain undistributed.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-supplementary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "primary-validation", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/study-validation.json"},
+        {"role": "robustness-validation", "path": "reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/study-validation.json"},
+        {"role": "primary-private-receipt", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/private-artifact-receipt.json"},
+        {"role": "robustness-private-receipt", "path": "reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/private-artifact-receipt.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "app:supplementary-results/tab:historical-evidence-inventory",
+      "citation_need": "Caption must distinguish episodes, ledgers, comparison rows, cells, and redistribution receipts.",
       "mandatory": true,
       "review_state": "accepted"
     },
