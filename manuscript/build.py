@@ -93,6 +93,10 @@ def main() -> int:
                 "synthetic_evaluation_controls.py",
                 "BUILD FAILED: deterministic/stochastic evaluation is invalid",
             ),
+            (
+                "historical_evaluation_controls.py",
+                "BUILD FAILED: historical/robustness evaluation is invalid",
+            ),
         )
         for validator_name, failure_message in validation_specs:
             if not run_validation(
