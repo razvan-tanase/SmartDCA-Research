@@ -13,8 +13,12 @@ the primary historical and separately registered robustness evaluation;
 Chapter 9 integrates the safety-adaptivity finding, contributions, limitations,
 and future-research boundary; and Appendices A--E retain detailed proofs,
 cases, protocols, artifact identities, generated result tables, and clean
-commands. The introduction, conclusion, and abstracts remain structural
-placeholders for ticket 13. It is not a submission candidate.
+commands. The introduction, closing literature synthesis, conclusion, Romanian
+synopsis, and English abstract now connect those results through the approved
+research questions and contribution boundaries. The bilingual abstracts each
+remain below 200 words and share one page. Complete-release assembly and the
+institutional and supervisor gates remain outstanding; this draft is not a
+submission candidate.
 
 ## Authority
 

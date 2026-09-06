@@ -240,6 +240,28 @@ class ManuscriptBuildTests(unittest.TestCase):
             self.assertIn("DISSERTATION", normalized_upper)
             self.assertIn("SINOPSIS", normalized_upper)
             self.assertIn("ABSTRACT", normalized_upper)
+            abstract_pages = [
+                page for page in text.split("\f")
+                if page.lstrip().startswith("SINOPSIS") and "ABSTRACT" in page
+            ]
+            self.assertEqual(len(abstract_pages), 1)
+            synopsis, abstract = abstract_pages[0].split("ABSTRACT", 1)
+            for section in (synopsis.removeprefix("SINOPSIS"), abstract):
+                self.assertNotIn("UNRESOLVED", section)
+                self.assertGreater(len(section.split()), 0)
+            # T1 comma-below accents can split Romanian words in PDF text
+            # extraction. Count the authoritative prose, while the rendered
+            # assertions above verify populated abstracts on the shared page.
+            source_text = (MANUSCRIPT_ROOT / "source" / "thesis.tex").read_text(
+                encoding="utf-8"
+            )
+            for label, end_marker in (
+                ("sec:synopsis", r"\vfill"),
+                ("sec:abstract", r"\clearpage"),
+            ):
+                section = source_text.split(r"\label{" + label + "}", 1)[1]
+                section = section.split(end_marker, 1)[0]
+                self.assertLessEqual(len(section.split()), 200)
             self.assertIn(
                 "COMPUTER SCIENCE AND ENGINEERING DEPARTMENT", normalized_upper
             )
@@ -303,6 +325,22 @@ class ManuscriptBuildTests(unittest.TestCase):
                 font.attrib["id"]: int(font.attrib["size"])
                 for font in layout.iter("fontspec")
             }
+            contribution_page = next(
+                page for page in layout.iter("page")
+                if any(
+                    "Table 1.1:" in "".join(text.itertext())
+                    for text in page.iter("text")
+                )
+            )
+            category_cell = next(
+                text for text in contribution_page.iter("text")
+                if "".join(text.itertext()) == "Category"
+            )
+            self.assertAlmostEqual(
+                font_sizes[category_cell.attrib["font"]] / 1.5,
+                9.0,
+                delta=0.5,  # XML font sizes round to integer scaled points.
+            )
             introduction_page = next(
                 page
                 for page in layout.iter("page")

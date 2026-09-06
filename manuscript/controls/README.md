@@ -39,6 +39,12 @@ release input. Passing the control check means the drafting architecture is
 internally ready; it does not resolve personal, institutional, supervisor, or
 final-release decisions.
 
+Claim records retain their primary `manuscript_location`. Optional
+`restatement_locations` index the same claim in the introduction, conclusion,
+literature synthesis, and bilingual abstracts without duplicating its ID or
+evidence authority. The ticket 13 headline audit reconciles these locations
+and their wording; the generic validator does not establish semantic agreement.
+
 ## Change workflow
 
 1. Change the authoritative evidence or approved manuscript decision first.
