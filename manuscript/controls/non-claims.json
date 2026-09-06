@@ -17,7 +17,9 @@
         "ch:literature",
         "ch:model-signal",
         "ch:conclusion",
-        "ch:discussion"
+        "ch:discussion",
+        "sec:synopsis",
+        "sec:abstract"
       ],
       "mandatory": true,
       "review_state": "accepted"
@@ -39,7 +41,9 @@
         "ch:synthetic-results",
         "ch:historical-results",
         "ch:discussion",
-        "ch:conclusion"
+        "ch:conclusion",
+        "sec:synopsis",
+        "sec:abstract"
       ],
       "mandatory": true,
       "review_state": "accepted"
@@ -57,7 +61,10 @@
       "affected_locations": [
         "ch:historical-results",
         "ch:discussion",
-        "ch:conclusion"
+        "ch:conclusion",
+        "ch:introduction",
+        "sec:synopsis",
+        "sec:abstract"
       ],
       "mandatory": true,
       "review_state": "accepted"
@@ -77,7 +84,11 @@
         "ch:methodology",
         "ch:synthetic-results",
         "ch:historical-results",
-        "ch:discussion"
+        "ch:discussion",
+        "ch:introduction",
+        "ch:conclusion",
+        "sec:synopsis",
+        "sec:abstract"
       ],
       "mandatory": true,
       "review_state": "accepted"
@@ -97,7 +108,9 @@
         "ch:methodology",
         "ch:synthetic-results",
         "ch:historical-results",
-        "ch:discussion"
+        "ch:discussion",
+        "ch:introduction",
+        "ch:conclusion"
       ],
       "mandatory": true,
       "review_state": "accepted"
@@ -115,7 +128,9 @@
       "affected_locations": [
         "ch:model-signal",
         "ch:safety",
-        "ch:discussion"
+        "ch:discussion",
+        "ch:introduction",
+        "ch:conclusion"
       ],
       "mandatory": true,
       "review_state": "accepted"
@@ -131,7 +146,8 @@
       ],
       "affected_locations": [
         "ch:discussion",
-        "ch:conclusion"
+        "ch:conclusion",
+        "ch:introduction"
       ],
       "mandatory": true,
       "review_state": "reviewed"
@@ -148,7 +164,8 @@
       ],
       "affected_locations": [
         "ch:discussion",
-        "ch:conclusion"
+        "ch:conclusion",
+        "ch:introduction"
       ],
       "mandatory": true,
       "review_state": "reviewed"
@@ -165,7 +182,8 @@
       ],
       "affected_locations": [
         "ch:discussion",
-        "ch:conclusion"
+        "ch:conclusion",
+        "ch:introduction"
       ],
       "mandatory": true,
       "review_state": "reviewed"

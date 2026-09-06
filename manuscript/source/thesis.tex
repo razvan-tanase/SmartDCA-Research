@@ -122,19 +122,47 @@
 
 \section*{SINOPSIS}
 \addcontentsline{toc}{chapter}{SINOPSIS}
-\textbf{[UNRESOLVED: sinopsis în limba română, maximum 200 de cuvinte]}
-
-Sinopsisul va rezuma problema, rezultatele și concluziile într-un limbaj
-accesibil, dar suficient de specific pentru proiect.
+\label{sec:synopsis}
+Investițiile recurente ridică o întrebare practică: poate o regulă adaptivă
+îmbunătăți achizițiile fără a pierde o garanție față de investiția periodică
+integrală a contribuțiilor (DCA)? Teza compară strategii cu aceleași contribuții,
+decizii fără informații viitoare, achiziții finanțate integral și avere finală
+incluzând numerarul. În modelul fără fricțiuni, cu prețuri pozitive arbitrare și
+fără vânzări, dominanța universală impune exact achizițiile DCA. O constrângere
+asupra unităților deținute permite însă adaptivitate, garantând o fracție aleasă
+din averea DCA. Un scor bazat pe o medie Bajraktarevi\'c corectată selectează
+alocarea discreționară; garanția aparține constrângerii. Analiza exactă identifică
+regiuni de câștig și pierdere. Evaluarea reproductibilă separă dovezile
+deterministe, stocastice, istorice confirmatorii și de robustețe descriptivă.
+Toate cele 18 celule istorice primare fără fricțiuni, cu acoperire subunitară,
+au diferențe mediane negative față de DCA. Nicio comparație a scorului cu
+selectorul neutru protejat nu este semnificativă după corecția Holm. Rezultatul
+nu confirmă valoarea istorică incrementală a scorului, fără a demonstra
+echivalența. Siguranța relativă demonstrată și utilitatea empirică a adaptivității
+rămân distincte; teorema nu se extinde la costuri de tranzacționare.
 
 \vfill
 
 \section*{ABSTRACT}
 \addcontentsline{toc}{chapter}{ABSTRACT}
-\textbf{[UNRESOLVED: English abstract, maximum 200 words]}
-
-The abstract will summarize the problem, results, and conclusions for a reader
-outside the immediate specialty while retaining project-specific detail.
+\label{sec:abstract}
+Recurring investment raises a practical question: can an adaptive purchase
+rule improve allocation while retaining a guarantee relative to dollar-cost
+averaging (DCA)? This thesis compares strategies with identical deposits,
+causal decisions, fully funded purchases, and cash-inclusive terminal wealth.
+Under arbitrary positive prices in the frictionless buy-only model, universal
+pathwise dominance forces transaction-level DCA. A sharp unit guardrail instead
+permits adaptivity while guaranteeing a chosen fraction of DCA wealth. A
+corrected weighted Bajraktarevi\'c mean supplies the discretionary score; the
+constraint supplies safety. Exact analysis identifies realized win and loss
+regions. Reproducible evaluation separates deterministic, seeded stochastic,
+confirmatory historical, and descriptive robustness evidence. All 18 non-unit
+primary frictionless historical cells have negative median relative-wealth
+gaps against DCA. No signal-only comparison with the neutral guarded selector
+is significant after Holm adjustment. The result does not confirm incremental
+historical signal value and does not establish equivalence. Proved relative
+safety and empirically useful adaptivity remain distinct; the theorem does
+not extend to transaction costs.
 
 \clearpage
 \chapter*{Originality declaration placeholder}
@@ -158,58 +186,214 @@ release blockers in the institutional contract.
 
 \chapter{Introduction}
 \label{ch:introduction}
-Drafting now covers the reviewed literature, financial comparison,
-source-functional correction, corrected-signal foundations, the causal
-impossibility-to-safety policy architecture, exact performance boundaries,
-the frozen empirical methodology, and the deterministic and seeded-stochastic
-evaluation. The historical and integrative chapters retain explicit
-structural placeholders until their tracked manuscript slices are resolved.
 
-\section*{Manuscript spine}
-The thesis follows one safety-versus-adaptivity argument: a
-universal-superiority ambition is bounded by causal impossibility, relaxed
-into an exact safety architecture, implemented as a guarded adaptive policy,
-and tested by a frozen reproducible evaluation whose negative signal result is
-retained.
+A recurring investor faces a decision whenever new savings become available:
+invest the deposit immediately, or retain some cash for a later purchase.
+Dollar-cost averaging (DCA) makes the first choice at every scheduled date.
+An adaptive rule changes the amount invested in response to observed prices
+and portfolio state. The practical tension is that cash reserved for an
+apparently better opportunity also leaves fewer units exposed to a subsequent
+rise. A purchase rule needs both an implementable budget and a clear account
+of the risk it takes relative to DCA.
 
-\section*{Research questions and conservative answers}
+This thesis asks how much adaptivity can coexist with a guarantee. The problem
+is recurring investment, where money arrives over time, rather than staged
+investment of a lump sum already available. That funding distinction separates
+the present question from established timing comparisons
+\citep{constantinides1979,finlayzorn2023}. Both the adaptive strategy and DCA
+receive the same deposits on the same dates. Neither can borrow, sell units,
+or spend future deposits. Decisions use only observations available at the
+time, and cash earns no interest. At the common horizon, performance includes
+both remaining cash and the market value of acquired units. A lower average
+acquisition cost alone does not establish a wealth advantage under different
+spending paths (Chapter \ref{ch:model-signal}).
+
+\section{From Adaptive Superiority to Attainable Safety}
+\label{sec:introduction-route}
+
+The starting ambition was motivated by SmartDCA's adaptive purchase formulas
+and acquisition-cost comparisons \citep{calvet2023smartdca}: could a price-aware
+rule improve on recurring DCA while remaining no worse on every price path?
+Fixing causality, funding, and terminal accounting changes the answer.
+In the frictionless model with arbitrary finite positive prices, universal
+pathwise dominance forces the strategy to purchase exactly as DCA
+(Theorem \ref{thm:dca-impossibility}). This does not forbid a gain on a
+particular path. It rules out an economically distinct policy that is weakly
+better everywhere and strictly better somewhere under the stated comparison.
+
+The attainable alternative is a chosen relative-wealth floor.
+Epsilon-DCA safety requires terminal wealth to remain above a fixed fraction
+of same-deposit DCA wealth. The sharp unit guardrail enforces sufficient asset
+coverage after each purchase, leaving a funded discretionary allocation above
+the mandatory purchase floor (Theorem \ref{thm:epsilon-guardrail}). Full
+coverage forces DCA; a positive relaxation permits different purchases. Safety
+belongs to this constraint. It does not depend on the quality of the adaptive
+score, and it does not protect contributed principal or bound drawdown.
+
+The computational policy places a corrected-mean score inside that allocation
+interval. A source-functional audit first establishes where the original
+expression is a mean and repairs its normalization. The corrected construction
+is a weighted Bajraktarevi\'c mean within established theory
+\citep{bajraktarevic1958,paleszakaria2020}. The policy then builds its reference
+from normalized past prices and compares that reference with the current
+price. The score chooses a purchase above the floor without using future
+observations. Its mathematical validity as a mean does not establish investment
+value (Chapters \ref{ch:model-signal}--\ref{ch:safety}).
+
+Exact analysis makes the remaining performance question testable. Finite
+witnesses show both wins and losses; even a weak single-valley price shape
+does not ensure a gain. At arbitrary finite horizons, terminal cash and unit
+differences give an exact classification of the realized wealth gap. This is
+an accounting boundary conditional on completed purchase ledgers and the
+common evaluation price, not a forecasting rule (Chapter \ref{ch:boundaries}).
+The frozen evaluation then asks whether the selected score adds value within
+those limits. Figure \ref{fig:thesis-logic} separates the guarantee from the
+performance question that remains open to evidence.
+
+\begin{figure}[htbp]
+\centering
+\begingroup\small\singlespacing
+\fbox{\parbox{0.88\textwidth}{\centering
+Adaptive-superiority ambition under fair recurring-investment accounting}}
+\par\smallskip $\downarrow$ \par\smallskip
+\fbox{\parbox{0.88\textwidth}{\centering
+Causal impossibility motivates a relative-safety relaxation}}
+\par\smallskip $\swarrow\qquad\qquad\searrow$ \par\smallskip
+\fbox{\parbox{0.40\textwidth}{\centering
+Mandatory unit guardrail\\Proved frictionless floor}}
+\hfill
+\fbox{\parbox{0.40\textwidth}{\centering
+Discretionary corrected-mean score\\Path-dependent performance}}
+\par\smallskip $\searrow\qquad\qquad\swarrow$ \par\smallskip
+\fbox{\parbox{0.88\textwidth}{\centering
+Exact ledgers and frozen evaluation preserve both findings:\\
+a safety floor; no confirmed incremental historical signal value}}
+\endgroup
+\caption{The thesis argument. Arrows indicate the route of the inquiry, not
+causal identification or a quantitative performance model.}
+\label{fig:thesis-logic}
+\end{figure}
+\FloatBarrier
+
+\section{Research Questions and Conservative Answers}
+\label{sec:introduction-questions}
+
 \begin{enumerate}
   \item \textbf{Can a sequentially admissible, fully funded strategy
-  universally dominate the same-deposit DCA comparator?} No economically
-  distinct strategy can: universal pathwise dominance forces the strategy to
-  purchase exactly as DCA.
-  \item \textbf{Can an economically distinct adaptive strategy retain a
-  transparent, model-free relative-wealth floor?} Yes in the frictionless
-  comparison model: the epsilon-DCA unit guardrail gives the sharp causal floor
-  and leaves a funded discretionary allocation when epsilon is positive.
+  universally dominate the same-deposit DCA comparator?}
+  No economically distinct strategy can: universal pathwise dominance forces
+  the strategy to purchase exactly as DCA. Chapter \ref{ch:safety} states the
+  full model and equality result; Appendix \ref{app:proofs} supplies the proof.
+  \item \begin{minipage}[t]{\linewidth}
+  \textbf{Can an economically distinct adaptive strategy retain a
+  transparent, model-free relative-wealth floor?}
+  Yes in the frictionless comparison model: the epsilon-DCA unit guardrail
+  gives the sharp causal floor and leaves a funded discretionary allocation
+  when epsilon is positive. Chapter \ref{ch:safety} defines the complete
+  guarded rule; Chapter \ref{ch:boundaries} explains its performance limits.
+  \end{minipage}
   \item \textbf{Does the guarded corrected-mean score add empirical value
-  inside that safety architecture?} Not in the frozen historical evaluation:
-  the floor is confirmed operationally, but incremental value from the
-  corrected-mean signal is not confirmed.
+  inside that safety architecture?}
+  The frozen historical evaluation does not confirm it: incremental value
+  from the corrected-mean signal is not confirmed. Finite implementation
+  checks are consistent with the proved floor. Chapters
+  \ref{ch:synthetic-results}--\ref{ch:historical-results} distinguish that
+  operational check from the score's empirical assessment.
 \end{enumerate}
 
-\section*{Structural boundary}
-The body will retain motivation, questions, conservative answers,
-contributions, non-claims, and the chapter route. Proof detail and
-supplementary validation belong in the controlled appendices. Quantitative
-tables and figures enter the manuscript through generated assets whose bytes
-are checked against accepted run bundles before the canonical build.
+The historical distinction is decisive. In all 18 non-unit primary
+frictionless cells, the corrected guarded policy had a negative median
+relative terminal-wealth gap against DCA; nine complete-system H1 cells were
+Holm-significant in the negative direction. The signal-only comparison with
+the neutral guarded selector had no Holm-significant H2 cell. H1 and H2
+belong to the shared registered 36-test family, but answer different questions.
+A non-significant H2 result is not equivalence or proof of a zero effect. Deterministic
+paths, seeded stochastic families, primary history, and separately registered
+descriptive robustness retain their own evidential roles; their outcomes are
+not pooled into another inference (Chapters \ref{ch:methodology} and
+\ref{ch:discussion}).
+
+\section{Contributions and Claim Boundaries}
+\label{sec:introduction-contributions}
+
+The contribution is the connected investigation and its auditable results.
+Table \ref{tab:contribution-boundaries} distinguishes five kinds of work and
+locates their detailed support. Mathematical project results do not imply
+priority over all earlier literature; the bounded positioning review in
+Chapter \ref{ch:literature} governs external novelty language.
+
+\begin{table}[htbp]
+\centering
+\caption{Contribution categories and their limits, reconciled with the
+contribution and non-claim registers. Chapter references locate the evidence.}
+\label{tab:contribution-boundaries}
+\begingroup\singlespacing\fontsize{9}{11}\selectfont
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{L{0.18\textwidth}L{0.40\textwidth}L{0.34\textwidth}}
+\hline
+Category & Contribution and detailed home & Boundary \\
+\hline
+Mathematical & Correction, impossibility, sharp guardrail, and exact
+boundaries (Chs.\ \ref{ch:model-signal}--\ref{ch:boundaries}). & No new general mean
+class or universal SmartDCA superiority. \\
+Computational & Causal policies, exact checks, versioned runs, and generated
+assets (Ch.\ \ref{ch:methodology}; App.\ \ref{app:reproducibility}). & Research
+artifacts, not production trading infrastructure. \\
+Methodological & Fair comparators and separated, registered evidence layers
+(Chs.\ \ref{ch:model-signal}, \ref{ch:methodology}). & Applies established
+statistical and reproducibility methods. \\
+Empirical & Mixed synthetic outcomes and the frozen negative historical
+finding (Chs.\ \ref{ch:synthetic-results}--\ref{ch:historical-results}). & No confirmed
+incremental historical signal value or market-wide performance law. \\
+Integrative & One safety-versus-adaptivity argument
+(Chs.\ \ref{ch:discussion}--\ref{ch:conclusion}). & A synthesis of supported
+results, not an additional experiment. \\
+\hline
+\end{tabular}
+\endgroup
+\end{table}
+\FloatBarrier
+
+The safety theorem remains frictionless; net-of-cost observations do not extend
+it to transaction costs, taxes, slippage, or other frictions. No optimal score,
+coverage level, universal or expected outperformance, or causal market effect
+is established. The negative historical result is retained without selecting
+new parameters in response to it. New signals, datasets, guardrails, and
+outcome-driven analyses require separate research. These limits are part of
+the result, with their financial and empirical reasons developed in Chapter
+\ref{ch:discussion}.
+
+\section{Route Through the Manuscript}
+\label{sec:introduction-navigation}
+
+Chapter \ref{ch:literature} positions the financial comparator, corrected mean,
+and evaluation method. Chapter \ref{ch:model-signal} supplies the model and
+signal foundations; Chapter \ref{ch:safety} constructs the safe causal policy;
+and Chapter \ref{ch:boundaries} establishes the exact performance boundaries.
+Chapter \ref{ch:methodology} fixes the empirical design and reproduction route
+before Chapters \ref{ch:synthetic-results} and \ref{ch:historical-results}
+report synthetic and historical results. Chapter \ref{ch:discussion} brings
+them together with their limitations, and Chapter \ref{ch:conclusion} answers
+the research questions.
+
+The body carries the financial reasoning, decisive equations, algorithm,
+comparisons, and interpretation. Appendices \ref{app:proofs} and
+\ref{app:performance-cases} retain proof machinery and exhaustive cases;
+Appendices \ref{app:protocols}--\ref{app:supplementary-results} retain protocols,
+provenance, reproduction commands, and complete result tables. A Financial
+Computing reader can follow the argument in the body and consult those details
+where a claim needs closer scrutiny.
 
 \chapter{Literature and Research Positioning}
 \label{ch:literature}
-\textbf{Purpose.} Position DCA and adaptive accumulation, generalized and
-Bajraktarevi\'c means, causal portfolio safety, and reproducible computational
-finance against authoritative primary literature.
-
-\textbf{Prerequisites.} Thesis tickets 03, 04, and 05.
-
-\textbf{Reader outcome.} The reader can distinguish prior theory,
-project-specific results, methodological choices, and the claims the thesis
-explicitly rejects.
-
-\textbf{Placement.} Comparative synthesis and direct support for manuscript
-claims stay in the body. Exhaustive search logs and extended source tables stay
-in supplementary material.
+Three literature strands support different parts of the inquiry. Investment
+and portfolio-safety work identifies which funding process, comparator, and
+guarantee are being studied. Generalized-mean theory determines what the
+corrected reference calculation is and which properties it can support.
+Computational-finance and statistical methodology determine what the frozen
+evaluation can establish. The chapter connects these roles while retaining
+their separate assumptions and contribution boundaries.
 
 \section{DCA, Adaptive Accumulation, and Causal Safety}
 
@@ -601,6 +785,49 @@ observations against sanitized receipts and derived outputs. Software
 engineering and provenance evidence does not establish a financial result;
 financial evidence still comes from the model, proofs, empirical design, and
 observed estimates under their own assumptions.
+
+\section{Synthesis: Three Strands, One Bounded Inquiry}
+\label{sec:lit-integrative-synthesis}
+
+The common requirement across the three strands is to match a claim to the
+object it actually concerns. A return comparison belongs to a funding and
+trading model; a mean property belongs to a defined function and parameter
+region; an empirical conclusion belongs to an estimand and evidence design.
+None transfers automatically to the other two. An acquisition-cost inequality
+in SmartDCA does not establish a same-deposit wealth ranking, a valid weighted
+Bajraktarevi\'c reference does not establish predictive value, and a
+reproducible backtest does not establish universal performance
+\citep{calvet2023smartdca,paleszakaria2020,nasem2019reproducibility}.
+
+This separation identifies what the thesis adds within the reviewed
+literature. Established DCA timing and online-portfolio guarantees use their
+own budgets, trading permissions, and comparators
+\citep{constantinides1979,cover1991}. Pointwise no-arbitrage supplies the broader
+envelope for the impossibility result \citep{burzoni2019}; the explicit
+same-deposit DCA accounting, transaction-level equality case, sharp unit
+constraint, guarded policy, and realized-ledger boundaries are the project's
+specific results. The source-functional classification and normalization
+correction are likewise project work, while the corrected family itself is
+prior mean theory \citep{bajraktarevic1958,paleszakaria2020}. This bounded
+review supports precise attribution, not a claim that no related formulation
+exists elsewhere.
+
+The methodological strand provides the discipline needed to evaluate the
+remaining discretion. Registration separates planned tests from
+outcome-suggested analyses, block resampling addresses ordered dependence under
+its assumptions, and Holm correction treats the declared multiplicity family
+\citep{nosek2018preregistration,kunsch1989blockbootstrap,holm1979}. The thesis
+applies these established methods while separating a complete-policy comparison
+with DCA from a selector substitution within the guardrail. Provenance makes
+that application auditable; it cannot supply financial validity by itself.
+
+The resulting research position is a controlled inquiry into safe adaptivity:
+first determine which guarantee is feasible, then implement a funded causal
+choice inside it, and finally report whether the frozen evaluation supports
+that choice. A negative signal result remains informative because neither the
+prior mean theory nor the safety proof promised it would be positive.
+Chapter \ref{ch:model-signal} now fixes the accounting and reference calculation
+on which this sequence depends.
 
 \chapter{Financial Model and Corrected Signal Foundations}
 \label{ch:model-signal}
@@ -2952,17 +3179,104 @@ own evidence.
 
 \chapter{Conclusions}
 \label{ch:conclusion}
-\textbf{Purpose.} Answer the three research questions in order, summarize the
-contributions and non-claims, and identify a clean future-research frontier.
 
-\textbf{Prerequisites.} Chapter \ref{ch:discussion} and thesis ticket 13.
+The thesis began with a recurring-investment ambition: use observed prices to
+improve purchases while preserving a guarantee relative to DCA. The completed
+inquiry separates that ambition into a feasible safety requirement and an
+empirical performance question. Fair funding, cash-inclusive accounting,
+exact analysis, and frozen evaluation make the distinction explicit.
 
-\textbf{Reader outcome.} The reader leaves with a concise, defensible thesis
-result rather than a generalized performance promise.
+\section{Answers to the Research Questions}
+\label{sec:conclusion-answers}
 
-\textbf{Placement.} Only supported answers, contributions, limitations, and
-future work stay here. New evidence, proofs, and outcome-driven
-reinterpretation are excluded.
+\paragraph{RQ1: Can a sequentially admissible, fully funded strategy
+universally dominate the same-deposit DCA comparator?}
+No economically distinct strategy can do so in the stated model. With finite
+positive prices, identical exogenous deposits, causal long-only buy-only
+purchases, no borrowing, non-interest-bearing cash, and a common terminal
+valuation, universal pathwise dominance forces transaction-level DCA
+(Theorem \ref{thm:dca-impossibility}). The universal quantifier matters: a
+realized gain or a favorable modeled return distribution does not contradict
+the theorem. A stronger positive claim would require changing an assumption
+or the performance objective.
+
+\paragraph{RQ2: Can an economically distinct adaptive strategy retain a
+transparent, model-free relative-wealth floor?}
+Yes, under the frictionless comparison model. The epsilon-DCA unit guardrail
+is the sharp causal purchase constraint for the chosen DCA-relative floor
+(Theorem \ref{thm:epsilon-guardrail}). It leaves a funded discretionary
+allocation when coverage is relaxed; full coverage collapses the guarded
+policies to DCA. The corrected-mean score selects inside this interval and
+does not supply the guarantee. The exact finite witnesses and arbitrary-horizon
+boundary explain how such a safe policy can still win or lose against DCA:
+terminal cash and units, valued at the common evaluation price, determine the
+realized gap (Chapter \ref{ch:boundaries}). The boundary classifies an observed
+ledger rather than predicting a future advantage.
+
+\paragraph{RQ3: Does the guarded corrected-mean score add empirical value
+inside that safety architecture?}
+The frozen historical evaluation does not confirm incremental value. In the
+complete-system comparison, all 18 non-unit primary frictionless cells have
+negative median relative-wealth gaps against DCA, with nine H1 cells
+Holm-significant in the negative direction. In the signal-only comparison
+against the neutral guarded selector, no H2 cell is Holm-significant under
+the shared registered 36-test family (Chapter \ref{ch:historical-results}).
+The latter does not prove equivalence, a zero effect, or inferiority on every
+path. Mixed deterministic and seeded-stochastic outcomes show conditional
+possibilities and sensitivity; separately registered robustness remains
+descriptive. None of these layers is pooled with another to strengthen the
+primary conclusion. Finite safety checks agree with the architecture; the
+universal floor rests on the proof, not the number of successful runs.
+
+\section{What the Completed Inquiry Contributes}
+\label{sec:conclusion-contributions}
+
+The mathematical work links source-functional classification and correction
+to an impossibility boundary, an attainable guardrail, and exact performance
+classifications. The corrected construction remains a known weighted
+Bajraktarevi\'c mean; the attribution and parameter qualifications of Chapters
+\ref{ch:literature} and \ref{ch:model-signal} apply without enlargement.
+The computational work makes the policy and accounting executable through
+exact checks, frozen runners, generated assets, and versioned artifacts.
+The methodological work applies established statistical procedures to fair
+comparators and distinct evidence layers. The empirical work preserves both
+path-sensitive behavior and the negative historical finding. The integrative
+work connects them into one Financial Computing account of what safety can
+promise and what adaptivity still has to demonstrate.
+
+A negative result for the chosen score is an outcome of the inquiry, not a
+failure to complete it. The work yields a policy with an explicit guarantee,
+a precise interpretation of its relative risk, and evidence limiting the
+claim for its discretionary component. It establishes neither a new general
+mean class nor universal, expected, causal, or optimal SmartDCA superiority.
+
+\section{Limits and the Next Research Boundary}
+\label{sec:conclusion-limits}
+
+The floor protects wealth relative to DCA, which can itself lose value; it is
+not capital protection or a drawdown bound. The proof does not extend to fees,
+taxes, slippage, cash interest, or other altered execution assumptions.
+Net-of-cost outputs remain finite empirical calculations outside that theorem.
+Historical inference is limited to the frozen SPY and BTC-USD proxy series,
+one provider seam, declared schedules and horizons, overlapping episodes, and
+the executed primary signal configuration. Three-seed stochastic cells and
+sparse robustness cells do not establish market probabilities. Reproduction
+on retained inputs is computational agreement, not independent-data replication
+(Chapters \ref{ch:methodology} and \ref{ch:discussion}).
+
+Future work can specify a new selector, obtain a new holdout or source,
+evaluate deferred parameters, or analyze a cost-aware guarantee. Each changes
+the question or evidence and needs its own specification, appropriate
+registration, new artifact identity, and independent review. No such extension
+is part of the frozen result, and no optimal coverage has been established.
+
+The short account of the thesis is therefore complete: an adaptive-superiority
+ambition meets a causal impossibility boundary; a weaker relative-safety
+requirement admits a guarded computation; exact accounting identifies its
+performance limits; and reproducible evaluation retains an informative
+negative signal result. Guaranteed safety comes from the constraint. Useful
+adaptivity requires separate evidence, which the selected corrected-mean
+signal did not obtain in the frozen historical test.
 
 \appendix
 \chapter{Mathematical Proofs}

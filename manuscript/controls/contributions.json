@@ -20,7 +20,9 @@
         "ch:boundaries",
         "app:proofs",
         "app:performance-cases",
-        "ch:discussion"
+        "ch:discussion",
+        "ch:introduction",
+        "ch:conclusion"
       ],
       "novelty_boundary": "Treat these as project results whose external novelty wording remains conditional on the bounded literature reviews; never present the corrected family itself as a new mean class.",
       "mandatory": true,
@@ -43,7 +45,9 @@
         "ch:synthetic-results",
         "ch:historical-results",
         "app:reproducibility",
-        "ch:discussion"
+        "ch:discussion",
+        "ch:introduction",
+        "ch:conclusion"
       ],
       "novelty_boundary": "Claim reproducible project artifacts and validation coverage, not production-trading readiness or a generally validated simulation platform.",
       "mandatory": true,
@@ -64,7 +68,9 @@
         "ch:model-signal",
         "ch:methodology",
         "ch:discussion",
-        "app:protocols"
+        "app:protocols",
+        "ch:introduction",
+        "ch:conclusion"
       ],
       "novelty_boundary": "Present the design as the thesis's controlled evaluation method; do not imply that preregistration, block bootstrap, Holm correction, or reproducibility principles were invented here.",
       "mandatory": true,
@@ -85,7 +91,9 @@
       "manuscript_locations": [
         "ch:synthetic-results",
         "ch:historical-results",
-        "ch:discussion"
+        "ch:discussion",
+        "ch:introduction",
+        "ch:conclusion"
       ],
       "novelty_boundary": "Limit inference to the frozen paths, proxy series, schedules, parameters, costs, and registered tests; do not convert finite realized evidence into universal, causal, optimal, or expected-performance claims.",
       "mandatory": true,
@@ -94,7 +102,7 @@
     {
       "id": "contribution-integrative",
       "category": "integrative",
-      "contribution": "The Chapter 9 synthesis connects the adaptive-superiority ambition, causal impossibility boundary, attainable safety architecture, exact ledgers, and informative negative empirical result while preserving each evidence layer; introduction and conclusion integration remains ticket 13.",
+      "contribution": "The introduction, discussion, conclusion, and bilingual abstracts connect the adaptive-superiority ambition, causal impossibility boundary, attainable safety architecture, exact ledgers, and informative negative empirical result while preserving each evidence layer.",
       "evidence_paths": [
         ".scratch/smartdca/efforts/thesis-manuscript-assembly/spec.md",
         "reports/experiments/safety-adaptivity-tradeoff-synthesis.md",

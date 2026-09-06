@@ -14,6 +14,7 @@
         {"role": "source-audit", "path": "research/notes/source-out-quasi-gini-audit.md"}
       ],
       "manuscript_location": "ch:model-signal/def:corrected-mean",
+      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-contributions", "ch:literature/sec:lit-integrative-synthesis", "sec:synopsis", "sec:abstract"],
       "citation_need": "Cite the source paper and primary Bajraktarevic-family literature beside the classification and novelty boundary.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -30,6 +31,7 @@
         {"role": "executable-check", "path": "reproducibility/checks/check_pathwise_dca_dominance.py"}
       ],
       "manuscript_location": "ch:model-signal/sec:comparison-model",
+      "restatement_locations": ["ch:introduction", "ch:conclusion/sec:conclusion-answers", "sec:synopsis", "sec:abstract"],
       "citation_need": "Repository-derived model claim; cite external DCA or no-arbitrage literature only where the chapter makes a positioning claim.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -47,6 +49,7 @@
       ],
       "citation_keys": ["calvet2023smartdca"],
       "manuscript_location": "ch:model-signal/sec:accounting-quantities",
+      "restatement_locations": ["ch:introduction", "ch:literature/sec:lit-integrative-synthesis"],
       "citation_need": "Cite the source study for its acquisition-cost comparison and keep the cash-inclusive performance boundary adjacent.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -66,6 +69,7 @@
       ],
       "citation_keys": ["calvet2023smartdca"],
       "manuscript_location": "ch:model-signal/sec:corrected-signal",
+      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-answers", "ch:literature/sec:lit-integrative-synthesis", "sec:synopsis", "sec:abstract"],
       "citation_need": "Cite the source only for inherited score-parameter semantics; attribute currency invariance, lagging, odds calibration, and claim limits to project evidence.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -82,6 +86,7 @@
         {"role": "executable-check", "path": "reproducibility/checks/check_guarded_corrected_mean_smartdca.py"}
       ],
       "manuscript_location": "ch:safety/def:guarded-policy",
+      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-answers", "ch:literature/sec:lit-integrative-synthesis", "sec:synopsis", "sec:abstract"],
       "citation_need": "Cite the corrected-mean and guardrail authorities; attribute source-score semantics where discussed.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -97,6 +102,7 @@
         {"role": "proof-and-counterexamples", "path": "research/notes/source-out-quasi-gini-audit.md"}
       ],
       "manuscript_location": "ch:model-signal/thm:source-classification",
+      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-contributions", "ch:literature/sec:lit-integrative-synthesis"],
       "citation_need": "Cite the audited source formula and distinguish project proof from source-paper claims.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -130,6 +136,7 @@
       ],
       "citation_keys": ["burzoni2019"],
       "manuscript_location": "ch:safety/thm:dca-impossibility",
+      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "ch:literature/sec:lit-integrative-synthesis", "sec:synopsis", "sec:abstract"],
       "citation_need": "Cite the bounded novelty review and relevant robust-portfolio literature without claiming exhaustive novelty.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -147,6 +154,7 @@
       ],
       "citation_keys": ["blackperold1992", "grossmanzhou1993", "conttankov2009"],
       "manuscript_location": "ch:safety/thm:epsilon-guardrail",
+      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "ch:literature/sec:lit-integrative-synthesis", "sec:synopsis", "sec:abstract"],
       "citation_need": "Cite the bounded prior-art review and keep the DCA-specific result distinct from broader portfolio-insurance concepts.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -163,6 +171,7 @@
         {"role": "executable-check", "path": "reproducibility/checks/check_two_purchase_dca_win_loss_boundary.py"}
       ],
       "manuscript_location": "ch:boundaries/thm:two-purchase",
+      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-answers", "sec:synopsis", "sec:abstract"],
       "citation_need": "Internal theorem citation; external citation only for contextual comparison.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -179,6 +188,7 @@
         {"role": "executable-check", "path": "reproducibility/checks/check_three_purchase_corrected_mean_effect.py"}
       ],
       "manuscript_location": "ch:boundaries/thm:three-purchase",
+      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-answers", "sec:synopsis", "sec:abstract"],
       "citation_need": "Internal theorem citation; do not attach a general empirical interpretation to the witness.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -228,6 +238,7 @@
         {"role": "executable-check", "path": "reproducibility/checks/check_arbitrary_horizon_performance_boundary.py"}
       ],
       "manuscript_location": "ch:boundaries/thm:terminal-inventory",
+      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-answers", "sec:synopsis", "sec:abstract"],
       "citation_need": "Internal theorem and review citations; no stochastic language.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -263,6 +274,7 @@
         {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:synthetic-results/sec:deterministic",
+      "restatement_locations": ["ch:conclusion/sec:conclusion-answers"],
       "citation_need": "Cite the immutable run and reviewed report; no external prevalence citation.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -280,6 +292,7 @@
         {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:synthetic-results/sec:stochastic",
+      "restatement_locations": ["ch:conclusion/sec:conclusion-answers"],
       "citation_need": "Cite the generator design, immutable run, and report; cite external process literature when the models are introduced.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -348,6 +361,7 @@
         {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:historical-results/sec:primary-complete-system",
+      "restatement_locations": ["ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "sec:synopsis", "sec:abstract"],
       "citation_need": "Cite the protocol, provider semantics, immutable run, report, and audit beside the numerical statement.",
       "mandatory": true,
       "review_state": "accepted"
@@ -365,6 +379,7 @@
         {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:historical-results/sec:primary-signal",
+      "restatement_locations": ["ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "sec:synopsis", "sec:abstract"],
       "citation_need": "Cite the protocol, run, report, and audit; retain the non-equivalence qualification.",
       "mandatory": true,
       "review_state": "accepted"
@@ -382,6 +397,7 @@
         {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:historical-results/sec:registered-robustness",
+      "restatement_locations": ["ch:conclusion/sec:conclusion-answers"],
       "citation_need": "Cite the separate registration, run identity, and report; label every row post-confirmatory and descriptive.",
       "mandatory": true,
       "review_state": "accepted"
@@ -467,6 +483,7 @@
         {"role": "package-review", "path": "research/notes/safety-adaptivity-empirical-package-review.md"}
       ],
       "manuscript_location": "ch:methodology/sec:method-evidence-layers",
+      "restatement_locations": ["ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "sec:synopsis", "sec:abstract"],
       "citation_need": "Use each accepted report for its declared layer and the methodology literature for non-pooling and confirmatory-language limits.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -523,6 +540,7 @@
       ],
       "citation_keys": ["holm1979", "richardsonsmith1991overlap", "kunsch1989blockbootstrap", "politisromano1992circular", "hernanrobins2020"],
       "manuscript_location": "ch:methodology/sec:method-inference",
+      "restatement_locations": ["ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "sec:synopsis", "sec:abstract"],
       "citation_need": "Cite the original dependence and multiplicity methods for external positioning, and the protocol for the project-specific formulas and frozen block choice.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -593,6 +611,7 @@
         {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:synthetic-results/sec:safety-checks",
+      "restatement_locations": ["ch:conclusion/sec:conclusion-answers", "ch:introduction/sec:introduction-questions"],
       "citation_need": "Cite both the theorem and finite synthesis receipt, with their distinct evidentiary roles.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -656,6 +675,7 @@
         }
       ],
       "manuscript_location": "ch:discussion/sec:central-finding",
+      "restatement_locations": ["ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "ch:conclusion/sec:conclusion-limits", "sec:synopsis", "sec:abstract"],
       "citation_need": "Cite the analytical theorems, synthesis run, and independent review at their respective clauses.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -672,6 +692,7 @@
         {"role": "executable-check", "path": "reproducibility/checks/check_weak_single_valley_falsification.py"}
       ],
       "manuscript_location": "ch:boundaries/sec:single-valley-limit",
+      "restatement_locations": ["ch:introduction/sec:introduction-route"],
       "citation_need": "Internal search and theorem citations; describe the search domain explicitly.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -694,7 +715,7 @@
     },
     {
       "id": "claim-table-contribution-matrix",
-      "entry_type": "planned-table",
+      "entry_type": "table",
       "wording": "Contribution and non-claim matrix by mathematical, computational, methodological, empirical, and integrative category.",
       "claim_class": "manuscript-control-table",
       "scope": "Summary only; every row links to its detailed register and evidence authority.",
@@ -703,9 +724,10 @@
         {"role": "non-claim-register", "path": "manuscript/controls/non-claims.json"}
       ],
       "manuscript_location": "ch:introduction/tab:contribution-boundaries",
+      "presentation_status": "rendered-and-reconciled",
       "citation_need": "Cite evidence per substantive row; control-only cells need no external citation.",
       "mandatory": true,
-      "review_state": "accepted"
+      "review_state": "reviewed"
     },
     {
       "id": "claim-table-theorem-scope",
@@ -1228,7 +1250,7 @@
     },
     {
       "id": "claim-figure-thesis-logic",
-      "entry_type": "planned-figure",
+      "entry_type": "figure",
       "wording": "Thesis logic from universal-superiority ambition through impossibility, safety relaxation, guarded policy, reproducible evaluation, and negative signal finding.",
       "claim_class": "candidate-created-conceptual-figure",
       "scope": "A navigation diagram, not quantitative evidence or a causal graph.",
@@ -1237,9 +1259,10 @@
         {"role": "architecture-register", "path": "manuscript/controls/architecture.json"}
       ],
       "manuscript_location": "ch:introduction/fig:thesis-logic",
+      "presentation_status": "rendered-and-reconciled",
       "citation_need": "No external image citation; cite the underlying theorem and empirical claims in adjacent prose.",
       "mandatory": true,
-      "review_state": "accepted"
+      "review_state": "reviewed"
     },
     {
       "id": "claim-figure-policy-architecture",
@@ -1392,6 +1415,7 @@
         "kirkby2020"
       ],
       "manuscript_location": "ch:literature/sec:lit-dca-scope",
+      "restatement_locations": ["ch:introduction"],
       "citation_need": "Cite each result beside its criterion and assumptions; do not translate model- or preference-specific conclusions into pathwise terminal-wealth claims.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -1477,6 +1501,7 @@
         "burzoni2019"
       ],
       "manuscript_location": "ch:literature/sec:lit-project-boundary",
+      "restatement_locations": ["ch:literature/sec:lit-integrative-synthesis"],
       "citation_need": "Cite the pointwise no-arbitrage envelope and attribute the DCA-specific accounting and transaction-level identity only to the project evidence.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -1588,6 +1613,7 @@
         "aczeldaroczy1963"
       ],
       "manuscript_location": "ch:literature/sec:lit-mean-contribution-boundary",
+      "restatement_locations": ["ch:literature/sec:lit-integrative-synthesis"],
       "citation_need": "Cite source and prior-family authorities while naming correction, classification, characterization, and prior theory as distinct categories.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -1609,6 +1635,7 @@
         "white2000datasnooping"
       ],
       "manuscript_location": "ch:literature/sec:lit-method-registration",
+      "restatement_locations": ["ch:literature/sec:lit-integrative-synthesis"],
       "citation_need": "Cite preregistration and financial data-snooping sources beside the outcome-blind design boundary; label post-confirmatory robustness as descriptive and do not claim that registration validates the model.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -1632,6 +1659,7 @@
         "hernanrobins2020"
       ],
       "manuscript_location": "ch:literature/sec:lit-method-overlap-resampling",
+      "restatement_locations": ["ch:literature/sec:lit-integrative-synthesis"],
       "citation_need": "Cite the original overlapping-finance and block-bootstrap methods and a causal-inference authority; describe the project rule as registered rather than statistically optimal by citation.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -1655,6 +1683,7 @@
         "harveyliuzhu2016"
       ],
       "manuscript_location": "ch:literature/sec:lit-method-multiplicity-reporting",
+      "restatement_locations": ["ch:literature/sec:lit-integrative-synthesis"],
       "citation_need": "Cite Holm for family-wise error control, statistical guidance for effect-size and interval reporting, and finance literature for the multiple-testing context; keep estimates distinct from adjusted decisions.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -1675,6 +1704,7 @@
         "nasem2019reproducibility"
       ],
       "manuscript_location": "ch:literature/sec:lit-method-computational-reproducibility",
+      "restatement_locations": ["ch:literature/sec:lit-integrative-synthesis", "ch:conclusion/sec:conclusion-limits"],
       "citation_need": "Cite computational reproducibility definitions and reserve replication for a study using its own data; state exactly which project artifacts regenerate and which are independently reconciled.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -1697,6 +1727,7 @@
         "wilkinson2016fair"
       ],
       "manuscript_location": "ch:literature/sec:lit-method-provenance-release",
+      "restatement_locations": ["ch:literature/sec:lit-integrative-synthesis"],
       "citation_need": "Cite provenance, hash-based naming, and FAIR access principles; distinguish authenticated access and licensing from redistribution, and keep engineering evidence separate from financial evidence.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -1804,6 +1835,7 @@
         }
       ],
       "manuscript_location": "ch:discussion/sec:discussion-contributions",
+      "restatement_locations": ["ch:introduction/sec:introduction-contributions", "ch:conclusion/sec:conclusion-contributions"],
       "citation_need": "Use the cited chapter and theorem cross-references and linked evidence authority at the corresponding clause.",
       "mandatory": true,
       "review_state": "reviewed",
@@ -1849,6 +1881,7 @@
         }
       ],
       "manuscript_location": "ch:discussion/sec:discussion-limitations",
+      "restatement_locations": ["ch:introduction/sec:introduction-contributions", "ch:conclusion/sec:conclusion-limits", "sec:synopsis", "sec:abstract"],
       "citation_need": "Use the cited chapter and theorem cross-references and linked evidence authority at the corresponding clause.",
       "mandatory": true,
       "review_state": "reviewed",
@@ -1881,6 +1914,7 @@
         }
       ],
       "manuscript_location": "ch:discussion/sec:discussion-future-research",
+      "restatement_locations": ["ch:introduction/sec:introduction-contributions", "ch:conclusion/sec:conclusion-limits"],
       "citation_need": "Use the cited chapter and theorem cross-references and linked evidence authority at the corresponding clause.",
       "mandatory": true,
       "review_state": "reviewed"
