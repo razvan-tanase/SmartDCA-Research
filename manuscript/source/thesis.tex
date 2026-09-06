@@ -2677,20 +2677,278 @@ erase the negative result; they specify exactly what it can support.
 
 \chapter{Safety, Adaptivity, and Limitations}
 \label{ch:discussion}
-\textbf{Purpose.} Integrate analytical and empirical evidence into the central
-safety-versus-adaptivity finding and state the theorem, cost, data, inference,
-and generalization limits.
 
-\textbf{Prerequisites.} Chapters \ref{ch:synthetic-results} and
-\ref{ch:historical-results}, and thesis ticket 12.
+A causal policy can preserve a specified fraction of DCA wealth and still
+vary its purchases, but that freedom does not establish a return advantage. The chosen corrected-mean score did not earn an
+incremental historical value claim in the frozen evaluation. This chapter
+connects the analytical results of Chapters \ref{ch:safety}--\ref{ch:boundaries}
+to the separate empirical layers of Chapters
+\ref{ch:synthetic-results}--\ref{ch:historical-results}, without adding a new
+experiment or changing the interpretation of an accepted run.
 
-\textbf{Reader outcome.} The reader can state what is guaranteed, what was
-observed, what was not confirmed, and which future questions require new
-registered research.
+\section{The Central Safety--Adaptivity Finding}
+\label{sec:central-finding}
 
-\textbf{Placement.} Cross-layer synthesis and decision-relevant limitations
-stay in the body. No new analysis or unattractive outcome may be hidden in an
-appendix.
+Under the full comparison model---finite positive prices, the same exogenous
+deposits and horizon, causal long-only buy-only purchases, full funding,
+non-interest-bearing cash, and cash-inclusive terminal wealth---universal
+pathwise dominance forces transaction-level DCA (Theorem
+\ref{thm:dca-impossibility}). An economically distinct allocation rule therefore
+needs a weaker guarantee or a different model. The thesis takes the first
+route: for $\lambda=1-\varepsilon$, the epsilon-DCA unit guardrail guarantees
+$W_n^S(P)\geq\lambda W_n^D(P)$ on every admissible path (Theorem
+\ref{thm:epsilon-guardrail}). That relative-wealth floor belongs to the
+mandatory purchase constraint, independently of how the selector uses the
+funded discretionary allocation.
+
+For $0<\lambda<1$, the floor permits underperformance against DCA. It is
+neither a capital guarantee against the investor's contributed deposits nor a
+maximum-drawdown constraint on the investor's wealth path. DCA itself can lose
+value. At $\lambda=1$, both guarded policies collapse to DCA and the score has
+no economic discretion. Relaxing coverage creates room to alter purchases,
+but the room is permission to take relative risk, not evidence that the risk
+will be rewarded. Theorem \ref{thm:terminal-inventory} makes the distinction
+exact: the sign of a realized corrected-minus-comparator gap is the sign of
+$H_T+P U_T$, where $T$ is DCA or the neutral guarded selector and $H_T,U_T$
+are the terminal cash and unit differences. The equality classifies completed
+ledgers; it does not forecast those ledgers or future evaluation prices.
+
+The historical answer is correspondingly bounded. The complete corrected
+system had negative median relative-wealth gaps in all 18 non-unit primary
+frictionless cells; nine H1 cells rejected the two-sided zero null in the
+negative direction after the registered Holm adjustment. The signal-only H2
+comparison had no Holm-significant cell and did not confirm incremental value
+from replacing the neutral selector with the corrected score. These are the
+separate findings of Sections \ref{sec:primary-complete-system} and
+\ref{sec:primary-signal}. The latter does not establish equivalence, a zero
+signal effect, or universal inferiority. Thus the thesis establishes an
+attainable frictionless safety architecture and reports an informative
+negative result for its selected adaptive signal.
+
+The accepted \href{https://github.com/razvan-tanase/SmartDCA-Research/blob/07935797850387e786e396de6f5aa839cf8a26e4/reports/experiments/safety-adaptivity-tradeoff-synthesis.md}{\emph{Safety-adaptivity trade-off synthesis}} report, its claim
+receipts and domain audit, and the independently reviewed package identified
+in Appendix \ref{app:reproducibility} govern this synthesis. They reconcile
+existing evidence without creating a fifth empirical layer. The report retains
+the full cross-layer and cost tables and the safety-factor, mechanism, terminal
+attribution, and net-cost curves as linked supplementary material.
+
+\section{Agreement and Disagreement Across Evidence Layers}
+\label{sec:discussion-evidence-layers}
+
+The deterministic evidence establishes possibility and failure mechanisms.
+Exact finite witnesses include both gains and losses, and the weak-single-valley
+counterexamples show why a plausible investment-cycle shape cannot by itself
+supply a favorable wealth order. The fixed catalog in Section
+\ref{sec:deterministic} likewise contains both complete-system and signal-only
+signs. Neither the catalog nor an exhaustive search over a chosen finite grid
+samples the prevalence of such paths in markets. A positive witness remains
+valid when the historical median is negative; the witness never promised that
+its favorable conditions would be frequent.
+
+The stochastic evidence tests sensitivity to a specified price process. At the displayed 60-month, $\lambda=0.75$
+primary slice, three of five family medians are negative and two positive for
+the complete system; the signal-only medians have one negative and four
+positive signs. Each family cell summarizes just three saved seeds. The
+exploratory configurations can change signs again (Section
+\ref{sec:stochastic}). These outcomes illustrate dependence on the process,
+parameters, seed, and horizon. They are neither market-calibrated forecasts nor
+estimates of a population expected return.
+
+The primary historical layer instead describes ordered, overlapping episodes
+from the two frozen proxy series. Its complete-system medians are uniformly
+negative across the registered non-unit cells, while the signal comparison has
+17 negative medians and one positive median. Only the registered H1/H2
+circular moving-block bootstrap and shared Holm family support the primary
+inferential statements. Eighteen signed cell summaries are not eighteen
+independent markets, and their signs do not become an additional hypothesis
+test. The more uniformly negative historical pattern is compatible with the
+mixed synthetic signs and with a safety floor that permits losses against DCA.
+
+The separately registered robustness layer extends coverage and cadence on
+those retained series. In the non-unit frictionless slices, all 30 monthly
+additional-coverage complete-system medians and all 48 quarterly
+complete-system medians are negative. Signal-only
+medians are negative in all 30 monthly cells, while the quarterly cells have
+40 negative and eight positive medians (Section
+\ref{sec:registered-robustness}). These are descriptive sensitivities with no
+extension uncertainty or multiplicity procedure. They neither independently
+replicate the primary result nor amend H2 when a quarterly median is positive.
+
+Agreement across layers concerns the accounting and the conditional nature of
+performance. Their outcome counts, path frequencies, seed summaries, and
+historical episode counts are never pooled into a probability, significance
+statement, or causal claim. Even within history, monthly and quarterly raw
+wealth totals cannot be ranked as a cadence effect: their deposit schedules
+and contributed capital differ. Each relative gap retains its named comparator
+and common episode conditions.
+
+\section{What the Comparators and Mechanisms Explain}
+\label{sec:discussion-mechanisms}
+
+Complete-system performance compares corrected guarded with DCA. Signal-only
+performance compares corrected guarded with neutral guarded, holding the
+policy architecture and economic conditions fixed while changing the selector.
+Architecture-only performance compares neutral guarded with DCA. The last is a
+secondary descriptive comparison, not a randomized causal estimate of a
+standalone guardrail effect. Its negative primary medians do not assign the
+complete-system loss to the guardrail, just as H1 significance does not become
+H2 significance.
+
+Holding the architecture fixed also does not make the two policies' realized
+floors identical. Their earlier purchases change cash and unit cushions, so
+the same guardrail formula can produce different later mandatory purchases.
+The reference-aligned feedback condition in Theorem
+\ref{thm:cash-single-crossing} is sufficient for the qualified cash-crossing
+mechanism; a score crossing alone is not. H2 evaluates the downstream policy
+paths produced by the selector substitution, including that feedback.
+
+Terminal accounting supplies a precise interpretation without isolating a
+causal market effect. In every primary historical H1 cell, mean terminal cash
+contributes positively to corrected-minus-DCA wealth and the mean
+evaluation-price-valued unit contribution is negative and larger in magnitude
+(Section \ref{sec:historical-mechanisms}). Their sum is the mean dollar wealth
+gap. It is not a decomposition of the median relative gap: medians need not
+add, and the relative comparisons have their own denominators. Carrying cash
+can help on one realized continuation and hurt on another because later prices
+value the foregone or accumulated units differently.
+
+Cash drag, asset exposure, guardrail activation, and purchase activity describe
+that allocation mechanism. None replaces terminal wealth as the performance
+criterion, and lower average acquisition cost alone cannot establish a fair
+same-deposit advantage. Lower coverage changes the permitted allocation and
+observed mechanisms, but the accepted synthesis establishes no monotone law
+of realized performance and no optimal coverage. Its floor checks and
+$\lambda=1$ accounting regressions verify implementations on retained paths;
+the general guarantee continues to rest on the proof.
+
+\section{Contributions and the Informative Negative Result}
+\label{sec:discussion-contributions}
+
+The mathematical contribution is the linked chain from the source-functional
+audit and corrected normalization to causal impossibility, a sharp safety
+relaxation, and exact realized-path boundaries. The corrected construction is
+a weighted Bajraktarevi\'c mean, not a new general mean class; its precise
+identification and proved parameter-transform qualifications remain those of
+Chapter \ref{ch:model-signal} and the prior-theory review of Chapter
+\ref{ch:literature}. Exact classification, correction, and policy analysis
+retain their value even when the selected signal does not improve the
+historical result.
+
+The computational contribution is an executable causal policy with explicit
+cash and unit accounting, exact checks, frozen runners, generated assets, and
+versioned evidence that can be regenerated or reconciled. The methodological
+contribution is the controlled use of fair comparators, distinct inferential
+layers, outcome-blind primary choices, and explicit provenance boundaries.
+The thesis applies established registration, bootstrap, multiplicity, and
+reproducibility methods; it does not claim to invent them. These are research
+artifacts and evaluation practices, not a production trading system.
+
+The empirical contribution is the frozen result itself: path-sensitive
+synthetic behavior, finite implementation checks consistent with the proved
+floor, negative complete-system primary historical medians, and no confirmed
+incremental historical signal value. The integrative contribution is the
+Financial Computing argument connecting the investment problem, feasible
+algorithm, exact accounting, and evaluation. This reconciles the five
+contribution categories and the explicit non-claims in the manuscript controls
+without converting a mathematical property of a mean into an investment claim.
+
+The primary question was specified before outcome access; its negative answer
+now limits what can honestly be claimed for this rule. Choosing a different transform, weight,
+parameter, safety factor, regime label, or favorable episode after seeing the
+answer would change the study being reported. Such outcome-driven selection
+would require a separate analysis boundary and independent evaluation
+\citep{nosek2018preregistration,white2000datasnooping}. The frozen negative
+finding is therefore retained, rather than tuned away or recast as a proof
+that all adaptive investment is ineffective.
+
+\section{Limits of the Theorem and the Evaluation}
+\label{sec:discussion-limitations}
+
+\paragraph{Financial model and execution.}
+The theorem concerns one risky asset, arbitrary finite positive prices,
+exogenous deposits, causal fully funded long-only buy-only purchases, and
+cash carried without interest. Its relative floor is measured against
+same-deposit DCA using cash-inclusive terminal wealth. Transaction costs,
+taxes, slippage, market impact, borrowing, and other changes to those
+recursions require their own analysis. In particular, the two simple fee
+routes are finite net empirical robustness calculations outside the current
+frictionless safety theorem. Their observed numerical floor checks do not
+extend the proof. The model also does not establish a live execution price,
+liquidity capacity, or investor-specific optimal allocation.
+
+\paragraph{Datasets, assets, and provider semantics.}
+The historical evidence uses SPY adjusted close and BTC-USD unadjusted close
+from one accepted Yahoo Finance acquisition seam, with eligible starts from
+1993-02-01 and 2015-01-01 respectively and a common 2025-12-31 cutoff. SPY
+is an ETF proxy with the declared adjustment semantics, and BTC-USD is a
+quotation proxy whose exact venue aggregation is not independently
+established. Dividends are not added again to SPY's adjusted series; dividends
+outside those declared semantics have no theorem extension. The acquisition
+client and provider are distinct, as detailed in Section
+\ref{sec:method-historical-source}. A causal prefix in the retained series
+does not establish that every adjusted value was available in exactly that
+form to a real investor at the historical decision time. This is not a
+separately acquired vintage-data study or a replication across providers.
+
+The source receipts bind retained bytes and semantics; they do not remove
+provider revisions or proxy limitations. Public aggregates and generated
+assets support public reconciliation, while reproduction of price-bearing
+historical episodes needs the authorized private inputs. The repository's
+retained redistribution boundary remains as documented in Section
+\ref{sec:method-historical-source}; it is not changed by this discussion.
+
+\paragraph{Cadence, horizon, and parameters.}
+Primary history uses monthly deposits at 12-, 36-, and 60-month horizons;
+registered robustness adds quarterly deposits at 6, 24, and 120 months and
+additional coverage values. Constant USD 1000 contributions and the frozen
+date-mapping rules restrict the evaluated cash-flow schedules. Results do not
+rank other cadences, irregular deposits, or longer horizons. One primary
+corrected-mean configuration---identity transform, $\alpha=\beta=0$, equal
+weights---was executed. The four declared alternate corrected-mean
+configurations remain unexecuted. A finite coverage grid and exact
+beta-sensitive witnesses neither identify an optimal parameter nor test the
+whole corrected-mean family.
+
+\paragraph{Dependence, regimes, and external validity.}
+Overlapping historical episodes repeatedly reuse observations. The primary
+block procedure carries the registered ordered-dependence approximation into
+its inference; it does not create independent histories or establish that
+future market regimes will follow the same law. Cellwise percentile intervals
+remain distinct from the shared Holm decisions, and non-rejection of H2 is
+not equivalence. Robustness has no uncertainty analysis; the 120-month
+quarterly BTC-USD cells have only four overlapping starts. Those sparse
+summaries cannot support a stable market-wide estimate.
+
+The deterministic catalog has no sampling distribution, and the five simple
+stochastic constructions have only three saved seeds per configuration. They
+were not calibrated to estimate market probabilities. No post-hoc market-regime
+classification or regime-specific performance analysis belongs to the
+historical bundle. Market-regime coverage is therefore the coverage of the
+retained paths, not a validated partition of market conditions. Two assets,
+one provider seam, fixed schedules, and finite parameter choices do not
+establish transfer to other securities, venues, countries, investor cash flows,
+or future periods. Regeneration establishes computational agreement on the
+same evidence, not independent-data replication or economic truth
+\citep{nasem2019reproducibility}.
+
+\section{Future Questions Outside the Frozen Evidence}
+\label{sec:discussion-future-research}
+
+The result leaves concrete questions for separately specified work. Can a
+selector defined before evaluation reduce the observed unit shortfall without
+violating the existing guardrail? Would the conclusion persist on newly
+acquired point-in-time sources, different assets, or non-overlapping holdout
+periods? How would the deferred corrected-mean configurations behave under a
+newly registered analysis that acknowledges the primary outcomes already
+seen? These are proposals, not performed studies.
+
+A cost-aware guarantee, dynamic guardrail, or restricted-price-regime theorem
+would change the model, policy, or admissible path universe. Each needs an
+explicit specification, proof where a guarantee is claimed, and independent
+review; empirical extensions need a new identity and, where appropriate,
+registration before their outcomes are accessed. Existing accepted protocols,
+inputs, and run bundles remain the frozen thesis evidence. Guaranteed safety comes from the constraint; useful adaptivity must earn its
+own evidence.
 
 \chapter{Conclusions}
 \label{ch:conclusion}

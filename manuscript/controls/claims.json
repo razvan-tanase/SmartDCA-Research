@@ -618,13 +618,42 @@
     {
       "id": "claim-empirical-central-synthesis",
       "entry_type": "empirical-headline",
-      "wording": "The combined evidence supports a proved frictionless safety floor but no universal, optimal, or confirmed incremental superiority claim for the corrected-mean signal.",
+      "wording": "The unit guardrail supplies the proved frictionless relative-wealth floor independently of the selector; realized adaptivity is path-dependent, and the frozen historical H2 evaluation did not confirm incremental corrected-mean value.",
       "claim_class": "integrative-synthesis",
-      "scope": "The reviewed analytical results and 2,754 normalized aggregate cells kept at their source-specific inferential grain; no cross-layer pooling.",
+      "scope": "The reviewed analytical results and four distinct empirical evidence layers only; no pooled probability, significance, equivalence, universal inferiority, causal attribution, or optimal-parameter claim.",
       "authority": [
-        {"role": "publication-ready-synthesis", "path": "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"},
-        {"role": "independent-audit", "path": "research/notes/safety-adaptivity-tradeoff-synthesis-audit.md"},
-        {"role": "independent-package-review", "path": "research/notes/safety-adaptivity-empirical-package-review.md"}
+        {
+          "role": "publication-ready-synthesis",
+          "path": "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"
+        },
+        {
+          "role": "independent-audit",
+          "path": "research/notes/safety-adaptivity-tradeoff-synthesis-audit.md"
+        },
+        {
+          "role": "independent-package-review",
+          "path": "research/notes/safety-adaptivity-empirical-package-review.md"
+        },
+        {
+          "role": "impossibility-theorem",
+          "path": "research/theorems/causal-dca-dominance-impossibility.md"
+        },
+        {
+          "role": "guardrail-theorem",
+          "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"
+        },
+        {
+          "role": "ledger-boundary",
+          "path": "research/theorems/arbitrary-horizon-performance-boundary.md"
+        },
+        {
+          "role": "machine-claim-receipts",
+          "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/claim-receipts.json"
+        },
+        {
+          "role": "manuscript-discussion-audit",
+          "path": "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
+        }
       ],
       "manuscript_location": "ch:discussion/sec:central-finding",
       "citation_need": "Cite the analytical theorems, synthesis run, and independent review at their respective clauses.",
@@ -1113,13 +1142,27 @@
       "claim_class": "generated-synthesis-table",
       "scope": "Source-specific cells without pooling; deterministic signs and stochastic seeds are not population frequencies.",
       "authority": [
-        {"role": "generated-table-source", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/primary-tables.md"},
-        {"role": "normalized-evidence", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/normalized-evidence.csv"}
+        {
+          "role": "generated-table-source",
+          "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/primary-tables.md"
+        },
+        {
+          "role": "normalized-evidence",
+          "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/normalized-evidence.csv"
+        },
+        {
+          "role": "presentation-reconciliation",
+          "path": "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
+        }
       ],
-      "manuscript_location": "ch:discussion/tab:cross-layer",
-      "citation_need": "Cite all source layers through the synthesis manifest and independent review.",
-      "mandatory": true,
-      "review_state": "accepted"
+      "manuscript_location": "ch:discussion/sec:discussion-evidence-layers",
+      "citation_need": "The central-finding section links the accepted synthesis report and its supplementary displays; this retired plan requires no absent manuscript caption or figure/table label.",
+      "mandatory": false,
+      "review_state": "reviewed",
+      "original_planned_location": "ch:discussion/tab:cross-layer",
+      "presentation_status": "retired-manuscript-display-plan",
+      "presentation_decision": "Ticket 12 retires the proposed duplicate Chapter 9 display. The immutable table or figure remains linked repository supplementary evidence; detailed generated manuscript displays already reside in Chapters 7–8 and Appendix E. The actual Chapter 9 section interprets this evidence without reproducing the display.",
+      "discussion_claim_id": "claim-discussion-layer-comparison"
     },
     {
       "id": "claim-table-cost-scope",
@@ -1128,13 +1171,27 @@
       "claim_class": "generated-synthesis-table",
       "scope": "Declared cost models and evidence layers only; no transfer of the frictionless theorem label.",
       "authority": [
-        {"role": "generated-table-source", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/cost-scope-summary.csv"},
-        {"role": "synthesis-report", "path": "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"}
+        {
+          "role": "generated-table-source",
+          "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/cost-scope-summary.csv"
+        },
+        {
+          "role": "synthesis-report",
+          "path": "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"
+        },
+        {
+          "role": "presentation-reconciliation",
+          "path": "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
+        }
       ],
-      "manuscript_location": "ch:discussion/tab:cost-scope",
-      "citation_need": "Cite the generated source and theorem scope.",
-      "mandatory": true,
-      "review_state": "accepted"
+      "manuscript_location": "ch:discussion/sec:discussion-limitations",
+      "citation_need": "The central-finding section links the accepted synthesis report and its supplementary displays; this retired plan requires no absent manuscript caption or figure/table label.",
+      "mandatory": false,
+      "review_state": "reviewed",
+      "original_planned_location": "ch:discussion/tab:cost-scope",
+      "presentation_status": "retired-manuscript-display-plan",
+      "presentation_decision": "Ticket 12 retires the proposed duplicate Chapter 9 display. The immutable table or figure remains linked repository supplementary evidence; detailed generated manuscript displays already reside in Chapters 7–8 and Appendix E. The actual Chapter 9 section interprets this evidence without reproducing the display.",
+      "discussion_claim_id": "claim-discussion-limitations"
     },
     {
       "id": "claim-table-protocol-grid",
@@ -1207,13 +1264,27 @@
       "claim_class": "generated-results-figure",
       "scope": "Descriptive summaries of source-level aggregate cells with no cross-layer pooling.",
       "authority": [
-        {"role": "generated-svg", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/frictionless-safety-factor.svg"},
-        {"role": "figure-data", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/safety-factor-curve.csv"}
+        {
+          "role": "generated-svg",
+          "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/frictionless-safety-factor.svg"
+        },
+        {
+          "role": "figure-data",
+          "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/safety-factor-curve.csv"
+        },
+        {
+          "role": "presentation-reconciliation",
+          "path": "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
+        }
       ],
-      "manuscript_location": "ch:discussion/fig:safety-factor",
-      "citation_need": "Cite the synthesis run and label the summary grain in the caption.",
-      "mandatory": true,
-      "review_state": "accepted"
+      "manuscript_location": "ch:discussion/sec:discussion-mechanisms",
+      "citation_need": "The central-finding section links the accepted synthesis report and its supplementary displays; this retired plan requires no absent manuscript caption or figure/table label.",
+      "mandatory": false,
+      "review_state": "reviewed",
+      "original_planned_location": "ch:discussion/fig:safety-factor",
+      "presentation_status": "retired-manuscript-display-plan",
+      "presentation_decision": "Ticket 12 retires the proposed duplicate Chapter 9 display. The immutable table or figure remains linked repository supplementary evidence; detailed generated manuscript displays already reside in Chapters 7–8 and Appendix E. The actual Chapter 9 section interprets this evidence without reproducing the display.",
+      "discussion_claim_id": "claim-discussion-comparators-mechanisms"
     },
     {
       "id": "claim-figure-mechanisms",
@@ -1222,13 +1293,27 @@
       "claim_class": "generated-results-figure",
       "scope": "Descriptive source-cell summaries; mechanisms do not determine a monotone performance law.",
       "authority": [
-        {"role": "generated-svg", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/mechanism-curves.svg"},
-        {"role": "figure-data", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/safety-factor-curve.csv"}
+        {
+          "role": "generated-svg",
+          "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/mechanism-curves.svg"
+        },
+        {
+          "role": "figure-data",
+          "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/safety-factor-curve.csv"
+        },
+        {
+          "role": "presentation-reconciliation",
+          "path": "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
+        }
       ],
-      "manuscript_location": "ch:discussion/fig:mechanisms",
-      "citation_need": "Cite the synthesis run and define activation and floor-share denominators in the caption.",
-      "mandatory": true,
-      "review_state": "accepted"
+      "manuscript_location": "ch:discussion/sec:discussion-mechanisms",
+      "citation_need": "The central-finding section links the accepted synthesis report and its supplementary displays; this retired plan requires no absent manuscript caption or figure/table label.",
+      "mandatory": false,
+      "review_state": "reviewed",
+      "original_planned_location": "ch:discussion/fig:mechanisms",
+      "presentation_status": "retired-manuscript-display-plan",
+      "presentation_decision": "Ticket 12 retires the proposed duplicate Chapter 9 display. The immutable table or figure remains linked repository supplementary evidence; detailed generated manuscript displays already reside in Chapters 7–8 and Appendix E. The actual Chapter 9 section interprets this evidence without reproducing the display.",
+      "discussion_claim_id": "claim-discussion-comparators-mechanisms"
     },
     {
       "id": "claim-figure-terminal-attribution",
@@ -1237,13 +1322,27 @@
       "claim_class": "generated-results-figure",
       "scope": "Ledger-conditioned accounting normalized by contributed capital; not a causal decomposition of market outcomes.",
       "authority": [
-        {"role": "generated-svg", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/terminal-attribution.svg"},
-        {"role": "normalized-evidence", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/normalized-evidence.csv"}
+        {
+          "role": "generated-svg",
+          "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/terminal-attribution.svg"
+        },
+        {
+          "role": "normalized-evidence",
+          "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/normalized-evidence.csv"
+        },
+        {
+          "role": "presentation-reconciliation",
+          "path": "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
+        }
       ],
-      "manuscript_location": "ch:discussion/fig:terminal-attribution",
-      "citation_need": "Cite the terminal-inventory theorem and synthesis run; retain the non-causal qualification.",
-      "mandatory": true,
-      "review_state": "accepted"
+      "manuscript_location": "ch:discussion/sec:discussion-mechanisms",
+      "citation_need": "The central-finding section links the accepted synthesis report and its supplementary displays; this retired plan requires no absent manuscript caption or figure/table label.",
+      "mandatory": false,
+      "review_state": "reviewed",
+      "original_planned_location": "ch:discussion/fig:terminal-attribution",
+      "presentation_status": "retired-manuscript-display-plan",
+      "presentation_decision": "Ticket 12 retires the proposed duplicate Chapter 9 display. The immutable table or figure remains linked repository supplementary evidence; detailed generated manuscript displays already reside in Chapters 7–8 and Appendix E. The actual Chapter 9 section interprets this evidence without reproducing the display.",
+      "discussion_claim_id": "claim-discussion-comparators-mechanisms"
     },
     {
       "id": "claim-figure-net-cost",
@@ -1252,13 +1351,27 @@
       "claim_class": "generated-results-figure",
       "scope": "Declared proportional and fixed-fee models; descriptive and outside the current safety theorem.",
       "authority": [
-        {"role": "generated-svg", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/net-cost-summary.svg"},
-        {"role": "figure-data", "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/cost-scope-summary.csv"}
+        {
+          "role": "generated-svg",
+          "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/net-cost-summary.svg"
+        },
+        {
+          "role": "figure-data",
+          "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/cost-scope-summary.csv"
+        },
+        {
+          "role": "presentation-reconciliation",
+          "path": "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
+        }
       ],
-      "manuscript_location": "ch:discussion/fig:net-cost",
-      "citation_need": "Cite the synthesis run and place the theorem-scope disclaimer in the caption.",
-      "mandatory": true,
-      "review_state": "accepted"
+      "manuscript_location": "ch:discussion/sec:discussion-limitations",
+      "citation_need": "The central-finding section links the accepted synthesis report and its supplementary displays; this retired plan requires no absent manuscript caption or figure/table label.",
+      "mandatory": false,
+      "review_state": "reviewed",
+      "original_planned_location": "ch:discussion/fig:net-cost",
+      "presentation_status": "retired-manuscript-display-plan",
+      "presentation_decision": "Ticket 12 retires the proposed duplicate Chapter 9 display. The immutable table or figure remains linked repository supplementary evidence; detailed generated manuscript displays already reside in Chapters 7–8 and Appendix E. The actual Chapter 9 section interprets this evidence without reproducing the display.",
+      "discussion_claim_id": "claim-discussion-limitations"
     },
     {
       "id": "claim-lit-dca-scope",
@@ -1585,6 +1698,190 @@
       ],
       "manuscript_location": "ch:literature/sec:lit-method-provenance-release",
       "citation_need": "Cite provenance, hash-based naming, and FAIR access principles; distinguish authenticated access and licensing from redistribution, and keep engineering evidence separate from financial evidence.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-discussion-layer-comparison",
+      "entry_type": "empirical-headline",
+      "wording": "Mixed deterministic and seeded-stochastic signs coexist with the negative primary historical finding and descriptive monthly/quarterly robustness signs without pooling their inferential units.",
+      "claim_class": "integrative-synthesis",
+      "scope": "The declared displayed slices only; deterministic catalog signs are not probabilities, three saved seeds do not estimate expected return, and robustness has no new inference.",
+      "authority": [
+        {
+          "role": "synthesis-report",
+          "path": "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"
+        },
+        {
+          "role": "detailed-evidence",
+          "path": "research/notes/safety-adaptivity-tradeoff-synthesis-audit.md"
+        },
+        {
+          "role": "machine-summary",
+          "path": "reports/experiments/runs/smartdca-synthesis-v1-394aa4d22f52ec12aca69679780670d49caa671d5935963869f41c1b5b557f26/cross-layer-summary.csv"
+        },
+        {
+          "role": "registered-inference",
+          "path": "research/notes/confirmatory-historical-evaluation-audit.md"
+        },
+        {
+          "role": "manuscript-discussion-audit",
+          "path": "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
+        }
+      ],
+      "manuscript_location": "ch:discussion/sec:discussion-evidence-layers",
+      "citation_need": "Use the cited chapter and theorem cross-references and linked evidence authority at the corresponding clause.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-discussion-comparators-mechanisms",
+      "entry_type": "empirical-headline",
+      "wording": "H1, H2, and S1 retain their separate comparators; policy-specific floor feedback and terminal cash/unit accounting explain realized allocation without a causal decomposition, additive median attribution, or monotone coverage-performance law.",
+      "claim_class": "ledger-conditioned-interpretation",
+      "scope": "Exact terminal attribution is episode-level and additive for mean dollar components, not median relative gaps; holding the architecture fixed does not equate realized floors.",
+      "authority": [
+        {
+          "role": "terminal-boundary",
+          "path": "research/theorems/arbitrary-horizon-performance-boundary.md"
+        },
+        {
+          "role": "floor-feedback",
+          "path": "research/notes/cash-single-crossing-mechanism.md"
+        },
+        {
+          "role": "synthesis-report",
+          "path": "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"
+        },
+        {
+          "role": "detailed-evidence",
+          "path": "research/notes/safety-adaptivity-tradeoff-synthesis-audit.md"
+        },
+        {
+          "role": "historical-audit",
+          "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"
+        },
+        {
+          "role": "manuscript-discussion-audit",
+          "path": "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
+        }
+      ],
+      "manuscript_location": "ch:discussion/sec:discussion-mechanisms",
+      "citation_need": "Use the cited chapter and theorem cross-references and linked evidence authority at the corresponding clause.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-discussion-contributions",
+      "entry_type": "empirical-headline",
+      "wording": "The mathematical, computational, methodological, empirical, and integrative contributions remain valid with the frozen negative signal finding; no new mean class, invented statistical method, production readiness, or outcome-driven tuning is claimed.",
+      "claim_class": "integrative-synthesis",
+      "scope": "Reconciles the accepted contribution and non-claim matrices without adding evidence or changing novelty positioning.",
+      "authority": [
+        {
+          "role": "contribution-matrix",
+          "path": "manuscript/controls/contributions.json"
+        },
+        {
+          "role": "nonclaim-matrix",
+          "path": "manuscript/controls/non-claims.json"
+        },
+        {
+          "role": "mean-positioning",
+          "path": "research/notes/corrected-mean-prior-theory-literature.md"
+        },
+        {
+          "role": "methodology-positioning",
+          "path": "research/notes/reproducible-computational-finance-statistical-methodology.md"
+        },
+        {
+          "role": "synthesis-report",
+          "path": "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"
+        },
+        {
+          "role": "manuscript-discussion-audit",
+          "path": "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
+        }
+      ],
+      "manuscript_location": "ch:discussion/sec:discussion-contributions",
+      "citation_need": "Use the cited chapter and theorem cross-references and linked evidence authority at the corresponding clause.",
+      "mandatory": true,
+      "review_state": "reviewed",
+      "citation_keys": [
+        "nosek2018preregistration",
+        "white2000datasnooping"
+      ]
+    },
+    {
+      "id": "claim-discussion-limitations",
+      "entry_type": "empirical-headline",
+      "wording": "The relative floor is a frictionless DCA-relative guarantee, not capital or drawdown protection; the evaluation is limited by its retained proxies, provider seam, schedules, horizons, parameter grid, dependent windows, sparse robustness cells, uncalibrated synthetic families, and untested external validity.",
+      "claim_class": "scope-limitation",
+      "scope": "No cost-aware theorem, vintage-data guarantee, independently replicated data result, market-regime performance claim, or transfer beyond the frozen study is established.",
+      "authority": [
+        {
+          "role": "guardrail-theorem",
+          "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"
+        },
+        {
+          "role": "synthesis-audit",
+          "path": "research/notes/safety-adaptivity-tradeoff-synthesis-audit.md"
+        },
+        {
+          "role": "methodology-audit",
+          "path": "research/notes/empirical-methodology-reproducibility-manuscript-audit.md"
+        },
+        {
+          "role": "historical-audit",
+          "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"
+        },
+        {
+          "role": "provider-review",
+          "path": "research/notes/yahoo-finance-historical-data-provider-review.md"
+        },
+        {
+          "role": "methodology-literature",
+          "path": "research/notes/reproducible-computational-finance-statistical-methodology.md"
+        },
+        {
+          "role": "manuscript-discussion-audit",
+          "path": "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
+        }
+      ],
+      "manuscript_location": "ch:discussion/sec:discussion-limitations",
+      "citation_need": "Use the cited chapter and theorem cross-references and linked evidence authority at the corresponding clause.",
+      "mandatory": true,
+      "review_state": "reviewed",
+      "citation_keys": [
+        "nasem2019reproducibility"
+      ]
+    },
+    {
+      "id": "claim-discussion-future-boundary",
+      "entry_type": "empirical-headline",
+      "wording": "New selectors, point-in-time sources, assets, holdouts, deferred parameters, dynamic guardrails, restricted-path models, and cost-aware guarantees are future questions requiring separately specified evidence and review.",
+      "claim_class": "research-boundary",
+      "scope": "Proposals only; the four declared alternate corrected-mean configurations remain unexecuted and future work cannot be counted as frozen thesis evidence.",
+      "authority": [
+        {
+          "role": "approved-effort",
+          "path": ".scratch/smartdca/efforts/thesis-manuscript-assembly/spec.md"
+        },
+        {
+          "role": "synthesis-audit",
+          "path": "research/notes/safety-adaptivity-tradeoff-synthesis-audit.md"
+        },
+        {
+          "role": "artifact-policy",
+          "path": "docs/adr/0008-place-empirical-protocol-input-run-layers.md"
+        },
+        {
+          "role": "manuscript-discussion-audit",
+          "path": "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
+        }
+      ],
+      "manuscript_location": "ch:discussion/sec:discussion-future-research",
+      "citation_need": "Use the cited chapter and theorem cross-references and linked evidence authority at the corresponding clause.",
       "mandatory": true,
       "review_state": "reviewed"
     }
