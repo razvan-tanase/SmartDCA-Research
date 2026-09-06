@@ -9,13 +9,15 @@
       "reason": "Prior-theory review identifies the off-diagonal construction exactly within a known family.",
       "authority_paths": [
         "research/definitions/corrected-out-quasi-gini-mean.md",
-        "research/notes/prior-theory-corrected-out-quasi-gini.md"
+        "research/notes/prior-theory-corrected-out-quasi-gini.md",
+        "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
       ],
       "affected_locations": [
         "ch:introduction",
         "ch:literature",
         "ch:model-signal",
-        "ch:conclusion"
+        "ch:conclusion",
+        "ch:discussion"
       ],
       "mandatory": true,
       "review_state": "accepted"
@@ -27,7 +29,8 @@
       "reason": "The causal DCA impossibility theorem excludes the stronger claim under the complete comparison model.",
       "authority_paths": [
         "research/theorems/causal-dca-dominance-impossibility.md",
-        "research/theorems/epsilon-dca-safety-unit-guardrail.md"
+        "research/theorems/epsilon-dca-safety-unit-guardrail.md",
+        "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
       ],
       "affected_locations": [
         "ch:introduction",
@@ -48,7 +51,8 @@
       "reason": "Seventeen of eighteen signal-only medians were negative, one was positive, and none was significant after the registered correction.",
       "authority_paths": [
         "reports/experiments/confirmatory-historical-evaluation.md",
-        "research/notes/confirmatory-historical-evaluation-audit.md"
+        "research/notes/confirmatory-historical-evaluation-audit.md",
+        "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
       ],
       "affected_locations": [
         "ch:historical-results",
@@ -65,7 +69,8 @@
       "reason": "The proof uses the frictionless unit-coverage model and no extension to frictions has been established.",
       "authority_paths": [
         "research/theorems/epsilon-dca-safety-unit-guardrail.md",
-        "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"
+        "reports/experiments/safety-adaptivity-tradeoff-synthesis.md",
+        "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
       ],
       "affected_locations": [
         "ch:safety",
@@ -85,7 +90,8 @@
       "authority_paths": [
         "reports/experiments/seeded-stochastic-families.md",
         "reports/experiments/confirmatory-historical-evaluation.md",
-        "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"
+        "reports/experiments/safety-adaptivity-tradeoff-synthesis.md",
+        "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
       ],
       "affected_locations": [
         "ch:methodology",
@@ -103,7 +109,8 @@
       "reason": "Different carried-cash and unit paths can reverse the ranking implied by acquisition cost alone.",
       "authority_paths": [
         "CONTEXT.md",
-        "research/notes/pathwise-dca-dominance-under-causal-budget.md"
+        "research/notes/pathwise-dca-dominance-under-causal-budget.md",
+        "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
       ],
       "affected_locations": [
         "ch:model-signal",
@@ -112,6 +119,56 @@
       ],
       "mandatory": true,
       "review_state": "accepted"
+    },
+    {
+      "id": "nonclaim-capital-drawdown-protection",
+      "rejected_claim": "Epsilon-DCA safety protects contributed principal or imposes a maximum drawdown bound.",
+      "required_wording": "The floor is relative to same-deposit DCA wealth; DCA can itself lose value, and the theorem does not supply capital or drawdown protection.",
+      "reason": "The guarantee bounds terminal wealth relative to DCA under its specified model, not relative to deposits or a past wealth peak.",
+      "authority_paths": [
+        "research/theorems/epsilon-dca-safety-unit-guardrail.md",
+        "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
+      ],
+      "affected_locations": [
+        "ch:discussion",
+        "ch:conclusion"
+      ],
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "nonclaim-optimal-coverage",
+      "rejected_claim": "The frozen coverage grid or favorable finite witnesses identify an optimal parameter or monotone return improvement from more discretion.",
+      "required_wording": "Coverage controls the mandatory floor and funded discretion; realized performance remains path-dependent and no optimal configuration is established.",
+      "reason": "The synthesis retains mixed synthetic signs and descriptive historical sensitivity without a parameter-selection claim.",
+      "authority_paths": [
+        "reports/experiments/safety-adaptivity-tradeoff-synthesis.md",
+        "research/notes/safety-adaptivity-tradeoff-synthesis-audit.md",
+        "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
+      ],
+      "affected_locations": [
+        "ch:discussion",
+        "ch:conclusion"
+      ],
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "nonclaim-future-evidence",
+      "rejected_claim": "Deferred parameters, new datasets, selectors, guardrails, or regime analyses are already part of the accepted thesis evidence.",
+      "required_wording": "Treat these as separately specified future work with new evidence identities, appropriate registration, and independent review.",
+      "reason": "Four declared alternate corrected-mean configurations remain unexecuted; outcome access closes the primary selection boundary.",
+      "authority_paths": [
+        ".scratch/smartdca/efforts/thesis-manuscript-assembly/spec.md",
+        "research/notes/safety-adaptivity-tradeoff-synthesis-audit.md",
+        "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
+      ],
+      "affected_locations": [
+        "ch:discussion",
+        "ch:conclusion"
+      ],
+      "mandatory": true,
+      "review_state": "reviewed"
     }
   ]
 }

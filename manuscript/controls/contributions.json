@@ -11,14 +11,16 @@
         "research/theorems/source-out-functional-mean-classification.md",
         "research/theorems/causal-dca-dominance-impossibility.md",
         "research/theorems/epsilon-dca-safety-unit-guardrail.md",
-        "research/theorems/arbitrary-horizon-performance-boundary.md"
+        "research/theorems/arbitrary-horizon-performance-boundary.md",
+        "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
       ],
       "manuscript_locations": [
         "ch:model-signal",
         "ch:safety",
         "ch:boundaries",
         "app:proofs",
-        "app:performance-cases"
+        "app:performance-cases",
+        "ch:discussion"
       ],
       "novelty_boundary": "Treat these as project results whose external novelty wording remains conditional on the bounded literature reviews; never present the corrected family itself as a new mean class.",
       "mandatory": true,
@@ -33,13 +35,15 @@
         "reproducibility/checks/check_deterministic_adversarial_study.py",
         "reproducibility/checks/check_stochastic_family_study.py",
         "reproducibility/checks/check_historical_confirmatory_evaluation.py",
-        "reproducibility/checks/check_safety_adaptivity_synthesis.py"
+        "reproducibility/checks/check_safety_adaptivity_synthesis.py",
+        "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
       ],
       "manuscript_locations": [
         "ch:methodology",
         "ch:synthetic-results",
         "ch:historical-results",
-        "app:reproducibility"
+        "app:reproducibility",
+        "ch:discussion"
       ],
       "novelty_boundary": "Claim reproducible project artifacts and validation coverage, not production-trading readiness or a generally validated simulation platform.",
       "mandatory": true,
@@ -53,7 +57,8 @@
         "research/notes/pathwise-dca-dominance-under-causal-budget.md",
         "experiments/protocols/safety-adaptivity-v1.json",
         "experiments/protocols/safety-adaptivity-yahoo-v2.json",
-        "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"
+        "reports/experiments/safety-adaptivity-tradeoff-synthesis.md",
+        "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
       ],
       "manuscript_locations": [
         "ch:model-signal",
@@ -68,12 +73,14 @@
     {
       "id": "contribution-empirical",
       "category": "empirical",
-      "contribution": "A frozen evaluation showing path- and parameter-sensitive synthetic behavior, a verified frictionless safety floor, negative complete-system historical medians in every non-unit primary cell, and no confirmed incremental historical value from the corrected-mean signal.",
+      "contribution": "A frozen evaluation showing path- and parameter-sensitive synthetic behavior, finite implementation checks consistent with the proved frictionless safety floor, negative complete-system historical medians in every non-unit primary cell, no confirmed incremental historical corrected-mean value, and separately reported descriptive robustness.",
       "evidence_paths": [
         "reports/experiments/deterministic-adversarial-paths.md",
         "reports/experiments/seeded-stochastic-families.md",
         "reports/experiments/confirmatory-historical-evaluation.md",
-        "reports/experiments/safety-adaptivity-tradeoff-synthesis.md"
+        "reports/experiments/safety-adaptivity-tradeoff-synthesis.md",
+        "research/notes/safety-adaptivity-discussion-manuscript-audit.md",
+        "research/notes/historical-robustness-evaluation-manuscript-audit.md"
       ],
       "manuscript_locations": [
         "ch:synthetic-results",
@@ -87,11 +94,12 @@
     {
       "id": "contribution-integrative",
       "category": "integrative",
-      "contribution": "A Financial Computing narrative that starts from an adaptive-superiority ambition, proves its causal boundary, constructs an attainable safety relaxation, implements it as a guarded policy, and treats an informative negative empirical result as the final scientific finding.",
+      "contribution": "The Chapter 9 synthesis connects the adaptive-superiority ambition, causal impossibility boundary, attainable safety architecture, exact ledgers, and informative negative empirical result while preserving each evidence layer; introduction and conclusion integration remains ticket 13.",
       "evidence_paths": [
         ".scratch/smartdca/efforts/thesis-manuscript-assembly/spec.md",
         "reports/experiments/safety-adaptivity-tradeoff-synthesis.md",
-        "research/notes/safety-adaptivity-empirical-package-review.md"
+        "research/notes/safety-adaptivity-empirical-package-review.md",
+        "research/notes/safety-adaptivity-discussion-manuscript-audit.md"
       ],
       "manuscript_locations": [
         "ch:introduction",

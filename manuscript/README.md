@@ -9,10 +9,12 @@ impossibility-to-safety policy architecture; Chapter 5 supplies the finite- and
 arbitrary-horizon realized performance boundaries; Chapter 6 fixes the frozen
 empirical design, inferential limits, and reproduction route; Chapter 7 reports
 the reviewed deterministic and seeded-stochastic evaluation; Chapter 8 reports
-the primary historical and separately registered robustness evaluation; and
-Appendices A--E retain detailed proofs, cases, protocols, artifact identities,
-generated result tables, and clean commands. The integrative chapters remain
-structural placeholders. It is not a submission candidate.
+the primary historical and separately registered robustness evaluation;
+Chapter 9 integrates the safety-adaptivity finding, contributions, limitations,
+and future-research boundary; and Appendices A--E retain detailed proofs,
+cases, protocols, artifact identities, generated result tables, and clean
+commands. The introduction, conclusion, and abstracts remain structural
+placeholders for ticket 13. It is not a submission candidate.
 
 ## Authority
 
