@@ -235,33 +235,55 @@ class ManuscriptBuildTests(unittest.TestCase):
             self.assertIn("Appendix", normalized_text)
             self.assertIn("BIBLIOGRAPHY", normalized_text)
             self.assertIn("Originality declaration placeholder", normalized_text)
-            self.assertIn("LUCRARE DE DISERTA", normalized_upper)
-            self.assertIn("MASTER", normalized_upper)
-            self.assertIn("DISSERTATION", normalized_upper)
-            self.assertIn("SINOPSIS", normalized_upper)
+            first_page = text.split("\f", 1)[0]
+            first_page_upper = first_page.upper()
+            for cover_line in (
+                "UNIVERSITY POLITEHNICA OF BUCHAREST",
+                "FACULTY OF AUTOMATIC CONTROL AND COMPUTERS",
+                "COMPUTER SCIENCE AND ENGINEERING DEPARTMENT",
+                "MASTER IN FINANCIAL COMPUTING",
+                "RESEARCH THESIS",
+                "ADAPTIVE EXTENSIONS OF DOLLAR–COST AVERAGING",
+                "A MEANS-THEORETIC FRAMEWORK AND EMPIRICAL EVALUATION OF",
+                "SMARTDCA STRATEGIES",
+                "RĂZVAN-ANDREI TĂNASE",
+                "THESIS ADVISOR:",
+                "BUCHAREST",
+                "2025",
+            ):
+                self.assertIn(cover_line, first_page_upper)
+            self.assertNotIn("LUCRARE DE DISERTA", normalized_upper)
+            self.assertNotIn("SINOPSIS", normalized_upper)
             self.assertIn("ABSTRACT", normalized_upper)
             abstract_pages = [
                 page for page in text.split("\f")
-                if page.lstrip().startswith("SINOPSIS") and "ABSTRACT" in page
+                if page.lstrip().startswith("ABSTRACT")
             ]
             self.assertEqual(len(abstract_pages), 1)
-            synopsis, abstract = abstract_pages[0].split("ABSTRACT", 1)
-            for section in (synopsis.removeprefix("SINOPSIS"), abstract):
-                self.assertNotIn("UNRESOLVED", section)
-                self.assertGreater(len(section.split()), 0)
-            # T1 comma-below accents can split Romanian words in PDF text
-            # extraction. Count the authoritative prose, while the rendered
-            # assertions above verify populated abstracts on the shared page.
+            abstract = abstract_pages[0].removeprefix("ABSTRACT")
+            self.assertNotIn("UNRESOLVED", abstract)
+            self.assertGreater(len(abstract.split()), 0)
             source_text = (MANUSCRIPT_ROOT / "source" / "thesis.tex").read_text(
                 encoding="utf-8"
             )
-            for label, end_marker in (
-                ("sec:synopsis", r"\vfill"),
-                ("sec:abstract", r"\clearpage"),
-            ):
-                section = source_text.split(r"\label{" + label + "}", 1)[1]
-                section = section.split(end_marker, 1)[0]
-                self.assertLessEqual(len(section.split()), 200)
+            self.assertEqual(source_text.count(r"\begin{titlepage}"), 1)
+            self.assertEqual(source_text.count("assets/upb_logo.png"), 1)
+            self.assertEqual(source_text.count("assets/sigla_cs.png"), 1)
+            self.assertIn(
+                r"\includegraphics[width=26.5mm]{assets/upb_logo.png}",
+                source_text,
+            )
+            self.assertIn(
+                r"\includegraphics[width=51.5mm]{assets/sigla_cs.png}",
+                source_text,
+            )
+            self.assertIn(r"\hspace{78pt}", source_text)
+            self.assertIn(r"\hspace{107pt}", source_text)
+            self.assertNotIn(r"\section*{SINOPSIS}", source_text)
+            self.assertNotIn(r"\label{sec:synopsis}", source_text)
+            section = source_text.split(r"\label{sec:abstract}", 1)[1]
+            section = section.split(r"\clearpage", 1)[0]
+            self.assertLessEqual(len(section.split()), 200)
             self.assertIn(
                 "COMPUTER SCIENCE AND ENGINEERING DEPARTMENT", normalized_upper
             )
@@ -277,13 +299,26 @@ class ManuscriptBuildTests(unittest.TestCase):
                     encoding="utf-8"
                 )
             )
-            values = {
+            contract_values = {
                 requirement["id"]: requirement["value"]
                 for requirement in contract["requirements"]
             }
             self.assertIn(
-                values["institution_name"].split(" / ")[1].upper(), normalized_upper
+                "National University of Science and Technology POLITEHNICA Bucharest",
+                contract_values["institution_name"],
             )
+            self.assertIn(
+                "Romanian cover",
+                contract_values["front_matter_beyond_declaration"],
+            )
+            self.assertIn(
+                "Romanian SINOPSIS",
+                contract_values["bilingual_abstracts"],
+            )
+            values = {
+                requirement["id"]: requirement["value"]
+                for requirement in contract["requirements"]
+            }
             self.assertIn(
                 values["faculty_name"].split(" / ")[1].upper(), normalized_upper
             )
@@ -296,10 +331,10 @@ class ManuscriptBuildTests(unittest.TestCase):
                 text=True,
             ).stdout
             self.assertIn(
-                "Title:           Safe Adaptivity in Dollar-Cost Averaging:",
+                "Title:           Adaptive Extensions of Dollar–Cost Averaging:",
                 pdf_info,
             )
-            self.assertIn("Author:          [UNRESOLVED:", pdf_info)
+            self.assertIn("Author:          Răzvan-Andrei Tănase", pdf_info)
             self.assertRegex(
                 pdf_info,
                 r"Page size:\s+595(?:\.\d+)? x 84[12](?:\.\d+)? pts \(A4\)",
@@ -390,9 +425,10 @@ class ManuscriptBuildTests(unittest.TestCase):
             )
             self.assertTrue(
                 any(
-                    {"SINOPSIS", "ABSTRACT"}.issubset(
-                        {"".join(text.itertext()) for text in page.iter("text")}
-                    )
+                    "ABSTRACT"
+                    in {"".join(text.itertext()) for text in page.iter("text")}
+                    and "SINOPSIS"
+                    not in {"".join(text.itertext()) for text in page.iter("text")}
                     for page in layout.iter("page")
                 )
             )

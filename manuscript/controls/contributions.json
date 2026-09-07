@@ -102,7 +102,7 @@
     {
       "id": "contribution-integrative",
       "category": "integrative",
-      "contribution": "The introduction, discussion, conclusion, and bilingual abstracts connect the adaptive-superiority ambition, causal impossibility boundary, attainable safety architecture, exact ledgers, and informative negative empirical result while preserving each evidence layer.",
+      "contribution": "The introduction, discussion, conclusion, and English abstract connect the adaptive-superiority ambition, causal impossibility boundary, attainable safety architecture, exact ledgers, and informative negative empirical result while preserving each evidence layer.",
       "evidence_paths": [
         ".scratch/smartdca/efforts/thesis-manuscript-assembly/spec.md",
         "reports/experiments/safety-adaptivity-tradeoff-synthesis.md",

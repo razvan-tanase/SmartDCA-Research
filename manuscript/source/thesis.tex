@@ -16,13 +16,13 @@
 \usepackage{xcolor}
 \usepackage[hidelinks]{hyperref}
 
-\newcommand{\thesistitle}{Safe Adaptivity in Dollar-Cost Averaging: From an Impossibility Boundary to a Reproducible Empirical Evaluation}
+\newcommand{\thesistitle}{Adaptive Extensions of Dollar--Cost Averaging: A Means-Theoretic Framework and Empirical Evaluation of SmartDCA Strategies}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 \hypersetup{
   pdftitle={\thesistitle},
-  pdfauthor={[UNRESOLVED: candidate's official name]},
-  pdfsubject={Financial Computing master's dissertation draft},
+  pdfauthor={Răzvan-Andrei Tănase},
+  pdfsubject={Financial Computing research thesis},
   pdfkeywords={dollar-cost averaging, Financial Computing, reproducibility}
 }
 
@@ -57,94 +57,65 @@
   {\normalfont\fontsize{12}{15}\selectfont\bfseries}}
 \makeatother
 
-\newcommand{\brandmarksplaceholder}{%
-  \fbox{\parbox[c][16mm][c]{0.72\textwidth}{\centering
-    \textbf{[UNRESOLVED: insert current official university and department brand marks]}}}}
-
 \begin{document}
 \hypersetup{pageanchor=false}
 
+% Candidate-requested reference-cover exception: the current draft uses the
+% attached document's shorter institution line and English-only front matter.
+% The frozen institutional contract remains authoritative for approval: its
+% verified long-form identity, bilingual route, and current-brand evidence are
+% still release blockers until supervisor/faculty confirmation.
 \begin{titlepage}
+  \thispagestyle{empty}
+  \begingroup
+  \sffamily
+  \singlespacing
+  \setlength{\parskip}{0pt}
   \centering
-  {\small\bfseries UNIVERSITATEA NAȚIONALĂ DE ȘTIINȚĂ ȘI TEHNOLOGIE\par
-  POLITEHNICA BUCUREȘTI\par
-  FACULTATEA DE AUTOMATICĂ ȘI CALCULATOARE\par
-  DEPARTAMENTUL DE CALCULATOARE\par
-  FINANCIAL COMPUTING\par}
-  \vspace{1.2cm}
-  \brandmarksplaceholder
-  \vfill
-  {\Large\bfseries LUCRARE DE DISERTAȚIE\par}
-  \vspace{1.2cm}
-  {\large\bfseries \thesistitle\par}
-  \vspace{0.35cm}
-  {\normalsize Titlu de lucru --- aprobarea finală este nerezolvată\par}
-  \vfill
-  {\normalsize\textbf{[UNRESOLVED: numele oficial al candidatului]}\par}
-  \vfill
-  \begin{flushright}
-    \textbf{Coordonator științific:}\par
-    \textbf{[UNRESOLVED: nume și titlu academic]}\par
-  \end{flushright}
-  \vfill
-  {\bfseries BUCUREȘTI\par}
-  {\bfseries [UNRESOLVED: anul depunerii]\par}
-\end{titlepage}
+  {\fontsize{17.3}{18}\selectfont
+    UNIVERSITY POLITEHNICA OF BUCHAREST\par
+    FACULTY OF AUTOMATIC CONTROL AND COMPUTERS\par
+    COMPUTER SCIENCE AND ENGINEERING DEPARTMENT\par
+    MASTER IN FINANCIAL COMPUTING\par}
 
-\begin{titlepage}
-  \centering
-  {\small\bfseries NATIONAL UNIVERSITY OF SCIENCE AND TECHNOLOGY\par
-  POLITEHNICA BUCHAREST\par
-  FACULTY OF AUTOMATIC CONTROL AND COMPUTERS\par
-  COMPUTER SCIENCE AND ENGINEERING DEPARTMENT\par
-  FINANCIAL COMPUTING\par}
-  \vspace{1.2cm}
-  \brandmarksplaceholder
-  \vfill
-  {\Large\bfseries MASTER'S DISSERTATION\par}
-  \vspace{1.2cm}
-  {\large\bfseries \thesistitle\par}
-  \vspace{0.35cm}
-  {\normalsize Working title --- final approval unresolved\par}
-  \vfill
-  {\normalsize\textbf{[UNRESOLVED: candidate's official name]}\par}
-  \vfill
+  \vspace{50pt}
+  \noindent\makebox[\textwidth][l]{%
+    \hspace{78pt}%
+    \includegraphics[width=26.5mm]{assets/upb_logo.png}%
+    \hspace{107pt}%
+    \includegraphics[width=51.5mm]{assets/sigla_cs.png}%
+  }\par
+
+  \vspace{106pt}
+  {\fontsize{25}{30}\selectfont RESEARCH THESIS\par}
+
+  \vspace{41pt}
+  {\fontsize{17.3}{16.7}\selectfont
+    Adaptive Extensions of Dollar--Cost Averaging\par
+    A Means-Theoretic Framework and Empirical Evaluation of\par
+    SmartDCA Strategies\par}
+
+  \vspace{35pt}
+  {\fontsize{20.75}{24}\selectfont Răzvan-Andrei Tănase\par}
+
+  \vspace{58pt}
   \begin{flushright}
-    \textbf{Scientific supervisor:}\par
-    \textbf{[UNRESOLVED: name and academic title]}\par
+    {\fontsize{14.4}{23}\selectfont
+      \textbf{Thesis advisor:}\hspace*{6pt}\par
+      Șl.dr.ing Costin Carabaș\hspace*{6pt}\par}
   \end{flushright}
+
   \vfill
-  {\bfseries BUCHAREST\par}
-  {\bfseries [UNRESOLVED: submission year]\par}
+  {\fontsize{14.4}{15}\selectfont\bfseries BUCHAREST\par}
+  {\fontsize{12}{15}\selectfont 2025\par}
+  \vspace{27pt}
+  \endgroup
 \end{titlepage}
 
 \hypersetup{pageanchor=true}
 \pagenumbering{roman}
 \tableofcontents
 \clearpage
-
-\section*{SINOPSIS}
-\addcontentsline{toc}{chapter}{SINOPSIS}
-\label{sec:synopsis}
-Investițiile recurente ridică o întrebare practică: poate o regulă adaptivă
-îmbunătăți achizițiile fără a pierde o garanție față de investiția periodică
-integrală a contribuțiilor (DCA)? Teza compară strategii cu aceleași contribuții,
-decizii fără informații viitoare, achiziții finanțate integral și avere finală
-incluzând numerarul. În modelul fără fricțiuni, cu prețuri pozitive arbitrare și
-fără vânzări, dominanța universală impune exact achizițiile DCA. O constrângere
-asupra unităților deținute permite însă adaptivitate, garantând o fracție aleasă
-din averea DCA. Un scor bazat pe o medie Bajraktarevi\'c corectată selectează
-alocarea discreționară; garanția aparține constrângerii. Analiza exactă identifică
-regiuni de câștig și pierdere. Evaluarea reproductibilă separă dovezile
-deterministe, stocastice, istorice confirmatorii și de robustețe descriptivă.
-Toate cele 18 celule istorice primare fără fricțiuni, cu acoperire subunitară,
-au diferențe mediane negative față de DCA. Nicio comparație a scorului cu
-selectorul neutru protejat nu este semnificativă după corecția Holm. Rezultatul
-nu confirmă valoarea istorică incrementală a scorului, fără a demonstra
-echivalența. Siguranța relativă demonstrată și utilitatea empirică a adaptivității
-rămân distincte; teorema nu se extinde la costuri de tranzacționare.
-
-\vfill
 
 \section*{ABSTRACT}
 \addcontentsline{toc}{chapter}{ABSTRACT}
@@ -180,10 +151,12 @@ official 2025--2026 finalization regulation requires online hand-in, a public
 presentation and defense, a hand-completed originality declaration that forms
 part of the dissertation, and faculty similarity
 review~\citep{politehnica2026finalization}. The candidate-supplied official
-faculty template~\citep{acs2018thesistemplate} fixes the bilingual cover and
-synopsis/abstract route, A4 geometry, and recommended typography. Personal,
-session, branding, citation, submission, and supervisor inputs remain explicit
-release blockers in the institutional contract.
+faculty template~\citep{acs2018thesistemplate} fixes the A4 geometry and
+recommended typography. This draft follows the candidate-directed English
+cover and abstract presentation; the institutional contract records the
+remaining approval boundary. Personal, session, branding, citation,
+submission, and supervisor inputs remain explicit release blockers in the
+institutional contract.
 
 \clearpage
 \pagenumbering{arabic}

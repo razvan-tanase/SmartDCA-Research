@@ -41,8 +41,8 @@ final-release decisions.
 
 Claim records retain their primary `manuscript_location`. Optional
 `restatement_locations` index the same claim in the introduction, conclusion,
-literature synthesis, and bilingual abstracts without duplicating its ID or
-evidence authority. The ticket 13 headline audit reconciles these locations
+literature synthesis, and the current English abstract without duplicating its
+ID or evidence authority. The ticket 13 headline audit reconciles these locations
 and their wording; the generic validator does not establish semantic agreement.
 
 The integrated assembly audit also validates every primary and restatement

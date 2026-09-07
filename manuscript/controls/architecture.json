@@ -7,7 +7,7 @@
       "record_type": "spine",
       "mandatory": true,
       "review_state": "accepted",
-      "working_title": "Safe Adaptivity in Dollar-Cost Averaging: From an Impossibility Boundary to a Reproducible Empirical Evaluation",
+      "working_title": "Adaptive Extensions of Dollar--Cost Averaging: A Means-Theoretic Framework and Empirical Evaluation of SmartDCA Strategies",
       "narrative": "A universal-superiority ambition is bounded by causal impossibility, relaxed into an exact safety architecture, implemented as a guarded adaptive policy, and tested by a frozen reproducible evaluation whose negative signal result is retained.",
       "research_questions": [
         {
