@@ -11,6 +11,10 @@
 \usepackage{lmodern}
 \usepackage{amsmath}
 \usepackage{array}
+\usepackage{booktabs}
+\usepackage{caption}
+\DeclareCaptionFont{tabletext}{\fontsize{9}{11}\selectfont}
+\captionsetup[table]{font=tabletext,labelfont=bf,justification=raggedright,singlelinecheck=false,skip=8pt}
 \usepackage{tabularx}
 \usepackage[a4paper,margin=25.4mm]{geometry}
 \usepackage{graphicx}
@@ -33,7 +37,11 @@
 \onehalfspacing
 \setlength{\parskip}{8pt}
 
+% Keep successive tables together at the top of float pages.
 \makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{20pt plus 2pt}
+\setlength{\@fpbot}{0pt plus 1fil}
 \g@addto@macro\UrlBreaks{%
   \do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9%
   \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j%
@@ -285,16 +293,13 @@ Chapter \ref{ch:literature} governs external novelty language.
 
 \begin{table}[htbp]
 \centering
-\caption{Contribution categories and their limits, reconciled with the
-contribution and non-claim registers. Chapter references locate the evidence.}
-\label{tab:contribution-boundaries}
 \begingroup\singlespacing\fontsize{9}{11}\selectfont
 \setlength{\tabcolsep}{4pt}
 \renewcommand{\arraystretch}{1.25}
 \begin{tabular}{L{0.18\textwidth}L{0.40\textwidth}L{0.34\textwidth}}
-\hline
-Category & Contribution and detailed home & Boundary \\
-\hline
+\toprule
+    \textbf{Category} & \textbf{Contribution and detailed home} & \textbf{Boundary} \\
+    \midrule
 Mathematical & Correction, impossibility, sharp guardrail, and exact
 boundaries (Chs.\ \ref{ch:model-signal}--\ref{ch:boundaries}). & No new general mean
 class or universal SmartDCA superiority. \\
@@ -310,9 +315,12 @@ incremental historical signal value or market-wide performance law. \\
 Integrative & One safety-versus-adaptivity argument
 (Chs.\ \ref{ch:discussion}--\ref{ch:conclusion}). & A synthesis of supported
 results, not an additional experiment. \\
-\hline
+\bottomrule
 \end{tabular}
 \endgroup
+\caption{Contribution categories and their limits, reconciled with the
+contribution and non-claim registers. Chapter references locate the evidence.}
+\label{tab:contribution-boundaries}
 \end{table}
 \FloatBarrier
 
@@ -1885,12 +1893,12 @@ shown in Table \ref{tab:terminal-inventory-classification}.
 
 \begin{table}[htbp]
   \centering
-  \fontsize{9}{11}\selectfont
+  \singlespacing\fontsize{9}{11}\selectfont
   \renewcommand{\arraystretch}{1.18}
-  \begin{tabular}{p{0.25\textwidth}p{0.20\textwidth}p{0.43\textwidth}}
-    \hline
-    Terminal signs & Positive root & Exact order as $P$ increases \\
-    \hline
+  \begin{tabular}{L{0.25\textwidth}L{0.20\textwidth}L{0.43\textwidth}}
+    \toprule
+    \textbf{Terminal signs} & \textbf{Positive root} & \textbf{Exact order as $P$ increases} \\
+    \midrule
     $H_T>0,\ U_T\geq0$ & none & corrected wins for every $P>0$ \\
     $H_T>0,\ U_T<0$ & $\frac{H_T}{-U_T}$ & win below, tie at, and loss above the root \\
     $H_T=0,\ U_T>0$ & none & corrected wins for every $P>0$ \\
@@ -1898,7 +1906,7 @@ shown in Table \ref{tab:terminal-inventory-classification}.
     $H_T=0,\ U_T<0$ & none & corrected loses for every $P>0$ \\
     $H_T<0,\ U_T>0$ & $\frac{-H_T}{U_T}$ & loss below, tie at, and win above the root \\
     $H_T<0,\ U_T\leq0$ & none & corrected loses for every $P>0$ \\
-    \hline
+    \bottomrule
   \end{tabular}
   \caption{Complete positive-evaluation-price classification after the two
   causal ledgers are fixed.}
@@ -1956,19 +1964,19 @@ substituted for one another.
 
 \begin{table}[htbp]
   \centering
-  \fontsize{9}{11}\selectfont
+  \singlespacing\fontsize{9}{11}\selectfont
   \renewcommand{\arraystretch}{1.16}
   \begin{tabular}{L{0.22\textwidth}L{0.30\textwidth}L{0.38\textwidth}}
-    \hline
-    Evidence role & What it establishes & What it does not establish \\
-    \hline
+    \toprule
+    \textbf{Evidence role} & \textbf{What it establishes} & \textbf{What it does not establish} \\
+    \midrule
     Finite witness (Sections \ref{thm:two-purchase} and \ref{thm:three-purchase}) & Nonempty two- or three-date region; possible beta-sensitive flip & Parameter ranking, frequency, or longer-horizon law \\
     Finite deterministic search (Section \ref{sec:single-valley-limit}) & Exact counterexample to a universal valley conjecture inside a declared grid & Probability, expected return, or exhaustive continuous-domain ranking \\
     Model-general identity (Section \ref{thm:cash-timing}) & Cash-timing equality for any fully funded common-deposit strategies & A favorable sign or score attribution \\
     Conditional mechanism theorem (Section \ref{thm:cash-single-crossing}) & Cash single crossing under sufficient reference-aligned floor feedback & Necessity or terminal-wealth order \\
     Realized-ledger theorem (Section \ref{thm:terminal-inventory}) & Exact $H_T+P U_T$ classification at every finite horizon & Price-only, universal, or expected-performance conclusion \\
     Stochastic questions (Chapters \ref{ch:synthetic-results}--\ref{ch:historical-results}) & Later distributional sensitivity under a declared sampling design & Retrospective reinterpretation of deterministic theorems \\
-    \hline
+    \bottomrule
   \end{tabular}
   \caption{Scope map for the finite and arbitrary-horizon evidence.}
   \label{tab:theorem-scope}
@@ -3812,15 +3820,15 @@ Table \ref{tab:appendix-three-beta-witness}.
 
 \begin{table}[htbp]
   \centering
-  \fontsize{9}{11}\selectfont
+  \singlespacing\fontsize{9}{11}\selectfont
   \renewcommand{\arraystretch}{1.15}
   \begin{tabular}{c c c c c c c}
-    \hline
-    $\beta$ & $R_2$ & $b_\beta$ & $b_3^c$ & $c_\beta$ & $T_\beta$ & $W_3^c-W_3^D$ \\
-    \hline
+    \toprule
+    \textbf{$\beta$} & \textbf{$R_2$} & \textbf{$b_\beta$} & \textbf{$b_3^c$} & \textbf{$c_\beta$} & \textbf{$T_\beta$} & \textbf{$W_3^c-W_3^D$} \\
+    \midrule
     $-1$ & $8/5$ & $4/9$ & $23/24$ & $25/24$ & $25/22$ & $-1/36$ \\
     $1$ & $5/2$ & $5/9$ & $7/6$ & $5/6$ & $20/17$ & $1/144$ \\
-    \hline
+    \bottomrule
   \end{tabular}
   \caption{Exact beta-sensitive three-purchase witness.}
   \label{tab:appendix-three-beta-witness}
@@ -4070,19 +4078,19 @@ Table \ref{tab:protocol-grid} lists the frozen execution grid.
 
 \begin{table}[htbp]
   \centering
-  \fontsize{9}{11}\selectfont
+  \singlespacing\fontsize{9}{11}\selectfont
   \renewcommand{\arraystretch}{1.14}
   \begin{tabular}{L{0.20\textwidth}L{0.32\textwidth}L{0.37\textwidth}}
-    \hline
-    Axis & Primary & Outside the confirmatory family \\
-    \hline
+    \toprule
+    \textbf{Axis} & \textbf{Primary} & \textbf{Outside the confirmatory family} \\
+    \midrule
     Policies & DCA, neutral guarded, corrected guarded & Same policies; no outcome-selected replacement \\
     Coverage & $1,0.9,0.75,0.5$ & $0.99,0.95,0.8,0.6,0.25$ robustness \\
     Corrected mean & identity, $\alpha=0$, $\beta=0$, equal weights & Four declared alternate configurations, currently unexecuted \\
     Historical horizons & Monthly 12, 36, 60 months & Quarterly 6, 24, 120 months \\
     Costs & Frictionless for H1/H2 & Proportional 10 bps and fixed USD 1 \\
     Comparisons & $c$ versus $D$; $c$ versus $0$ & $0$ versus $D$ is secondary; all extension rows descriptive \\
-    \hline
+    \bottomrule
   \end{tabular}
   \caption{Frozen empirical execution axes and their inferential boundary.}
   \label{tab:protocol-grid}
@@ -4235,17 +4243,17 @@ Table \ref{tab:artifact-inventory} separates the retained artifact layers.
 
 \begin{table}[htbp]
   \centering
-  \fontsize{9}{11}\selectfont
+  \singlespacing\fontsize{9}{11}\selectfont
   \renewcommand{\arraystretch}{1.13}
   \begin{tabular}{L{0.19\textwidth}L{0.31\textwidth}L{0.39\textwidth}}
-    \hline
-    Layer & Repository authority & Identity and retention rule \\
-    \hline
+    \toprule
+    \textbf{Layer} & \textbf{Repository authority} & \textbf{Identity and retention rule} \\
+    \midrule
     Protocol & \path{experiments/protocols} & Accepted bytes never change; a revision receives a new protocol identity. \\
     Input or receipt & \path{experiments/inputs} & Runner inputs are versioned; restricted source bytes publish only sanitized fingerprints and metadata. \\
     Run bundle & \path{reports/experiments/runs} & Content-derived identity binds code, protocol, and input; collision prevents overwrite. \\
     Narrative report & \path{reports/experiments} & Revisable; keeps artifact links and publication state accurate without replacing machine artifacts. \\
-    \hline
+    \bottomrule
   \end{tabular}
   \caption{Four versioned artifact layers and their distinct identity and retention rules.}
   \label{tab:artifact-inventory}

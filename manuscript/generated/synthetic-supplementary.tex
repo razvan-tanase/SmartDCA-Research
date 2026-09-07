@@ -5,119 +5,151 @@
 \section{Complete Deterministic Catalog Summaries}
 \label{sec:supp-deterministic}
 \begin{table}[!htbp]
-  \centering\fontsize{9}{11}\selectfont\singlespacing
+  \centering\singlespacing
+  \setlength{\tabcolsep}{3pt}
+  \renewcommand{\arraystretch}{1.16}\fontsize{9}{11}\selectfont
 
-  \renewcommand{\arraystretch}{1.10}
-  \begin{tabularx}{\textwidth}{r>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}Xrrr}
-    \hline
-    Coverage & Comparison & Minimum & Maximum & \multicolumn{2}{c}{Loss / tie / win} \\
-    \hline
+  \begin{tabular}{>{\raggedleft\arraybackslash}p{\dimexpr0.14\textwidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.26\textwidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.17\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.17\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.13\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.13\textwidth-2\tabcolsep\relax}}
+    \toprule
+    \textbf{Coverage} & \textbf{Comparison} & \textbf{Minimum} & \textbf{Maximum} & \multicolumn{2}{c}{\textbf{Loss / tie / win}} \\
+    \midrule
     0.9 & Corrected--DCA & -1.991\% & +10.824\% & \multicolumn{2}{c}{9 / 2 / 7} \\
+    \addlinespace[2pt]
     0.9 & Corrected--neutral & -1.005\% & +2.073\% & \multicolumn{2}{c}{5 / 2 / 11} \\
+    \addlinespace[2pt]
     0.9 & Neutral--DCA & -1.810\% & +11.949\% & \multicolumn{2}{c}{12 / 2 / 4} \\
+    \addlinespace[4pt]
     0.75 & Corrected--DCA & -4.978\% & +26.105\% & \multicolumn{2}{c}{9 / 2 / 7} \\
+    \addlinespace[2pt]
     0.75 & Corrected--neutral & -2.901\% & +3.516\% & \multicolumn{2}{c}{5 / 2 / 11} \\
+    \addlinespace[2pt]
     0.75 & Neutral--DCA & -4.526\% & +29.873\% & \multicolumn{2}{c}{12 / 2 / 4} \\
+    \addlinespace[4pt]
     0.5 & Corrected--DCA & -8.565\% & +34.880\% & \multicolumn{2}{c}{10 / 2 / 6} \\
+    \addlinespace[2pt]
     0.5 & Corrected--neutral & -5.577\% & +5.108\% & \multicolumn{2}{c}{4 / 2 / 12} \\
+    \addlinespace[2pt]
     0.5 & Neutral--DCA & -7.508\% & +42.846\% & \multicolumn{2}{c}{11 / 2 / 5} \\
-    \hline
-  \end{tabularx}
+    \bottomrule
+  \end{tabular}
   \caption{Frictionless ranges and exact sign counts over all 18 fixed paths in the accepted deterministic catalog, including fourteen primary families, three boundary regressions, and one retained design iteration. Every row uses the frozen identity corrected mean; counts are finite catalog descriptions, not estimates of a path distribution.}
   \label{tab:deterministic-coverage-ranges}
 \end{table}
 
-
 \begin{table}[!htbp]
-  \centering\fontsize{9}{11}\selectfont\singlespacing
+  \centering\singlespacing
+  \setlength{\tabcolsep}{3pt}
+  \renewcommand{\arraystretch}{1.16}\fontsize{9}{11}\selectfont
 
-  \renewcommand{\arraystretch}{1.10}
-  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}Xrrr}
-    \hline
-    \shortstack[r]{Cost\\scope} & Comparison & Minimum & Maximum & \shortstack[r]{Loss\\/\\tie\\/\\win} \\
-    \hline
+  \begin{tabular}{>{\raggedright\arraybackslash}p{\dimexpr0.22\textwidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.24\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.17\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.17\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.2\textwidth-2\tabcolsep\relax}}
+    \toprule
+    \textbf{Cost scope} & \textbf{Comparison} & \textbf{Minimum} & \textbf{Maximum} & \textbf{Loss / tie / win} \\
+    \midrule
     Frictionless & Corrected--DCA & -4.978\% & +26.105\% & 9 / 2 / 7 \\
+    \addlinespace[2pt]
     Frictionless & Corrected--neutral & -2.901\% & +3.516\% & 5 / 2 / 11 \\
+    \addlinespace[2pt]
     Frictionless & Neutral--DCA & -4.526\% & +29.873\% & 12 / 2 / 4 \\
+    \addlinespace[4pt]
     Proportional 10 bps & Corrected--DCA & -4.965\% & +26.125\% & 9 / 0 / 9 \\
+    \addlinespace[2pt]
     Proportional 10 bps & Corrected--neutral & -2.903\% & +3.515\% & 5 / 2 / 11 \\
+    \addlinespace[2pt]
     Proportional 10 bps & Neutral--DCA & -4.515\% & +29.897\% & 12 / 0 / 6 \\
+    \addlinespace[4pt]
     Fixed USD 1 & Corrected--DCA & -4.979\% & +26.122\% & 9 / 2 / 7 \\
+    \addlinespace[2pt]
     Fixed USD 1 & Corrected--neutral & -2.893\% & +3.515\% & 5 / 2 / 11 \\
+    \addlinespace[2pt]
     Fixed USD 1 & Neutral--DCA & -4.527\% & +29.880\% & 12 / 2 / 4 \\
-    \hline
-  \end{tabularx}
+    \bottomrule
+  \end{tabular}
   \caption{Net-of-cost range sensitivity at $\lambda=0.75$ over the same 18 fixed deterministic paths. The frictionless row is theorem-compatible finite validation. The proportional and fixed-fee rows are empirical net-performance calculations outside the current epsilon-DCA theorem; no frictional safety guarantee is asserted.}
   \label{tab:deterministic-cost-ranges}
 \end{table}
-
 
 \clearpage
 \section{Seeded-Stochastic Sensitivities and Validation}
 \label{sec:supp-stochastic}
 \begin{table}[!htbp]
-  \centering\fontsize{9}{11}\selectfont\singlespacing
+  \centering\singlespacing
+  \setlength{\tabcolsep}{3pt}
+  \renewcommand{\arraystretch}{1.16}\fontsize{9}{11}\selectfont
 
-  \setlength{\tabcolsep}{2.4pt}
-  \renewcommand{\arraystretch}{1.12}
-  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}Xrrrrr}
-    \hline
-    Sensitivity & Comparison & $N$ & Median & \shortstack[r]{Seed\\range} & \shortstack[r]{5\%\\downside} & Worst \\
-    \hline
+  \begin{tabular}{>{\raggedright\arraybackslash}p{\dimexpr0.19\textwidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.115\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.05\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.125\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.26\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.135\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.125\textwidth-2\tabcolsep\relax}}
+    \toprule
+    \textbf{Sensitivity} & \textbf{Policy pair} & \textbf{$N$} & \textbf{Median} & \textbf{Seed range} & \textbf{5\% downside} & \textbf{Worst} \\
+    \midrule
     Negative trend & C--D & 3 & +0.659\% & [+0.631\%, +0.861\%] & +0.633\% & 0.000\% \\
+    \addlinespace[2pt]
     Negative trend & C--N & 3 & -0.037\% & [-0.090\%, -0.015\%] & -0.085\% & 0.090\% \\
+    \addlinespace[2pt]
     Negative trend & N--D & 3 & +0.674\% & [+0.668\%, +0.951\%] & +0.668\% & 0.000\% \\
+    \addlinespace[4pt]
     Faster mean reversion & C--D & 3 & +0.365\% & [+0.228\%, +0.585\%] & +0.242\% & 0.000\% \\
+    \addlinespace[2pt]
     Faster mean reversion & C--N & 3 & +0.275\% & [+0.221\%, +0.319\%] & +0.227\% & 0.000\% \\
+    \addlinespace[2pt]
     Faster mean reversion & N--D & 3 & +0.090\% & [-0.091\%, +0.363\%] & -0.073\% & 0.091\% \\
+    \addlinespace[4pt]
     Higher volatility & C--D & 3 & -0.021\% & [-0.174\%, +1.469\%] & -0.159\% & 0.174\% \\
+    \addlinespace[2pt]
     Higher volatility & C--N & 3 & +0.252\% & [-0.100\%, +0.366\%] & -0.065\% & 0.100\% \\
+    \addlinespace[2pt]
     Higher volatility & N--D & 3 & -0.272\% & [-0.538\%, +1.570\%] & -0.512\% & 0.538\% \\
+    \addlinespace[4pt]
     Persistent bear regime & C--D & 3 & +0.711\% & [-0.466\%, +0.736\%] & -0.348\% & 0.466\% \\
+    \addlinespace[2pt]
     Persistent bear regime & C--N & 3 & +0.063\% & [-0.040\%, +0.158\%] & -0.030\% & 0.040\% \\
+    \addlinespace[2pt]
     Persistent bear regime & N--D & 3 & +0.577\% & [-0.528\%, +0.752\%] & -0.418\% & 0.528\% \\
+    \addlinespace[4pt]
     More frequent jumps & C--D & 3 & +0.080\% & [-0.033\%, +0.850\%] & -0.021\% & 0.033\% \\
+    \addlinespace[2pt]
     More frequent jumps & C--N & 3 & -0.009\% & [-0.145\%, +0.035\%] & -0.131\% & 0.145\% \\
+    \addlinespace[2pt]
     More frequent jumps & N--D & 3 & +0.045\% & [-0.024\%, +0.997\%] & -0.017\% & 0.024\% \\
-    \hline
-  \end{tabularx}
+    \bottomrule
+  \end{tabular}
   \caption{Exploratory stochastic sensitivities at the 60-month, frictionless, $\lambda=0.75$ slice with the frozen identity corrected mean. Each sensitivity--comparison row has $N=3$ saved paths, one per seed, and remains separate from its primary family. C--D is corrected guarded versus DCA, C--N is corrected guarded versus neutral guarded, and N--D is neutral guarded versus DCA. Each percentage uses its named right-hand policy as denominator. Seed range is the minimum-to-maximum interval across the same three saved gaps; the linearly interpolated 5\% value is a compact descriptive downside summary rather than a tail estimate. Worst is the largest observed relative shortfall and is zero when all three gaps are nonnegative. The five sensitivities are controlled process changes, not replacements selected after outcome access and not a pooled inferential sample.}
   \label{tab:stochastic-sensitivity}
 \end{table}
 
-
 \begin{table}[!htbp]
-  \centering\fontsize{9}{11}\selectfont\singlespacing
+  \centering\singlespacing
+  \setlength{\tabcolsep}{3pt}
+  \renewcommand{\arraystretch}{1.16}\fontsize{9}{11}\selectfont
 
-  \renewcommand{\arraystretch}{1.10}
-  \begin{tabular}{rrrrr}
-    \hline
-    Coverage & \shortstack[r]{Floor-active\\range} & \shortstack[r]{Cash-drag\\range} & \shortstack[r]{Asset-exposure\\range} & \shortstack[r]{C--D\\median\\range} \\
-    \hline
+  \begin{tabular}{>{\raggedleft\arraybackslash}p{\dimexpr0.12\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.21\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.2\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.22\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.25\textwidth-2\tabcolsep\relax}}
+    \toprule
+    \textbf{Coverage} & \textbf{Floor-active range} & \textbf{Cash-drag range} & \textbf{Asset-exposure range} & \textbf{C--D median range} \\
+    \midrule
     0.9 & 30.0\%--31.7\% & 1.5\%--1.9\% & 98.3\%--98.4\% & -0.637\%--+0.204\% \\
+    \addlinespace[4pt]
     0.75 & 10.6\%--11.1\% & 1.5\%--1.9\% & 98.3\%--98.4\% & -0.773\%--+0.115\% \\
+    \addlinespace[4pt]
     0.5 & 3.9\%--3.9\% & 1.5\%--1.9\% & 98.3\%--98.4\% & -0.800\%--+0.158\% \\
-    \hline
+    \bottomrule
   \end{tabular}
   \caption{Safety-factor diagnostics across the five primary 60-month stochastic families under the frozen identity corrected mean and frictionless costs. Each range is over five family summaries, each based on the same three saved seeds. Floor active is the mean share of 60 purchase dates at which the corrected guarded policy's clipped floor binds; cash drag is its terminal cash divided by total deposits; and asset exposure is its terminal asset value divided by terminal wealth. C--D is the corrected guarded versus DCA median relative terminal-wealth gap, with DCA as denominator. Lower coverage reduced observed floor activation in this grid, while the complete-system median range changed non-monotonically; the family summaries are not pooled into a new sample or test.}
   \label{tab:stochastic-coverage-diagnostics}
 \end{table}
 
-
 \begin{table}[!htbp]
-  \centering\fontsize{9}{11}\selectfont\singlespacing
+  \centering\singlespacing
+  \setlength{\tabcolsep}{3pt}
+  \renewcommand{\arraystretch}{1.16}\fontsize{9}{11}\selectfont
 
-  \renewcommand{\arraystretch}{1.12}
-  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xrrrr>{\raggedright\arraybackslash}X}
-    \hline
-    Layer & \shortstack[r]{Attempted\\paths} & Generated & Excluded & \shortstack[r]{Ledgers\\/\\comparisons} & \shortstack[r]{Declared\\role} \\
-    \hline
+  \begin{tabular}{>{\raggedright\arraybackslash}p{\dimexpr0.2\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.13\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.13\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.12\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.19\textwidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.23\textwidth-2\tabcolsep\relax}}
+    \toprule
+    \textbf{Layer} & \textbf{Attempted paths} & \textbf{Generated} & \textbf{Excluded} & \textbf{Ledgers / comparisons} & \textbf{Declared role} \\
+    \midrule
     Deterministic & 21 & 18 & 3 & 648 / 648 & finite catalog and exact regressions \\
+    \addlinespace[4pt]
     Seeded stochastic & 90 & 90 & 0 & 3240 / 3240 & controlled three-seed sensitivity \\
-    \hline
-  \end{tabularx}
+    \bottomrule
+  \end{tabular}
   \caption{Accepted synthetic evidence inventory. Deterministic exclusions are three typed pre-policy input or predicate rejections; the stochastic run has none. Ledgers and three ordered comparison rows share the same counts because each scenario executes three policies and emits the three declared comparisons. Counts remain within their layer and are never combined into a significance claim.}
   \label{tab:synthetic-validation-inventory}
 \end{table}
-
 \clearpage

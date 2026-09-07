@@ -55,6 +55,14 @@ submission candidate.
   and
   [`reproducibility/historical_evaluation_assets.py`](../reproducibility/historical_evaluation_assets.py).
 
+Generated tables use unscaled 9-point type, content-specific column widths,
+bold aligned headings, and spaced rows. The presentation-only width registry
+in [`reproducibility/manuscript_table_layout.py`](../reproducibility/manuscript_table_layout.py)
+is applied by both asset generators; change it and regenerate the fragments
+instead of editing generated TeX. Table captions and rules are styled in the
+thesis preamble. Check the rendered pages as well as the warning-free build
+when changing a layout, and preserve the accepted data and captions.
+
 ## Draft build
 
 Identity-bound empirical regeneration and the supported focused suite require

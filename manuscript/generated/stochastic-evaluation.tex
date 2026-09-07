@@ -3,31 +3,45 @@
 % Accepted source artifact SHA-256: 06aca2d1c1de2d26088d0e4228889c0f8c11095aa505e9037babfb5697f75c28
 
 \begin{table}[!htbp]
-  \centering\fontsize{9}{11}\selectfont\singlespacing
+  \centering\singlespacing
+  \setlength{\tabcolsep}{3pt}
+  \renewcommand{\arraystretch}{1.16}\fontsize{9}{11}\selectfont
 
-  \setlength{\tabcolsep}{2.4pt}
-  \renewcommand{\arraystretch}{1.12}
-  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}Xrrrrr}
-    \hline
-    Family & Comparison & $N$ & Median & \shortstack[r]{Seed\\range} & \shortstack[r]{5\%\\downside} & Worst \\
-    \hline
+  \begin{tabular}{>{\raggedright\arraybackslash}p{\dimexpr0.19\textwidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.115\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.05\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.125\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.26\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.135\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.125\textwidth-2\tabcolsep\relax}}
+    \toprule
+    \textbf{Family} & \textbf{Policy pair} & \textbf{$N$} & \textbf{Median} & \textbf{Seed range} & \textbf{5\% downside} & \textbf{Worst} \\
+    \midrule
     Trend & C--D & 3 & -0.269\% & [-0.273\%, -0.070\%] & -0.273\% & 0.273\% \\
+    \addlinespace[2pt]
     Trend & C--N & 3 & +0.043\% & [+0.036\%, +0.047\%] & +0.037\% & 0.000\% \\
+    \addlinespace[2pt]
     Trend & N--D & 3 & -0.316\% & [-0.316\%, -0.106\%] & -0.316\% & 0.316\% \\
+    \addlinespace[4pt]
     Mean reversion & C--D & 3 & +0.111\% & [+0.095\%, +0.442\%] & +0.097\% & 0.000\% \\
+    \addlinespace[2pt]
     Mean reversion & C--N & 3 & +0.071\% & [+0.033\%, +0.084\%] & +0.037\% & 0.000\% \\
+    \addlinespace[2pt]
     Mean reversion & N--D & 3 & +0.040\% & [+0.012\%, +0.409\%] & +0.014\% & 0.000\% \\
+    \addlinespace[4pt]
     Stochastic volatility & C--D & 3 & -0.491\% & [-0.590\%, +0.348\%] & -0.580\% & 0.590\% \\
+    \addlinespace[2pt]
     Stochastic volatility & C--N & 3 & +0.022\% & [+0.007\%, +0.066\%] & +0.009\% & 0.000\% \\
+    \addlinespace[2pt]
     Stochastic volatility & N--D & 3 & -0.498\% & [-0.612\%, +0.282\%] & -0.601\% & 0.612\% \\
+    \addlinespace[4pt]
     Regime switching & C--D & 3 & -0.773\% & [-0.895\%, +0.169\%] & -0.883\% & 0.895\% \\
+    \addlinespace[2pt]
     Regime switching & C--N & 3 & -0.029\% & [-0.064\%, +0.068\%] & -0.060\% & 0.064\% \\
+    \addlinespace[2pt]
     Regime switching & N--D & 3 & -0.745\% & [-0.832\%, +0.101\%] & -0.823\% & 0.832\% \\
+    \addlinespace[4pt]
     Jump diffusion & C--D & 3 & +0.115\% & [-0.128\%, +0.595\%] & -0.103\% & 0.128\% \\
+    \addlinespace[2pt]
     Jump diffusion & C--N & 3 & +0.020\% & [+0.017\%, +0.065\%] & +0.017\% & 0.000\% \\
+    \addlinespace[2pt]
     Jump diffusion & N--D & 3 & +0.095\% & [-0.193\%, +0.578\%] & -0.164\% & 0.193\% \\
-    \hline
-  \end{tabularx}
+    \bottomrule
+  \end{tabular}
   \caption{Primary seeded-stochastic 60-month frictionless slice at $\lambda=0.75$ and the frozen identity corrected mean. Each family--comparison row has $N=3$ saved paths, one per seed. C--D is corrected guarded versus DCA, C--N is corrected guarded versus neutral guarded, and N--D is neutral guarded versus DCA. Each percentage uses its named right-hand policy as denominator. Seed range is the minimum-to-maximum interval across the same three saved gaps; the linearly interpolated 5\% value is a compact descriptive downside summary rather than a tail estimate. Worst is the largest observed relative shortfall and is zero when all three gaps are nonnegative. The five controlled families are not calibrated market populations and do not support a win probability, expected return, or significance claim.}
   \label{tab:stochastic-primary}
 \end{table}
