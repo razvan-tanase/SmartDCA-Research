@@ -276,7 +276,8 @@ class ManuscriptBuildTests(unittest.TestCase):
             )
             self.assertIn("Appendix", normalized_text)
             self.assertIn("BIBLIOGRAPHY", normalized_text)
-            self.assertIn("Originality declaration placeholder", normalized_text)
+            self.assertNotIn("Originality declaration placeholder", normalized_text)
+            self.assertNotIn("Institutional status", normalized_text)
             first_page = text.split("\f", 1)[0]
             first_page_upper = first_page.upper()
             for cover_line in (
@@ -291,7 +292,7 @@ class ManuscriptBuildTests(unittest.TestCase):
                 "RĂZVAN-ANDREI TĂNASE",
                 "THESIS ADVISOR:",
                 "BUCHAREST",
-                "2025",
+                "2026",
             ):
                 self.assertIn(cover_line, first_page_upper)
             self.assertNotIn("LUCRARE DE DISERTA", normalized_upper)
@@ -329,9 +330,9 @@ class ManuscriptBuildTests(unittest.TestCase):
             self.assertIn(
                 "COMPUTER SCIENCE AND ENGINEERING DEPARTMENT", normalized_upper
             )
-            self.assertIn("public presentation and defense", normalized_text)
-            self.assertIn("online hand-in", normalized_text)
-            self.assertIn("similarity review", normalized_text)
+            self.assertNotIn("public presentation and defense", normalized_text)
+            self.assertNotIn("online hand-in", normalized_text)
+            self.assertNotIn("similarity review", normalized_text)
             self.assertGreaterEqual(normalized_text.count("Figure 4.1"), 2)
             self.assertGreaterEqual(normalized_text.count("Figure 7.1"), 2)
             self.assertGreaterEqual(normalized_text.count("Figure 7.2"), 2)
