@@ -91,6 +91,40 @@ Run the control check directly with:
 python manuscript/check_controls.py
 ```
 
+## Portable LaTeX editor project
+
+For an editor such as Overleaf, export a complete uploadable project:
+
+```bash
+python manuscript/export_latex.py
+```
+
+Upload `manuscript/build/smartdca-thesis-latex.zip` as a new project, select
+`thesis.tex` as the main document, and use pdfLaTeX. The ZIP contains the cover
+images, all nine included TeX fragments, and the bibliography. Paths are
+relocated only in the exported thesis; the retained inputs remain unchanged.
+The Verification workflow also provides the ZIP as the
+`smartdca-thesis-latex` artifact.
+
+Downloading only `source/thesis.tex` or `source/` is insufficient: it omits
+the sibling `generated/` and `bibliography/` directories. This causes
+`File '../generated/policy-architecture.tex' not found` and interrupts the
+first LaTeX pass, leaving citations and cross-references unresolved.
+
+For a local build of the extracted ZIP, run `latexmk -pdf -bibtex thesis.tex`
+from the extracted directory. The same command works from `manuscript/source/`
+in a complete checkout: its `latexmkrc` supplies an absolute bibliography search
+path, including when output goes to another directory. In the extracted ZIP,
+without latexmk, run `pdflatex thesis.tex`,
+`bibtex thesis`, and then `pdflatex thesis.tex` twice. The first pass may report
+undefined references; inspect the final pass after BibTeX and the reruns.
+If an editor retains auxiliary files from the failed upload, recompile from
+scratch after uploading the complete project.
+
+The portable project is a derived editing convenience. Use the canonical
+Python build for evidence validation and the integrated review package below
+for provenance and submission-gate results.
+
 ## Clean-environment build
 
 With Docker available, one command builds the dated Debian/TeX environment and
