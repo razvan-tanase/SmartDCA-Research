@@ -1,0 +1,9 @@
+# Keep plain latexmk builds independent of the Python builder's environment
+# and of the output directory in which latexmk invokes BibTeX.
+use Cwd qw(abs_path);
+use File::Basename qw(dirname);
+use File::Spec;
+
+my $bibliography = File::Spec->catdir(dirname(abs_path(__FILE__)), '..', 'bibliography');
+my $separator = $^O eq 'MSWin32' ? ';' : ':';
+$ENV{'BIBINPUTS'} = $bibliography . $separator . ($ENV{'BIBINPUTS'} // '');

@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import json
+import os
+import shutil
 import subprocess
 import sys
 import tempfile
 import unittest
 import xml.etree.ElementTree as ET
+import zipfile
 from pathlib import Path
 
 
@@ -15,6 +18,45 @@ BUILDER = MANUSCRIPT_ROOT / "build.py"
 
 
 class ManuscriptBuildTests(unittest.TestCase):
+    def assert_plain_latex_build(self, directory: Path) -> None:
+        environment = os.environ.copy()
+        for variable in ("BIBINPUTS", "TEXINPUTS", "BSTINPUTS"):
+            environment.pop(variable, None)
+        build = subprocess.run(
+            ["latexmk", "-pdf", "-bibtex", "-interaction=nonstopmode",
+             "-halt-on-error", "thesis.tex"],
+            cwd=directory, env=environment, capture_output=True, text=True,
+        )
+        self.assertEqual(build.returncode, 0, build.stdout + build.stderr)
+        self.assertTrue((directory / "thesis.pdf").is_file())
+        log = (directory / "thesis.log").read_text()
+        self.assertNotRegex(
+            log, r"(?mi)^.*warning[: ]|^!|^Missing character:|^(?:Overfull|Underfull) \\[hv]box",
+        )
+        self.assertNotIn("Warning--", (directory / "thesis.blg").read_text())
+
+    def test_source_builds_without_python_bibliography_environment(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            for name in ("source", "generated", "bibliography"):
+                shutil.copytree(MANUSCRIPT_ROOT / name, root / name)
+            self.assert_plain_latex_build(root / "source")
+
+    def test_portable_latex_export_builds_without_repository(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            archive = root / "thesis-latex.zip"
+            export = subprocess.run(
+                [sys.executable, str(MANUSCRIPT_ROOT / "export_latex.py"),
+                 "--output", str(archive)],
+                cwd=root, capture_output=True, text=True,
+            )
+            self.assertEqual(export.returncode, 0, export.stdout + export.stderr)
+            project = root / "uploaded-project"
+            with zipfile.ZipFile(archive) as stream:
+                stream.extractall(project)
+            self.assert_plain_latex_build(project)
+
     def test_invalid_controls_stop_build_before_latex(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)

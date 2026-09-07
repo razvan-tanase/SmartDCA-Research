@@ -54,6 +54,14 @@ jobs:
             echo "Expected the integrated draft to fail closed with status 1."
             exit 1
           fi
+      - name: Export the portable LaTeX editor project
+        run: python3 manuscript/export_latex.py
+      - name: Retain the portable LaTeX editor project
+        uses: actions/upload-artifact@v7
+        with:
+          name: smartdca-thesis-latex
+          path: manuscript/build/smartdca-thesis-latex.zip
+          if-no-files-found: error
       - name: Retain the integrated manuscript review package
         uses: actions/upload-artifact@v7
         with:
