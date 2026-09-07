@@ -15,7 +15,7 @@
       ],
       "manuscript_location": "ch:model-signal/def:corrected-mean",
       "display_labels": ["eq:corrected-mean-off-diagonal", "eq:corrected-mean-diagonal", "eq:corrected-bajraktarevic", "eq:appendix-corrected-power", "eq:appendix-corrected-diagonal-path", "eq:appendix-corrected-diagonal-limit", "eq:weighted-power-definition", "eq:corrected-power-weights", "eq:corrected-limit-weights"],
-      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-contributions", "ch:literature/sec:lit-integrative-synthesis", "sec:synopsis", "sec:abstract"],
+      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-contributions", "ch:literature/sec:lit-integrative-synthesis", "sec:abstract"],
       "citation_need": "Cite the source paper and primary Bajraktarevic-family literature beside the classification and novelty boundary.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -33,7 +33,7 @@
       ],
       "manuscript_location": "ch:model-signal/sec:comparison-model",
       "display_labels": ["eq:model-recursions", "eq:model-ledger", "eq:model-dca", "eq:model-terminal-wealth", "eq:model-dca-gap"],
-      "restatement_locations": ["ch:introduction", "ch:conclusion/sec:conclusion-answers", "sec:synopsis", "sec:abstract"],
+      "restatement_locations": ["ch:introduction", "ch:conclusion/sec:conclusion-answers", "sec:abstract"],
       "citation_need": "Repository-derived model claim; cite external DCA or no-arbitrage literature only where the chapter makes a positioning claim.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -73,7 +73,7 @@
       "citation_keys": ["calvet2023smartdca"],
       "manuscript_location": "ch:model-signal/sec:corrected-signal",
       "display_labels": ["eq:corrected-reference", "eq:corrected-score"],
-      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-answers", "ch:literature/sec:lit-integrative-synthesis", "sec:synopsis", "sec:abstract"],
+      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-answers", "ch:literature/sec:lit-integrative-synthesis", "sec:abstract"],
       "citation_need": "Cite the source only for inherited score-parameter semantics; attribute currency invariance, lagging, odds calibration, and claim limits to project evidence.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -91,7 +91,7 @@
       ],
       "manuscript_location": "ch:safety/def:guarded-policy",
       "display_labels": ["eq:guarded-policy-score", "eq:complete-guarded-policy", "eq:guarded-policy-funding", "eq:guarded-cushion-recursion", "eq:guarded-policy-safety"],
-      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-answers", "ch:literature/sec:lit-integrative-synthesis", "sec:synopsis", "sec:abstract"],
+      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-answers", "ch:literature/sec:lit-integrative-synthesis", "sec:abstract"],
       "citation_need": "Cite the corrected-mean and guardrail authorities; attribute source-score semantics where discussed.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -144,7 +144,7 @@
       "citation_keys": ["burzoni2019"],
       "manuscript_location": "ch:safety/thm:dca-impossibility",
       "display_labels": ["eq:impossibility-wealth", "eq:universal-dca-dominance", "eq:impossibility-collapse", "eq:impossibility-adverse-gap", "eq:appendix-dca-gap", "eq:appendix-prefix-funding", "eq:appendix-impossibility-induction-gap", "eq:proof-terminal-ledger", "eq:proof-first-adverse-gap"],
-      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "ch:literature/sec:lit-integrative-synthesis", "sec:synopsis", "sec:abstract"],
+      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "ch:literature/sec:lit-integrative-synthesis", "sec:abstract"],
       "citation_need": "Cite the bounded novelty review and relevant robust-portfolio literature without claiming exhaustive novelty.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -163,7 +163,7 @@
       "citation_keys": ["blackperold1992", "grossmanzhou1993", "conttankov2009"],
       "manuscript_location": "ch:safety/thm:epsilon-guardrail",
       "display_labels": ["eq:epsilon-dca-safety", "eq:guardrail-state", "eq:guardrail-floor", "eq:guardrail-feasibility", "eq:guardrail-interface", "eq:guardrail-sufficiency", "eq:boundary-safety-reminder", "eq:appendix-coverage-sufficient", "eq:appendix-prefix-deficit-bound", "eq:appendix-coverage-update", "eq:appendix-exact-safety-factor", "eq:proof-unit-deficit", "eq:proof-expensive-continuation", "eq:proof-local-floor", "eq:proof-selector-recovery", "eq:proof-worst-case-factor", "eq:proof-floor-sharpness"],
-      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "ch:literature/sec:lit-integrative-synthesis", "sec:synopsis", "sec:abstract"],
+      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "ch:literature/sec:lit-integrative-synthesis", "sec:abstract"],
       "citation_need": "Cite the bounded prior-art review and keep the DCA-specific result distinct from broader portfolio-insurance concepts.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -181,7 +181,7 @@
       ],
       "manuscript_location": "ch:boundaries/thm:two-purchase",
       "display_labels": ["eq:two-purchase-ratios", "eq:two-purchase-components", "eq:two-purchase-boundary", "eq:two-purchase-win-region", "eq:two-purchase-neutral-difference", "eq:appendix-two-first-state", "eq:appendix-two-floor", "eq:appendix-two-gap", "eq:appendix-two-extended-threshold", "eq:appendix-two-flip"],
-      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-answers", "sec:synopsis", "sec:abstract"],
+      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-answers", "sec:abstract"],
       "citation_need": "Internal theorem citation; external citation only for contextual comparison.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -199,7 +199,7 @@
       ],
       "manuscript_location": "ch:boundaries/thm:three-purchase",
       "display_labels": ["eq:three-purchase-components", "eq:three-purchase-boundary", "eq:three-purchase-threshold", "eq:three-purchase-witness-inputs", "eq:appendix-three-reference", "eq:appendix-three-score", "eq:appendix-three-common-state"],
-      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-answers", "sec:synopsis", "sec:abstract"],
+      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-answers", "sec:abstract"],
       "citation_need": "Internal theorem citation; do not attach a general empirical interpretation to the witness.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -252,7 +252,7 @@
       ],
       "manuscript_location": "ch:boundaries/thm:terminal-inventory",
       "display_labels": ["eq:terminal-inventory-components", "eq:terminal-inventory-boundary", "eq:unit-gap-from-cash", "eq:valley-exposures", "eq:valley-terminal-boundary", "eq:appendix-affine-cash-route", "eq:appendix-aligned-win-ledger", "eq:affine-strict-wins", "eq:affine-strict-losses"],
-      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-answers", "sec:synopsis", "sec:abstract"],
+      "restatement_locations": ["ch:introduction/sec:introduction-route", "ch:conclusion/sec:conclusion-answers", "sec:abstract"],
       "citation_need": "Internal theorem and review citations; no stochastic language.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -375,7 +375,7 @@
         {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:historical-results/sec:primary-complete-system",
-      "restatement_locations": ["ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "sec:synopsis", "sec:abstract"],
+      "restatement_locations": ["ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "sec:abstract"],
       "citation_need": "Cite the protocol, provider semantics, immutable run, report, and audit beside the numerical statement.",
       "mandatory": true,
       "review_state": "accepted"
@@ -393,7 +393,7 @@
         {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
       ],
       "manuscript_location": "ch:historical-results/sec:primary-signal",
-      "restatement_locations": ["ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "sec:synopsis", "sec:abstract"],
+      "restatement_locations": ["ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "sec:abstract"],
       "citation_need": "Cite the protocol, run, report, and audit; retain the non-equivalence qualification.",
       "mandatory": true,
       "review_state": "accepted"
@@ -498,7 +498,7 @@
         {"role": "package-review", "path": "research/notes/safety-adaptivity-empirical-package-review.md"}
       ],
       "manuscript_location": "ch:methodology/sec:method-evidence-layers",
-      "restatement_locations": ["ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "sec:synopsis", "sec:abstract"],
+      "restatement_locations": ["ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "sec:abstract"],
       "citation_need": "Use each accepted report for its declared layer and the methodology literature for non-pooling and confirmatory-language limits.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -556,7 +556,7 @@
       "citation_keys": ["holm1979", "richardsonsmith1991overlap", "kunsch1989blockbootstrap", "politisromano1992circular", "hernanrobins2020"],
       "manuscript_location": "ch:methodology/sec:method-inference",
       "display_labels": ["eq:method-relative-gap", "eq:method-terminal-attribution", "eq:method-cell-seed", "eq:method-finite-p", "eq:method-holm"],
-      "restatement_locations": ["ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "sec:synopsis", "sec:abstract"],
+      "restatement_locations": ["ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "sec:abstract"],
       "citation_need": "Cite the original dependence and multiplicity methods for external positioning, and the protocol for the project-specific formulas and frozen block choice.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -691,7 +691,7 @@
         }
       ],
       "manuscript_location": "ch:discussion/sec:central-finding",
-      "restatement_locations": ["ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "ch:conclusion/sec:conclusion-limits", "sec:synopsis", "sec:abstract"],
+      "restatement_locations": ["ch:introduction/sec:introduction-questions", "ch:conclusion/sec:conclusion-answers", "ch:conclusion/sec:conclusion-limits", "sec:abstract"],
       "citation_need": "Cite the analytical theorems, synthesis run, and independent review at their respective clauses.",
       "mandatory": true,
       "review_state": "reviewed"
@@ -1899,7 +1899,7 @@
         }
       ],
       "manuscript_location": "ch:discussion/sec:discussion-limitations",
-      "restatement_locations": ["ch:introduction/sec:introduction-contributions", "ch:conclusion/sec:conclusion-limits", "sec:synopsis", "sec:abstract"],
+      "restatement_locations": ["ch:introduction/sec:introduction-contributions", "ch:conclusion/sec:conclusion-limits", "sec:abstract"],
       "citation_need": "Use the cited chapter and theorem cross-references and linked evidence authority at the corresponding clause.",
       "mandatory": true,
       "review_state": "reviewed",

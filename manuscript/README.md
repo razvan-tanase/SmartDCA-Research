@@ -13,11 +13,18 @@ the primary historical and separately registered robustness evaluation;
 Chapter 9 integrates the safety-adaptivity finding, contributions, limitations,
 and future-research boundary; and Appendices A--E retain detailed proofs,
 cases, protocols, artifact identities, generated result tables, and clean
-commands. The introduction, closing literature synthesis, conclusion, Romanian
-synopsis, and English abstract now connect those results through the approved
-research questions and contribution boundaries. The bilingual abstracts each
-remain below 200 words and share one page. The reproducible package command below assembles its source, PDF, evidence
-map, and supervisor brief. Ticket 14 remains open because its institutional
+commands. The introduction, closing literature synthesis, conclusion, and
+English abstract now connect those results through the approved research
+questions and contribution boundaries. The current source follows the
+candidate's requested English-only front matter: one English cover and one
+English abstract. The retained institutional contract still records the
+template's bilingual route, verified long-form institution identity, and
+unresolved current-brand evidence. The attached-reference cover intentionally
+uses its shorter institution line and supplied brand marks; that presentation
+choice remains subject to supervisor/faculty confirmation and stays a release
+blocker until confirmed. The reproducible package command below assembles its
+source, PDF, evidence map, and supervisor brief. Ticket 14 remains open because
+its institutional
 acceptance criteria are not met; this draft is not a review-candidate or
 submission candidate.
 
@@ -63,8 +70,10 @@ python manuscript/build.py
 ```
 
 The derived PDF is written to `manuscript/build/thesis.pdf`. It implements the
-template's bilingual cover/front-matter route, A4/25.4 mm layout, body spacing,
-and heading hierarchy. It renders all ten completed body chapters and five appendices. Before LaTeX starts, the build runs the architecture/evidence control
+current English-only cover/front-matter route requested for this draft, A4/25.4
+mm layout, body spacing, and heading hierarchy. It renders all ten completed
+body chapters and five appendices. Before LaTeX starts, the build runs the
+architecture/evidence control
 check and the DCA/adaptive/causal-safety, corrected-mean prior-theory, and
 reproducible computational-finance/statistical-method literature traceability
 checks, followed by the financial-model/corrected-signal and

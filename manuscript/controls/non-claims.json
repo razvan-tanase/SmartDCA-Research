@@ -18,7 +18,6 @@
         "ch:model-signal",
         "ch:conclusion",
         "ch:discussion",
-        "sec:synopsis",
         "sec:abstract"
       ],
       "mandatory": true,
@@ -42,7 +41,6 @@
         "ch:historical-results",
         "ch:discussion",
         "ch:conclusion",
-        "sec:synopsis",
         "sec:abstract"
       ],
       "mandatory": true,
@@ -63,7 +61,6 @@
         "ch:discussion",
         "ch:conclusion",
         "ch:introduction",
-        "sec:synopsis",
         "sec:abstract"
       ],
       "mandatory": true,
@@ -87,7 +84,6 @@
         "ch:discussion",
         "ch:introduction",
         "ch:conclusion",
-        "sec:synopsis",
         "sec:abstract"
       ],
       "mandatory": true,

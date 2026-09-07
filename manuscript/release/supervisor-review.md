@@ -15,7 +15,7 @@ retain while guaranteeing a comparison with same-deposit DCA?
 
 | Read | Purpose and boundary |
 |---|---|
-| Bilingual abstracts; Chapters 1 and 10 | Problem, three research questions, conservative answers, and contribution limits. |
+| English cover and abstract; Chapters 1 and 10 | Problem, three research questions, conservative answers, and contribution limits. |
 | Chapters 2–3 | Prior work, fair deposit accounting, source-functional correction, and the corrected mean's known Bajraktarević classification. |
 | Chapter 4; Appendix A | Universal causal dominance collapses to DCA; the sharp unit guardrail instead guarantees a chosen frictionless relative-wealth floor. |
 | Chapter 5; Appendix B | Exact realized wins and losses, cash timing, qualified floor feedback, and the terminal-cash/unit boundary. These are not predictions or win probabilities. |
@@ -62,6 +62,14 @@ The dated Docker route declares the environment; distribution package versions
 can evolve, so byte identity is claimed only when the recorded toolchain and
 source reproduce the same hashes. The PDF is intentionally unapproved while
 required personal, institutional, and supervisor evidence is absent.
+
+The current source follows the attached candidate reference for presentation:
+one English cover, one English abstract, the reference's shorter institution
+line, and the supplied UPB/Computer Science and Engineering marks. The frozen
+institutional contract still records the verified long-form identity, bilingual
+cover and synopsis route, and unresolved current-brand evidence. This delta is
+intentional for the requested draft, but it is not an approval or a waiver of
+those release requirements.
 
 ## Decisions requiring human judgment
 
