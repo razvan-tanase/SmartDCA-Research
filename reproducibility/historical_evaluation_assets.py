@@ -11,6 +11,11 @@ from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 from typing import Iterable
 
+if __package__:
+    from .manuscript_table_layout import format_manuscript_tables
+else:
+    from manuscript_table_layout import format_manuscript_tables
+
 
 PRIMARY_RUN_ID = (
     "smartdca-historical-study-v1-"
@@ -1315,7 +1320,7 @@ def generate_historical_evaluation_assets(
     output = output_directory.resolve()
     output.mkdir(parents=True, exist_ok=True)
     for asset_name in ASSET_NAMES:
-        (output / asset_name).write_text(assets[asset_name], encoding="utf-8")
+        (output / asset_name).write_text(format_manuscript_tables(assets[asset_name]), encoding="utf-8")
 
     return {
         "status": "passed",

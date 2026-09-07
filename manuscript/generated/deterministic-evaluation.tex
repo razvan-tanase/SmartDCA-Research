@@ -2,15 +2,14 @@
 % Accepted source run: smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db
 % Accepted source artifact SHA-256: 852dcb8b62be8ee80619d27695fba2fed5e308205ea8f78ac3127ab8bbb9c233
 
-\begin{table}[htbp]
-  \centering
-  \scriptsize
+\begin{table}[!htbp]
+  \centering\fontsize{9}{11}\selectfont\singlespacing
+
   \setlength{\tabcolsep}{2.8pt}
   \renewcommand{\arraystretch}{1.10}
-  \resizebox{\textwidth}{!}{%
-  \begin{tabular}{lrrrrrrr}
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xrrrrrrr}
     \hline
-    Family & Dates & C--D & C--N & N--D & Cash drag & Asset exposure & Floor active \\
+    Family & Dates & C--D & C--N & N--D & \shortstack[r]{Cash\\drag} & \shortstack[r]{Asset\\exposure} & \shortstack[r]{Floor\\active} \\
     \hline
     Constant & 4 & 0.000\% & 0.000\% & 0.000\% & 12.5\% & 87.5\% & 100.0\% \\
     Monotone rise & 5 & -4.712\% & -0.460\% & -4.271\% & 16.9\% & 87.8\% & 100.0\% \\
@@ -27,11 +26,11 @@
     Hostile carried cash & 5 & -4.978\% & -0.473\% & -4.526\% & 16.3\% & 88.6\% & 100.0\% \\
     Hostile adaptive timing & 6 & +26.105\% & -2.901\% & +29.873\% & 7.0\% & 80.4\% & 83.3\% \\
     \hline
-  \end{tabular}%
-  }
+  \end{tabularx}
   \caption{Primary deterministic catalog at frictionless $\lambda=0.75$ with the frozen identity corrected mean and one fixed episode per row. Dates is the number of purchase dates. C--D is the complete corrected policy versus DCA, C--N is its signal-only comparison with the neutral guarded selector, and N--D is the safety-architecture comparison; each relative gap uses its named right-hand policy as denominator and the three columns are not additive. Cash drag is terminal corrected cash divided by deposits, asset exposure is corrected asset value divided by terminal wealth, and floor active is the corrected policy's share of purchase dates with an active clipped floor. These fourteen designed paths are a finite catalog, not a probability sample.}
   \label{tab:deterministic-primary}
 \end{table}
+
 
 \begin{figure}[htbp]
   \centering

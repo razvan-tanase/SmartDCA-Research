@@ -31,6 +31,7 @@ python3.12 -m unittest \
   manuscript.tests.test_controls \
   manuscript.tests.test_release_check \
   manuscript.tests.test_manuscript_build \
+  manuscript.tests.test_assembly \
   reproducibility.checks.check_financial_model_corrected_signal_foundations \
   reproducibility.checks.check_impossibility_safety_policy_architecture \
   reproducibility.checks.check_finite_arbitrary_horizon_boundaries \

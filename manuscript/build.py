@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the thesis shell from its authoritative LaTeX source."""
+"""Build the integrated thesis from its authoritative LaTeX source."""
 
 from __future__ import annotations
 
@@ -109,6 +109,11 @@ def main() -> int:
                 failure_message,
             ):
                 return 1
+        if not run_validation(
+            [sys.executable, str(root / "assembly_controls.py"), "--root", str(root)],
+            "BUILD FAILED: integrated manuscript assembly controls are invalid",
+        ):
+            return 1
 
     latexmk = shutil.which("latexmk")
     if latexmk is None:

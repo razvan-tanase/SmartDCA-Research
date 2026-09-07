@@ -1,10 +1,13 @@
 \documentclass[12pt,a4paper,oneside]{report}
+\pdftrailerid{}
+\pdfsuppressptexinfo=15
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{amsmath}
 \usepackage{array}
+\usepackage{tabularx}
 \usepackage[a4paper,margin=25.4mm]{geometry}
 \usepackage{graphicx}
 \usepackage{natbib}
@@ -171,7 +174,8 @@ not extend to transaction costs.
 
 \chapter*{Institutional status}
 \addcontentsline{toc}{chapter}{Institutional status}
-This document is a controlled partial draft, not a submission candidate. The
+This document is a complete integrated draft for review, not a submission
+candidate. The
 official 2025--2026 finalization regulation requires online hand-in, a public
 presentation and defense, a hand-completed originality declaration that forms
 part of the dissertation, and faculty similarity
@@ -1919,11 +1923,12 @@ cash path:
 \end{equation}
 
 Equations (\ref{eq:terminal-inventory-boundary})--
-(\ref{eq:unit-gap-from-cash}) yield the complete affine trichotomy on $P>0$.
+(\ref{eq:unit-gap-from-cash}) yield the complete affine trichotomy on $P>0$
+shown in Table \ref{tab:terminal-inventory-classification}.
 
 \begin{table}[htbp]
   \centering
-  \small
+  \fontsize{9}{11}\selectfont
   \renewcommand{\arraystretch}{1.18}
   \begin{tabular}{p{0.25\textwidth}p{0.20\textwidth}p{0.43\textwidth}}
     \hline
@@ -1994,7 +1999,7 @@ substituted for one another.
 
 \begin{table}[htbp]
   \centering
-  \small
+  \fontsize{9}{11}\selectfont
   \renewcommand{\arraystretch}{1.16}
   \begin{tabular}{L{0.22\textwidth}L{0.30\textwidth}L{0.38\textwidth}}
     \hline
@@ -2478,7 +2483,7 @@ review identity, exact public and private review routes, focused checkpoints,
 and the clean manuscript build. The canonical thesis source is this LaTeX
 file; \path{manuscript/build.py} validates controls and scientific seams before
 rendering, while \path{manuscript/build-clean.sh} supplies the dated
-Debian/TeX route. A successful partial-draft build demonstrates a reproducible
+Debian/TeX route. A successful integrated-draft build demonstrates a reproducible
 manuscript artifact, not submission readiness and not the truth of a financial
 claim.
 
@@ -2791,6 +2796,9 @@ rejections.
 
 \section{Architecture, Safety, and Terminal Mechanisms}
 \label{sec:historical-mechanisms}
+
+Table \ref{tab:historical-policy-mechanisms} reports the cash, exposure, and
+floor-activation mechanisms for the guarded policies.
 
 \input{../generated/historical-mechanisms.tex}
 
@@ -3336,6 +3344,7 @@ $\Delta\to0$. Put
 \begin{equation}
   \mathcal N_0=\sum_i u_i f(u_i)^{\beta-1},
   \qquad \mathcal D_0=\sum_i f(u_i)^\beta.
+  \label{eq:source-diagonal-components}
 \end{equation}
 
 Then
@@ -3377,12 +3386,14 @@ For $\xi\neq0$, write the positive weighted power mean as
 \begin{equation}
   P_\xi(u;\omega)
   =\left(\frac{\sum_i\omega_i u_i^\xi}{\sum_i\omega_i}\right)^{1/\xi}.
+  \label{eq:weighted-power-definition}
 \end{equation}
 
 At fixed off-diagonal parameters, define the positive effective weights
 
 \begin{equation}
   \omega_i=w_i u_i f(u_i)^{\alpha-1}.
+  \label{eq:corrected-power-weights}
 \end{equation}
 
 Equation (\ref{eq:corrected-mean-off-diagonal}) becomes
@@ -3422,6 +3433,7 @@ The finite collection of normalized weights converges to
   \pi_i(0)=
   \frac{w_i u_i f(u_i)^{\tau-1}}
        {\sum_j w_j u_j f(u_j)^{\tau-1}}.
+  \label{eq:corrected-limit-weights}
 \end{equation}
 
 Expanding the finite sum and then its logarithm at $\Delta=0$ gives
@@ -3499,6 +3511,7 @@ On the diagonal, replace the power average by
   =\exp\left(
     \frac{\sum_i w_i \eta(u_i)\log u_i}{\sum_i w_i \eta(u_i)}
   \right).
+  \label{eq:homogeneity-diagonal-form}
 \end{equation}
 
 The same two-point cross-multiplication uses $\log u-\log v$ instead of
@@ -3526,6 +3539,7 @@ the zero initial portfolio and the funded recursions,
   C_n^S=\sum_{t=1}^{n}(d_t-b_t^S),
   \qquad
   Q_n^S=\sum_{t=1}^{n}\frac{b_t^S}{p_t}.
+  \label{eq:proof-terminal-ledger}
 \end{equation}
 
 Substitution into terminal wealth and cancellation of DCA's common deposits
@@ -3560,6 +3574,7 @@ retained date-one amount contributes
 \begin{equation}
   r-M\frac{r}{p_1}
   =r\left(1-\frac{M}{p_1}\right)<0,
+  \label{eq:proof-first-adverse-gap}
 \end{equation}
 
 contradicting universal weak dominance. Hence $b_1^S=d_1$, and the cash and
@@ -3616,6 +3631,7 @@ date $t$ there is a unit deficit
 
 \begin{equation}
   \delta=\lambda Q_t^D-Q_t^S>0.
+  \label{eq:proof-unit-deficit}
 \end{equation}
 
 Let $B=C_t^S$ and fix any finite future deposit schedule whose total is $F$.
@@ -3625,6 +3641,7 @@ The candidate can spend at most $B+F$ after the selected prefix, so
 \begin{equation}
   Q_n^S\leq Q_t^S+\frac{B+F}{L^2},
   \qquad C_n^S\leq B+F,
+  \label{eq:proof-expensive-continuation}
 \end{equation}
 
 while DCA receives $F/L^2$ future units. Consequently
@@ -3659,6 +3676,7 @@ $b_t^S\geq0$ yields
 \begin{equation}
   b_t^S\geq\left[\lambda d_t-p_tK_{t-1}^S\right]_+
   =m_t^S(\lambda).
+  \label{eq:proof-local-floor}
 \end{equation}
 
 Because the prior cushion is nonnegative,
@@ -3671,6 +3689,7 @@ representation (\ref{eq:guardrail-interface}). When $B_t^S>m_t^S$, take
 
 \begin{equation}
   a_t=\frac{b_t^S-m_t^S}{B_t^S-m_t^S}\in[0,1].
+  \label{eq:proof-selector-recovery}
 \end{equation}
 
 When the interval is a singleton, set $a_t=0$ by convention; the resulting
@@ -3685,6 +3704,7 @@ For paths with at least one positive deposit, define
 \begin{equation}
   \Gamma(S)=\inf_{\text{admissible full paths}}
   \frac{W_n^S}{W_n^D}.
+  \label{eq:proof-worst-case-factor}
 \end{equation}
 
 Nonnegative cash implies that every completed path has wealth ratio at least
@@ -3710,6 +3730,7 @@ evaluation price $P$,
 
 \begin{equation}
   \frac{W^S}{W^D}=\lambda+\frac{1-\lambda}{P}\downarrow\lambda,
+  \label{eq:proof-floor-sharpness}
 \end{equation}
 
 so that construction admits no larger uniform factor. The excluded limit
@@ -3829,11 +3850,12 @@ $p_3/p_2=1/2$, and $y=7/6$. The common state is
 \end{equation}
 
 Changing only beta gives $R_2(-1)=\frac85$ and
-$R_2(1)=\frac52$, with the complete exact comparison
+$R_2(1)=\frac52$, with the complete exact comparison in
+Table \ref{tab:appendix-three-beta-witness}.
 
 \begin{table}[htbp]
   \centering
-  \small
+  \fontsize{9}{11}\selectfont
   \renewcommand{\arraystretch}{1.15}
   \begin{tabular}{c c c c c c c}
     \hline
@@ -4026,6 +4048,7 @@ At $P=1/2$, the two gaps are positive:
   W_4^c-W_4^D=\frac{12017}{57600},
   \qquad
   W_4^c-W_4^0=\frac{30293}{230400}.
+  \label{eq:affine-strict-wins}
 \end{equation}
 
 At $P=2$ on the same purchase ledgers, they are instead negative:
@@ -4034,6 +4057,7 @@ At $P=2$ on the same purchase ledgers, they are instead negative:
   W_4^c-W_4^D=-\frac{26387}{28800},
   \qquad
   W_4^c-W_4^0=-\frac{8123}{115200}.
+  \label{eq:affine-strict-losses}
 \end{equation}
 
 The score, floors, purchases, cash, and units are unchanged; only the
@@ -4085,9 +4109,11 @@ the historical audit separately records the later outcome opening.
 \section{Execution Grid}
 \label{sec:appendix-execution-grid}
 
+Table \ref{tab:protocol-grid} lists the frozen execution grid.
+
 \begin{table}[htbp]
   \centering
-  \small
+  \fontsize{9}{11}\selectfont
   \renewcommand{\arraystretch}{1.14}
   \begin{tabular}{L{0.20\textwidth}L{0.32\textwidth}L{0.37\textwidth}}
     \hline
@@ -4248,9 +4274,11 @@ controls, and generated assets.
 \section{Artifact Layers and Historical Input Identity}
 \label{sec:appendix-artifact-layers}
 
+Table \ref{tab:artifact-inventory} separates the retained artifact layers.
+
 \begin{table}[htbp]
   \centering
-  \small
+  \fontsize{9}{11}\selectfont
   \renewcommand{\arraystretch}{1.13}
   \begin{tabular}{L{0.19\textwidth}L{0.31\textwidth}L{0.39\textwidth}}
     \hline
@@ -4426,7 +4454,12 @@ dated image and renders the PDF without a locally installed TeX distribution.
 The build writes only derived files below \path{manuscript/build}. The
 submission checker remains expected to fail while institutional and
 supervisor-owned placeholders are unresolved; reproducibility of this
-controlled partial draft is not a release-state transition.
+integrated draft does not confer candidate approval.
+The complete review package is assembled with
+\path{./manuscript/assemble-clean.sh}, or
+\path{python manuscript/assemble.py} in the declared local environment. It
+binds the source, bibliography, generated assets, evidence map, review brief,
+and exact PDF to a provisional identity while retaining all submission blockers.
 
 \chapter{Supplementary Tables and Figures}
 \label{app:supplementary-results}
@@ -4439,6 +4472,10 @@ displayed value is generated from the accepted bundles rather than transcribed
 from narrative prose. The table notes preserve population, horizon, coverage,
 comparison, units, inference status, and theorem scope so that the appendix
 remains interpretable without a private data source.
+
+Tables \ref{tab:stochastic-sensitivity} and
+\ref{tab:synthetic-validation-inventory} retain the exploratory sensitivity
+results and the synthetic validation inventory.
 
 \input{../generated/synthetic-supplementary.tex}
 

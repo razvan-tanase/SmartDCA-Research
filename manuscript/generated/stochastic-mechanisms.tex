@@ -27,14 +27,13 @@
   \label{fig:stochastic-attribution}
 \end{figure}
 
-\begin{table}[htbp]
-  \centering
-  \scriptsize
+\begin{table}[!htbp]
+  \centering\fontsize{9}{11}\selectfont\singlespacing
+
   \renewcommand{\arraystretch}{1.12}
-  \resizebox{\textwidth}{!}{%
-  \begin{tabular}{lrrrrr}
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xrrrrr}
     \hline
-    Family & Floor active & Cash drag & Asset exposure & Cash contribution & Unit contribution \\
+    Family & \shortstack[r]{Floor\\active} & \shortstack[r]{Cash\\drag} & \shortstack[r]{Asset\\exposure} & \shortstack[r]{Cash\\contribution} & \shortstack[r]{Unit\\contribution} \\
     \hline
     Trend & 10.6\% & 1.7\% & 98.3\% & +1016 USD & -1144 USD \\
     Mean reversion & 10.6\% & 1.5\% & 98.4\% & +894 USD & -783 USD \\
@@ -42,8 +41,7 @@
     Regime switching & 10.6\% & 1.9\% & 98.3\% & +1156 USD & -1544 USD \\
     Jump diffusion & 10.6\% & 1.6\% & 98.3\% & +962 USD & -864 USD \\
     \hline
-  \end{tabular}%
-  }
+  \end{tabularx}
   \caption{Corrected-policy mechanism diagnostics for the same five primary 60-month, frictionless, $\lambda=0.75$ cells as Table~\ref{tab:stochastic-primary}. Floor active is the mean share of 60 purchase dates with an active clipped floor; cash drag is terminal cash divided by deposits; asset exposure is asset value divided by terminal wealth; cash and unit columns are mean corrected-minus-DCA terminal-wealth contributions across three saved seeds.}
   \label{tab:stochastic-mechanisms}
 \end{table}

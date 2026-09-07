@@ -367,7 +367,7 @@ def audit_deterministic_stochastic_evaluation(
     require_terms(
         stochastic_asset,
         (
-            r"Comparison & $N$ & Median & Seed range & 5\% downside & Worst",
+            r"Comparison & $N$ & Median & \shortstack[r]{Seed\\range} & \shortstack[r]{5\%\\downside} & Worst",
             "C--D is corrected guarded versus DCA",
             "C--N is corrected guarded versus neutral guarded",
             "N--D is neutral guarded versus DCA",
@@ -386,7 +386,7 @@ def audit_deterministic_stochastic_evaluation(
     require_terms(
         supplementary_asset,
         (
-            r"Comparison & $N$ & Median & Seed range & 5\% downside & Worst",
+            r"Comparison & $N$ & Median & \shortstack[r]{Seed\\range} & \shortstack[r]{5\%\\downside} & Worst",
             "C--D is corrected guarded versus DCA",
             "C--N is corrected guarded versus neutral guarded",
             "N--D is neutral guarded versus DCA",
