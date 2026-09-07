@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 36834)
-Total output lines: 1995
-
 {
   "schema_version": 1,
   "register": "claims",
@@ -712,7 +709,358 @@ Total output lines: 1995
       ],
       "manuscript_location": "ch:boundaries/sec:single-valley-limit",
       "display_labels": ["eq:weak-single-valley", "eq:valley-dca-loss-inputs", "eq:valley-neutral-loss-inputs", "eq:appendix-valley-dca-cash", "eq:appendix-valley-dca-loss", "eq:appendix-valley-neutral-cash", "eq:appendix-valley-neutral-loss"],
-      "restatement_locations": ["ch:introduction/se…6834 tokens truncated…ef87b421a580cf7c0dc30d2844c51be6241bc682e39221/historical-aggregates.json"},
+      "restatement_locations": ["ch:introduction/sec:introduction-route"],
+      "citation_need": "Internal search and theorem citations; describe the search domain explicitly.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-computational-cash-crossing-counterexample",
+      "entry_type": "empirical-headline",
+      "wording": "Exact-rational mechanism search found that policy-specific clipped floors can create a second corrected-minus-neutral cash-sign reversal on a strict valley.",
+      "claim_class": "computational-counterexample",
+      "scope": "The retained exact witness and declared search; a mechanism counterexample, not a market-frequency observation.",
+      "authority": [
+        {"role": "search-report", "path": "reports/experiments/cash-single-crossing-search.md"},
+        {"role": "evidence-note", "path": "research/notes/cash-single-crossing-mechanism.md"},
+        {"role": "executable-check", "path": "reproducibility/checks/check_cash_single_crossing_mechanism.py"}
+      ],
+      "manuscript_location": "ch:boundaries/sec:guardrail-feedback",
+      "display_labels": ["eq:appendix-alignment-not-necessary", "eq:appendix-double-reversal", "eq:appendix-no-floor-crossing"],
+      "citation_need": "Internal search and theorem citations with exact witness parameters in the appendix.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-table-contribution-matrix",
+      "entry_type": "table",
+      "wording": "Contribution and non-claim matrix by mathematical, computational, methodological, empirical, and integrative category.",
+      "claim_class": "manuscript-control-table",
+      "scope": "Summary only; every row links to its detailed register and evidence authority.",
+      "authority": [
+        {"role": "contribution-register", "path": "manuscript/controls/contributions.json"},
+        {"role": "non-claim-register", "path": "manuscript/controls/non-claims.json"}
+      ],
+      "manuscript_location": "ch:introduction/tab:contribution-boundaries",
+      "presentation_status": "rendered-and-reconciled",
+      "citation_need": "Cite evidence per substantive row; control-only cells need no external citation.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-table-theorem-scope",
+      "entry_type": "manuscript-summary-table",
+      "wording": "Scope map distinguishing finite witnesses, deterministic falsification, model-general accounting, conditional cash crossing, realized-ledger classification, and later stochastic questions.",
+      "claim_class": "mathematical-summary-table",
+      "scope": "Concise restatement only; canonical theorem pages and exact-search reports govern each row, and no row changes its evidence layer.",
+      "authority": [
+        {"role": "two-purchase-theorem", "path": "research/theorems/two-purchase-guarded-smartdca-boundary.md"},
+        {"role": "two-purchase-evidence", "path": "research/notes/two-purchase-dca-win-loss-boundary.md"},
+        {"role": "three-purchase-theorem", "path": "research/theorems/three-purchase-corrected-mean-effect.md"},
+        {"role": "three-purchase-evidence", "path": "research/notes/three-purchase-corrected-mean-effect.md"},
+        {"role": "cash-timing-theorem", "path": "research/theorems/arbitrary-horizon-cash-timing-identity.md"},
+        {"role": "cash-timing-evidence", "path": "research/notes/arbitrary-horizon-accounting-verification-seam.md"},
+        {"role": "cash-crossing-theorem", "path": "research/theorems/reference-aligned-guardrail-cash-single-crossing.md"},
+        {"role": "cash-crossing-evidence", "path": "research/notes/cash-single-crossing-mechanism.md"},
+        {"role": "terminal-inventory-theorem", "path": "research/theorems/arbitrary-horizon-performance-boundary.md"},
+        {"role": "terminal-inventory-evidence", "path": "research/notes/arbitrary-horizon-performance-boundary.md"},
+        {"role": "valley-search-report", "path": "reports/experiments/weak-single-valley-falsification.md"},
+        {"role": "cash-crossing-search-report", "path": "reports/experiments/cash-single-crossing-search.md"}
+      ],
+      "manuscript_location": "ch:boundaries/tab:theorem-scope",
+      "citation_need": "Cite each canonical theorem or its manuscript label from the corresponding row.",
+      "mandatory": true,
+      "review_state": "reviewed"
+    },
+    {
+      "id": "claim-table-deterministic-primary",
+      "entry_type": "manuscript-table",
+      "wording": "The generated primary deterministic table reports all fourteen required families at the frictionless lambda-0.75 identity-mean slice, with purchase dates, all three ordered relative gaps, corrected cash drag, asset exposure, and floor activation.",
+      "claim_class": "generated-results-table",
+      "scope": "One fixed episode per required primary family; varying path horizons are explicit and signs are finite catalog outcomes, not frequencies.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/deterministic-evaluation.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "generated-table-source", "path": "reports/experiments/runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/report-tables.txt"},
+        {"role": "reviewed-report", "path": "reports/experiments/deterministic-adversarial-paths.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:synthetic-results/tab:deterministic-primary",
+      "citation_need": "Cite the immutable run and report in the caption or adjacent prose.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-stochastic-primary",
+      "entry_type": "manuscript-table",
+      "wording": "The generated primary seeded-stochastic table reports medians, minimum-to-maximum seed ranges, linearly interpolated five-percent downside, and worst observed shortfall for all three ordered policy comparisons in five process families.",
+      "claim_class": "generated-results-table",
+      "scope": "Fifteen comparison-specific aggregate cells: three ordered comparisons for each of five primary families at the displayed horizon and coverage, with three saved seeds per cell; descriptive only.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/stochastic-evaluation.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "stochastic-aggregates", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/stochastic-aggregates.json"},
+        {"role": "reviewed-report", "path": "reports/experiments/seeded-stochastic-families.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:synthetic-results/tab:stochastic-primary",
+      "citation_need": "Cite the immutable run and generation design.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-figure-deterministic-layers",
+      "entry_type": "manuscript-figure",
+      "wording": "The generated deterministic layer figure shows complete-system, signal-only, and architecture-only gap signs on four mechanism-representative fixed paths using a common zero axis without treating the contrasts as additive.",
+      "claim_class": "generated-results-figure",
+      "scope": "Four explicitly selected rows from the fourteen-family frictionless lambda-0.75 table; exposition only, with no selection-based inference.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/deterministic-evaluation.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "deterministic-attribution", "path": "reports/experiments/runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/mechanism-attribution.csv"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:synthetic-results/fig:deterministic-layers",
+      "citation_need": "Caption must define C--D, C--N, N--D scope and state that different denominators prevent an additive interpretation.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-figure-stochastic-attribution",
+      "entry_type": "manuscript-figure",
+      "wording": "The generated stochastic attribution figure separates mean terminal cash and evaluation-price-valued unit-gap contributions for corrected guarded versus DCA in each primary process family.",
+      "claim_class": "generated-results-figure",
+      "scope": "Five primary 60-month frictionless lambda-0.75 cells, three saved seeds per cell; dollar components explain realized ledgers and are not process estimates.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/stochastic-mechanisms.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "stochastic-aggregates", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/stochastic-aggregates.json"},
+        {"role": "terminal-inventory-theorem", "path": "research/theorems/arbitrary-horizon-performance-boundary.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:synthetic-results/fig:stochastic-attribution",
+      "citation_need": "Caption must identify dollar units, comparison, horizon, coverage, seed count, and ledger-conditioned scope.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-stochastic-mechanisms",
+      "entry_type": "manuscript-table",
+      "wording": "The generated stochastic mechanism table reports mean corrected-policy floor activation, cash drag, asset exposure, and terminal cash/unit contributions for the primary displayed cells.",
+      "claim_class": "generated-results-table",
+      "scope": "Five primary 60-month frictionless lambda-0.75 cells with three saved seeds each; descriptive mechanism diagnostics only.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/stochastic-mechanisms.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "stochastic-aggregates", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/stochastic-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:synthetic-results/tab:stochastic-mechanisms",
+      "citation_need": "Caption must state metric denominators, dollar attribution, path count, horizon, coverage, and frictionless scope.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-deterministic-coverage-ranges",
+      "entry_type": "manuscript-table",
+      "wording": "The generated deterministic coverage table reports exact minima, maxima, and loss/tie/win counts for all three comparisons across all eighteen fixed paths at each non-unit primary safety factor.",
+      "claim_class": "generated-results-table",
+      "scope": "Eighteen accepted deterministic paths at frictionless lambda 0.9, 0.75, and 0.5; catalog counts are not frequencies.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/synthetic-supplementary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "deterministic-attribution", "path": "reports/experiments/runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/mechanism-attribution.csv"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "app:supplementary-results/tab:deterministic-coverage-ranges",
+      "citation_need": "Keep finite-catalog and non-frequency wording in the caption.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-deterministic-cost-ranges",
+      "entry_type": "manuscript-table",
+      "wording": "The generated deterministic cost table reports exact ranges and sign counts for frictionless, proportional-ten-basis-point, and fixed-one-dollar calculations at lambda 0.75.",
+      "claim_class": "generated-results-table",
+      "scope": "Eighteen accepted deterministic paths; fee rows are net empirical calculations outside the current safety theorem.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/synthetic-supplementary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "deterministic-attribution", "path": "reports/experiments/runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/mechanism-attribution.csv"},
+        {"role": "safety-theorem", "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "app:supplementary-results/tab:deterministic-cost-ranges",
+      "citation_need": "Caption must distinguish gross theorem-compatible validation from net fee calculations.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-stochastic-sensitivity",
+      "entry_type": "manuscript-table",
+      "wording": "The generated stochastic sensitivity table reports medians, minimum-to-maximum seed ranges, linearly interpolated five-percent downside, and worst observed shortfall for all three ordered policy comparisons without replacing or pooling the primary rows.",
+      "claim_class": "generated-results-table",
+      "scope": "Fifteen comparison-specific aggregate cells: three ordered comparisons for each of five exploratory 60-month frictionless lambda-0.75 configurations, with three saved seeds per cell; controlled sensitivity only.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/synthetic-supplementary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "stochastic-aggregates", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/stochastic-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "app:supplementary-results/tab:stochastic-sensitivity",
+      "citation_need": "Caption must label the rows exploratory, three-seed, descriptive, and separate from primary.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-stochastic-coverage-diagnostics",
+      "entry_type": "manuscript-table",
+      "wording": "The generated stochastic coverage table reports family-summary ranges for floor activation, cash drag, asset exposure, and corrected-versus-DCA median gaps at each non-unit primary safety factor.",
+      "claim_class": "generated-results-table",
+      "scope": "Five primary 60-month frictionless family cells per safety factor, three saved seeds per cell; ranges are not pooled inference.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/synthetic-supplementary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "stochastic-aggregates", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/stochastic-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "app:supplementary-results/tab:stochastic-coverage-diagnostics",
+      "citation_need": "Caption must name the summary grain and reject a pooled monotonicity inference.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-synthetic-validation-inventory",
+      "entry_type": "manuscript-table",
+      "wording": "The generated validation inventory reports attempted, generated, excluded, ledger, and comparison counts separately for deterministic and seeded-stochastic evidence.",
+      "claim_class": "generated-results-table",
+      "scope": "Accepted immutable manifests and nested validation receipts; completeness accounting only, without cross-layer pooling.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/synthetic-supplementary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/synthetic_evaluation_assets.py"},
+        {"role": "deterministic-validation", "path": "reports/experiments/runs/smartdca-deterministic-v1-80e0f231729885a672c4f4162a35516f3cd257aa6dc71fafc01d14b03cabe9db/runner/validation.json"},
+        {"role": "stochastic-validation", "path": "reports/experiments/runs/smartdca-stochastic-v1-78c05259beccc59ab5605e1ac291e01cb899361705862e88ba2e73d2fb2fbf25/runner/validation.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/deterministic-stochastic-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "app:supplementary-results/tab:synthetic-validation-inventory",
+      "citation_need": "Keep evidence layers and their declared roles separate in the caption.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-historical-primary",
+      "entry_type": "manuscript-table",
+      "wording": "Primary historical H1/H2 table reporting dataset-horizon median ranges, Holm-rejected coverage values, episode counts, and comparison tiers; the complete cellwise intervals and adjusted decisions remain in the supplementary tables.",
+      "claim_class": "generated-confirmatory-table",
+      "scope": "Sealed primary cells only; preserve overlapping-window units and the full 36-cell Holm family.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-primary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "primary-aggregates", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/historical-aggregates.json"},
+        {"role": "registered-uncertainty", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/uncertainty.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:historical-results/tab:historical-primary",
+      "citation_need": "Cite protocol, source seam, run, and audit in caption or adjacent prose.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-figure-historical-primary-effects",
+      "entry_type": "manuscript-figure",
+      "wording": "Zero-centred bars report all 18 primary H1 median corrected-versus-DCA relative terminal-wealth gaps at a common scale.",
+      "claim_class": "generated-results-figure",
+      "scope": "Sealed non-unit primary frictionless cells; point estimates over dependent overlapping starts, not intervals or independent market frequencies.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-primary.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "primary-aggregates", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/historical-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:historical-results/fig:historical-primary-effects",
+      "citation_need": "Caption must define the denominator, cell grain, common scale, and non-causal interpretation.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-historical-comparison-tiers",
+      "entry_type": "manuscript-table",
+      "wording": "The generated comparison table keeps complete-system H1, signal-only H2, and architecture-only S1 cell signs, ranges, denominators, and inferential roles separate.",
+      "claim_class": "generated-results-table",
+      "scope": "Eighteen non-unit primary frictionless cells per comparison; only H1/H2 enter the sealed family and S1 is descriptive.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-mechanisms.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "primary-aggregates", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/historical-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:historical-results/tab:historical-comparison-tiers",
+      "citation_need": "Caption must name every right-hand comparator and prevent significance transfer between tiers.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-historical-policy-mechanisms",
+      "entry_type": "manuscript-table",
+      "wording": "The generated mechanism table reports cash-drag, terminal-exposure, and guardrail-activation ranges separately for corrected and neutral guarded policies.",
+      "claim_class": "generated-results-table",
+      "scope": "Eighteen non-unit primary frictionless cells per policy; mechanism summaries are not performance criteria.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-mechanisms.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "primary-aggregates", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/historical-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:historical-results/tab:historical-policy-mechanisms",
+      "citation_need": "Caption must define every denominator and reject a monotone performance interpretation.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-historical-risk-attribution",
+      "entry_type": "manuscript-table",
+      "wording": "The generated downside and attribution table reports the largest primary shortfall, lowest 5 percent cell quantile, and the 18-positive-cash/18-negative-valued-unit sign pattern for corrected versus DCA.",
+      "claim_class": "generated-results-table",
+      "scope": "Primary non-unit frictionless H1 cells; terminal components are ledger-conditioned accounting rather than causal effects.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-mechanisms.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "primary-aggregates", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/historical-aggregates.json"},
+        {"role": "terminal-inventory-theorem", "path": "research/theorems/arbitrary-horizon-performance-boundary.md"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:historical-results/tab:historical-risk-attribution",
+      "citation_need": "Caption must define downside and both signed components and preserve the non-causal boundary.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-registered-robustness",
+      "entry_type": "manuscript-table",
+      "wording": "The generated robustness table reports monthly and quarterly complete-system and signal-only cell counts, signs, median ranges, and descriptive uncertainty status without pooling schedules.",
+      "claim_class": "generated-descriptive-table",
+      "scope": "The separately registered robustness run; monthly additional coverage and quarterly horizons remain distinct and do not revise H1/H2.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-robustness.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "robustness-aggregates", "path": "reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/robustness-aggregates.json"},
+        {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
+      ],
+      "manuscript_location": "ch:historical-results/tab:registered-robustness",
+      "citation_need": "Caption must label rows post-confirmatory descriptive and prohibit cross-cadence raw-wealth comparison.",
+      "mandatory": true,
+      "review_state": "accepted"
+    },
+    {
+      "id": "claim-table-historical-cost-robustness",
+      "entry_type": "manuscript-table",
+      "wording": "The generated historical cost table reports primary, monthly additional-coverage, and quarterly complete-system median ranges and largest observed shortfalls for both declared fee routes.",
+      "claim_class": "generated-descriptive-table",
+      "scope": "Cost-adjusted historical cells only; all are descriptive and outside the current frictionless safety theorem.",
+      "authority": [
+        {"role": "manuscript-asset", "path": "manuscript/generated/historical-robustness.tex"},
+        {"role": "asset-generator", "path": "reproducibility/historical_evaluation_assets.py"},
+        {"role": "primary-aggregates", "path": "reports/experiments/runs/smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221/historical-aggregates.json"},
         {"role": "robustness-aggregates", "path": "reports/experiments/runs/smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184/robustness-aggregates.json"},
         {"role": "safety-theorem", "path": "research/theorems/epsilon-dca-safety-unit-guardrail.md"},
         {"role": "manuscript-evaluation-audit", "path": "research/notes/historical-robustness-evaluation-manuscript-audit.md"}
