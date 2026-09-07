@@ -97,13 +97,19 @@ human decisions still needed.
   rechecked, leaving no findings. Spec found no scientific drift or actionable
   defect within the achievable scope, independently regenerated all eight
   empirical fragments, and confirmed unchanged numerical tokens.
-- Clean-container GitHub verification and completion of the restarted
-  stochastic suite remain required before recording a passing full route.
-  The submission checker continues to report the institutional blockers.
+- [Clean-container verification](https://github.com/razvan-tanase/SmartDCA-Research/actions/runs/34087486136)
+  passed on the published implementation commit `301548e593be82100c91a90595749c7b602641b3`,
+  including the exported-source reproduction test and retained review package.
+  The submission checker correctly exits 1 with the institutional blockers.
+- The [full scientific replay](https://github.com/razvan-tanase/SmartDCA-Research/actions/runs/34087486111)
+  records the complete scientific route for that same implementation. Its
+  recorded conclusion, together with the manuscript job, is authoritative for
+  that commit. Subsequent documentation-only tracking changes and their current
+  check results are visible on [PR 28](https://github.com/razvan-tanase/SmartDCA-Research/pull/28).
 
 The earlier verification attempt was interrupted by a runtime-level
 `fatal library error, lookup self` during the stochastic suite. Completed
 earlier checks were retained; the stochastic suite and remaining README route
 were restarted explicitly. The second stochastic attempt did not complete
-before the workspace process ended; another explicit run is in progress.
-Neither interrupted attempt is recorded as a passing full-suite run.
+before the workspace process ended. Neither interrupted attempt is recorded
+as a passing full-suite run; use the linked workflow for a durable result.

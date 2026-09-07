@@ -23,7 +23,7 @@ The candidate and supervisor can open one complete PDF and its release package, 
 - [ ] Definitions, theorem statements, assumptions, notation, equations, comparisons, and evidence-layer labels agree across chapters.
 - [x] Internal references, numbering, bibliography links, acronyms, appendices, and glossary use resolve from the built document.
 - [ ] The rendered candidate satisfies all currently testable institutional requirements and the body-versus-appendix contract.
-- [ ] A clean environment reproduces the same complete release through one documented route.
+- [x] A clean environment reproduces the same complete release through one documented route.
 - [x] The candidate receives a provisional release identity binding source, bibliography, generated assets, evidence-map state, and PDF.
 - [x] A supervisor-review package explains the narrative, contribution boundaries, evidence controls, and questions requiring human judgment.
 
@@ -33,6 +33,9 @@ The candidate and supervisor can open one complete PDF and its release package, 
   content-bound source/PDF package, 96 claim records and 155 uniquely owned
   scientific displays, regenerated assets, rendered audit, and supervisor
   brief are implemented. Standards and Spec reviews have no remaining findings.
+  The clean-container build, exported-source reproduction, and packaging tests
+  passed in GitHub verification. The checked reproduction and provisional
+  identity criteria refer to this integrated draft's actual state.
   See the [assembly audit](../../../../../research/notes/complete-manuscript-assembly-audit.md)
   for verification and scope. Returned to open because the frozen
   institutional contract still requires actual decisions and evidence;
