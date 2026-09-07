@@ -285,7 +285,7 @@ class ManuscriptBuildTests(unittest.TestCase):
                 "FACULTY OF AUTOMATIC CONTROL AND COMPUTERS",
                 "COMPUTER SCIENCE AND ENGINEERING DEPARTMENT",
                 "MASTER IN FINANCIAL COMPUTING",
-                "RESEARCH THESIS",
+                "MASTER THESIS",
                 "ADAPTIVE EXTENSIONS OF DOLLAR–COST AVERAGING",
                 "A MEANS-THEORETIC FRAMEWORK AND EMPIRICAL EVALUATION OF",
                 "SMARTDCA STRATEGIES",
