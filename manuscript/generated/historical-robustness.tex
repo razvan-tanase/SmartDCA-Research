@@ -3,44 +3,50 @@
 % Accepted source artifact digest: 60a57ca4220bd5dbac678a3458e239731802c637701d588c089f6e3575bc3a15
 
 \begin{table}[!htbp]
-  \centering\fontsize{9}{11}\selectfont\singlespacing
+  \centering\singlespacing
+  \setlength{\tabcolsep}{3pt}
+  \renewcommand{\arraystretch}{1.16}\fontsize{9}{11}\selectfont
 
-  \setlength{\tabcolsep}{3.0pt}
-  \renewcommand{\arraystretch}{1.12}
-  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}Xrrrr}
-    \hline
-    \shortstack[r]{Registered\\schedule} & Comparison & Cells & \shortstack[r]{Negative\\/\\positive} & \shortstack[r]{Median\\range} & Uncertainty \\
-    \hline
+  \begin{tabular}{>{\raggedright\arraybackslash}p{\dimexpr0.2\textwidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.2\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.065\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.14\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.25\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.145\textwidth-2\tabcolsep\relax}}
+    \toprule
+    \textbf{Registered schedule} & \textbf{Comparison} & \textbf{Cells} & \textbf{Negative / positive} & \textbf{Median range} & \textbf{Uncertainty} \\
+    \midrule
     Monthly extra coverage & Corrected--DCA & 30 & 30 / 0 & -4.8134\% to -0.0335\% & descriptive only \\
+    \addlinespace[2pt]
     Monthly extra coverage & Corrected--neutral & 30 & 30 / 0 & -0.5836\% to -0.0002\% & descriptive only \\
+    \addlinespace[4pt]
     Quarterly horizons & Corrected--DCA & 48 & 48 / 0 & -23.4841\% to -0.0260\% & descriptive only \\
+    \addlinespace[2pt]
     Quarterly horizons & Corrected--neutral & 48 & 40 / 8 & -9.2164\% to +0.0570\% & descriptive only \\
-    \hline
-  \end{tabularx}
+    \bottomrule
+  \end{tabular}
   \caption{Separately registered post-confirmatory robustness results under frictionless accounting. Monthly rows use only the five additional coverage values on the sealed monthly episodes; quarterly rows use all eight non-unit primary and robustness coverage values at 6, 24, and 120 months. Counts are dataset--horizon--coverage cells, not episodes. Every comparison stays within one cadence and uses its named right-hand denominator; raw wealth is not compared across monthly and quarterly schedules because their deposit counts differ. No row has a bootstrap interval, $p$-value, or multiplicity decision, and none revises H1 or H2.}
   \label{tab:registered-robustness}
 \end{table}
 
-
 \begin{table}[!htbp]
-  \centering\fontsize{9}{11}\selectfont\singlespacing
+  \centering\singlespacing
+  \setlength{\tabcolsep}{3pt}
+  \renewcommand{\arraystretch}{1.16}\fontsize{9}{11}\selectfont
 
-  \setlength{\tabcolsep}{3.0pt}
-  \renewcommand{\arraystretch}{1.12}
-  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}Xrrr}
-    \hline
-    \shortstack[r]{Evidence\\slice} & \shortstack[r]{Cost\\route} & \shortstack[r]{Corrected--DCA\\cells} & \shortstack[r]{Median\\range} & \shortstack[r]{Largest\\shortfall} \\
-    \hline
+  \begin{tabular}{>{\raggedright\arraybackslash}p{\dimexpr0.24\textwidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.2\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.13\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.27\textwidth-2\tabcolsep\relax}>{\raggedleft\arraybackslash}p{\dimexpr0.16\textwidth-2\tabcolsep\relax}}
+    \toprule
+    \textbf{Evidence slice} & \textbf{Cost route} & \textbf{Corrected--DCA cells} & \textbf{Median range} & \textbf{Largest shortfall} \\
+    \midrule
     Primary monthly grid & Proportional 10 bps & 18 & -4.5921\% to -0.3303\% & 18.957\% \\
+    \addlinespace[4pt]
     Monthly extra coverage & Proportional 10 bps & 30 & -4.8054\% to -0.0330\% & 20.217\% \\
+    \addlinespace[4pt]
     Quarterly horizons & Proportional 10 bps & 48 & -23.4837\% to -0.0255\% & 32.148\% \\
+    \addlinespace[4pt]
     Primary monthly grid & Fixed USD 1 & 18 & -4.5978\% to -0.3353\% & 18.979\% \\
+    \addlinespace[4pt]
     Monthly extra coverage & Fixed USD 1 & 30 & -4.8182\% to -0.0335\% & 20.243\% \\
+    \addlinespace[4pt]
     Quarterly horizons & Fixed USD 1 & 48 & -23.5076\% to -0.0260\% & 32.190\% \\
-    \hline
-  \end{tabularx}
+    \bottomrule
+  \end{tabular}
   \caption{Complete-system cost robustness for corrected guarded versus DCA. All displayed medians are negative, but these proportional- and fixed-fee calculations are finite descriptive evidence outside the current frictionless safety theorem. They carry no confirmatory cost hypothesis, no registered interval, and no multiplicity adjustment; an observed numerical floor check under fees is not a frictional guarantee.}
   \label{tab:historical-cost-robustness}
 \end{table}
-
 \FloatBarrier

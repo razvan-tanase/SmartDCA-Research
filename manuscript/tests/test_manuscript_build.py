@@ -419,6 +419,21 @@ class ManuscriptBuildTests(unittest.TestCase):
                 9.0,
                 delta=0.5,  # XML font sizes round to integer scaled points.
             )
+            # setspace can silently restore the surrounding 12-point size.
+            # Check generated table text in the rendered PDF as well as the
+            # hand-authored contribution table and the source declaration.
+            for heading_text in (
+                "Mean cash drag", "Mean asset exposure", "Mean floor activation",
+            ):
+                heading_cell = next(
+                    text for text in layout.iter("text")
+                    if "".join(text.itertext()) == heading_text
+                )
+                self.assertAlmostEqual(
+                    font_sizes[heading_cell.attrib["font"]] / 1.5,
+                    9.0,
+                    delta=0.5,
+                )
             introduction_page = next(
                 page
                 for page in layout.iter("page")

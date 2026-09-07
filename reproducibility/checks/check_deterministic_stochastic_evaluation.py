@@ -37,7 +37,7 @@ class DeterministicStochasticEvaluationTest(unittest.TestCase):
 
         for asset in (primary, exploratory):
             self.assertIn(
-                r"Comparison & $N$ & Median & \shortstack[r]{Seed\\range} & \shortstack[r]{5\%\\downside} & Worst",
+                r"\textbf{Policy pair} & \textbf{$N$} & \textbf{Median} & \textbf{Seed range} & \textbf{5\% downside} & \textbf{Worst}",
                 asset,
             )
             for definition in (
