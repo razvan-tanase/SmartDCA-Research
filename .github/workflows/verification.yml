@@ -24,12 +24,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: Build manuscript shell in the declared clean environment
-        run: ./manuscript/build-clean.sh
+      - name: Assemble integrated manuscript in the declared clean environment
+        run: ./manuscript/assemble-clean.sh
       - name: Test the public control, build, and release-check seams
         run: |
           image_name="$(cat manuscript/environment/image-tag.txt)"
           docker run --rm \
+            --user "$(id -u):$(id -g)" \
+            --env TEXMFCONFIG=/tmp/texmf-config \
+            --env TEXMFHOME=/tmp/texmf-home \
+            --env TEXMFVAR=/tmp/texmf-var \
+            --env XDG_CACHE_HOME=/tmp/cache \
             --volume "$PWD:/work" \
             --workdir /work \
             --entrypoint python3 \
@@ -37,7 +42,8 @@ jobs:
             -m unittest \
             manuscript.tests.test_controls \
             manuscript.tests.test_release_check \
-            manuscript.tests.test_manuscript_build
+            manuscript.tests.test_manuscript_build \
+            manuscript.tests.test_assembly
       - name: Confirm that the draft cannot be mistaken for a submission candidate
         run: |
           set +e
@@ -45,6 +51,12 @@ jobs:
           release_status=$?
           set -e
           if [ "$release_status" -ne 1 ]; then
-            echo "Expected the draft shell to fail closed with status 1."
+            echo "Expected the integrated draft to fail closed with status 1."
             exit 1
           fi
+      - name: Retain the integrated manuscript review package
+        uses: actions/upload-artifact@v7
+        with:
+          name: smartdca-integrated-manuscript
+          path: manuscript/build/packages/
+          if-no-files-found: error

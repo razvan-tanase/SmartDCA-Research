@@ -4,11 +4,11 @@
 
 \section{Complete Deterministic Catalog Summaries}
 \label{sec:supp-deterministic}
-\begin{table}[htbp]
-  \centering
-  \scriptsize
+\begin{table}[!htbp]
+  \centering\fontsize{9}{11}\selectfont\singlespacing
+
   \renewcommand{\arraystretch}{1.10}
-  \begin{tabular}{rllrrr}
+  \begin{tabularx}{\textwidth}{r>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}Xrrr}
     \hline
     Coverage & Comparison & Minimum & Maximum & \multicolumn{2}{c}{Loss / tie / win} \\
     \hline
@@ -22,18 +22,19 @@
     0.5 & Corrected--neutral & -5.577\% & +5.108\% & \multicolumn{2}{c}{4 / 2 / 12} \\
     0.5 & Neutral--DCA & -7.508\% & +42.846\% & \multicolumn{2}{c}{11 / 2 / 5} \\
     \hline
-  \end{tabular}
+  \end{tabularx}
   \caption{Frictionless ranges and exact sign counts over all 18 fixed paths in the accepted deterministic catalog, including fourteen primary families, three boundary regressions, and one retained design iteration. Every row uses the frozen identity corrected mean; counts are finite catalog descriptions, not estimates of a path distribution.}
   \label{tab:deterministic-coverage-ranges}
 \end{table}
 
-\begin{table}[htbp]
-  \centering
-  \scriptsize
+
+\begin{table}[!htbp]
+  \centering\fontsize{9}{11}\selectfont\singlespacing
+
   \renewcommand{\arraystretch}{1.10}
-  \begin{tabular}{llrrr}
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}Xrrr}
     \hline
-    Cost scope & Comparison & Minimum & Maximum & Loss / tie / win \\
+    \shortstack[r]{Cost\\scope} & Comparison & Minimum & Maximum & \shortstack[r]{Loss\\/\\tie\\/\\win} \\
     \hline
     Frictionless & Corrected--DCA & -4.978\% & +26.105\% & 9 / 2 / 7 \\
     Frictionless & Corrected--neutral & -2.901\% & +3.516\% & 5 / 2 / 11 \\
@@ -45,23 +46,23 @@
     Fixed USD 1 & Corrected--neutral & -2.893\% & +3.515\% & 5 / 2 / 11 \\
     Fixed USD 1 & Neutral--DCA & -4.527\% & +29.880\% & 12 / 2 / 4 \\
     \hline
-  \end{tabular}
+  \end{tabularx}
   \caption{Net-of-cost range sensitivity at $\lambda=0.75$ over the same 18 fixed deterministic paths. The frictionless row is theorem-compatible finite validation. The proportional and fixed-fee rows are empirical net-performance calculations outside the current epsilon-DCA theorem; no frictional safety guarantee is asserted.}
   \label{tab:deterministic-cost-ranges}
 \end{table}
 
+
 \clearpage
 \section{Seeded-Stochastic Sensitivities and Validation}
 \label{sec:supp-stochastic}
-\begin{table}[htbp]
-  \centering
-  \scriptsize
+\begin{table}[!htbp]
+  \centering\fontsize{9}{11}\selectfont\singlespacing
+
   \setlength{\tabcolsep}{2.4pt}
   \renewcommand{\arraystretch}{1.12}
-  \resizebox{\textwidth}{!}{%
-  \begin{tabular}{llrrrrr}
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}Xrrrrr}
     \hline
-    Sensitivity & Comparison & $N$ & Median & Seed range & 5\% downside & Worst \\
+    Sensitivity & Comparison & $N$ & Median & \shortstack[r]{Seed\\range} & \shortstack[r]{5\%\\downside} & Worst \\
     \hline
     Negative trend & C--D & 3 & +0.659\% & [+0.631\%, +0.861\%] & +0.633\% & 0.000\% \\
     Negative trend & C--N & 3 & -0.037\% & [-0.090\%, -0.015\%] & -0.085\% & 0.090\% \\
@@ -79,19 +80,19 @@
     More frequent jumps & C--N & 3 & -0.009\% & [-0.145\%, +0.035\%] & -0.131\% & 0.145\% \\
     More frequent jumps & N--D & 3 & +0.045\% & [-0.024\%, +0.997\%] & -0.017\% & 0.024\% \\
     \hline
-  \end{tabular}%
-  }
+  \end{tabularx}
   \caption{Exploratory stochastic sensitivities at the 60-month, frictionless, $\lambda=0.75$ slice with the frozen identity corrected mean. Each sensitivity--comparison row has $N=3$ saved paths, one per seed, and remains separate from its primary family. C--D is corrected guarded versus DCA, C--N is corrected guarded versus neutral guarded, and N--D is neutral guarded versus DCA. Each percentage uses its named right-hand policy as denominator. Seed range is the minimum-to-maximum interval across the same three saved gaps; the linearly interpolated 5\% value is a compact descriptive downside summary rather than a tail estimate. Worst is the largest observed relative shortfall and is zero when all three gaps are nonnegative. The five sensitivities are controlled process changes, not replacements selected after outcome access and not a pooled inferential sample.}
   \label{tab:stochastic-sensitivity}
 \end{table}
 
-\begin{table}[htbp]
-  \centering
-  \scriptsize
+
+\begin{table}[!htbp]
+  \centering\fontsize{9}{11}\selectfont\singlespacing
+
   \renewcommand{\arraystretch}{1.10}
   \begin{tabular}{rrrrr}
     \hline
-    Coverage & Floor-active range & Cash-drag range & Asset-exposure range & C--D median range \\
+    Coverage & \shortstack[r]{Floor-active\\range} & \shortstack[r]{Cash-drag\\range} & \shortstack[r]{Asset-exposure\\range} & \shortstack[r]{C--D\\median\\range} \\
     \hline
     0.9 & 30.0\%--31.7\% & 1.5\%--1.9\% & 98.3\%--98.4\% & -0.637\%--+0.204\% \\
     0.75 & 10.6\%--11.1\% & 1.5\%--1.9\% & 98.3\%--98.4\% & -0.773\%--+0.115\% \\
@@ -102,21 +103,21 @@
   \label{tab:stochastic-coverage-diagnostics}
 \end{table}
 
-\begin{table}[htbp]
-  \centering
-  \scriptsize
+
+\begin{table}[!htbp]
+  \centering\fontsize{9}{11}\selectfont\singlespacing
+
   \renewcommand{\arraystretch}{1.12}
-  \resizebox{\textwidth}{!}{%
-  \begin{tabular}{lrrrrl}
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xrrrr>{\raggedright\arraybackslash}X}
     \hline
-    Layer & Attempted paths & Generated & Excluded & Ledgers / comparisons & Declared role \\
+    Layer & \shortstack[r]{Attempted\\paths} & Generated & Excluded & \shortstack[r]{Ledgers\\/\\comparisons} & \shortstack[r]{Declared\\role} \\
     \hline
     Deterministic & 21 & 18 & 3 & 648 / 648 & finite catalog and exact regressions \\
     Seeded stochastic & 90 & 90 & 0 & 3240 / 3240 & controlled three-seed sensitivity \\
     \hline
-  \end{tabular}%
-  }
+  \end{tabularx}
   \caption{Accepted synthetic evidence inventory. Deterministic exclusions are three typed pre-policy input or predicate rejections; the stochastic run has none. Ledgers and three ordered comparison rows share the same counts because each scenario executes three policies and emits the three declared comparisons. Counts remain within their layer and are never combined into a significance claim.}
   \label{tab:synthetic-validation-inventory}
 \end{table}
+
 \clearpage

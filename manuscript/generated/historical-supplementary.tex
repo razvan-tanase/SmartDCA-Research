@@ -2,15 +2,14 @@
 % Accepted source run(s): smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221; smartdca-historical-robustness-v1-0991d999e1a8070a2a6eb8046b08a91d0e42341995610a602372c52dfab14184
 % Accepted source artifact digest: 60a57ca4220bd5dbac678a3458e239731802c637701d588c089f6e3575bc3a15
 
-\begin{table}[htbp]
-  \centering
-  \tiny
+\begin{table}[!htbp]
+  \centering\fontsize{9}{11}\selectfont\singlespacing
+
   \setlength{\tabcolsep}{2.2pt}
   \renewcommand{\arraystretch}{1.04}
-  \resizebox{\textwidth}{!}{%
-  \begin{tabular}{lrrrrrl}
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xrrrrr>{\raggedright\arraybackslash}X}
     \hline
-    Dataset & Horizon & $\lambda$ & $N$ & Median & Cellwise 95\% interval & Holm $p$ / decision \\
+    Dataset & Horizon & $\lambda$ & $N$ & Median & \shortstack[r]{Cellwise\\95\%\\interval} & \shortstack[r]{Holm\\$p$\\/\\decision} \\
     \hline
     BTC-USD & 12 & 0.5 & 120 & -4.337\% & [-6.647\%, -1.228\%] & 0.1625 / not rejected \\
     BTC-USD & 12 & 0.75 & 120 & -3.448\% & [-5.309\%, -1.389\%] & 0.1053 / not rejected \\
@@ -31,22 +30,21 @@
     SPY & 60 & 0.75 & 335 & -0.929\% & [-1.184\%, -0.107\%] & 0.1794 / not rejected \\
     SPY & 60 & 0.9 & 335 & -0.832\% & [-1.018\%, -0.183\%] & 0.1656 / not rejected \\
     \hline
-  \end{tabular}%
-  }
+  \end{tabularx}
   \caption{Complete H1 cell results for corrected guarded versus DCA in the sealed primary monthly frictionless run. $N$ counts ordered overlapping starts within one cell; intervals are cellwise two-sided percentile intervals from 10,000 circular moving-block replicates with horizon-length blocks. Holm values are adjusted once over the complete 36-cell H1/H2 family. An interval excluding zero is not substituted for the registered adjusted decision.}
   \label{tab:historical-h1-cells}
 \end{table}
+
 \FloatBarrier
 
-\begin{table}[htbp]
-  \centering
-  \tiny
+\begin{table}[!htbp]
+  \centering\fontsize{9}{11}\selectfont\singlespacing
+
   \setlength{\tabcolsep}{2.2pt}
   \renewcommand{\arraystretch}{1.04}
-  \resizebox{\textwidth}{!}{%
-  \begin{tabular}{lrrrrrl}
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xrrrrr>{\raggedright\arraybackslash}X}
     \hline
-    Dataset & Horizon & $\lambda$ & $N$ & Median & Cellwise 95\% interval & Holm $p$ / decision \\
+    Dataset & Horizon & $\lambda$ & $N$ & Median & \shortstack[r]{Cellwise\\95\%\\interval} & \shortstack[r]{Holm\\$p$\\/\\decision} \\
     \hline
     BTC-USD & 12 & 0.5 & 120 & -0.2409\% & [-0.9019\%, +0.1626\%] & 1.0000 / not rejected \\
     BTC-USD & 12 & 0.75 & 120 & -0.1517\% & [-0.6540\%, +0.0764\%] & 1.0000 / not rejected \\
@@ -67,22 +65,21 @@
     SPY & 60 & 0.75 & 335 & -0.0682\% & [-0.1326\%, -0.0002\%] & 0.5687 / not rejected \\
     SPY & 60 & 0.9 & 335 & -0.0723\% & [-0.1167\%, -0.0025\%] & 0.4620 / not rejected \\
     \hline
-  \end{tabular}%
-  }
+  \end{tabularx}
   \caption{Complete H2 cell results for corrected guarded versus neutral guarded in the sealed primary monthly frictionless run. $N$ counts ordered overlapping starts within one cell; intervals are cellwise two-sided percentile intervals from 10,000 circular moving-block replicates with horizon-length blocks. Holm values are adjusted once over the complete 36-cell H1/H2 family. An interval excluding zero is not substituted for the registered adjusted decision. Non-rejection does not establish equivalence.}
   \label{tab:historical-h2-cells}
 \end{table}
+
 \FloatBarrier
 
-\begin{table}[htbp]
-  \centering
-  \tiny
+\begin{table}[!htbp]
+  \centering\fontsize{9}{11}\selectfont\singlespacing
+
   \setlength{\tabcolsep}{2.5pt}
   \renewcommand{\arraystretch}{1.04}
-  \resizebox{\textwidth}{!}{%
-  \begin{tabular}{lrrrrrr}
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xrrrrrr}
     \hline
-    Dataset & Horizon & $\lambda$ & $N$ & Median neutral--DCA gap & 5\% downside & Worst shortfall \\
+    Dataset & Horizon & $\lambda$ & $N$ & \shortstack[r]{Median\\neutral--DCA\\gap} & \shortstack[r]{5\%\\downside} & \shortstack[r]{Worst\\shortfall} \\
     \hline
     BTC-USD & 12 & 0.5 & 120 & -4.325\% & -11.414\% & 13.571\% \\
     BTC-USD & 12 & 0.75 & 120 & -3.373\% & -8.825\% & 10.313\% \\
@@ -103,22 +100,21 @@
     SPY & 60 & 0.75 & 335 & -0.872\% & -1.641\% & 1.852\% \\
     SPY & 60 & 0.9 & 335 & -0.758\% & -1.436\% & 1.582\% \\
     \hline
-  \end{tabular}%
-  }
+  \end{tabularx}
   \caption{Complete S1 architecture-only distribution summaries for neutral guarded versus DCA across the non-unit primary frictionless grid. Each relative gap uses DCA wealth as denominator. $N$ counts ordered overlapping starts within one cell. These prespecified secondary rows share the same episode populations but carry no bootstrap or Holm decision and do not causally decompose H1.}
   \label{tab:historical-architecture-cells}
 \end{table}
+
 \FloatBarrier
 
-\begin{table}[htbp]
-  \centering
-  \tiny
+\begin{table}[!htbp]
+  \centering\fontsize{9}{11}\selectfont\singlespacing
+
   \setlength{\tabcolsep}{2.4pt}
   \renewcommand{\arraystretch}{1.04}
-  \resizebox{\textwidth}{!}{%
-  \begin{tabular}{lrlrrr}
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xr>{\raggedright\arraybackslash}Xrrr}
     \hline
-    Dataset & Horizon & Comparison & $N$ & Coverage cells & Median range \\
+    Dataset & Horizon & Comparison & $N$ & \shortstack[r]{Coverage\\cells} & \shortstack[r]{Median\\range} \\
     \hline
     BTC-USD & 12 & Corrected--DCA & 120 & 5 & -4.8134\% to -0.1640\% \\
     BTC-USD & 12 & Corrected--neutral & 120 & 5 & -0.2601\% to -0.0098\% \\
@@ -139,22 +135,21 @@
     SPY & 60 & Corrected--neutral & 335 & 5 & -0.0728\% to -0.0066\% \\
     SPY & 60 & Neutral--DCA & 335 & 5 & -0.9019\% to -0.1325\% \\
     \hline
-  \end{tabular}%
-  }
+  \end{tabularx}
   \caption{Monthly additional-coverage robustness on the sealed episode schedules. Each range is over the declared non-unit coverage cells within one dataset--horizon--comparison coordinate. $N$ is the number of ordered overlapping episode starts in each cell. All rows are post-confirmatory descriptive robustness with uncertainty status \texttt{not-run-robustness}; they do not enter H1/H2 or permit raw-wealth comparison with another cadence.}
   \label{tab:historical-monthly-robustness-ranges}
 \end{table}
+
 \FloatBarrier
 
-\begin{table}[htbp]
-  \centering
-  \tiny
+\begin{table}[!htbp]
+  \centering\fontsize{9}{11}\selectfont\singlespacing
+
   \setlength{\tabcolsep}{2.4pt}
   \renewcommand{\arraystretch}{1.04}
-  \resizebox{\textwidth}{!}{%
-  \begin{tabular}{lrlrrr}
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xr>{\raggedright\arraybackslash}Xrrr}
     \hline
-    Dataset & Horizon & Comparison & $N$ & Coverage cells & Median range \\
+    Dataset & Horizon & Comparison & $N$ & \shortstack[r]{Coverage\\cells} & \shortstack[r]{Median\\range} \\
     \hline
     BTC-USD & 6 & Corrected--DCA & 42 & 8 & -5.9678\% to -0.0680\% \\
     BTC-USD & 6 & Corrected--neutral & 42 & 8 & +0.0009\% to +0.0570\% \\
@@ -175,30 +170,29 @@
     SPY & 120 & Corrected--neutral & 92 & 8 & -0.3314\% to -0.0210\% \\
     SPY & 120 & Neutral--DCA & 92 & 8 & -2.0064\% to -0.2117\% \\
     \hline
-  \end{tabular}%
-  }
+  \end{tabularx}
   \caption{Quarterly-horizon robustness with deposits every three months. Each range is over the declared non-unit coverage cells within one dataset--horizon--comparison coordinate. $N$ is the number of ordered overlapping episode starts in each cell. All rows are post-confirmatory descriptive robustness with uncertainty status \texttt{not-run-robustness}; they do not enter H1/H2 or permit raw-wealth comparison with another cadence.}
   \label{tab:historical-quarterly-robustness-ranges}
 \end{table}
+
 \FloatBarrier
 
-\begin{table}[htbp]
-  \centering
-  \scriptsize
+\begin{table}[!htbp]
+  \centering\fontsize{9}{11}\selectfont\singlespacing
+
   \setlength{\tabcolsep}{2.8pt}
   \renewcommand{\arraystretch}{1.10}
-  \resizebox{\textwidth}{!}{%
-  \begin{tabular}{lrrrrrl}
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xrrrrr>{\raggedright\arraybackslash}X}
     \hline
-    Evidence slice & Attempted & Included & Excluded & Ledgers / comparisons & Aggregate cells & Uncertainty \\
+    \shortstack[r]{Evidence\\slice} & Attempted & Included & Excluded & \shortstack[r]{Ledgers\\/\\comparisons} & \shortstack[r]{Aggregate\\cells} & Uncertainty \\
     \hline
     Sealed primary monthly & 1365 & 1365 & 0 & 49140 / 49140 & 216 & 36 confirmatory cells \\
     Registered monthly coverage & 1365 & 1365 & 0 & 73710 / 73710 & 324 & descriptive only \\
     Registered quarterly horizons & 428 & 428 & 0 & 34668 / 34668 & 486 & descriptive only \\
     \hline
-  \end{tabular}%
-  }
+  \end{tabularx}
   \caption{Historical evidence inventory and completeness reconciliation. Attempts and inclusions are schedule-specific episodes; ledgers and ordered comparison results have the same counts because three policies produce three comparisons. Both validations record zero exclusions, empty protocol-deviation and violation lists, and passed accounting checks. Public bundles contain derived aggregates, uncertainty where registered, validation, tables, figure-ready data, manifests, and cryptographic receipts; restricted source observations are not redistributed.}
   \label{tab:historical-evidence-inventory}
 \end{table}
+
 \clearpage

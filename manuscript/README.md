@@ -2,7 +2,7 @@
 
 This directory contains the authoritative thesis source, the implemented
 official-template layer, the thesis architecture and evidence controls, and the
-fail-closed submission gate. The current PDF is a controlled partial draft:
+fail-closed submission gate. The current PDF is a complete integrated draft:
 Chapter 2 supplies the reviewed literature positioning; Chapter 3 supplies the
 financial-model and corrected-signal foundations; Chapter 4 supplies the
 impossibility-to-safety policy architecture; Chapter 5 supplies the finite- and
@@ -16,8 +16,9 @@ cases, protocols, artifact identities, generated result tables, and clean
 commands. The introduction, closing literature synthesis, conclusion, Romanian
 synopsis, and English abstract now connect those results through the approved
 research questions and contribution boundaries. The bilingual abstracts each
-remain below 200 words and share one page. Complete-release assembly and the
-institutional and supervisor gates remain outstanding; this draft is not a
+remain below 200 words and share one page. The reproducible package command below assembles its source, PDF, evidence
+map, and supervisor brief. Ticket 14 remains open because its institutional
+acceptance criteria are not met; this draft is not a review-candidate or
 submission candidate.
 
 ## Authority
@@ -63,9 +64,7 @@ python manuscript/build.py
 
 The derived PDF is written to `manuscript/build/thesis.pdf`. It implements the
 template's bilingual cover/front-matter route, A4/25.4 mm layout, body spacing,
-and heading hierarchy. It renders all ten planned body chapters and five
-appendices with their purpose, prerequisites, reader outcome, and placement
-boundary. Before LaTeX starts, the build runs the architecture/evidence control
+and heading hierarchy. It renders all ten completed body chapters and five appendices. Before LaTeX starts, the build runs the architecture/evidence control
 check and the DCA/adaptive/causal-safety, corrected-mean prior-theory, and
 reproducible computational-finance/statistical-method literature traceability
 checks, followed by the financial-model/corrected-signal and
@@ -98,6 +97,53 @@ build packages, mounts the repository source, and writes the derived PDF to the
 same ignored build directory. GitHub Actions executes this route from a clean
 runner.
 
+## Integrated review package
+
+From a clean checkout, one command assembles the complete package:
+
+```bash
+./manuscript/assemble-clean.sh
+```
+
+With the declared TeX/Poppler tools already installed, use:
+
+```bash
+python manuscript/assemble.py
+```
+
+Both routes run the canonical build, regenerate and compare all eight empirical
+fragments, audit display ownership and rendered references, and write a
+content-addressed ZIP below `manuscript/build/packages/`. The ZIP contains the
+PDF, a complete public source snapshot, bibliography, generated assets,
+controls, a claim-to-evidence CSV with printed pages, assembly audit,
+[supervisor review brief](release/supervisor-review.md), institutional blocker
+list, and manifest. Every payload file is hashed. Private provider observations
+are excluded because they are not versioned repository inputs.
+
+The state is **integrated-draft**. Assembly success does not approve the
+submission gate, resolve ticket 14, or advance tickets 15–17. The package
+records the submission checker verdict and retains all missing personal,
+institutional, and supervisor evidence. See the
+[assembly audit](../research/notes/complete-manuscript-assembly-audit.md).
+
+New files must be staged before assembling a working checkout: the inventory
+uses tracked paths and hashes their actual working bytes and executable modes, recording HEAD and
+whether the checkout is modified. An exported package uses its bound
+`SOURCE-FILES.json` and can rebuild without Git history. A relocated export
+reproduces identical PDF and ZIP bytes under the same toolchain. The dated
+Docker image installs distribution packages whose versions may evolve; the
+manifest records actual versions, and cross-toolchain byte identity is not
+assumed. Full scientific verification remains a separate required release
+gate documented in the root README; ordinary package assembly reconciles
+accepted outputs without rerunning every experiment.
+
+Run the assembly seam independently:
+
+```bash
+python manuscript/assembly_controls.py --build-dir manuscript/build
+python -m unittest manuscript.tests.test_assembly
+```
+
 ## Submission gate
 
 ```bash
@@ -110,11 +156,12 @@ machine-readable contracts are out of sync, a required build input is missing,
 a declared placeholder marker remains, a LaTeX citation has no bibliography
 entry, a bibliography entry is never cited, or the thesis architecture and
 evidence controls are invalid. Failure remains expected while the owned
-institutional decisions and visible placeholders are unresolved.
+institutional decisions and front-matter placeholders are unresolved.
 
 ## Focused verification
 
 ```bash
+python -m unittest manuscript.tests.test_assembly
 python -m unittest manuscript.tests.test_controls
 python -m unittest manuscript.tests.test_release_check
 python -m unittest manuscript.tests.test_manuscript_build

@@ -2,15 +2,14 @@
 % Accepted source run(s): smartdca-historical-study-v1-5b10a2aba05f84eacfef87b421a580cf7c0dc30d2844c51be6241bc682e39221
 % Accepted source artifact digest: cb79fcb63ecb2c9a0894a8f24255dfd4934eaa0dcb54fb4f0894d1b71b941718
 
-\begin{table}[htbp]
-  \centering
-  \scriptsize
+\begin{table}[!htbp]
+  \centering\fontsize{9}{11}\selectfont\singlespacing
+
   \setlength{\tabcolsep}{3.0pt}
   \renewcommand{\arraystretch}{1.12}
-  \resizebox{\textwidth}{!}{%
-  \begin{tabular}{lrrrrrr}
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xrrrrrr}
     \hline
-    Dataset & Horizon & $N$ & H1 median range & H1 rejected $\lambda$ & H2 median range & H2 rejected $\lambda$ \\
+    Dataset & Horizon & $N$ & \shortstack[r]{H1\\median\\range} & \shortstack[r]{H1\\rejected\\$\lambda$} & \shortstack[r]{H2\\median\\range} & \shortstack[r]{H2\\rejected\\$\lambda$} \\
     \hline
     BTC-USD & 12 & 120 & -4.337\% to -1.640\% & none & -0.241\% to -0.100\% & none \\
     BTC-USD & 36 & 96 & -3.707\% to -3.172\% & 0.9 & -0.545\% to -0.391\% & none \\
@@ -19,11 +18,11 @@
     SPY & 36 & 359 & -0.924\% to -0.717\% & 0.5, 0.75, 0.9 & -0.045\% to -0.039\% & none \\
     SPY & 60 & 335 & -0.938\% to -0.832\% & none & -0.072\% to -0.068\% & none \\
     \hline
-  \end{tabular}%
-  }
+  \end{tabularx}
   \caption{Sealed primary monthly historical results under the frozen identity corrected mean, frictionless accounting, and non-unit $\lambda\in\{0.5,0.75,0.9\}$. $N$ is the number of ordered overlapping episode starts in each individual cell, not an independent-history count. H1 is corrected guarded versus DCA; H2 is corrected guarded versus the neutral guarded selector, and each relative gap uses its named right-hand policy as denominator. Ranges are over the three coverage-specific medians. Rejected values use two-sided $p<0.05$ after Holm adjustment over one sealed 36-test H1/H2 family; no H2 cell was rejected. Cellwise intervals and adjusted values appear in Appendix Tables~\ref{tab:historical-h1-cells}--\ref{tab:historical-h2-cells}.}
   \label{tab:historical-primary}
 \end{table}
+
 
 \begin{figure}[htbp]
   \centering

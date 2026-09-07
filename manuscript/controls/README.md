@@ -15,7 +15,7 @@ remain in the separate [institutional contract](../contract/institutional-contra
 | [`architecture.json`](architecture.json) | Working title, three research questions and conservative answers, safety-versus-adaptivity spine, chapter dependencies, reader outcomes, and body-versus-appendix rules. |
 | [`contributions.json`](contributions.json) | Mathematical, computational, methodological, empirical, and integrative contribution matrix with evidence and novelty boundaries. |
 | [`non-claims.json`](non-claims.json) | Claims the thesis rejects and the wording required in their place. |
-| [`claims.json`](claims.json) | Stable claim-to-evidence entries for every canonical definition and theorem, current empirical headline, and selected manuscript table and figure. |
+| [`claims.json`](claims.json) | Stable claim-to-evidence entries for every canonical definition and theorem, current empirical headline, and every included manuscript table and figure. |
 | [`notation.json`](notation.json) | Governing symbols, first-use locations, and every intentional repository-to-manuscript reconciliation. |
 | [`governance.json`](governance.json) | Terminology, citations, generated assets, dependencies, supervisor feedback, and release-state rules. |
 | [`supervisor-feedback.json`](supervisor-feedback.json) | Dated feedback ledger. It is intentionally empty until actual feedback is received. |
@@ -44,6 +44,14 @@ Claim records retain their primary `manuscript_location`. Optional
 literature synthesis, and bilingual abstracts without duplicating its ID or
 evidence authority. The ticket 13 headline audit reconciles these locations
 and their wording; the generic validator does not establish semantic agreement.
+
+The integrated assembly audit also validates every primary and restatement
+label. `display_labels` assigns supporting equations to their existing claim
+ID; primary table, figure, definition, and theorem labels identify their
+individual owners. Every labeled scientific display has exactly one owner.
+The exported CSV adds the primary printed page from the compiled auxiliary
+file. This proves structural traceability, not semantic completeness; the
+independent complete-draft audit remains required.
 
 ## Change workflow
 
